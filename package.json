@@ -1,0 +1,39 @@
+{
+  "name": "shop-standards",
+  "version": "1.0.0",
+  "description": "Standard refinements for e-commerce websites.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/netzstrategen/shop-standards"
+  },
+  "author": "netzstrategen <hallo@netzstrategen.com>",
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/netzstrategen/shop-standards/issues"
+  },
+  "homepage": "https://github.com/netzstrategen/shop-standards/blob/master/README.md",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-es2016": "^6.24.1",
+    "eslint": "^4.2.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-clean": "^0.3.2",
+    "gulp-eol": "^0.1.2",
+    "gulp-eslint": "^4.0.0",
+    "gulp-if": "^2.0.2",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.4.1",
+    "gulp-uglify": "^3.0.0",
+    "minimist": "^1.2.0",
+    "run-sequence": "^2.2.0"
+  }
+}
