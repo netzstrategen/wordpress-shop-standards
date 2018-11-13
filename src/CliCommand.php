@@ -26,7 +26,7 @@ class CliCommand extends \WP_CLI_Command {
     }
     elseif (isset($args[0])) {
       $product_ids = explode(',', trim($args[0], ','));
-      static::forceUpdateProducts($product_ids);
+      static::updateSalePercentage($product_ids);
     }
     else {
       WP_CLI::error('A comma separated list of products ids is needed. Use option --all to update all products.');
