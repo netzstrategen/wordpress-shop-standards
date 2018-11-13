@@ -93,6 +93,27 @@ class WooCommerce {
   }
 
   /**
+   * Changes sale flash label to display sale percentage.
+   *
+   * @implements woocommerce_change_sale_to_percentage
+   */
+  public static function woocommerce_change_sale_to_percentage($output, $post, $product) {
+    if ($product->get_type() === 'variation') {
+      $sale_percentage = get_post_meta($product->get_parent_id(), '_sale_percentage', TRUE);
+    }
+    else {
+      $sale_percentage = get_post_meta($product->get_id(), '_sale_percentage', TRUE);
+    }
+    if (((!is_single() && $sale_percentage >= 0) || is_single()) && get_post_meta($product->get_id(), '_custom_hide_sale_percentage_flash_label', TRUE) !== 'yes') {
+      $output = '<span class="onsale" data="' . $sale_percentage . '">-' . $sale_percentage . '%</span>';
+    }
+    else {
+      $output = '';
+    }
+    return $output;
+  }
+
+  /**
    * Adds backordering with proper status messages for every product whether
    *   stock managing is enabled or it's available.
    *
@@ -176,14 +197,16 @@ class WooCommerce {
    *
    * @implements updated_post_meta
    */
-  public static function updateSalePercentage($check, $object_id, $meta_key, $meta_value) {
+  public static function updateSalePercentage($check, $product_id, $meta_key, $meta_value) {
     if ($meta_key === '_regular_price' || $meta_key === '_sale_price') {
-      $product = wc_get_product($object_id);
-      if ($product->product_type === 'variation') {
-        static::update_sale_percentage($product->get_parent_id(), $product->parent->post);
+      $product = wc_get_product($product_id);
+      $product_type = $product->get_type();
+      if ($product_type === 'variation') {
+        $parent_id = $product->get_parent_id();
+        static::update_sale_percentage($parent_id, get_post($parent_id));
       }
-      elseif ($product->product_type === 'simple') {
-        static::update_sale_percentage($product->get_id(), $product->post);
+      elseif ($product_type === 'simple') {
+        static::update_sale_percentage($product_id, get_post($product_id));
       }
     }
   }
@@ -194,7 +217,7 @@ class WooCommerce {
   public static function update_sale_percentage($post_id, $post) {
     global $wpdb;
     $product_has_variation = $wpdb->get_var("SELECT ID from wp_posts WHERE post_type = 'product_variation' AND post_parent = $post_id LIMIT 0,1");
-    if ($post->post_type === 'product') {
+    if (get_post_type($post) === 'product') {
       if ($product_has_variation) {
         $where = "WHERE p.post_type = 'product_variation' AND p.post_parent = $post_id";
       }

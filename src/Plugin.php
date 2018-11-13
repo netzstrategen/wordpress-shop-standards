@@ -48,6 +48,8 @@ class Plugin {
     // Adds strike price (range) labels for variable products, too.
     add_filter('woocommerce_variable_sale_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_variable_sale_price_html', 10, 2);
     add_filter('woocommerce_variable_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_variable_sale_price_html', 10, 2);
+    // Changes sale flash label to display sale percentage.
+    add_filter('woocommerce_sale_flash', __NAMESPACE__ . '\WooCommerce::woocommerce_change_sale_to_percentage', 10, 3);
   }
 
   /**
