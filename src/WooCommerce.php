@@ -361,6 +361,15 @@ class WooCommerce {
       'value' => get_post_meta($variation->ID, '_custom_hide_add_to_cart_button', TRUE),
     ]);
     echo '</div>';
+
+    // Insufficient variant images` button checkbox.
+    echo '<div style="clear:both">';
+    woocommerce_wp_checkbox([
+      'id' => '_custom_insufficient_variant_images',
+      'label' => __('Insufficient variant images', Plugin::L10N),
+      'value' => get_post_meta($variation->ID, '_custom_insufficient_variant_images', TRUE),
+    ]);
+    echo '</div>';
   }
 
   /**
@@ -395,6 +404,11 @@ class WooCommerce {
           // Hide `add to cart` button checkbox.
           if ($hide_add_to_cart_button = $_POST['_custom_hide_add_to_cart_button'] ?: 'no') {
             update_post_meta($variation_id, '_custom_hide_add_to_cart_button', $hide_add_to_cart_button);
+          }
+
+          // Insufficient variant images` button checkbox.
+          if ($hide_add_to_cart_button = $_POST['_custom_insufficient_variant_images'] ?: 'no') {
+            update_post_meta($variation_id, '_custom_insufficient_variant_images', $hide_add_to_cart_button);
           }
         }
       }

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2018-04-12 19:02+0200\n"
-"PO-Revision-Date: 2018-04-12 19:03+0200\n"
+"POT-Creation-Date: 2018-11-19 15:21+0100\n"
+"PO-Revision-Date: 2018-11-19 15:22+0100\n"
 "Last-Translator: Luca Pipolo <luca@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
@@ -29,38 +29,42 @@ msgstr ""
 "Die Plugins WooCommerce und WooCommerce German Market müssen installiert und "
 "aktiviert sein, um das Shop Standards Plugin aktivieren zu können."
 
-#: src/Plugin.php:90
+#: src/Plugin.php:92
 msgid "Processing order…"
 msgstr "Verarbeite Bestellung…"
 
-#: src/WooCommerce.php:106
+#: src/WooCommerce.php:127
 msgid "Out of stock"
 msgstr "nicht lieferbar"
 
-#: src/WooCommerce.php:110
+#: src/WooCommerce.php:131
 msgid "In stock"
 msgstr "lieferbar"
 
-#: src/WooCommerce.php:243 src/WooCommerce.php:319
+#: src/WooCommerce.php:266 src/WooCommerce.php:342
 msgid "ERP/Inventory ID"
 msgstr "ERP/Inventar ID"
 
-#: src/WooCommerce.php:252
+#: src/WooCommerce.php:275
 msgid "Display sale price as normal price"
 msgstr "Sale-Preis wie einen Standard-Preis anzeigen"
 
-#: src/WooCommerce.php:260
+#: src/WooCommerce.php:283
 msgid "Hide add to cart button"
 msgstr "Warenkorb-Button verbergen"
 
-#: src/WooCommerce.php:310
+#: src/WooCommerce.php:333
 msgid "Global Trade Item Number"
 msgstr ""
 
-#: src/WooCommerce.php:328
+#: src/WooCommerce.php:351
 msgid "Display sale price as normal price:"
 msgstr "Sale-Preis wie einen Standard-Preis anzeigen"
 
-#: src/WooCommerce.php:337
+#: src/WooCommerce.php:360
 msgid "Hide add to cart button:"
 msgstr "Warenkorb-Button verbergen:"
+
+#: src/WooCommerce.php:369
+msgid "Insufficient variant images"
+msgstr "Unzureichendes Varianten-Bild"
