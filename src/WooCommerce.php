@@ -362,7 +362,7 @@ class WooCommerce {
     ]);
     echo '</div>';
 
-    // Insufficient variant images` button checkbox.
+    // Insufficient variant images button checkbox.
     echo '<div style="clear:both">';
     woocommerce_wp_checkbox([
       'id' => '_custom_insufficient_variant_images',
@@ -406,7 +406,7 @@ class WooCommerce {
             update_post_meta($variation_id, '_custom_hide_add_to_cart_button', $hide_add_to_cart_button);
           }
 
-          // Insufficient variant images` button checkbox.
+          // Insufficient variant images button checkbox.
           if ($hide_add_to_cart_button = $_POST['_custom_insufficient_variant_images'] ?: 'no') {
             update_post_meta($variation_id, '_custom_insufficient_variant_images', $hide_add_to_cart_button);
           }
