@@ -366,8 +366,9 @@ class WooCommerce {
     echo '<div style="clear:both">';
     woocommerce_wp_checkbox([
       'id' => '_custom_insufficient_variant_images',
-      'label' => __('Insufficient variant images', Plugin::L10N),
+      'label' => __('Variation has insufficient images', Plugin::L10N),
       'value' => get_post_meta($variation->ID, '_custom_insufficient_variant_images', TRUE),
+      'desc_tip' => __('Allows this product to be identified and possibly be excluded by other processes and plugins (e.g. a custom filter for product feeds). Enabling this option has no effect on the output (by default).', Plugin::L10N),
     ]);
     echo '</div>';
   }

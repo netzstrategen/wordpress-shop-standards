@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2018-11-19 15:21+0100\n"
-"PO-Revision-Date: 2018-11-19 15:22+0100\n"
+"POT-Creation-Date: 2018-11-20 11:01+0100\n"
+"PO-Revision-Date: 2018-11-20 11:02+0100\n"
 "Last-Translator: Luca Pipolo <luca@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -66,5 +66,15 @@ msgid "Hide add to cart button:"
 msgstr "Warenkorb-Button verbergen:"
 
 #: src/WooCommerce.php:369
-msgid "Insufficient variant images"
-msgstr "Unzureichendes Varianten-Bild"
+msgid "Variation has insufficient images"
+msgstr "Variation hat ein unzureichendes Bild"
+
+#: src/WooCommerce.php:371
+msgid ""
+"Allows this product to be identified and possibly be excluded by other "
+"processes and plugins (e.g. a custom filter for product feeds). Enabling "
+"this option has no effect on the output (by default)."
+msgstr ""
+"Markiert diese Variante um sie beispielsweise bei Produkt-Feeds aufgrund "
+"unzureichender Bilder auszuschließen. Das Setzen des Hakens hat keinen "
+"Einfluss auf das Frontend."
