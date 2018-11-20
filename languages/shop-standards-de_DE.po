@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2018-04-12 19:02+0200\n"
-"PO-Revision-Date: 2018-04-12 19:03+0200\n"
+"POT-Creation-Date: 2018-11-20 11:01+0100\n"
+"PO-Revision-Date: 2018-11-20 11:02+0100\n"
 "Last-Translator: Luca Pipolo <luca@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
@@ -29,38 +29,52 @@ msgstr ""
 "Die Plugins WooCommerce und WooCommerce German Market müssen installiert und "
 "aktiviert sein, um das Shop Standards Plugin aktivieren zu können."
 
-#: src/Plugin.php:90
+#: src/Plugin.php:92
 msgid "Processing order…"
 msgstr "Verarbeite Bestellung…"
 
-#: src/WooCommerce.php:106
+#: src/WooCommerce.php:127
 msgid "Out of stock"
 msgstr "nicht lieferbar"
 
-#: src/WooCommerce.php:110
+#: src/WooCommerce.php:131
 msgid "In stock"
 msgstr "lieferbar"
 
-#: src/WooCommerce.php:243 src/WooCommerce.php:319
+#: src/WooCommerce.php:266 src/WooCommerce.php:342
 msgid "ERP/Inventory ID"
 msgstr "ERP/Inventar ID"
 
-#: src/WooCommerce.php:252
+#: src/WooCommerce.php:275
 msgid "Display sale price as normal price"
 msgstr "Sale-Preis wie einen Standard-Preis anzeigen"
 
-#: src/WooCommerce.php:260
+#: src/WooCommerce.php:283
 msgid "Hide add to cart button"
 msgstr "Warenkorb-Button verbergen"
 
-#: src/WooCommerce.php:310
+#: src/WooCommerce.php:333
 msgid "Global Trade Item Number"
 msgstr ""
 
-#: src/WooCommerce.php:328
+#: src/WooCommerce.php:351
 msgid "Display sale price as normal price:"
 msgstr "Sale-Preis wie einen Standard-Preis anzeigen"
 
-#: src/WooCommerce.php:337
+#: src/WooCommerce.php:360
 msgid "Hide add to cart button:"
 msgstr "Warenkorb-Button verbergen:"
+
+#: src/WooCommerce.php:369
+msgid "Variation has insufficient images"
+msgstr "Variation hat ein unzureichendes Bild"
+
+#: src/WooCommerce.php:371
+msgid ""
+"Allows this product to be identified and possibly be excluded by other "
+"processes and plugins (e.g. a custom filter for product feeds). Enabling "
+"this option has no effect on the output (by default)."
+msgstr ""
+"Markiert diese Variante um sie beispielsweise bei Produkt-Feeds aufgrund "
+"unzureichender Bilder auszuschließen. Das Setzen des Hakens hat keinen "
+"Einfluss auf das Frontend."
