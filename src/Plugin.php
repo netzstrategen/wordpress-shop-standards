@@ -22,6 +22,18 @@ class Plugin {
   const L10N = self::PREFIX;
 
   /**
+   * Plugin initialization method with the lowest possible priority.
+   *
+   * @implements init
+   */
+  public static function preInit() {
+    // Enables revisions for product descriptions.
+    // WooCommerce registers its post types very early in init with a priority
+    // of 5, so we need to register upfront.
+    add_filter('woocommerce_register_post_type_product', __NAMESPACE__ . '\WooCommerce::woocommerce_register_post_type_product');
+  }
+
+  /**
    * Plugin initialization method.
    *
    * @implements init
