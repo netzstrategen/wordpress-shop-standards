@@ -50,7 +50,7 @@ class Plugin {
     remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10);
 
     // Changes the minimum amount of variations to trigger the AJAX handling.
-    add_filter('woocommerce_ajax_variation_threshold', __CLASS__ . '\WooCommerce::woocommerce_ajax_variation_threshold', 10, 2);
+    add_filter('woocommerce_ajax_variation_threshold', __NAMESPACE__ . '\WooCommerce::woocommerce_ajax_variation_threshold', 10, 2);
   }
 
   /**
