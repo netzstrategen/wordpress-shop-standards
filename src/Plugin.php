@@ -22,6 +22,11 @@ class Plugin {
   const L10N = self::PREFIX;
 
   /**
+   * @var string
+   */
+  private static $baseUrl;
+
+  /**
    * Plugin initialization method with the lowest possible priority.
    *
    * @implements init
@@ -57,6 +62,9 @@ class Plugin {
 
     // Changes the minimum amount of variations to trigger the AJAX handling.
     add_filter('woocommerce_ajax_variation_threshold', __NAMESPACE__ . '\WooCommerce::woocommerce_ajax_variation_threshold', 10, 2);
+
+    // Enqueues plugin scripts.
+    add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
   }
 
   /**
@@ -68,6 +76,60 @@ class Plugin {
     if (is_search() || preg_match('@/page/\d+@', $_SERVER['REQUEST_URI'])) {
       echo '<meta name="robots" content="noindex">';
     }
+  }
+
+  /**
+   * Enqueues plugin scripts.
+   *
+   * @implements wp_enqueue_scripts
+   */
+  public static function wp_enqueue_scripts() {
+    $git_version = static::getGitVersion();
+    wp_enqueue_script(Plugin::PREFIX, static::getBaseUrl() . '/dist/scripts/main.min.js', ['jquery'], $git_version, TRUE);
+  }
+
+  /**
+   * The base URL path to this plugin's folder.
+   *
+   * Uses plugins_url() instead of plugin_dir_url() to avoid a trailing slash.
+   */
+  public static function getBaseUrl() {
+    if (!isset(static::$baseUrl)) {
+      static::$baseUrl = plugins_url('', static::getBasePath() . '/plugin.php');
+    }
+    return static::$baseUrl;
+  }
+
+  /**
+   * The absolute filesystem base path of this plugin.
+   *
+   * @return string
+   */
+  public static function getBasePath() {
+    return dirname(__DIR__);
+  }
+
+  /**
+   * Generates a version out of the current commit hash.
+   *
+   * @return string
+   */
+   public static function getGitVersion() {
+    $git_version = NULL;
+    if (is_dir(ABSPATH . '.git')) {
+      $ref = trim(file_get_contents(ABSPATH . '.git/HEAD'));
+      if (strpos($ref, 'ref:') === 0) {
+        $ref = substr($ref, 5);
+        if (file_exists(ABSPATH . '.git/' . $ref)) {
+          $ref = trim(file_get_contents(ABSPATH . '.git/' . $ref));
+        }
+        else {
+          $ref = substr($ref, 11);
+        }
+      }
+      $git_version = substr($ref, 0, 8);
+    }
+    return $git_version;
   }
 
   /**
