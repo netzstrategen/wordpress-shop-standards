@@ -31,6 +31,10 @@ class Plugin {
     // WooCommerce registers its post types very early in init with a priority
     // of 5, so we need to register upfront.
     add_filter('woocommerce_register_post_type_product', __NAMESPACE__ . '\WooCommerce::woocommerce_register_post_type_product');
+
+    // Adds strike price (range) labels for variable products, too.
+    add_filter('woocommerce_variable_sale_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_variable_sale_price_html', 10, 2);
+    add_filter('woocommerce_variable_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_variable_sale_price_html', 10, 2);
   }
 
   /**

@@ -8,6 +8,39 @@ namespace Netzstrategen\ShopStandards;
 class WooCommerce {
 
   /**
+   * Adds strike price for variable products above regular product price labels.
+   *
+   * @see https://github.com/woocommerce/woocommerce/issues/16169
+   *
+   * @implements woocommerce_variable_sale_price_html
+   * @implements woocommerce_variable_price_html
+   */
+  public static function woocommerce_variable_sale_price_html($price, $product) {
+    $sale_prices = [
+      'min' => $product->get_variation_price('min', TRUE),
+      'max' => $product->get_variation_price('max', TRUE),
+    ];
+    $regular_prices = [
+      'min' => $product->get_variation_regular_price('min', TRUE),
+      'max' => $product->get_variation_regular_price('max', TRUE),
+    ];
+    $regular_price = [wc_price($regular_prices['min'])];
+    if ($regular_prices['min'] !== $regular_prices['max']) {
+      $regular_price[] = wc_price($regular_prices['max']);
+    }
+    $sale_price = [wc_price($sale_prices['min'])];
+    if ($sale_prices['min'] !== $sale_prices['max']) {
+      $sale_price[] = wc_price($sale_prices['max']);
+    }
+    if (($sale_prices['min'] !== $regular_prices['min'] || $sale_prices['max'] !== $regular_prices['max'])) {
+      if ($sale_prices['min'] !== $sale_prices['max'] || $regular_prices['min'] !== $regular_prices['max']) {
+        $price = '<del>' . implode('-', $regular_price) . '</del> <ins>' . implode('-', $sale_price) . '</ins>';
+      }
+    }
+    return $price;
+  }
+
+  /**
    * Enables revisions for product descriptions.
    *
    * @implements woocommerce_register_post_type_product
