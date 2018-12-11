@@ -1,0 +1,37 @@
+{
+  "version": "1.7.0",
+  "title": "shop-standards",
+  "description": "Standard refinements for e-commerce websites.",
+  "dependencies": {
+    "@netzstrategen/gulp-task-collection": "^1.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-react": "^7.10.0",
+    "prettier": "^1.14.0"
+  },
+  "gulpPaths": {
+    "destDir": "./dist",
+    "images": {
+      "src": "./assets/img/**/*.{jpg,jpeg,png,gif,svg}",
+      "dest": "./dist/img"
+    },
+    "scripts": {
+      "src": "./assets/scripts/**/*.js",
+      "dest": "./dist/scripts"
+    },
+    "styles": {
+      "srcDir": "./assets/styles",
+      "src": [
+        "./assets/styles/**/*.scss"
+      ],
+      "dest": "./dist/styles"
+    },
+    "templates": "./templates/**/*.twig"
+  }
+}
