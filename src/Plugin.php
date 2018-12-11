@@ -46,11 +46,28 @@ class Plugin {
     if (is_admin()) {
       return;
     }
+
+    // Blocks search indexing on search pages.
+    add_action('wp_head', __CLASS__ . '::wp_head');
+    // Disables Yoast adjacent links.
+    add_filter('wpseo_disable_adjacent_rel_links', '__return_true');
+
     // Removes coupon box from checkout.
     remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10);
 
     // Changes the minimum amount of variations to trigger the AJAX handling.
     add_filter('woocommerce_ajax_variation_threshold', __NAMESPACE__ . '\WooCommerce::woocommerce_ajax_variation_threshold', 10, 2);
+  }
+
+  /**
+   * Blocks search indexing on search pages.
+   *
+   * @implements wp_head
+   */
+  public static function wp_head() {
+    if (is_search() || preg_match('@/page/\d+@', $_SERVER['REQUEST_URI'])) {
+      echo '<meta name="robots" content="noindex">';
+    }
   }
 
   /**
