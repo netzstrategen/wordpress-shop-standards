@@ -29,6 +29,9 @@ class Admin {
    * @implements admin_init
    */
   public static function init() {
+    // Ensures new product are saved before updating its meta data.
+    add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\WooCommerce::saveNewProductBeforeMetaUpdate', 1);
+
     // Updates product delivery time with the lowest devlivery time between its own variations.
     add_action('updated_post_meta', __NAMESPACE__ . '\WooCommerce::updateDeliveryTime', 10, 3);
 

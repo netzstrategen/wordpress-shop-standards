@@ -160,6 +160,21 @@ class WooCommerce {
   }
 
   /**
+   * Ensures new product are saved before updating its meta data.
+   *
+   * New products are still not saved when updated_post_meta hook is called.
+   * Since we can not check if the meta keys were changed before running
+   * our custom functions (see updateDeliveryTime and updateSalePercentage),
+   * we are forcing the post to be saved before updating the meta keys.
+   *
+   * @implements woocommerce_process_product_meta
+   */
+  public static function saveNewProductBeforeMetaUpdate($post_id) {
+    $product = wc_get_product($post_id);
+    $product->save();
+  }
+
+  /**
    * Updates product delivery time with the lowest devlivery time between its own variations.
    *
    * If product has variations, its delivery time should be the lowest one between its own variations.
