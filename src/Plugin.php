@@ -63,6 +63,9 @@ class Plugin {
     // Changes the minimum amount of variations to trigger the AJAX handling.
     add_filter('woocommerce_ajax_variation_threshold', __NAMESPACE__ . '\WooCommerce::woocommerce_ajax_variation_threshold', 10, 2);
 
+    // Adds backordering with proper status messages.
+    add_filter('woocommerce_get_availability', __NAMESPACE__ . '\WooCommerce::woocommerce_get_availability', 10, 2);
+
     // Enqueues plugin scripts.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
   }
