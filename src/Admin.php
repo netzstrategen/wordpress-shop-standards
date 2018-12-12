@@ -36,10 +36,11 @@ class Admin {
     }
 
     $product = wc_get_product($object_id);
-    if ($product->product_type === 'variation') {
+    if ($product->is_type('variation')) {
       $variation_deliveries_ranges = [];
 
-      foreach ($product->parent->get_children() as $variation) {
+      $parent_product = wc_get_product($product->get_parent_id());
+      foreach ($parent_product->get_children() as $variation) {
         $variation_term_id = get_post_meta($variation, '_lieferzeit', TRUE);
         $variation_term_slug = get_term($variation_term_id)->slug;
         // Matches every digits in the delivery time term slug.
