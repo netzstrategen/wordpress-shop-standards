@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2018-11-29 10:58+0100\n"
+"POT-Creation-Date: 2018-12-13 18:14+0100\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,3 +17,19 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
+
+#: src/WooCommerce.php:80
+msgid "Out of stock"
+msgstr ""
+
+#: src/WooCommerce.php:84
+msgid "In stock"
+msgstr ""
+
+#: src/WooCommerce.php:110
+msgid "Variation has insufficient images"
+msgstr ""
+
+#: src/WooCommerce.php:112
+msgid "Allows this product to be identified and possibly be excluded by other processes and plugins (e.g. a custom filter for product feeds). Enabling this option has no effect on the output (by default)."
+msgstr ""

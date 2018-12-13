@@ -20,6 +20,10 @@ class Admin {
   public static function init() {
     // Updates product delivery time with the lowest delivery time between its own variations.
     add_action('updated_post_meta', __CLASS__ . '::updated_post_meta', 10, 3);
+
+    // Adds products variations custom fields.
+    add_action('woocommerce_product_after_variable_attributes', __NAMESPACE__ . '\WooCommerce::woocommerce_product_after_variable_attributes', 10, 3);
+    add_action('woocommerce_save_product_variation', __NAMESPACE__ . '\WooCommerce::woocommerce_save_product_variation', 10, 2);
   }
 
   /**

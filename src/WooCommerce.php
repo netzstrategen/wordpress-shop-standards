@@ -97,4 +97,36 @@ class WooCommerce {
     return 24;
   }
 
+  /**
+   * Creates custom fields for product variations.
+   *
+   * @implements woocommerce_product_after_variable_attributes
+   */
+  public static function woocommerce_product_after_variable_attributes($loop, $variation_id, $variation) {
+    // Insufficient variant images button checkbox.
+    echo '<div style="clear:both">';
+    woocommerce_wp_checkbox([
+      'id' => '_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation->ID,
+      'label' => __('Variation has insufficient images', Plugin::L10N),
+      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation->ID, TRUE),
+      'description' => __('Allows this product to be identified and possibly be excluded by other processes and plugins (e.g. a custom filter for product feeds). Enabling this option has no effect on the output (by default).', Plugin::L10N),
+      'desc_tip' => TRUE,
+    ]);
+    echo '</div>';
+  }
+
+  /**
+   * Saves custom fields for product variations.
+   *
+   * @implements woocommerce_save_product_variation
+   */
+   public static function woocommerce_save_product_variation($post_id, $loop) {
+    if (!isset($_POST['variable_post_id'])) {
+      return;
+    }
+    $variation_id = $_POST['variable_post_id'][$loop];
+    $insufficient_variant_images = isset($_POST['_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id]) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id]) ? 'yes' : 'no';
+    update_post_meta($variation_id, '_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id, $insufficient_variant_images);
+  }
+
 }
