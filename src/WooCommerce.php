@@ -88,4 +88,13 @@ class WooCommerce {
     return $stock;
   }
 
+  /**
+   * Changes number of displayed products.
+   *
+   * @implement loop_shop_per_page
+   */
+  public static function loop_shop_per_page($cols) {
+    return 24;
+  }
+
 }
