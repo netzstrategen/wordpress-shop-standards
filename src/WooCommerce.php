@@ -98,11 +98,75 @@ class WooCommerce {
   }
 
   /**
+   * Displays custom fields for single products.
+   *
+   * @implements woocommerce_product_options_general_product_data
+   */
+  public static function woocommerce_product_options_general_product_data() {
+    // GTIN field.
+    echo '<div class="options_group show_if_simple show_if_external">';
+    woocommerce_wp_text_input([
+      'id' => '_' . Plugin::PREFIX . '_gtin',
+      'label' => __('GTIN', Plugin::L10N),
+      'desc_tip' => 'true',
+      'description' => __('Enter the Global Trade Item Number', Plugin::L10N),
+    ]);
+    echo '</div>';
+    // ERP/Inventory ID field.
+    echo '<div class="options_group show_if_simple show_if_external">';
+    woocommerce_wp_text_input([
+      'id' => '_' . Plugin::PREFIX . '_erp_inventory_id',
+      'label' => __('ERP/Inventory ID', Plugin::L10N),
+    ]);
+    echo '</div>';
+  }
+
+  /**
+   * Saves custom fields for simple products.
+   *
+   * @implements woocommerce_process_product_meta
+   */
+  public static function woocommerce_process_product_meta($post_id) {
+    $custom_fields = [
+      '_' . Plugin::PREFIX . '_gtin',
+      '_' . Plugin::PREFIX . '_erp_inventory_id',
+    ];
+
+    foreach ($custom_fields as $field) {
+      if (isset($_POST[$field])) {
+        if ($field) {
+          update_post_meta($post_id, $field, $_POST[$field]);
+        }
+        else {
+          delete_post_meta($post_id, $field);
+        }
+      }
+    }
+  }
+
+  /**
    * Creates custom fields for product variations.
    *
    * @implements woocommerce_product_after_variable_attributes
    */
   public static function woocommerce_product_after_variable_attributes($loop, $variation_id, $variation) {
+    // Variation GTIN field.
+    echo '<div style="clear:both">';
+    woocommerce_wp_text_input([
+      'id' => '_' . Plugin::PREFIX . '_gtin[' . $loop . ']',
+      'label' => __('GTIN:', Plugin::L10N),
+      'placeholder' => __('Enter the Global Trade Item Number', Plugin::L10N),
+      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_gtin', TRUE),
+    ]);
+    echo '</div>';
+    // Variation ERP/Inventory ID field.
+    echo '<div style="clear:both">';
+    woocommerce_wp_text_input([
+      'id' => '_' . Plugin::PREFIX . '_erp_inventory_id[' . $loop . ']',
+      'label' => __('ERP/Inventory ID:', Plugin::L10N),
+      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_erp_inventory_id', TRUE),
+    ]);
+    echo '</div>';
     // Insufficient variant images button checkbox.
     echo '<div style="clear:both">';
     woocommerce_wp_checkbox([
@@ -125,6 +189,24 @@ class WooCommerce {
       return;
     }
     $variation_id = $_POST['variable_post_id'][$loop];
+
+    // Variation GTIN and ERP/Inventory ID fields.
+    $custom_fields = [
+      '_' . Plugin::PREFIX . '_gtin',
+      '_' . Plugin::PREFIX . '_erp_inventory_id',
+    ];
+    foreach ($custom_fields as $field) {
+      if (isset($_POST[$field]) && isset($_POST[$field][$loop])) {
+        if ($_POST[$field][$loop]) {
+          update_post_meta($variation_id, $field, $_POST[$field][$loop]);
+        }
+        else {
+          delete_post_meta($post_id, $field);
+        }
+      }
+    }
+
+    // Insufficient variant images button checkbox.
     $insufficient_variant_images = isset($_POST['_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id]) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id]) ? 'yes' : 'no';
     update_post_meta($variation_id, '_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id, $insufficient_variant_images);
   }
