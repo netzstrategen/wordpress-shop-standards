@@ -98,6 +98,15 @@ class WooCommerce {
   }
 
   /**
+   * Hides Add to Cart button for products that must not be sold online.
+   */
+  public static function is_purchasable($purchasable, $product) {
+    $product_id = $product->get_id();
+    $hide_add_to_cart = get_post_meta($product_id, '_' . Plugin::PREFIX . '_hide_add_to_cart_button', TRUE);
+    return !wc_string_to_bool($hide_add_to_cart);
+  }
+
+  /**
    * Displays custom fields for single products.
    *
    * @implements woocommerce_product_options_general_product_data
@@ -117,6 +126,13 @@ class WooCommerce {
     woocommerce_wp_text_input([
       'id' => '_' . Plugin::PREFIX . '_erp_inventory_id',
       'label' => __('ERP/Inventory ID', Plugin::L10N),
+    ]);
+    echo '</div>';
+    // Hide add to cart button.
+    echo '<div class="options_group show_if_simple show_if_external">';
+    woocommerce_wp_checkbox([
+      'id' => '_' . Plugin::PREFIX . '_hide_add_to_cart_button',
+      'label' => __('Hide add to cart button', Plugin::L10N),
     ]);
     echo '</div>';
   }
@@ -161,6 +177,11 @@ class WooCommerce {
         }
       }
     }
+
+    // Hide add to cart button.
+    $hide_add_to_cart_index = '_' . Plugin::PREFIX . '_hide_add_to_cart_button';
+    $hide_add_to_cart_value = isset($_POST[$hide_add_to_cart_index]) && wc_string_to_bool($_POST[$hide_add_to_cart_index]) ? 'yes' : 'no';
+    update_post_meta($post_id, $hide_add_to_cart_index, $hide_add_to_cart_value);
   }
 
   /*
@@ -199,6 +220,20 @@ class WooCommerce {
   }
 
   /**
+   * Displays order notice for products that must not be sold online.
+   */
+  public static function woocommerce_single_product_summary() {
+    if (empty(get_field('acf_hide_add_to_cart_product_notice', 'option')) || empty($product = wc_get_product())) {
+      return;
+    }
+    $product_id = $product->get_id();
+
+    if (static::productHasSpecificTaxonomyTerm($product_id, 'product_cat') || static::productHasSpecificTaxonomyTerm($product_id, 'product_brand')) {
+      echo '<div class="info-notice">' . $notice . '</div>';
+    }
+  }
+
+  /**
    * Checks whether a given post has a given term.
    */
   public static function productHasSpecificTaxonomyTerm($post_id, $taxonomy_name) {
@@ -228,6 +263,14 @@ class WooCommerce {
       'id' => '_' . Plugin::PREFIX . '_erp_inventory_id[' . $loop . ']',
       'label' => __('ERP/Inventory ID:', Plugin::L10N),
       'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_erp_inventory_id', TRUE),
+    ]);
+    echo '</div>';
+    // Variation hide add to cart button.
+    echo '<div style="clear:both">';
+    woocommerce_wp_checkbox([
+      'id' => '_' . Plugin::PREFIX . '_hide_add_to_cart_button_' . $variation->ID,
+      'label' => __('Hide add to cart button', Plugin::L10N),
+      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_hide_add_to_cart_button', TRUE),
     ]);
     echo '</div>';
     // Insufficient variant images button checkbox.
@@ -269,7 +312,11 @@ class WooCommerce {
       }
     }
 
-    // Insufficient variant images button checkbox.
+    // Hide add to cart button.
+    $hide_add_to_cart_button = isset($_POST['_' . Plugin::PREFIX . '_hide_add_to_cart_button_' . $variation_id]) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_hide_add_to_cart_button_' . $variation_id]) ? 'yes' : 'no';
+    update_post_meta($variation_id, '_' . Plugin::PREFIX . '_hide_add_to_cart_button', $hide_add_to_cart_button);
+
+    // Insufficient images checkbox.
     $insufficient_variant_images = isset($_POST['_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id]) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id]) ? 'yes' : 'no';
     update_post_meta($variation_id, '_' . Plugin::PREFIX . '_insufficient_variant_images', $insufficient_variant_images);
   }

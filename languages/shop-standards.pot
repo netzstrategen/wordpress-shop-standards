@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-01-07 16:30+0100\n"
+"POT-Creation-Date: 2019-01-15 09:54+0100\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,15 +18,15 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: src/Plugin.php:53 src/Plugin.php:54 src/Plugin.php:111 src/Plugin.php:135
+#: src/Plugin.php:53 src/Plugin.php:54 src/Plugin.php:117 src/Plugin.php:141
 msgid "Hide \"Add to Cart\" button"
 msgstr ""
 
-#: src/Plugin.php:96
+#: src/Plugin.php:102
 msgid "Hide \"Add to Cart\" button for product categories"
 msgstr ""
 
-#: src/Plugin.php:120
+#: src/Plugin.php:126
 msgid "Hide \"Add to Cart\" button for product brands"
 msgstr ""
 
@@ -38,34 +38,38 @@ msgstr ""
 msgid "In stock"
 msgstr ""
 
-#: src/WooCommerce.php:110
+#: src/WooCommerce.php:119
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:112 src/WooCommerce.php:221
+#: src/WooCommerce.php:121 src/WooCommerce.php:256
 msgid "Enter the Global Trade Item Number"
 msgstr ""
 
-#: src/WooCommerce.php:119
+#: src/WooCommerce.php:128
 msgid "ERP/Inventory ID"
 msgstr ""
 
-#: src/WooCommerce.php:136
+#: src/WooCommerce.php:135 src/WooCommerce.php:272
+msgid "Hide add to cart button"
+msgstr ""
+
+#: src/WooCommerce.php:152
 msgid "Product notes"
 msgstr ""
 
-#: src/WooCommerce.php:220
+#: src/WooCommerce.php:255
 msgid "GTIN:"
 msgstr ""
 
-#: src/WooCommerce.php:229
+#: src/WooCommerce.php:264
 msgid "ERP/Inventory ID:"
 msgstr ""
 
-#: src/WooCommerce.php:237
+#: src/WooCommerce.php:280
 msgid "Variation has insufficient images"
 msgstr ""
 
-#: src/WooCommerce.php:239
+#: src/WooCommerce.php:282
 msgid "Allows this product to be identified and possibly be excluded by other processes and plugins (e.g. a custom filter for product feeds). Enabling this option has no effect on the output (by default)."
 msgstr ""

@@ -78,9 +78,15 @@ class Plugin {
     // Changes number of displayed products.
     add_filter('loop_shop_per_page', __NAMESPACE__ . '\WooCommerce::loop_shop_per_page', 20, 1);
 
+    // Hides Add to Cart button for products that must not be sold online.
+    add_filter('woocommerce_is_purchasable', __NAMESPACE__ . '\WooCommerce::is_purchasable', 10, 2);
+
     // Hides 'add to cart' button for products from specific categories or brands.
     add_action('wp_head', __NAMESPACE__ . '\WooCommerce::wp_head');
     add_action('wp', __NAMESPACE__ . '\WooCommerce::wp');
+
+    // Displays order notice for products that must not be sold online.
+    add_action('woocommerce_single_product_summary', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_summary');
 
     // Enqueues plugin scripts.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
