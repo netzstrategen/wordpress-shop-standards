@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2018-12-14 18:32+0100\n"
-"PO-Revision-Date: 2018-12-14 18:33+0100\n"
+"POT-Creation-Date: 2019-01-02 15:59+0100\n"
+"PO-Revision-Date: 2019-01-02 15:59+0100\n"
 "Last-Translator: Joan López <joan@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -21,6 +21,18 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 
+#: src/Plugin.php:53 src/Plugin.php:54 src/Plugin.php:111 src/Plugin.php:135
+msgid "Hide \"Add to Cart\" button"
+msgstr "“In den Warenkorb”-Verhalten"
+
+#: src/Plugin.php:96
+msgid "Hide \"Add to Cart\" button for product categories"
+msgstr "“In den Warenkorb” für Produktkategorien verstecken"
+
+#: src/Plugin.php:120
+msgid "Hide \"Add to Cart\" button for product brands"
+msgstr "“In den Warenkorb” für Produktmarken verstecken"
+
 #: src/WooCommerce.php:80
 msgid "Out of stock"
 msgstr ""
@@ -33,7 +45,7 @@ msgstr ""
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:112 src/WooCommerce.php:158
+#: src/WooCommerce.php:112 src/WooCommerce.php:202
 msgid "Enter the Global Trade Item Number"
 msgstr "Global Trade Item Number eingeben"
 
@@ -41,19 +53,19 @@ msgstr "Global Trade Item Number eingeben"
 msgid "ERP/Inventory ID"
 msgstr "ERP/Inventar ID"
 
-#: src/WooCommerce.php:157
+#: src/WooCommerce.php:201
 msgid "GTIN:"
 msgstr ""
 
-#: src/WooCommerce.php:166
+#: src/WooCommerce.php:210
 msgid "ERP/Inventory ID:"
 msgstr "ERP/Inventar ID:"
 
-#: src/WooCommerce.php:174
+#: src/WooCommerce.php:218
 msgid "Variation has insufficient images"
 msgstr "Variation hat ein unzureichendes Bilder"
 
-#: src/WooCommerce.php:176
+#: src/WooCommerce.php:220
 msgid ""
 "Allows this product to be identified and possibly be excluded by other "
 "processes and plugins (e.g. a custom filter for product feeds). Enabling "

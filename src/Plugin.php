@@ -48,6 +48,15 @@ class Plugin {
    * @implements init
    */
   public static function init() {
+    if (function_exists('register_field_group')) {
+      acf_add_options_sub_page([
+        'page_title' => __('Hide "Add to Cart" button', Plugin::L10N),
+        'menu_title' => __('Hide "Add to Cart" button', Plugin::L10N),
+        'parent_slug' => 'woocommerce',
+      ]);
+      Plugin::register_acf();
+    }
+
     if (is_admin()) {
       return;
     }
@@ -69,8 +78,66 @@ class Plugin {
     // Changes number of displayed products.
     add_filter('loop_shop_per_page', __NAMESPACE__ . '\WooCommerce::loop_shop_per_page', 20, 1);
 
+    // Hides 'add to cart' button for products from specific categories or brands.
+    add_action('wp_head', __NAMESPACE__ . '\WooCommerce::wp_head');
+    add_action('wp', __NAMESPACE__ . '\WooCommerce::wp');
+
     // Enqueues plugin scripts.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
+  }
+
+  /**
+   * Registers ACF Fields.
+   */
+  public static function register_acf() {
+    // Hide 'add to cart' button for selected categories.
+    register_field_group([
+      'key' => 'acf_group_hide_add_to_cart_product_cat',
+      'title' => __('Hide "Add to Cart" button for product categories', Plugin::L10N),
+      'fields' => [[
+        'key' => 'acf_hide_add_to_cart_product_cat',
+        'name' => 'acf_hide_add_to_cart_product_cat',
+        'type' => 'taxonomy',
+        'taxonomy' => 'product_cat',
+        'field_type' => 'multi_select',
+        'allow_null' => 0,
+        'add_term' => 1,
+        'return_format' => 'id',
+        'multiple' => 0,
+      ]],
+      'location' => [[[
+        'param' => 'options_page',
+        'operator' => '==',
+        'value' => 'acf-options-' . sanitize_title(__('Hide "Add to Cart" button', Plugin::L10N)),
+      ]]],
+      'label_placement' => 'top',
+      'instruction_placement' => 'label',
+      'active' => 1,
+    ]);
+    // Hide 'add to cart' button for selected brands.
+    register_field_group([
+      'key' => 'acf_group_hide_add_to_cart_product_brand',
+      'title' => __('Hide "Add to Cart" button for product brands', Plugin::L10N),
+      'fields' => [[
+        'key' => 'acf_hide_add_to_cart_product_brand',
+        'name' => 'acf_hide_add_to_cart_product_brand',
+        'type' => 'taxonomy',
+        'taxonomy' => 'product_brand',
+        'field_type' => 'multi_select',
+        'allow_null' => 0,
+        'add_term' => 1,
+        'return_format' => 'id',
+        'multiple' => 0,
+      ]],
+      'location' => [[[
+        'param' => 'options_page',
+        'operator' => '==',
+        'value' => 'acf-options-' . sanitize_title(__('Hide "Add to Cart" button', Plugin::L10N)),
+      ]]],
+      'label_placement' => 'top',
+      'instruction_placement' => 'label',
+      'active' => 1,
+    ]);
   }
 
   /**

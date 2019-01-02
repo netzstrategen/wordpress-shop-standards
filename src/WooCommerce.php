@@ -144,6 +144,50 @@ class WooCommerce {
     }
   }
 
+  /*
+   * Adds CSS override to wp_head.
+   *
+   * @implements wp_head
+   */
+  public static function wp_head() {
+    global $post;
+    // Hide Add to Cart button for variable products of specific brands.
+    // The button is always visible also if no variant is selected.
+    // If the product has a specific brand, the style gets overridden to hide the button again.
+    if ($post && static::productHasSpecificTaxonomyTerm($post->ID, 'product_brand')) {
+      echo '<style>.single_variation_wrap .variations_button { display: none; }</style>';
+    }
+  }
+
+  /**
+   * Hides 'add to cart' button for products from specific categories or brands.
+   *
+   * @implements wp
+   */
+  public static function wp() {
+    if (!empty($product = wc_get_product())) {
+      if (static::productHasSpecificTaxonomyTerm($product->get_id(), 'product_cat') || static::productHasSpecificTaxonomyTerm($product->get_id(), 'product_brand')) {
+        // If the product is a variation, to preserve the variation dropdown
+        // select, we need to remove the single variation add to cart button.
+        if ($product->is_type('variable')) {
+          remove_action('woocommerce_single_variation', 'woocommerce_single_variation_add_to_cart_button', 20);
+        }
+        else {
+          remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
+        }
+      }
+    }
+  }
+
+  /**
+   * Checks whether a given post has a given term.
+   */
+  public static function productHasSpecificTaxonomyTerm($post_id, $taxonomy_name) {
+    if ($excluded_terms = get_field('acf_hide_add_to_cart_' . $taxonomy_name, 'option')) {
+      return has_term($excluded_terms, $taxonomy_name, $post_id);
+    }
+  }
+
   /**
    * Creates custom fields for product variations.
    *
