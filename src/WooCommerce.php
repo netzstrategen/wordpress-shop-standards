@@ -184,6 +184,21 @@ class WooCommerce {
     update_post_meta($post_id, $hide_add_to_cart_index, $hide_add_to_cart_value);
   }
 
+  /**
+   * Ensures new product are saved before updating its meta data.
+   *
+   * New products are still not saved when updated_post_meta hook is called.
+   * Since we can not check if the meta keys were changed before running
+   * our custom functions (see updateDeliveryTime and updateSalePercentage),
+   * we are forcing the post to be saved before updating the meta keys.
+   *
+   * @implements woocommerce_process_product_meta
+   */
+  public static function saveNewProductBeforeMetaUpdate($post_id) {
+    $product = wc_get_product($post_id);
+    $product->save();
+  }
+
   /*
    * Adds CSS override to wp_head.
    *
@@ -321,6 +336,53 @@ class WooCommerce {
     // Insufficient images checkbox.
     $insufficient_variant_images = isset($_POST['_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id]) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id]) ? 'yes' : 'no';
     update_post_meta($variation_id, '_' . Plugin::PREFIX . '_insufficient_variant_images', $insufficient_variant_images);
+  }
+
+  /**
+   * Sorts products by _sale_percentage.
+   *
+   * @implements woocommerce_get_catalog_ordering_args
+   */
+  public static function woocommerce_get_catalog_ordering_args($args) {
+    $orderby_value = isset($_GET['orderby']) ? wc_clean($_GET['orderby']) : apply_filters('woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby'));
+    if ('sale_percentage' === $orderby_value) {
+      $args['orderby'] = 'meta_value_num';
+      $args['order'] = 'DESC';
+      $args['meta_key'] = '_sale_percentage';
+    }
+    return $args;
+  }
+
+  /**
+   * Adds custom sortby option.
+   *
+   * @implements woocommerce_catalog_orderby
+   * @implements woocommerce_default_catalog_orderby_options
+   */
+  public static function orderbySalePercentage($sortby) {
+    $sortby['sale_percentage'] = __('Sort by discount', 'shop');
+    return $sortby;
+  }
+
+  /**
+   * Changes sale flash label to display sale percentage.
+   *
+   * @implements woocommerce_sale_flash
+   */
+  public static function woocommerce_sale_flash($output, $post, $product) {
+    if ($product->get_type() === 'variation') {
+      $sale_percentage = get_post_meta($product->get_parent_id(), '_sale_percentage', TRUE);
+    }
+    else {
+      $sale_percentage = get_post_meta($product->get_id(), '_sale_percentage', TRUE);
+    }
+    if (((!is_single() && $sale_percentage >= 10) || is_single()) && get_post_meta($product->get_id(), '_custom_hide_sale_percentage_flash_label', TRUE) !== 'yes') {
+      $output = '<span class="onsale" data="' . $sale_percentage . '">-' . $sale_percentage . '%</span>';
+    }
+    else {
+      $output = '';
+    }
+    return $output;
   }
 
 }

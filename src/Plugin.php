@@ -88,6 +88,14 @@ class Plugin {
     // Displays order notice for products that must not be sold online.
     add_action('woocommerce_single_product_summary', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_summary');
 
+    // Sorts products by _sale_percentage.
+    add_filter('woocommerce_get_catalog_ordering_args', __NAMESPACE__ . '\WooCommerce::woocommerce_get_catalog_ordering_args');
+    // Adds custom sort by sale percentage option.
+    add_filter('woocommerce_default_catalog_orderby_options', __NAMESPACE__ . '\WooCommerce::orderbySalePercentage');
+    add_filter('woocommerce_catalog_orderby', __NAMESPACE__ . '\WooCommerce::orderbySalePercentage');
+    // Changes sale flash label to display sale percentage.
+    add_filter('woocommerce_sale_flash', __NAMESPACE__ . '\WooCommerce::woocommerce_sale_flash', 10, 3);
+
     // Enqueues plugin scripts.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
   }
