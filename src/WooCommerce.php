@@ -235,7 +235,7 @@ class WooCommerce {
     woocommerce_wp_checkbox([
       'id' => '_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation->ID,
       'label' => __('Variation has insufficient images', Plugin::L10N),
-      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation->ID, TRUE),
+      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_insufficient_variant_images', TRUE),
       'description' => __('Allows this product to be identified and possibly be excluded by other processes and plugins (e.g. a custom filter for product feeds). Enabling this option has no effect on the output (by default).', Plugin::L10N),
       'desc_tip' => TRUE,
     ]);
@@ -271,7 +271,7 @@ class WooCommerce {
 
     // Insufficient variant images button checkbox.
     $insufficient_variant_images = isset($_POST['_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id]) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id]) ? 'yes' : 'no';
-    update_post_meta($variation_id, '_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id, $insufficient_variant_images);
+    update_post_meta($variation_id, '_' . Plugin::PREFIX . '_insufficient_variant_images', $insufficient_variant_images);
   }
 
 }
