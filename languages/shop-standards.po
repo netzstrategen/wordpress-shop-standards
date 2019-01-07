@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-01-02 15:59+0100\n"
-"PO-Revision-Date: 2019-01-02 15:59+0100\n"
+"POT-Creation-Date: 2019-01-07 16:30+0100\n"
+"PO-Revision-Date: 2019-01-07 16:31+0100\n"
 "Last-Translator: Joan López <joan@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -45,7 +45,7 @@ msgstr ""
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:112 src/WooCommerce.php:202
+#: src/WooCommerce.php:112 src/WooCommerce.php:221
 msgid "Enter the Global Trade Item Number"
 msgstr "Global Trade Item Number eingeben"
 
@@ -53,19 +53,23 @@ msgstr "Global Trade Item Number eingeben"
 msgid "ERP/Inventory ID"
 msgstr "ERP/Inventar ID"
 
-#: src/WooCommerce.php:201
+#: src/WooCommerce.php:136
+msgid "Product notes"
+msgstr "Interne Anmerkungen"
+
+#: src/WooCommerce.php:220
 msgid "GTIN:"
 msgstr ""
 
-#: src/WooCommerce.php:210
+#: src/WooCommerce.php:229
 msgid "ERP/Inventory ID:"
 msgstr "ERP/Inventar ID:"
 
-#: src/WooCommerce.php:218
+#: src/WooCommerce.php:237
 msgid "Variation has insufficient images"
 msgstr "Variation hat ein unzureichendes Bilder"
 
-#: src/WooCommerce.php:220
+#: src/WooCommerce.php:239
 msgid ""
 "Allows this product to be identified and possibly be excluded by other "
 "processes and plugins (e.g. a custom filter for product feeds). Enabling "

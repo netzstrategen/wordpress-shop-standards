@@ -122,6 +122,24 @@ class WooCommerce {
   }
 
   /**
+   * Adds product notes custom field.
+   *
+   * This field will be added as the last field in the product
+   * general options section.
+   *
+   * @implements woocommerce_product_options_general_product_data
+   */
+  public static function productNotesCustomField() {
+    echo '<div class="options_group show_if_simple show_if_variable show_if_external">';
+    woocommerce_wp_textarea_input([
+      'id' => '_' . Plugin::PREFIX . '_product_notes',
+      'label' => __('Product notes', Plugin::L10N),
+      'style' => 'min-height: 120px;',
+    ]);
+    echo '</div>';
+  }
+
+  /**
    * Saves custom fields for simple products.
    *
    * @implements woocommerce_process_product_meta
@@ -130,6 +148,7 @@ class WooCommerce {
     $custom_fields = [
       '_' . Plugin::PREFIX . '_gtin',
       '_' . Plugin::PREFIX . '_erp_inventory_id',
+      '_' . Plugin::PREFIX . '_product_notes',
     ];
 
     foreach ($custom_fields as $field) {

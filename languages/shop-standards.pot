@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-01-02 15:59+0100\n"
+"POT-Creation-Date: 2019-01-07 16:30+0100\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,7 +42,7 @@ msgstr ""
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:112 src/WooCommerce.php:202
+#: src/WooCommerce.php:112 src/WooCommerce.php:221
 msgid "Enter the Global Trade Item Number"
 msgstr ""
 
@@ -50,18 +50,22 @@ msgstr ""
 msgid "ERP/Inventory ID"
 msgstr ""
 
-#: src/WooCommerce.php:201
-msgid "GTIN:"
-msgstr ""
-
-#: src/WooCommerce.php:210
-msgid "ERP/Inventory ID:"
-msgstr ""
-
-#: src/WooCommerce.php:218
-msgid "Variation has insufficient images"
+#: src/WooCommerce.php:136
+msgid "Product notes"
 msgstr ""
 
 #: src/WooCommerce.php:220
+msgid "GTIN:"
+msgstr ""
+
+#: src/WooCommerce.php:229
+msgid "ERP/Inventory ID:"
+msgstr ""
+
+#: src/WooCommerce.php:237
+msgid "Variation has insufficient images"
+msgstr ""
+
+#: src/WooCommerce.php:239
 msgid "Allows this product to be identified and possibly be excluded by other processes and plugins (e.g. a custom filter for product feeds). Enabling this option has no effect on the output (by default)."
 msgstr ""
