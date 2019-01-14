@@ -98,11 +98,13 @@ class Plugin {
   public static function register_acf() {
     // Hide 'add to cart' button for selected categories.
     register_field_group([
-      'key' => 'acf_group_hide_add_to_cart_product_cat',
-      'title' => __('Hide "Add to Cart" button for product categories', Plugin::L10N),
+      'key' => 'acf_group_hide_add_to_cart',
+      'title' => __('Hide "Add to Cart" button', Plugin::L10N),
       'fields' => [[
         'key' => 'acf_hide_add_to_cart_product_cat',
         'name' => 'acf_hide_add_to_cart_product_cat',
+        'label' => __('Product categories', Plugin::L10N),
+        'instructions' => __('"Add to Cart" button will be hidden for the selected categories.', Plugin::L10N),
         'type' => 'taxonomy',
         'taxonomy' => 'product_cat',
         'field_type' => 'multi_select',
@@ -110,23 +112,12 @@ class Plugin {
         'add_term' => 1,
         'return_format' => 'id',
         'multiple' => 0,
-      ]],
-      'location' => [[[
-        'param' => 'options_page',
-        'operator' => '==',
-        'value' => 'acf-options-' . sanitize_title(__('Hide "Add to Cart" button', Plugin::L10N)),
-      ]]],
-      'label_placement' => 'top',
-      'instruction_placement' => 'label',
-      'active' => 1,
-    ]);
-    // Hide 'add to cart' button for selected brands.
-    register_field_group([
-      'key' => 'acf_group_hide_add_to_cart_product_brand',
-      'title' => __('Hide "Add to Cart" button for product brands', Plugin::L10N),
-      'fields' => [[
+      ],
+      [
         'key' => 'acf_hide_add_to_cart_product_brand',
         'name' => 'acf_hide_add_to_cart_product_brand',
+        'label' => __('Product brands', Plugin::L10N),
+        'instructions' => __('"Add to Cart" button will be hidden for the selected brands.', Plugin::L10N),
         'type' => 'taxonomy',
         'taxonomy' => 'product_brand',
         'field_type' => 'multi_select',
@@ -134,6 +125,15 @@ class Plugin {
         'add_term' => 1,
         'return_format' => 'id',
         'multiple' => 0,
+      ],
+      [
+        'key' => 'acf_hide_add_to_cart_product_notice',
+        'name' => 'acf_hide_add_to_cart_product_notice',
+        'label' => __('Notice', Plugin::L10N),
+        'type' => 'textarea',
+        'instructions' => __('Notice to display for products that must not be sold online.', Plugin::L10N),
+        'rows' => 4,
+        'new_lines' => 'wpautop',
       ]],
       'location' => [[[
         'param' => 'options_page',

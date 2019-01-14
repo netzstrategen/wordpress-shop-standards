@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-01-15 09:54+0100\n"
-"PO-Revision-Date: 2019-01-15 09:58+0100\n"
+"POT-Creation-Date: 2019-01-15 10:12+0100\n"
+"PO-Revision-Date: 2019-01-15 10:13+0100\n"
 "Last-Translator: Joan López <joan@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -21,17 +21,38 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 
-#: src/Plugin.php:53 src/Plugin.php:54 src/Plugin.php:117 src/Plugin.php:141
+#: src/Plugin.php:53 src/Plugin.php:54 src/Plugin.php:102 src/Plugin.php:141
 msgid "Hide \"Add to Cart\" button"
 msgstr "“In den Warenkorb”-Verhalten"
 
-#: src/Plugin.php:102
-msgid "Hide \"Add to Cart\" button for product categories"
-msgstr "“In den Warenkorb” für Produktkategorien verstecken"
+#: src/Plugin.php:106
+msgid "Product categories"
+msgstr "Produktkategorien"
 
-#: src/Plugin.php:126
-msgid "Hide \"Add to Cart\" button for product brands"
-msgstr "“In den Warenkorb” für Produktmarken verstecken"
+#: src/Plugin.php:107
+msgid "\"Add to Cart\" button will be hidden for the selected categories."
+msgstr ""
+"Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
+"ausgeblendet."
+
+#: src/Plugin.php:119
+msgid "Product brands"
+msgstr "Produktmarken"
+
+#: src/Plugin.php:120
+msgid "\"Add to Cart\" button will be hidden for the selected brands."
+msgstr ""
+"Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
+"ausgeblendet."
+
+#: src/Plugin.php:132
+msgid "Notice"
+msgstr "Hinweis"
+
+#: src/Plugin.php:134
+msgid "Notice to display for products that must not be sold online."
+msgstr ""
+"Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
 
 #: src/WooCommerce.php:80
 msgid "Out of stock"
@@ -45,35 +66,35 @@ msgstr ""
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:121 src/WooCommerce.php:256
+#: src/WooCommerce.php:121 src/WooCommerce.php:258
 msgid "Enter the Global Trade Item Number"
-msgstr "Global Trade Item Number eingeben"
+msgstr "Geben Sie die Gesamtzahl des Handels ein"
 
 #: src/WooCommerce.php:128
 msgid "ERP/Inventory ID"
 msgstr "ERP/Inventar ID"
 
-#: src/WooCommerce.php:135 src/WooCommerce.php:272
+#: src/WooCommerce.php:135 src/WooCommerce.php:274
 msgid "Hide add to cart button"
 msgstr "Warenkorb-Button verstecken"
 
 #: src/WooCommerce.php:152
 msgid "Product notes"
-msgstr ""
+msgstr "Produktinformationen"
 
-#: src/WooCommerce.php:255
+#: src/WooCommerce.php:257
 msgid "GTIN:"
 msgstr ""
 
-#: src/WooCommerce.php:264
+#: src/WooCommerce.php:266
 msgid "ERP/Inventory ID:"
 msgstr "ERP/Inventar ID:"
 
-#: src/WooCommerce.php:280
+#: src/WooCommerce.php:282
 msgid "Variation has insufficient images"
 msgstr "Variation hat ein unzureichendes Bilder"
 
-#: src/WooCommerce.php:282
+#: src/WooCommerce.php:284
 msgid ""
 "Allows this product to be identified and possibly be excluded by other "
 "processes and plugins (e.g. a custom filter for product feeds). Enabling "

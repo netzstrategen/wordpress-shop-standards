@@ -205,16 +205,18 @@ class WooCommerce {
    * @implements wp
    */
   public static function wp() {
-    if (!empty($product = wc_get_product())) {
-      if (static::productHasSpecificTaxonomyTerm($product->get_id(), 'product_cat') || static::productHasSpecificTaxonomyTerm($product->get_id(), 'product_brand')) {
-        // If the product is a variation, to preserve the variation dropdown
-        // select, we need to remove the single variation add to cart button.
-        if ($product->is_type('variable')) {
-          remove_action('woocommerce_single_variation', 'woocommerce_single_variation_add_to_cart_button', 20);
-        }
-        else {
-          remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
-        }
+    if (empty($product = wc_get_product())) {
+      return;
+    }
+    $product_id = $product->get_id();
+    if (static::productHasSpecificTaxonomyTerm($product_id, 'product_cat') || static::productHasSpecificTaxonomyTerm($product_id, 'product_brand')) {
+      // If the product is a variation, to preserve the variation dropdown
+      // select, we need to remove the single variation add to cart button.
+      if ($product->is_type('variable')) {
+        remove_action('woocommerce_single_variation', 'woocommerce_single_variation_add_to_cart_button', 20);
+      }
+      else {
+        remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
       }
     }
   }
