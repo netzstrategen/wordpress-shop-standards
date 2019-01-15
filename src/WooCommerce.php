@@ -225,7 +225,7 @@ class WooCommerce {
    * Displays order notice for products that must not be sold online.
    */
   public static function woocommerce_single_product_summary() {
-    if (empty(get_field('acf_hide_add_to_cart_product_notice', 'option')) || empty($product = wc_get_product())) {
+    if (empty($notice = get_field('acf_hide_add_to_cart_product_notice', 'option')) || empty($product = wc_get_product())) {
       return;
     }
     $product_id = $product->get_id();
