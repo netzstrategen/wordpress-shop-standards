@@ -149,7 +149,7 @@ class WooCommerce {
     echo '<div class="options_group show_if_simple show_if_variable show_if_external">';
     woocommerce_wp_textarea_input([
       'id' => '_' . Plugin::PREFIX . '_product_notes',
-      'label' => __('Product notes', Plugin::L10N),
+      'label' => __('Internal product notes', Plugin::L10N),
       'style' => 'min-height: 120px;',
     ]);
     echo '</div>';

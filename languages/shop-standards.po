@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-01-15 10:12+0100\n"
-"PO-Revision-Date: 2019-01-15 10:13+0100\n"
+"POT-Creation-Date: 2019-01-15 10:15+0100\n"
+"PO-Revision-Date: 2019-01-15 10:16+0100\n"
 "Last-Translator: Joan López <joan@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -79,8 +79,8 @@ msgid "Hide add to cart button"
 msgstr "Warenkorb-Button verstecken"
 
 #: src/WooCommerce.php:152
-msgid "Product notes"
-msgstr "Produktinformationen"
+msgid "Internal product notes"
+msgstr "Interne Anmerkungen"
 
 #: src/WooCommerce.php:257
 msgid "GTIN:"

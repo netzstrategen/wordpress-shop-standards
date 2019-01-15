@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-01-15 10:12+0100\n"
+"POT-Creation-Date: 2019-01-15 10:15+0100\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,7 +71,7 @@ msgid "Hide add to cart button"
 msgstr ""
 
 #: src/WooCommerce.php:152
-msgid "Product notes"
+msgid "Internal product notes"
 msgstr ""
 
 #: src/WooCommerce.php:257
