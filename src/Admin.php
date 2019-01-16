@@ -83,10 +83,10 @@ class Admin {
   public static function updateSalePercentage($check, $object_id, $meta_key, $meta_value) {
     if ($meta_key === '_regular_price' || $meta_key === '_sale_price') {
       $product = wc_get_product($object_id);
-      if ($product->product_type === 'variation') {
+      if ($product->get_type() === 'variation') {
         static::saveSalePercentage($product->get_parent_id(), $product->parent->post);
       }
-      elseif ($product->product_type === 'simple') {
+      elseif ($product->get_type() === 'simple') {
         static::saveSalePercentage($product->get_id(), $product->post);
       }
     }
