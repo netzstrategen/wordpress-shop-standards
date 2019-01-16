@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: Shop Standards
-  Version: 1.16.0
+  Version: 1.17.0
   Text Domain: shop-standards
   Description: Standard refinements for e-commerce websites.
   Author: netzstrategen
@@ -41,3 +41,7 @@ add_action('plugins_loaded', __NAMESPACE__ . '\Plugin::loadTextdomain');
 add_action('admin_init', __NAMESPACE__ . '\Admin::init');
 add_action('init', __NAMESPACE__ . '\Plugin::preInit', 0);
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
+
+if (defined('WP_CLI') && WP_CLI) {
+  \WP_CLI::add_command('shop-standards', __NAMESPACE__ . '\CliCommand');
+}
