@@ -96,6 +96,9 @@ class Plugin {
     // Changes sale flash label to display sale percentage.
     add_filter('woocommerce_sale_flash', __NAMESPACE__ . '\WooCommerce::woocommerce_sale_flash', 10, 3);
 
+    // Displays sale price as regular price if custom field is checked.
+    add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_price_html', 10, 2);
+
     // Enqueues plugin scripts.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
   }
