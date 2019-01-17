@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-01-15 10:15+0100\n"
-"PO-Revision-Date: 2019-01-15 10:16+0100\n"
+"POT-Creation-Date: 2019-01-17 13:06+0100\n"
+"PO-Revision-Date: 2019-01-17 13:07+0100\n"
 "Last-Translator: Joan López <joan@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
@@ -21,35 +21,35 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 
-#: src/Plugin.php:53 src/Plugin.php:54 src/Plugin.php:102 src/Plugin.php:141
+#: src/Plugin.php:53 src/Plugin.php:54 src/Plugin.php:113 src/Plugin.php:152
 msgid "Hide \"Add to Cart\" button"
 msgstr "“In den Warenkorb”-Verhalten"
 
-#: src/Plugin.php:106
+#: src/Plugin.php:117
 msgid "Product categories"
 msgstr "Produktkategorien"
 
-#: src/Plugin.php:107
+#: src/Plugin.php:118
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
 "ausgeblendet."
 
-#: src/Plugin.php:119
+#: src/Plugin.php:130
 msgid "Product brands"
 msgstr "Produktmarken"
 
-#: src/Plugin.php:120
+#: src/Plugin.php:131
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
 "ausgeblendet."
 
-#: src/Plugin.php:132
+#: src/Plugin.php:143
 msgid "Notice"
 msgstr "Hinweis"
 
-#: src/Plugin.php:134
+#: src/Plugin.php:145
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 "Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
@@ -66,7 +66,7 @@ msgstr ""
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:121 src/WooCommerce.php:258
+#: src/WooCommerce.php:121 src/WooCommerce.php:295
 msgid "Enter the Global Trade Item Number"
 msgstr "Geben Sie die Gesamtzahl des Handels ein"
 
@@ -74,27 +74,43 @@ msgstr "Geben Sie die Gesamtzahl des Handels ein"
 msgid "ERP/Inventory ID"
 msgstr "ERP/Inventar ID"
 
-#: src/WooCommerce.php:135 src/WooCommerce.php:274
+#: src/WooCommerce.php:135
+msgid "Display sale price as normal price"
+msgstr "Reduzierten Preis als normalen Preis anzeigen"
+
+#: src/WooCommerce.php:142
+msgid "Custom price label"
+msgstr "Individuelles Preis-Label anzeigen"
+
+#: src/WooCommerce.php:144
+msgid ""
+"The label will only be displayed if \"Sale price was displayed as regular "
+"price\" setting is checked."
+msgstr ""
+"Das Label wird nur angezeigt, wenn “Sale Preis als regulären Preis anzeigen "
+"aktiviert wurde."
+
+#: src/WooCommerce.php:151 src/WooCommerce.php:311
 msgid "Hide add to cart button"
 msgstr "Warenkorb-Button verstecken"
 
-#: src/WooCommerce.php:152
+#: src/WooCommerce.php:168
 msgid "Internal product notes"
 msgstr "Interne Anmerkungen"
 
-#: src/WooCommerce.php:257
+#: src/WooCommerce.php:294
 msgid "GTIN:"
 msgstr ""
 
-#: src/WooCommerce.php:266
+#: src/WooCommerce.php:303
 msgid "ERP/Inventory ID:"
 msgstr "ERP/Inventar ID:"
 
-#: src/WooCommerce.php:282
+#: src/WooCommerce.php:319
 msgid "Variation has insufficient images"
 msgstr "Variation hat ein unzureichendes Bilder"
 
-#: src/WooCommerce.php:284
+#: src/WooCommerce.php:321
 msgid ""
 "Allows this product to be identified and possibly be excluded by other "
 "processes and plugins (e.g. a custom filter for product feeds). Enabling "
@@ -103,3 +119,14 @@ msgstr ""
 "Markiert diese Variante um sie beispielsweise bei Produkt-Feeds aufgrund "
 "unzureichender Bilder auszuschließen. Das Setzen des Hakens hat keinen "
 "Einfluss auf das Frontend."
+
+#: src/WooCommerce.php:385
+msgid "Sort by discount"
+msgstr ""
+
+#: src/WooCommerce.php:438
+msgid "(Our price)"
+msgstr "(Hauspreis)"
+
+#~ msgid "Display sale price as normal price:"
+#~ msgstr "Reduzierten Preis als normalen Preis anzeigen:"

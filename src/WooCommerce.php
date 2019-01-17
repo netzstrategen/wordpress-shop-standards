@@ -128,6 +128,22 @@ class WooCommerce {
       'label' => __('ERP/Inventory ID', Plugin::L10N),
     ]);
     echo '</div>';
+    // Show `sale price only` checkbox.
+    echo '<div class="options_group">';
+    woocommerce_wp_checkbox([
+      'id' => '_' . Plugin::PREFIX . '_show_sale_price_only',
+      'label' => __('Display sale price as normal price', Plugin::L10N),
+    ]);
+    echo '</div>';
+    // Custom price label
+    echo '<div class="options_group">';
+    woocommerce_wp_text_input([
+      'id' => '_' . Plugin::PREFIX . '_price_label',
+      'label' => __('Custom price label', Plugin::L10N),
+      'desc_tip' => 'true',
+      'description' => __('The label will only be displayed if "Sale price was displayed as regular price" setting is checked.', Plugin::L10N),
+    ]);
+    echo '</div>';
     // Hide add to cart button.
     echo '<div class="options_group show_if_simple show_if_external">';
     woocommerce_wp_checkbox([
@@ -165,6 +181,7 @@ class WooCommerce {
       '_' . Plugin::PREFIX . '_gtin',
       '_' . Plugin::PREFIX . '_erp_inventory_id',
       '_' . Plugin::PREFIX . '_product_notes',
+      '_' . Plugin::PREFIX . '_price_label',
     ];
 
     foreach ($custom_fields as $field) {
@@ -178,10 +195,15 @@ class WooCommerce {
       }
     }
 
-    // Hide add to cart button.
-    $hide_add_to_cart_index = '_' . Plugin::PREFIX . '_hide_add_to_cart_button';
-    $hide_add_to_cart_value = isset($_POST[$hide_add_to_cart_index]) && wc_string_to_bool($_POST[$hide_add_to_cart_index]) ? 'yes' : 'no';
-    update_post_meta($post_id, $hide_add_to_cart_index, $hide_add_to_cart_value);
+    $custom_fields_checkbox = [
+      '_' . Plugin::PREFIX . '_show_sale_price_only',
+      '_' . Plugin::PREFIX . '_hide_add_to_cart_button',
+    ];
+
+    foreach ($custom_fields_checkbox as $field) {
+      $value = isset($_POST[$field]) && wc_string_to_bool($_POST[$field]) ? 'yes' : 'no';
+      update_post_meta($post_id, $field, $value);
+    }
   }
 
   /**
@@ -383,6 +405,40 @@ class WooCommerce {
       $output = '';
     }
     return $output;
+  }
+
+  /**
+   * Displays sale price as regular price if custom field is checked.
+   *
+   * @implements woocommerce_get_price_html
+   */
+  public static function woocommerce_get_price_html($price, $product) {
+    $product_id = $product->get_type() === 'variation' ? $product->get_parent_id() : $product->get_id();
+    if (get_post_meta($product_id, '_' . Plugin::PREFIX . '_show_sale_price_only', TRUE) === 'yes') {
+      if ($product->get_type() === 'variable') {
+        if ($product->get_variation_sale_price() === $product->get_variation_regular_price()) {
+          return $price;
+        }
+        $sale_prices = [
+          'min' => $product->get_variation_price('min', TRUE),
+          'max' => $product->get_variation_price('max', TRUE),
+        ];
+        $sale_price = [wc_price($sale_prices['min'])];
+        if ($sale_prices['min'] !== $sale_prices['max']) {
+          $sale_price[] = wc_price($sale_prices['max']);
+        }
+        $price = implode('-', $sale_price);
+      }
+      else {
+        if (!$product->get_sale_price()) {
+          return $price;
+        }
+        $price = wc_price(wc_get_price_to_display($product)) . $product->get_price_suffix();
+      }
+      $price_label = get_post_meta($product_id, '_' . Plugin::PREFIX . '_price_label', TRUE) ?: __('(Our price)', Plugin::L10N);
+      $price .= ' ' . $price_label;
+    }
+    return $price;
   }
 
 }
