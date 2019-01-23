@@ -60,6 +60,9 @@ class Plugin {
     // Changes sale flash label to display sale percentage, also on instant search results panel.
     add_filter('woocommerce_sale_flash', __NAMESPACE__ . '\WooCommerce::woocommerce_sale_flash', 10, 3);
 
+    // Displays sale price as regular price if custom field is checked.
+    add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_price_html', 10, 2);
+
     if (is_admin()) {
       return;
     }
@@ -96,9 +99,6 @@ class Plugin {
     // Adds custom sort by sale percentage option.
     add_filter('woocommerce_default_catalog_orderby_options', __NAMESPACE__ . '\WooCommerce::orderbySalePercentage');
     add_filter('woocommerce_catalog_orderby', __NAMESPACE__ . '\WooCommerce::orderbySalePercentage');
-
-    // Displays sale price as regular price if custom field is checked.
-    add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_price_html', 10, 2);
 
     // Enqueues plugin scripts.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
