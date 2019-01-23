@@ -435,8 +435,11 @@ class WooCommerce {
         }
         $price = wc_price(wc_get_price_to_display($product)) . $product->get_price_suffix();
       }
-      $price_label = get_post_meta($product_id, '_' . Plugin::PREFIX . '_price_label', TRUE) ?: __('(Our price)', Plugin::L10N);
-      $price .= ' ' . $price_label;
+
+      if (is_product()) {
+        $price_label = get_post_meta($product_id, '_' . Plugin::PREFIX . '_price_label', TRUE) ?: __('(Our price)', Plugin::L10N);
+        $price .= ' ' . $price_label;
+      }
     }
     return $price;
   }
