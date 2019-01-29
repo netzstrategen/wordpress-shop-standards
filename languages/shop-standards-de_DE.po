@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-01-23 15:52+0100\n"
-"PO-Revision-Date: 2019-01-23 15:53+0100\n"
+"POT-Creation-Date: 2019-01-29 20:17+0100\n"
+"PO-Revision-Date: 2019-01-29 20:18+0100\n"
 "Last-Translator: Joan López <joan@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -20,6 +20,28 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-2: node_modules\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
+
+#: src/Admin.php:50
+msgid "Block indexing of products listing pages"
+msgstr ""
+
+#: src/Admin.php:51
+msgid "If checked, noindex meta tags will be added to products listing pages."
+msgstr ""
+
+#: src/Admin.php:54
+msgid "Disable Yoast WP Seo adjacent navigation links"
+msgstr ""
+
+#: src/Admin.php:55
+msgid ""
+"If checked, injecting of rel prev/next links by plugin WordPress SEO by "
+"Yoast will be disabled."
+msgstr ""
+
+#: src/Admin.php:158
+msgid "Shop Standards"
+msgstr ""
 
 #: src/Plugin.php:53 src/Plugin.php:54 src/Plugin.php:114 src/Plugin.php:153
 msgid "Hide \"Add to Cart\" button"
@@ -124,6 +146,14 @@ msgstr ""
 msgid "Sort by discount"
 msgstr ""
 
-#: src/WooCommerce.php:441
+#: src/WooCommerce.php:440
 msgid "(Our price)"
 msgstr "(Online-Preis)"
+
+#: templates/settings.php:7
+msgid "Shop Standards settings"
+msgstr ""
+
+#: templates/settings.php:10
+msgid "SEO related settings"
+msgstr ""

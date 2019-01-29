@@ -70,7 +70,11 @@ class Plugin {
     // Blocks search indexing on search pages.
     add_action('wp_head', __CLASS__ . '::wp_head');
     // Disables Yoast adjacent links.
-    add_filter('wpseo_disable_adjacent_rel_links', '__return_true');
+    add_filter('wpseo_disable_adjacent_rel_links',
+      function () {
+        return get_option(Plugin::L10N . '_disable_wpseo_adjacent_rel_links');
+      }
+    );
 
     // Removes coupon box from checkout.
     remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10);
@@ -164,6 +168,10 @@ class Plugin {
    * @implements wp_head
    */
   public static function wp_head() {
+    if (!get_option(Plugin::L10N . '_set_noindex_products_listings')) {
+      return;
+    }
+
     if (is_search() || preg_match('@/page/\d+@', $_SERVER['REQUEST_URI'])) {
       echo '<meta name="robots" content="noindex">';
     }
@@ -177,6 +185,40 @@ class Plugin {
   public static function wp_enqueue_scripts() {
     $git_version = static::getGitVersion();
     wp_enqueue_script(Plugin::PREFIX, static::getBaseUrl() . '/dist/scripts/main.min.js', ['jquery'], $git_version, TRUE);
+  }
+
+  /**
+   * Renders a given plugin template, optionally overridden by the theme.
+   *
+   * WordPress offers no built-in function to allow plugins to render templates
+   * with custom variables, respecting possibly existing theme template overrides.
+   * Inspired by Drupal (5-7).
+   *
+   * @param array $template_subpathnames
+   *   An prioritized list of template (sub)pathnames within the plugin/theme to
+   *   discover; the first existing wins.
+   * @param array $variables
+   *   An associative array of template variables to provide to the template.
+   *
+   * @throws \InvalidArgumentException
+   *   If none of the $template_subpathnames files exist in the plugin itself.
+   */
+  public static function renderTemplate(array $template_subpathnames, array $variables = []) {
+    $template_pathname = locate_template($template_subpathnames, FALSE, FALSE);
+    extract($variables, EXTR_SKIP | EXTR_REFS);
+    if ($template_pathname !== '') {
+      include $template_pathname;
+    }
+    else {
+      while ($template_pathname = current($template_subpathnames)) {
+        if (file_exists($template_pathname = static::getBasePath() . '/' . $template_pathname)) {
+          include $template_pathname;
+          return;
+        }
+        next($template_subpathnames);
+      }
+      throw new \InvalidArgumentException("Missing template '$template_pathname'");
+    }
   }
 
   /**

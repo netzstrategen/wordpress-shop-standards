@@ -13,6 +13,13 @@ namespace Netzstrategen\ShopStandards;
 class Admin {
 
   /**
+   * Plugin configuration settings.
+   *
+   * @var array
+   */
+  public static $pluginSettings;
+
+  /**
    * Plugin backend initialization method.
    *
    * @implements admin_init
@@ -35,6 +42,25 @@ class Admin {
     // Adds products variations custom fields.
     add_action('woocommerce_product_after_variable_attributes', __NAMESPACE__ . '\WooCommerce::woocommerce_product_after_variable_attributes', 10, 3);
     add_action('woocommerce_save_product_variation', __NAMESPACE__ . '\WooCommerce::woocommerce_save_product_variation', 10, 2);
+
+    // Defines plugin configuration settings.
+    if (!isset(static::$pluginSettings)) {
+      static::$pluginSettings  = [
+        '_set_noindex_products_listings' => [
+          'label' => __('Block indexing of products listing pages', Plugin::L10N),
+          'description' => __('If checked, noindex meta tags will be added to products listing pages.', Plugin::L10N),
+        ],
+        '_disable_wpseo_adjacent_rel_links' => [
+          'label' => __('Disable Yoast WP Seo adjacent navigation links', Plugin::L10N),
+          'description' => __('If checked, injecting of rel prev/next links by plugin WordPress SEO by Yoast will be disabled.', Plugin::L10N),
+        ],
+      ];
+    }
+
+    // Registers plugin settings.
+    foreach (static::$pluginSettings as $key => $setting) {
+      register_setting(Plugin::L10N . '-settings', Plugin::L10N . $key);
+    }
   }
 
   /**
@@ -122,6 +148,23 @@ class Admin {
       }
       update_post_meta($post_id, '_sale_percentage', $sale_percentage);
     }
+  }
+
+  /**
+   * Adds a plugin settings option to the admin menu.
+   *
+   * @implements admin_menu
+   */
+  public static function admin_menu() {
+    $title = __('Shop Standards', Plugin::L10N);
+    add_submenu_page('options-general.php', $title, $title, 'manage_options', Plugin::L10N . '-settings', [__CLASS__, 'renderSettings']);
+  }
+
+  /**
+   * Renders the plugin settings form.
+   */
+  public static function renderSettings() {
+    Plugin::renderTemplate(['templates/settings.php']);
   }
 
 }
