@@ -84,10 +84,11 @@ class Admin {
     if ($meta_key === '_regular_price' || $meta_key === '_sale_price') {
       $product = wc_get_product($object_id);
       if ($product->get_type() === 'variation') {
-        static::saveSalePercentage($product->get_parent_id(), $product->parent->post);
+        $parent_id = $product->get_parent_id();
+        static::saveSalePercentage($parent_id, get_post($parent_id));
       }
       elseif ($product->get_type() === 'simple') {
-        static::saveSalePercentage($product->get_id(), $product->post);
+        static::saveSalePercentage($object_id, get_post($object_id));
       }
     }
   }
