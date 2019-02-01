@@ -45,22 +45,33 @@ class Admin {
 
     // Defines plugin configuration settings.
     if (!isset(static::$pluginSettings)) {
-      static::$pluginSettings  = [
-        '_set_noindex_products_listings' => [
-          'label' => __('Block indexing of products listing pages', Plugin::L10N),
-          'description' => __('If checked, noindex meta tags will be added to products listing pages.', Plugin::L10N),
+      static::$pluginSettings = [
+        [
+          'name' => __('Shop Standards SEO settings', Plugin::L10N),
+          'type' => 'title',
         ],
-        '_disable_wpseo_adjacent_rel_links' => [
-          'label' => __('Disable Yoast WP Seo adjacent navigation links', Plugin::L10N),
-          'description' => __('If checked, injecting of rel prev/next links by plugin WordPress SEO by Yoast will be disabled.', Plugin::L10N),
+        [
+          'id' => '_robots_noindex_secondary_product_listings',
+          'type' => 'checkbox',
+          'name' => __('Index only first page of paginated products listings', Plugin::L10N),
+          'desc_tip' => __('If checked, noindex meta tag will be added to paginated products listing pages, starting from the second page.', Plugin::L10N),
+        ],
+        [
+          'id' => '_wpseo_disable_adjacent_rel_links',
+          'type' => 'checkbox',
+          'name' => __('Disable Yoast WP Seo adjacent navigation links', Plugin::L10N),
+          'desc_tip' => __('Avoids unwanted rankings of search result URLs as well as paginated listing pages in case the shop\'s product listing is using infinite scrolling or lazy loading to display further products without pagination links.', Plugin::L10N),
+        ],
+        [
+          'id' => Plugin::L10N,
+          'type' => 'sectionend',
         ],
       ];
     }
 
-    // Registers plugin settings.
-    foreach (static::$pluginSettings as $key => $setting) {
-      register_setting(Plugin::L10N . '-settings', Plugin::L10N . $key);
-    }
+    // Adds plugin configuration section to WooCommerce products settings section.
+    add_filter('woocommerce_get_sections_products', __CLASS__ . '::woocommerce_get_sections_products');
+    add_filter( 'woocommerce_get_settings_products', __CLASS__ . '::woocommerce_get_settings_products', 10, 2 );
   }
 
   /**
@@ -151,20 +162,26 @@ class Admin {
   }
 
   /**
-   * Adds a plugin settings option to the admin menu.
+   * Adds a settings section to WooCommerce products settings tab.
    *
-   * @implements admin_menu
+   * @implements woocommerce_get_sections_products
    */
-  public static function admin_menu() {
-    $title = __('Shop Standards', Plugin::L10N);
-    add_submenu_page('options-general.php', $title, $title, 'manage_options', Plugin::L10N . '-settings', [__CLASS__, 'renderSettings']);
+  public static function woocommerce_get_sections_products($sections) {
+    $sections[Plugin::L10N] = __('Shop Standards', Plugin::L10N);
+    return $sections;
   }
 
   /**
-   * Renders the plugin settings form.
+   * Adds settings fields to corresponding WooCommerce settings section.
+   *
+   * @implements woocommerce_get_settings_products
    */
-  public static function renderSettings() {
-    Plugin::renderTemplate(['templates/settings.php']);
+  public static function woocommerce_get_settings_products($settings, $current_section) {
+    if ($current_section === Plugin::L10N) {
+      return static::$pluginSettings;
+    }
+
+    return $settings;
   }
 
 }

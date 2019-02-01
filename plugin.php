@@ -38,7 +38,6 @@ register_deactivation_hook(__FILE__, __NAMESPACE__ . '\Schema::deactivate');
 register_uninstall_hook(__FILE__, __NAMESPACE__ . '\Schema::uninstall');
 
 add_action('plugins_loaded', __NAMESPACE__ . '\Plugin::loadTextdomain');
-add_action('admin_menu', __NAMESPACE__ . '\Admin::admin_menu');
 add_action('admin_init', __NAMESPACE__ . '\Admin::init');
 add_action('init', __NAMESPACE__ . '\Plugin::preInit', 0);
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);

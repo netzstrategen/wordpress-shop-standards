@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-01-29 20:17+0100\n"
-"PO-Revision-Date: 2019-01-29 20:18+0100\n"
+"POT-Creation-Date: 2019-02-01 11:30+0100\n"
+"PO-Revision-Date: 2019-02-01 11:32+0100\n"
 "Last-Translator: Joan López <joan@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -22,11 +22,13 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 
 #: src/Admin.php:50
-msgid "Block indexing of products listing pages"
+msgid "Index only first page of paginated products listings"
 msgstr ""
 
 #: src/Admin.php:51
-msgid "If checked, noindex meta tags will be added to products listing pages."
+msgid ""
+"If checked, noindex meta tag will be added to paginated products listing "
+"pages, starting from the second page."
 msgstr ""
 
 #: src/Admin.php:54
@@ -43,35 +45,35 @@ msgstr ""
 msgid "Shop Standards"
 msgstr ""
 
-#: src/Plugin.php:53 src/Plugin.php:54 src/Plugin.php:114 src/Plugin.php:153
+#: src/Plugin.php:53 src/Plugin.php:54 src/Plugin.php:118 src/Plugin.php:157
 msgid "Hide \"Add to Cart\" button"
 msgstr "“In den Warenkorb”-Verhalten"
 
-#: src/Plugin.php:118
+#: src/Plugin.php:122
 msgid "Product categories"
 msgstr "Produktkategorien"
 
-#: src/Plugin.php:119
+#: src/Plugin.php:123
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
 "ausgeblendet."
 
-#: src/Plugin.php:131
+#: src/Plugin.php:135
 msgid "Product brands"
 msgstr "Produktmarken"
 
-#: src/Plugin.php:132
+#: src/Plugin.php:136
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
 "ausgeblendet."
 
-#: src/Plugin.php:144
+#: src/Plugin.php:148
 msgid "Notice"
 msgstr "Hinweis"
 
-#: src/Plugin.php:146
+#: src/Plugin.php:150
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 "Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
