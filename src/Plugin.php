@@ -70,11 +70,7 @@ class Plugin {
     // Blocks search indexing on search pages.
     add_action('wp_head', __CLASS__ . '::wp_head');
     // Disables Yoast adjacent links.
-    add_filter('wpseo_disable_adjacent_rel_links',
-      function () {
-        return get_option(Plugin::L10N . '_wpseo_disable_adjacent_rel_links');
-      }
-    );
+    add_filter('wpseo_disable_adjacent_rel_links', __CLASS__ . '::wpseo_disable_adjacent_rel_links');
 
     // Removes coupon box from checkout.
     remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10);
@@ -168,12 +164,20 @@ class Plugin {
    * @implements wp_head
    */
   public static function wp_head() {
-    $is_paginated = preg_match('@/page/(\d+)@', $_SERVER['REQUEST_URI'], $matches);
     $noindex_second_page = get_option(Plugin::L10N . '_robots_noindex_secondary_product_listings');
 
-    if (is_search() || ($is_paginated && $noindex_second_page && (int) $matches[1] > 1)) {
+    if (is_search() || (is_paged() && $noindex_second_page)) {
       echo '<meta name="robots" content="noindex">';
     }
+  }
+
+  /**
+   * Disables Yoast adjacent links.
+   *
+   * @implements wpseo_disable_adjacent_rel_links
+   */
+  public static function wpseo_disable_adjacent_rel_links() {
+    return get_option(Plugin::L10N . '_wpseo_disable_adjacent_rel_links');
   }
 
   /**

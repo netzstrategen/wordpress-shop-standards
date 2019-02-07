@@ -53,13 +53,13 @@ class Admin {
         [
           'id' => '_robots_noindex_secondary_product_listings',
           'type' => 'checkbox',
-          'name' => __('Index only first page of paginated products listings', Plugin::L10N),
+          'name' => __('Index first page of paginated products listings only', Plugin::L10N),
           'desc_tip' => __('If checked, noindex meta tag will be added to paginated products listing pages, starting from the second page.', Plugin::L10N),
         ],
         [
           'id' => '_wpseo_disable_adjacent_rel_links',
           'type' => 'checkbox',
-          'name' => __('Disable Yoast WP Seo adjacent navigation links', Plugin::L10N),
+          'name' => __('Disable Yoast SEO adjacent navigation links.', Plugin::L10N),
           'desc_tip' => __('Avoids unwanted rankings of search result URLs as well as paginated listing pages in case the shop\'s product listing is using infinite scrolling or lazy loading to display further products without pagination links.', Plugin::L10N),
         ],
         [
@@ -71,7 +71,7 @@ class Admin {
 
     // Adds plugin configuration section to WooCommerce products settings section.
     add_filter('woocommerce_get_sections_products', __CLASS__ . '::woocommerce_get_sections_products');
-    add_filter( 'woocommerce_get_settings_products', __CLASS__ . '::woocommerce_get_settings_products', 10, 2 );
+    add_filter('woocommerce_get_settings_products', __CLASS__ . '::woocommerce_get_settings_products', 10, 2);
   }
 
   /**
@@ -162,7 +162,7 @@ class Admin {
   }
 
   /**
-   * Adds a settings section to WooCommerce products settings tab.
+   * Adds a settings section to the WooCommerce products settings tab.
    *
    * @implements woocommerce_get_sections_products
    */
