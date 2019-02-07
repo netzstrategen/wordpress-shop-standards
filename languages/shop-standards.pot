@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-01-17 13:06+0100\n"
+"POT-Creation-Date: 2019-02-07 11:02+0100\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,31 +18,55 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: src/Plugin.php:53 src/Plugin.php:54 src/Plugin.php:113 src/Plugin.php:152
+#: src/Admin.php:50
+msgid "Shop Standards SEO settings"
+msgstr ""
+
+#: src/Admin.php:56
+msgid "Index first page of paginated products listings only"
+msgstr ""
+
+#: src/Admin.php:57
+msgid "If checked, noindex meta tag will be added to paginated products listing pages, starting from the second page."
+msgstr ""
+
+#: src/Admin.php:62
+msgid "Disable Yoast SEO adjacent navigation links."
+msgstr ""
+
+#: src/Admin.php:63
+msgid "Avoids unwanted rankings of search result URLs as well as paginated listing pages in case the shop's product listing is using infinite scrolling or lazy loading to display further products without pagination links."
+msgstr ""
+
+#: src/Admin.php:170
+msgid "Shop Standards"
+msgstr ""
+
+#: src/Plugin.php:53 src/Plugin.php:54 src/Plugin.php:114 src/Plugin.php:153
 msgid "Hide \"Add to Cart\" button"
 msgstr ""
 
-#: src/Plugin.php:117
+#: src/Plugin.php:118
 msgid "Product categories"
 msgstr ""
 
-#: src/Plugin.php:118
+#: src/Plugin.php:119
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 
-#: src/Plugin.php:130
+#: src/Plugin.php:131
 msgid "Product brands"
 msgstr ""
 
-#: src/Plugin.php:131
+#: src/Plugin.php:132
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 
-#: src/Plugin.php:143
+#: src/Plugin.php:144
 msgid "Notice"
 msgstr ""
 
-#: src/Plugin.php:145
+#: src/Plugin.php:146
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 
@@ -106,6 +130,6 @@ msgstr ""
 msgid "Sort by discount"
 msgstr ""
 
-#: src/WooCommerce.php:438
+#: src/WooCommerce.php:440
 msgid "(Our price)"
 msgstr ""

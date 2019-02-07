@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-01-23 15:52+0100\n"
-"PO-Revision-Date: 2019-01-23 15:53+0100\n"
+"POT-Creation-Date: 2019-02-07 11:02+0100\n"
+"PO-Revision-Date: 2019-02-07 11:05+0100\n"
 "Last-Translator: Joan López <joan@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -15,11 +15,39 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
-"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;"
-"esc_html_x:1,2c\n"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPathExcluded-2: node_modules\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
+
+#: src/Admin.php:50
+msgid "Shop Standards SEO settings"
+msgstr ""
+
+#: src/Admin.php:56
+msgid "Index first page of paginated products listings only"
+msgstr ""
+
+#: src/Admin.php:57
+msgid ""
+"If checked, noindex meta tag will be added to paginated products listing "
+"pages, starting from the second page."
+msgstr ""
+
+#: src/Admin.php:62
+msgid "Disable Yoast SEO adjacent navigation links."
+msgstr ""
+
+#: src/Admin.php:63
+msgid ""
+"Avoids unwanted rankings of search result URLs as well as paginated listing "
+"pages in case the shop's product listing is using infinite scrolling or lazy "
+"loading to display further products without pagination links."
+msgstr ""
+
+#: src/Admin.php:170
+msgid "Shop Standards"
+msgstr ""
 
 #: src/Plugin.php:53 src/Plugin.php:54 src/Plugin.php:114 src/Plugin.php:153
 msgid "Hide \"Add to Cart\" button"
@@ -124,6 +152,6 @@ msgstr ""
 msgid "Sort by discount"
 msgstr ""
 
-#: src/WooCommerce.php:441
+#: src/WooCommerce.php:440
 msgid "(Our price)"
 msgstr "(Online-Preis)"

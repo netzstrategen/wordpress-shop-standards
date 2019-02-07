@@ -13,6 +13,13 @@ namespace Netzstrategen\ShopStandards;
 class Admin {
 
   /**
+   * Plugin configuration settings.
+   *
+   * @var array
+   */
+  public static $pluginSettings;
+
+  /**
    * Plugin backend initialization method.
    *
    * @implements admin_init
@@ -35,6 +42,36 @@ class Admin {
     // Adds products variations custom fields.
     add_action('woocommerce_product_after_variable_attributes', __NAMESPACE__ . '\WooCommerce::woocommerce_product_after_variable_attributes', 10, 3);
     add_action('woocommerce_save_product_variation', __NAMESPACE__ . '\WooCommerce::woocommerce_save_product_variation', 10, 2);
+
+    // Defines plugin configuration settings.
+    if (!isset(static::$pluginSettings)) {
+      static::$pluginSettings = [
+        [
+          'name' => __('Shop Standards SEO settings', Plugin::L10N),
+          'type' => 'title',
+        ],
+        [
+          'id' => '_robots_noindex_secondary_product_listings',
+          'type' => 'checkbox',
+          'name' => __('Index first page of paginated products listings only', Plugin::L10N),
+          'desc_tip' => __('If checked, noindex meta tag will be added to paginated products listing pages, starting from the second page.', Plugin::L10N),
+        ],
+        [
+          'id' => '_wpseo_disable_adjacent_rel_links',
+          'type' => 'checkbox',
+          'name' => __('Disable Yoast SEO adjacent navigation links.', Plugin::L10N),
+          'desc_tip' => __('Avoids unwanted rankings of search result URLs as well as paginated listing pages in case the shop\'s product listing is using infinite scrolling or lazy loading to display further products without pagination links.', Plugin::L10N),
+        ],
+        [
+          'id' => Plugin::L10N,
+          'type' => 'sectionend',
+        ],
+      ];
+    }
+
+    // Adds plugin configuration section to WooCommerce products settings section.
+    add_filter('woocommerce_get_sections_products', __CLASS__ . '::woocommerce_get_sections_products');
+    add_filter('woocommerce_get_settings_products', __CLASS__ . '::woocommerce_get_settings_products', 10, 2);
   }
 
   /**
@@ -122,6 +159,29 @@ class Admin {
       }
       update_post_meta($post_id, '_sale_percentage', $sale_percentage);
     }
+  }
+
+  /**
+   * Adds a settings section to the WooCommerce products settings tab.
+   *
+   * @implements woocommerce_get_sections_products
+   */
+  public static function woocommerce_get_sections_products($sections) {
+    $sections[Plugin::L10N] = __('Shop Standards', Plugin::L10N);
+    return $sections;
+  }
+
+  /**
+   * Adds settings fields to corresponding WooCommerce settings section.
+   *
+   * @implements woocommerce_get_settings_products
+   */
+  public static function woocommerce_get_settings_products($settings, $current_section) {
+    if ($current_section === Plugin::L10N) {
+      return static::$pluginSettings;
+    }
+
+    return $settings;
   }
 
 }
