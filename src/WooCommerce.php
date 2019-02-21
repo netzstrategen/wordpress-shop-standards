@@ -481,7 +481,7 @@ class WooCommerce {
     return $html;
   }
 
-   /**
+  /**
    * Retrieves basic data (SKU, dimensions and weight) for a given product.
    *
    * @param WC_Product $product
@@ -491,19 +491,29 @@ class WooCommerce {
    *   Set of product data including weight, dimensions and SKU.
    */
   public static function getProductData(\WC_Product $product) {
-    $productData = [];
+    $product_data = [];
+    $product_data_label = [];
+    $product_data_value = [];
 
     // Adds sku to the cart item data.
     if ($sku = $product->get_sku()) {
-      $productData[] = [
-        'name' => __('SKU', 'woocommerce'),
-        'value' => $sku,
+      $product_data_label[] = __('SKU', 'woocommerce');
+      $product_data_value[] = $sku;
+    }
+    if ($erp_id = get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_erp_inventory_id', TRUE)) {
+      $product_data_label[] = __('ERP/ID', Plugin::L10N);
+      $product_data_value[] = $erp_id;
+    }
+    if ($product_data_value) {
+      $product_data[] = [
+        'name' => implode(' | ', $product_data_label),
+        'value' => implode(' | ', $product_data_value),
       ];
     }
 
     // Adds dimensions to the cart item data.
     if ($dimensions_value = array_filter($product->get_dimensions(FALSE))) {
-      $productData[] = [
+      $product_data[] = [
         'name' => __('Dimensions', 'woocommerce'),
         'value' => wc_format_dimensions($dimensions_value),
       ];
@@ -511,21 +521,13 @@ class WooCommerce {
 
     // Adds weight to the cart item data.
     if ($weight_value = $product->get_weight()) {
-      $productData[] = [
+      $product_data[] = [
         'name' => __('Weight', 'woocommerce'),
         'value' => $weight_value . ' kg',
       ];
     }
 
-    // Adds ERP/ID to the cart item data.
-    if ($erp_id = get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_erp_inventory_id', TRUE)) {
-      $productData[] = [
-        'name' => __('ERP/ID', Plugin::L10N),
-        'value' => $erp_id,
-      ];
-    }
-
-    return $productData;
+    return apply_filters(Plugin::PREFIX . '_product_data', $product_data);
   }
 
   /**
