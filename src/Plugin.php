@@ -100,6 +100,12 @@ class Plugin {
     add_filter('woocommerce_default_catalog_orderby_options', __NAMESPACE__ . '\WooCommerce::orderbySalePercentage');
     add_filter('woocommerce_catalog_orderby', __NAMESPACE__ . '\WooCommerce::orderbySalePercentage');
 
+    // Adds basic information (e.g. weight, SKU, etc.) and product attributes to cart item data.
+    add_action('woocommerce_get_item_data', __NAMESPACE__ . '\WooCommerce::woocommerce_get_item_data', 10, 2);
+
+    // Adds product attributes to order emails.
+    add_filter('woocommerce_display_item_meta', __NAMESPACE__ . '\WooCommerce::woocommerce_display_item_meta', 10, 3);
+
     // Enqueues plugin scripts.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
   }
