@@ -100,7 +100,7 @@ class Plugin {
     add_filter('woocommerce_default_catalog_orderby_options', __NAMESPACE__ . '\WooCommerce::orderbySalePercentage');
     add_filter('woocommerce_catalog_orderby', __NAMESPACE__ . '\WooCommerce::orderbySalePercentage');
 
-    // Adds basic information (e.g. wight, sku, etc.) and product attributes to cart item data.
+    // Adds basic information (e.g. weight, SKU, etc.) and product attributes to cart item data.
     add_action('woocommerce_get_item_data', __NAMESPACE__ . '\WooCommerce::woocommerce_get_item_data', 10, 2);
 
     // Adds product attributes to order emails.
