@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-02-20 16:29+0100\n"
-"PO-Revision-Date: 2019-02-20 16:31+0100\n"
+"POT-Creation-Date: 2019-03-04 16:44+0100\n"
+"PO-Revision-Date: 2019-03-04 16:44+0100\n"
 "Last-Translator: Luca Pipolo <luca@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -94,7 +94,7 @@ msgstr ""
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:121 src/WooCommerce.php:295
+#: src/WooCommerce.php:121 src/WooCommerce.php:303
 msgid "Enter the Global Trade Item Number"
 msgstr "Geben Sie die Gesamtzahl des Handels ein"
 
@@ -118,27 +118,31 @@ msgstr ""
 "Das Label wird nur angezeigt, wenn “Sale Preis als regulären Preis anzeigen "
 "aktiviert wurde."
 
-#: src/WooCommerce.php:151 src/WooCommerce.php:311
+#: src/WooCommerce.php:151 src/WooCommerce.php:319
 msgid "Hide add to cart button"
 msgstr "Warenkorb-Button verstecken"
 
-#: src/WooCommerce.php:168
+#: src/WooCommerce.php:158 src/WooCommerce.php:337
+msgid "Price comparison focus product"
+msgstr "Preisbeobachtung Fokus-Produkt"
+
+#: src/WooCommerce.php:175
 msgid "Internal product notes"
 msgstr "Interne Anmerkungen"
 
-#: src/WooCommerce.php:294
+#: src/WooCommerce.php:302
 msgid "GTIN:"
 msgstr ""
 
-#: src/WooCommerce.php:303
+#: src/WooCommerce.php:311
 msgid "ERP/Inventory ID:"
 msgstr "ERP/Inventar ID:"
 
-#: src/WooCommerce.php:319
+#: src/WooCommerce.php:327
 msgid "Variation has insufficient images"
 msgstr "Variation hat ein unzureichendes Bilder"
 
-#: src/WooCommerce.php:321
+#: src/WooCommerce.php:329
 msgid ""
 "Allows this product to be identified and possibly be excluded by other "
 "processes and plugins (e.g. a custom filter for product feeds). Enabling "
@@ -148,30 +152,30 @@ msgstr ""
 "unzureichender Bilder auszuschließen. Das Setzen des Hakens hat keinen "
 "Einfluss auf das Frontend."
 
-#: src/WooCommerce.php:385
+#: src/WooCommerce.php:405
 msgid "Sort by discount"
 msgstr ""
 
-#: src/WooCommerce.php:440
+#: src/WooCommerce.php:460
 msgid "(Our price)"
 msgstr "(Online-Preis)"
 
-#: src/WooCommerce.php:499
+#: src/WooCommerce.php:520
 msgid "SKU"
 msgstr ""
 
-#: src/WooCommerce.php:507
-msgid "Dimensions"
-msgstr ""
-
-#: src/WooCommerce.php:515
-msgid "Weight"
-msgstr ""
-
-#: src/WooCommerce.php:523
+#: src/WooCommerce.php:524
 msgid "ERP/ID"
 msgstr ""
 
-#: src/WooCommerce.php:559
+#: src/WooCommerce.php:537
+msgid "Dimensions"
+msgstr ""
+
+#: src/WooCommerce.php:545
+msgid "Weight"
+msgstr ""
+
+#: src/WooCommerce.php:581
 msgid "Product "
 msgstr "Produkt "
