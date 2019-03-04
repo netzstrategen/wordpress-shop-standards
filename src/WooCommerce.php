@@ -151,6 +151,13 @@ class WooCommerce {
       'label' => __('Hide add to cart button', Plugin::L10N),
     ]);
     echo '</div>';
+    // Price comparison focus product.
+    echo '<div class="options_group">';
+    woocommerce_wp_checkbox([
+      'id' => '_' . Plugin::PREFIX . '_price_comparison_focus',
+      'label' => __('Price comparison focus product', Plugin::L10N),
+    ]);
+    echo '</div>';
   }
 
   /**
@@ -198,6 +205,7 @@ class WooCommerce {
     $custom_fields_checkbox = [
       '_' . Plugin::PREFIX . '_show_sale_price_only',
       '_' . Plugin::PREFIX . '_hide_add_to_cart_button',
+      '_' . Plugin::PREFIX . '_price_comparison_focus',
     ];
 
     foreach ($custom_fields_checkbox as $field) {
@@ -322,6 +330,14 @@ class WooCommerce {
       'desc_tip' => TRUE,
     ]);
     echo '</div>';
+    // Price comparison focus product.
+    echo '<div style="clear:both">';
+    woocommerce_wp_checkbox([
+      'id' => '_' . Plugin::PREFIX . '_price_comparison_focus',
+      'label' => __('Price comparison focus product', Plugin::L10N),
+      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_price_comparison_focus', TRUE),
+    ]);
+    echo '</div>';
   }
 
   /**
@@ -358,6 +374,10 @@ class WooCommerce {
     // Insufficient images checkbox.
     $insufficient_variant_images = isset($_POST['_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id]) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id]) ? 'yes' : 'no';
     update_post_meta($variation_id, '_' . Plugin::PREFIX . '_insufficient_variant_images', $insufficient_variant_images);
+
+    // Price comparison focus product.
+    $price_comparison_focus = isset($_POST['_' . Plugin::PREFIX . '_price_comparison_focus']) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_price_comparison_focus']) ? 'yes' : 'no';
+    update_post_meta($variation_id, '_' . Plugin::PREFIX . '_price_comparison_focus', $price_comparison_focus);
   }
 
   /**
