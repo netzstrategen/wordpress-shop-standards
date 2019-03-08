@@ -193,7 +193,7 @@ class WooCommerce {
 
     foreach ($custom_fields as $field) {
       if (isset($_POST[$field])) {
-        if ($field) {
+        if (!is_array($_POST[$field]) && $_POST[$field]) {
           update_post_meta($post_id, $field, $_POST[$field]);
         }
         else {
@@ -209,7 +209,7 @@ class WooCommerce {
     ];
 
     foreach ($custom_fields_checkbox as $field) {
-      $value = isset($_POST[$field]) && wc_string_to_bool($_POST[$field]) ? 'yes' : 'no';
+      $value = isset($_POST[$field]) && !is_array($_POST[$field]) && wc_string_to_bool($_POST[$field]) ? 'yes' : 'no';
       update_post_meta($post_id, $field, $value);
     }
   }
@@ -362,7 +362,7 @@ class WooCommerce {
           update_post_meta($variation_id, $field, $_POST[$field][$loop]);
         }
         else {
-          delete_post_meta($post_id, $field);
+          delete_post_meta($variation_id, $field);
         }
       }
     }
