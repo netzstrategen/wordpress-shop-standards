@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-03-04 16:44+0100\n"
-"PO-Revision-Date: 2019-03-04 16:44+0100\n"
+"POT-Creation-Date: 2019-03-18 12:40+0100\n"
+"PO-Revision-Date: 2019-03-18 12:41+0100\n"
 "Last-Translator: Luca Pipolo <luca@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
@@ -154,7 +154,7 @@ msgstr ""
 
 #: src/WooCommerce.php:405
 msgid "Sort by discount"
-msgstr ""
+msgstr "Sortieren nach Rabatt"
 
 #: src/WooCommerce.php:460
 msgid "(Our price)"

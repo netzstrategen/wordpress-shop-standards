@@ -402,7 +402,7 @@ class WooCommerce {
    * @implements woocommerce_default_catalog_orderby_options
    */
   public static function orderbySalePercentage($sortby) {
-    $sortby['sale_percentage'] = __('Sort by discount', 'shop');
+    $sortby['sale_percentage'] = __('Sort by discount', 'shop-standards');
     return $sortby;
   }
 
