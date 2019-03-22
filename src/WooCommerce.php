@@ -566,8 +566,14 @@ class WooCommerce {
     if ($parent_id = $product->get_parent_id()) {
       $product = wc_get_product($parent_id);
     }
+    $variation_attributes = $product->get_variation_attributes();
     $attributes = $product->get_attributes();
-    foreach ($attributes as $attribute) {
+
+    foreach ($attributes as $key => $attribute) {
+      // Skips variation selected attributes to avoid displaying duplicates.
+      if (isset($variation_attributes[$key])) {
+        continue;
+      }
       if ($attribute['is_taxonomy'] && $attribute['is_visible'] === 1) {
         $terms = wp_get_post_terms($product->get_id(), $attribute['name'], 'all');
         if (empty($terms)) {
@@ -589,5 +595,6 @@ class WooCommerce {
     }
     return $data;
   }
+
 
 }
