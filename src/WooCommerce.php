@@ -596,5 +596,4 @@ class WooCommerce {
     return $data;
   }
 
-
 }
