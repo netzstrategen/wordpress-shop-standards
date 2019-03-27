@@ -566,7 +566,13 @@ class WooCommerce {
     if ($parent_id = $product->get_parent_id()) {
       $product = wc_get_product($parent_id);
     }
-    $variation_attributes = $product->get_variation_attributes();
+
+    if ($product->get_type() === 'variable') {
+      $variation_attributes = $product->get_variation_attributes();
+    }
+    else {
+      $variation_attributes = [];
+    }
     $attributes = $product->get_attributes();
 
     foreach ($attributes as $key => $attribute) {
