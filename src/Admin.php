@@ -25,23 +25,13 @@ class Admin {
    * @implements admin_init
    */
   public static function init() {
-    // Ensures new product are saved before updating its meta data.
-    add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\WooCommerce::saveNewProductBeforeMetaUpdate', 1);
-
-    // Updates product delivery time with the lowest delivery time between its own variations.
-    add_action('updated_post_meta', __CLASS__ . '::updateProductDeliveryTime', 10, 3);
-    // Updates sale percentage when regular price or sale price are updated.
-    add_action('updated_post_meta', __CLASS__ . '::updateSalePercentage', 10, 4);
-
     // Adds custom fields for single products.
     add_action('woocommerce_product_options_general_product_data',  __NAMESPACE__ . '\WooCommerce::woocommerce_product_options_general_product_data');
     // Appends product notes custom field as the last field in the product general options section.
     add_action('woocommerce_product_options_general_product_data', __NAMESPACE__ . '\WooCommerce::productNotesCustomField', 999);
-    add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\WooCommerce::woocommerce_process_product_meta');
 
     // Adds products variations custom fields.
     add_action('woocommerce_product_after_variable_attributes', __NAMESPACE__ . '\WooCommerce::woocommerce_product_after_variable_attributes', 10, 3);
-    add_action('woocommerce_save_product_variation', __NAMESPACE__ . '\WooCommerce::woocommerce_save_product_variation', 10, 2);
 
     // Defines plugin configuration settings.
     if (!isset(static::$pluginSettings)) {
