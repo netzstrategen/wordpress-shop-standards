@@ -125,11 +125,11 @@ class Plugin {
       return;
     };
     $shop_page = get_post(get_option('woocommerce_shop_page_id'));
-    $match = $shop_page->post_name;
+    $shop_page_slug = $shop_page->post_name;
     // Check if the requested pagename matches the shop page post name
     // but does not contain case sensitive characters to avoid redirect loops.
-    if (stripos($pagename, $match) !== FALSE && preg_match("@[A-Z]@", $pagename)) {
-      wp_redirect(home_url($match), 301);
+    if (stripos($pagename, $shop_page_slug) !== FALSE && preg_match("@[A-Z]@", $pagename)) {
+      wp_redirect(home_url($shop_page_slug), 301);
       exit;
     };
   }
