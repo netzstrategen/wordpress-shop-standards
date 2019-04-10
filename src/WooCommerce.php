@@ -456,12 +456,37 @@ class WooCommerce {
         $price = wc_price(wc_get_price_to_display($product)) . $product->get_price_suffix();
       }
 
-      if (is_product()) {
+      if (is_product() && !static::isSideProduct()) {
         $price_label = get_post_meta($product_id, '_' . Plugin::PREFIX . '_price_label', TRUE) ?: __('(Our price)', Plugin::L10N);
         $price .= ' ' . $price_label;
       }
     }
     return $price;
+  }
+
+  /**
+   * Checks if displayed product is a related, cross-sell or up-sell product.
+   *
+   * @return bool
+   *   TRUE is current displayed product is related, cross-sell or up-sell.
+   */
+  public static function isSideProduct() {
+    global $woocommerce_loop;
+
+    // For the main product in the product single view, $woocommerce_loop['name']
+    // value is 'up-sells'. We can only detect it is the main product checking
+    // that $woocommerce_loop['loop'] value is 1.
+    if (isset($woocommerce_loop['loop']) && $woocommerce_loop['loop'] === 1) {
+      return FALSE;
+    }
+
+    // At this point we have discarded the main product. Only side products like
+    // related, cross-sells and up-sells should remain.
+    if (isset($woocommerce_loop['name']) && in_array($woocommerce_loop['name'], ['related', 'cross-sells', 'up-sells'])) {
+      return TRUE;
+    }
+
+    return FALSE;
   }
 
   /**
