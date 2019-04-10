@@ -130,6 +130,7 @@ class Plugin {
     // but does not contain case sensitive characters to avoid redirect loops.
     if (stripos($pagename, $match) !== FALSE && preg_match("@[A-Z]@", $pagename)) {
       wp_redirect(home_url($match), 301);
+      exit;
     };
   }
 
