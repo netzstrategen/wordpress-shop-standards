@@ -121,7 +121,9 @@ class Plugin {
    * @implements parse_request
    */
   public static function parse_request($request) {
-    $pagename = $request->query_vars['pagename'];
+    if (!$pagename = $request->query_vars['pagename'] ?? '') {
+      return;
+    };
     $shop_page = get_post(get_option('woocommerce_shop_page_id'));
     $match = $shop_page->post_name;
     // Check if the requested pagename matches the shop page post name
