@@ -15,4 +15,20 @@
       $('#place_order').prop('value', 'Ihre Bestellung wird jetzt verarbeitet…').addClass('disabled');
     }
   });
+
+  /**
+   * Prevents multiple order to be sent even if woocommerce-german-market second
+   * checkout page is disabled. If form fields validation fails, the order
+   * submit button is enabled again to allow the user to resend the form.
+   */
+  $('#place_order').click(function (e) {
+    if ($(this).hasClass('disabled')) {
+      e.preventDefault();
+      return;
+    }
+    $(this).addClass('disabled');
+  });
+  $(document.body).on('checkout_error', (data) => {
+    $('#place_order').removeClass('disabled');
+  });
 }(jQuery));
