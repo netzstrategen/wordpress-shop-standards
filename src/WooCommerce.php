@@ -503,8 +503,9 @@ class WooCommerce {
     });
     // Add product data (SKU, dimensions and weight) and attributes.
     // Note: we display parent attributes for production variations.
-    $data = array_merge(static::getProductData($product), $data, $filtered_attributes);
-    return $data;
+    $product_data_set = array_merge(static::getProductData($product), $data, $filtered_attributes);
+
+    return $product_data_set;
   }
 
   /**
@@ -515,13 +516,23 @@ class WooCommerce {
   public static function woocommerce_display_item_meta($html, $item, $args) {
     $strings = [];
     $product = $item->get_product();
-    $attributes = array_merge(static::getProductData($product), static::getProductAttributes($product));
-    foreach ($attributes as $attribute) {
-      $strings[] = '<strong class="wc-item-meta-label">' . $attribute['name'] . ':</strong> ' . $attribute['value'];
+    $product_data_set = array_merge(static::getProductData($product), static::getProductAttributes($product));
+
+    // Display delivery time from woocommerce-german-market for each order item.
+    $delivery_time = wc_get_order_item_meta($item->get_id(), '_deliverytime');
+    if ($delivery_time && $delivery_time = get_term($delivery_time, 'product_delivery_times')) {
+      array_splice($product_data_set, 1, 0, [[
+        'name' => __('Delivery Time', 'woocommerce-german-market'),
+        'value' => $delivery_time->name,
+      ]]);
+    }
+
+    foreach ($product_data_set as $productData) {
+      $strings[] = '<strong class="wc-item-meta-label">' . $productData['name'] . ':</strong> ' . $productData['value'];
     }
 
     if ($strings) {
-      $html .= $args['before'] . implode($args['separator'], $strings) . $args['after'];
+      $html = $args['before'] . array_shift($strings) . $args['after'] . $html . $args['before'] . implode($args['separator'], $strings) . $args['after'];
     }
     return $html;
   }
