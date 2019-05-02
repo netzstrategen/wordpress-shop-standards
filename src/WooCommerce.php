@@ -501,6 +501,30 @@ class WooCommerce {
     $filtered_attributes = array_filter(static::getProductAttributes($product), function ($item) use ($stringified_data) {
       return strpos($stringified_data, '"' . $item['name'] . '"') === FALSE;
     });
+
+    $separator = [[
+      'key' => 'separator',
+      'value' => '',
+    ]];
+
+    // Display delivery time from woocommerce-german-market first for each order item.
+    // Adds a separator element before the attributes list of each order item.
+    if (count($data) > 1) {
+      $found = FALSE;
+      for ($pos = 0; $pos < count($data); $pos++) {
+        if (in_array(__('Delivery Time', 'woocommerce-german-market'), $data[$pos], TRUE)) {
+          $found = TRUE;
+          break;
+        }
+      }
+      if ($found) {
+        $data = array_merge(array_splice($data, $pos, 1), $separator, $data);
+      }
+    }
+    else {
+      $data = array_merge($data, $separator);
+    }
+
     // Add product data (SKU, dimensions and weight) and attributes.
     // Note: we display parent attributes for production variations.
     $product_data_set = array_merge(static::getProductData($product), $data, $filtered_attributes);
@@ -532,7 +556,7 @@ class WooCommerce {
     }
 
     if ($strings) {
-      $html = $args['before'] . array_shift($strings) . $args['after'] . $html . $args['before'] . implode($args['separator'], $strings) . $args['after'];
+      $html = $args['before'] . implode($args['separator'], $strings) . $args['after'] . $html;
     }
     return $html;
   }
