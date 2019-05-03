@@ -44,6 +44,35 @@ class CliCommand extends \WP_CLI_Command {
   }
 
   /**
+   * Updates products delivery time.
+   *
+   * ## OPTIONS
+   *
+   * [<product-ids-list>]
+   * : Updates delivery time of a set of products, given their IDs as a comma separated list.
+   *
+   * [--all]
+   * : Updates all products.
+   * ---
+   * default: ''
+   * ---
+   *
+   * ## EXAMPLES
+   *
+   *     wp shop-standards refreshDeliveryTime 2165, 2166, 2167
+   *     wp shop-standards refreshDeliveryTime --all
+   */
+  public function refreshDeliveryTime(array $args, array $options) {
+    if ($product_ids = static::getProductsToUpdate($args, $options)) {
+      static::updateProductsMeta($product_ids, 'delivery_time');
+      WP_CLI::success('Delivery times have been sucessfully updated.');
+    }
+    else {
+      WP_CLI::error('A comma separated list of products IDs is needed. Use option --all to update all products. See `wp shop-standards refreshDeliveryTime --help`.');
+    }
+  }
+
+  /**
    * Updates a given meta field for a list of products.
    *
    * @param array $product_ids
