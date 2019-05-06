@@ -125,7 +125,7 @@ class Plugin {
       return;
     };
     $shop_page = get_post(get_option('woocommerce_shop_page_id'));
-    $shop_page_slug = $shop_page->post_name;
+    $shop_page_slug = get_post_field('post_name', get_option('woocommerce_shop_page_id'), 'raw');
     // Check if the requested pagename matches the shop page post name
     // but does not contain case sensitive characters to avoid redirect loops.
     if (stripos($pagename, $shop_page_slug) !== FALSE && strpos($pagename, $shop_page_slug) === FALSE) {
