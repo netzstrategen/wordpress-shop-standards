@@ -128,7 +128,7 @@ class Plugin {
     $shop_page_slug = $shop_page->post_name;
     // Check if the requested pagename matches the shop page post name
     // but does not contain case sensitive characters to avoid redirect loops.
-    if (stripos($pagename, $shop_page_slug) !== FALSE && preg_match("@[A-Z]@", $pagename)) {
+    if (stripos($pagename, $shop_page_slug) !== FALSE && strpos($pagename, $shop_page_slug) === FALSE) {
       wp_redirect(home_url($shop_page_slug), 301);
       exit;
     };
