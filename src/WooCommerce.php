@@ -456,12 +456,37 @@ class WooCommerce {
         $price = wc_price(wc_get_price_to_display($product)) . $product->get_price_suffix();
       }
 
-      if (is_product()) {
+      if (is_product() && !static::isSideProduct()) {
         $price_label = get_post_meta($product_id, '_' . Plugin::PREFIX . '_price_label', TRUE) ?: __('(Our price)', Plugin::L10N);
         $price .= ' ' . $price_label;
       }
     }
     return $price;
+  }
+
+  /**
+   * Checks if displayed product is a related, cross-sell or up-sell product.
+   *
+   * @return bool
+   *   TRUE is current displayed product is related, cross-sell or up-sell.
+   */
+  public static function isSideProduct() {
+    global $woocommerce_loop;
+
+    // For the main product in the product single view, $woocommerce_loop['name']
+    // value is 'up-sells'. We can only detect it is the main product checking
+    // that $woocommerce_loop['loop'] value is 1.
+    if (isset($woocommerce_loop['loop']) && $woocommerce_loop['loop'] === 1) {
+      return FALSE;
+    }
+
+    // At this point we have discarded the main product. Only side products like
+    // related, cross-sells and up-sells should remain.
+    if (isset($woocommerce_loop['name']) && in_array($woocommerce_loop['name'], ['related', 'cross-sells', 'up-sells'])) {
+      return TRUE;
+    }
+
+    return FALSE;
   }
 
   /**
@@ -476,10 +501,35 @@ class WooCommerce {
     $filtered_attributes = array_filter(static::getProductAttributes($product), function ($item) use ($stringified_data) {
       return strpos($stringified_data, '"' . $item['name'] . '"') === FALSE;
     });
+
+    $separator = [[
+      'key' => 'separator',
+      'value' => '',
+    ]];
+
+    // Display delivery time from woocommerce-german-market first for each order item.
+    // Adds a separator element before the attributes list of each order item.
+    if (count($data) > 1) {
+      $found = FALSE;
+      for ($pos = 0; $pos < count($data); $pos++) {
+        if (in_array(__('Delivery Time', 'woocommerce-german-market'), $data[$pos], TRUE)) {
+          $found = TRUE;
+          break;
+        }
+      }
+      if ($found) {
+        $data = array_merge(array_splice($data, $pos, 1), $separator, $data);
+      }
+    }
+    else {
+      $data = array_merge($data, $separator);
+    }
+
     // Add product data (SKU, dimensions and weight) and attributes.
     // Note: we display parent attributes for production variations.
-    $data = array_merge(static::getProductData($product), $data, $filtered_attributes);
-    return $data;
+    $product_data_set = array_merge(static::getProductData($product), $data, $filtered_attributes);
+
+    return $product_data_set;
   }
 
   /**
@@ -490,13 +540,23 @@ class WooCommerce {
   public static function woocommerce_display_item_meta($html, $item, $args) {
     $strings = [];
     $product = $item->get_product();
-    $attributes = array_merge(static::getProductData($product), static::getProductAttributes($product));
-    foreach ($attributes as $attribute) {
-      $strings[] = '<strong class="wc-item-meta-label">' . $attribute['name'] . ':</strong> ' . $attribute['value'];
+    $product_data_set = array_merge(static::getProductData($product), static::getProductAttributes($product));
+
+    // Display delivery time from woocommerce-german-market for each order item.
+    $delivery_time = wc_get_order_item_meta($item->get_id(), '_deliverytime');
+    if ($delivery_time && $delivery_time = get_term($delivery_time, 'product_delivery_times')) {
+      array_splice($product_data_set, 1, 0, [[
+        'name' => __('Delivery Time', 'woocommerce-german-market'),
+        'value' => $delivery_time->name,
+      ]]);
+    }
+
+    foreach ($product_data_set as $productData) {
+      $strings[] = '<strong class="wc-item-meta-label">' . $productData['name'] . ':</strong> ' . $productData['value'];
     }
 
     if ($strings) {
-      $html .= $args['before'] . implode($args['separator'], $strings) . $args['after'];
+      $html = $args['before'] . implode($args['separator'], $strings) . $args['after'] . $html;
     }
     return $html;
   }
