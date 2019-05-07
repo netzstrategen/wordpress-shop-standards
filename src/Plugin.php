@@ -113,7 +113,7 @@ class Plugin {
   }
 
   /**
-   * Redirects uppercase containing shop slugs to the correct shop page.
+   * Redirects requests to shop page using different letter-casing to canonical shop page path.
    *
    * This is necessary as the archives rewrite rules do not match
    * case-insensitive but match a generic page name instead.
