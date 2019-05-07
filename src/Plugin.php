@@ -124,7 +124,6 @@ class Plugin {
     if (!$pagename = $request->query_vars['pagename'] ?? '') {
       return;
     };
-    $shop_page = get_post(get_option('woocommerce_shop_page_id'));
     $shop_page_slug = get_post_field('post_name', get_option('woocommerce_shop_page_id'), 'raw');
     // Check if the requested pagename matches the shop page post name
     // but does not contain case sensitive characters to avoid redirect loops.
