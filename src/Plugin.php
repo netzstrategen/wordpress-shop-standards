@@ -40,6 +40,8 @@ class Plugin {
     // Adds strike price (range) labels for variable products, too.
     add_filter('woocommerce_variable_sale_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_variable_sale_price_html', 10, 2);
     add_filter('woocommerce_variable_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_variable_sale_price_html', 10, 2);
+
+    add_action('parse_request', __CLASS__  . '::parse_request');
   }
 
   /**
@@ -108,6 +110,27 @@ class Plugin {
 
     // Enqueues plugin scripts.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
+  }
+
+  /**
+   * Redirects requests to shop page using different letter-casing to canonical shop page path.
+   *
+   * This is necessary as the archives rewrite rules do not match
+   * case-insensitive but match a generic page name instead.
+   *
+   * @implements parse_request
+   */
+  public static function parse_request($request) {
+    if (!$pagename = $request->query_vars['pagename'] ?? '') {
+      return;
+    };
+    $shop_page_slug = get_post_field('post_name', get_option('woocommerce_shop_page_id'), 'raw');
+    // Check if the requested pagename matches the shop page post name
+    // but does not contain case sensitive characters to avoid redirect loops.
+    if (stripos($pagename, $shop_page_slug) !== FALSE && strpos($pagename, $shop_page_slug) === FALSE) {
+      wp_redirect(home_url($shop_page_slug), 301);
+      exit;
+    };
   }
 
   /**
