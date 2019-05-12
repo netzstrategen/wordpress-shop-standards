@@ -163,6 +163,14 @@ class Plugin {
   public static function widgets_init() {
     // Registers widget to filter products by delivery time.
     register_widget(__NAMESPACE__ . '\Widgets\WidgetFilterDeliveryTime');
+
+    // Overrides layered nav woocommerce widgets with new ones supporting
+    // woocommerce-german-market delivery time taxonomy terms to be used
+    // as product filters.
+    unregister_widget('WC_Widget_Layered_Nav_Filters');
+    unregister_widget('WC_Widget_Layered_Nav');
+    register_widget(__NAMESPACE__ . '\Widgets\WidgetLayeredNav');
+    register_widget(__NAMESPACE__ . '\Widgets\WidgetLayeredNavFilters');
   }
 
   /**
