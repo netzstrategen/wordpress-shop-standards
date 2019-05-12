@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: Shop Standards
-  Version: 1.22.1
+  Version: 1.23.0
   Text Domain: shop-standards
   Description: Standard refinements for e-commerce websites.
   Author: netzstrategen
@@ -27,7 +27,13 @@ function classloader($class) {
     if ($ns_offset === NULL) {
       $ns_offset = strlen(__NAMESPACE__) + 1;
     }
-    include __DIR__ . '/src/' . strtr(substr($class, $ns_offset), '\\', '/') . '.php';
+    $folder = '/src/';
+    $class_name = strtr(substr($class, $ns_offset), '\\', '/');
+    if (strpos($class_name, 'Widgets/') === 0) {
+      $folder .= 'widgets/';
+      $class_name = substr($class_name, 8);
+    }
+    include __DIR__ . $folder . $class_name . '.php';
   }
 }
 
