@@ -672,4 +672,28 @@ class WooCommerce {
     return $data;
   }
 
+  /**
+   * Adds custom query variable to filter products by delivery time.
+   *
+   * @implements query_vars
+   */
+  public static function query_vars($vars) {
+    $vars[] = 'delivery_time';
+    return $vars;
+  }
+
+  public static function pre_get_posts($query) {
+    if (is_admin() || !$query->is_main_query()) {
+      return;
+    }
+    if (!empty($delivery_time_value = get_query_var('delivery_time'))) {
+      $meta_query = [[
+        'key' => '_lieferzeit',
+        'value' => $delivery_time_value,
+        'compare' => '=',
+      ]];
+      $query->set('meta_query', $meta_query);
+    }
+  }
+
 }
