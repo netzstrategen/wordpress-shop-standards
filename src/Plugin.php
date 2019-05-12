@@ -42,6 +42,15 @@ class Plugin {
     add_filter('woocommerce_variable_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_variable_sale_price_html', 10, 2);
 
     add_action('parse_request', __CLASS__  . '::parse_request');
+
+    // We need woocommerce-german-market plugin being active to add product
+    // delivery time support to products filtering in the woocommerce layered
+    // navigation.
+    $active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
+    if (in_array('woocommerce-german-market/WooCommerce-German-Market.php', $active_plugins)) {
+      // Registers products filter widgets supporting delivery time.
+      add_action('widgets_init', __CLASS__ . '::widgets_init');
+    }
   }
 
   /**
@@ -108,6 +117,10 @@ class Plugin {
     // Adds product attributes to order emails.
     add_filter('woocommerce_display_item_meta', __NAMESPACE__ . '\WooCommerce::woocommerce_display_item_meta', 10, 3);
 
+    // Adds custom query variable to filter products by delivery time.
+    add_filter('query_vars', __NAMESPACE__ . '\WooCommerce::query_vars');
+    add_action('pre_get_posts', __NAMESPACE__ . '\WooCommerce::pre_get_posts', 1);
+
     // Enqueues plugin scripts.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
   }
@@ -131,6 +144,16 @@ class Plugin {
       wp_redirect(home_url($shop_page_slug), 301);
       exit;
     };
+  }
+
+  /**
+   * Registers products filter widgets supporting delivery time.
+   *
+   * @implemets widgets_init
+   */
+  public static function widgets_init() {
+    // Registers widget to filter products by delivery time.
+    register_widget(__NAMESPACE__ . '\Widgets\WidgetFilterDeliveryTime');
   }
 
   /**
