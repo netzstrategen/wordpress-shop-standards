@@ -241,6 +241,48 @@ class Plugin {
   }
 
   /**
+   * Adds the passed argument as query parameter to a set of list elements.
+   *
+   * @param string $content
+   *   The HTML filter list to perform the transformation on.
+   * @param string $arg
+   *   Use delivery time as default argument.
+   *
+   * @return \DOMDocument|null
+   */
+  public static function transformFilterLinks(string $content, $arg = 'delivery_time'): ?\DOMDocument {
+    $args = [];
+    if ($arg = $_GET[$arg] ?? '') {
+      $args = array_filter(array_map('absint', explode(',', wp_unslash($arg))));
+    }
+    // Return early if no deliver time filter is not active.
+    if (!$args) {
+      return NULL;
+    }
+
+    $doc = new \DOMDocument();
+    $charset = get_option('blog_charset');
+    $options = LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD;
+    $doc->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', $charset), $options);
+    $xpath = new \DOMXPath($doc);
+
+    // Select all filter links and add the query parameter to it.
+    $anchors = $xpath->query('//ul/li/a');
+    foreach ($anchors as $anchor) {
+      if (!$anchor->hasAttribute('href')) {
+        continue;
+      }
+      $link = $anchor->getAttribute('href');
+      $anchor->setAttribute('href', add_query_arg(
+        $arg,
+        implode(',', $args),
+        $link
+      ));
+    }
+    return $doc;
+  }
+
+  /**
    * Enqueues plugin scripts.
    *
    * @implements wp_enqueue_scripts
