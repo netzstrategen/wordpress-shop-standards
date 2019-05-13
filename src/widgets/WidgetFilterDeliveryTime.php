@@ -51,11 +51,7 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
       return;
     }
 
-    $query_args = [
-      'taxonomy' => 'product_delivery_times',
-      'hide_empty' => FALSE,
-    ];
-    if (!$delivery_times = get_terms($query_args)) {
+    if (!$delivery_times = static::getProductsDeliveryTimes()) {
       return;
     }
 
@@ -85,11 +81,7 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
    * Inits widget controls settings.
    */
   public function initSettings() {
-    $args = [
-      'taxonomy' => 'product_delivery_times',
-      'hide_empty' => FALSE,
-    ];
-    if (!$delivery_times = get_terms($args)) {
+    if (!$delivery_times = static::getProductsDeliveryTimes()) {
       return;
     }
 
@@ -102,6 +94,25 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
         'label' => $delivery_time->name,
       ];
     }
+  }
+
+  /**
+   * Returns the existing delivery time taxonomy terms.
+   *
+   * @param array $args
+   *   Arguments for the query.
+   *
+   * @return array
+   *   Products delivery times.
+   */
+  public static function getProductsDeliveryTimes(array $args = []) {
+    $query_args = wp_parse_args($args, [
+      'taxonomy' => 'product_delivery_times',
+      'hide_empty' => FALSE,
+      'orderby' => 'slug',
+      'order' => 'ASC',
+    ]);
+    return get_terms($query_args);
   }
 
 }
