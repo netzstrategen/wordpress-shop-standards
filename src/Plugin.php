@@ -243,28 +243,28 @@ class Plugin {
   /**
    * Adds the passed argument as query parameter to all matched hrefs.
    *
-   * @param string $content
+   * @param string $html_filter
    *   The content to perform the transformation on.
-   * @param string $arg
+   * @param string $filter_name
    *   The query parameter to add.
    *
    * @return string
    */
-  public static function addFilterToNavLinks(string $content, string $arg): string {
-    if ($args = $_GET[$arg] ?? []) {
-      $args = array_filter(array_map('absint', explode(',', wp_unslash($args))));
+  public static function addFilterToNavLinks(string $html_filter, string $filter_name): string {
+    if ($filter_args = $_GET[$filter_name] ?? []) {
+      $filter_args = array_filter(array_map('absint', explode(',', wp_unslash($filter_args))));
     }
     // Return early if filter is currently not active.
-    if (!$args) {
-      return $content;
+    if (!$filter_args) {
+      return $html_filter;
     }
     // Add query parameter to all found hrefs.
-    $content = preg_replace_callback('@href="(.+?[^"])"@', function ($match) use ($arg, $args) {
-      $link = 'href="' . esc_url(add_query_arg($arg, implode(',', $args), $match[1])) . '"';
+    $html_filter = preg_replace_callback('@href="(.+?[^"])"@', function ($match) use ($filter_name, $filter_args) {
+      $link = 'href="' . esc_url(add_query_arg($filter_name, implode(',', $filter_args), $match[1])) . '"';
       return $link;
-    }, $content);
+    }, $html_filter);
 
-    return $content;
+    return $html_filter;
   }
 
   /**
