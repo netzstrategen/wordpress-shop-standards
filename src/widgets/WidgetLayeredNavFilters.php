@@ -26,18 +26,13 @@ class WidgetLayeredNavFilters extends \WC_Widget_Layered_Nav_Filters {
     ob_start();
     parent::widget($args, $instance);
     $output = ob_get_clean();
-
-    if ($doc = Plugin::transformFilterLinks($output)) {
-      // Append delivery time link to filter list.
+    $output = Plugin::addFilterToNavLinks($output, 'delivery_time');
+    if (isset($_GET['delivery_time'])) {
       $link = remove_query_arg('delivery_time');
       $link = '<li class="chosen"><a rel="nofollow" aria-label="' . esc_attr__('Remove filter', 'woocommerce') . '" href="' . esc_url($link) . '">' . __('Delivery Time', 'woocommerce-german-market') . '</a></li>';
-      $ul = $doc->getElementsByTagName('ul')->item(0);
-      $list_item = $doc->createDocumentFragment();
-      $list_item->appendXML($link);
-      $ul->appendChild($list_item);
-      $output = $doc->saveHTML();
+      // Append delivery time filter to active filter list.
+      $output = preg_replace('@</ul>@', $link . '</ul>' , $output);
     }
-
     echo $output;
   }
 

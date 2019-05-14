@@ -241,45 +241,30 @@ class Plugin {
   }
 
   /**
-   * Adds the passed argument as query parameter to a set of list elements.
+   * Adds the passed argument as query parameter to all matched hrefs.
    *
    * @param string $content
-   *   The HTML filter list to perform the transformation on.
+   *   The content to perform the transformation on.
    * @param string $arg
-   *   Use delivery time as default argument.
+   *   The query parameter to add.
    *
-   * @return \DOMDocument|null
+   * @return string
    */
-  public static function transformFilterLinks(string $content, $arg = 'delivery_time'): ?\DOMDocument {
-    $args = [];
-    if ($arg = $_GET[$arg] ?? '') {
-      $args = array_filter(array_map('absint', explode(',', wp_unslash($arg))));
+  public static function addFilterToNavLinks(string $content, string $arg): string {
+    if ($args = $_GET[$arg] ?? []) {
+      $args = array_filter(array_map('absint', explode(',', wp_unslash($args))));
     }
-    // Return early if no deliver time filter is not active.
+    // Return early if filter is currently not active.
     if (!$args) {
-      return NULL;
+      return $content;
     }
+    // Add query parameter to all found hrefs.
+    $content = preg_replace_callback('@href="(.+?[^"])"@', function ($match) use ($arg, $args) {
+      $link = 'href="' . esc_url(add_query_arg($arg, implode(',', $args), $match[1])) . '"';
+      return $link;
+    }, $content);
 
-    $doc = new \DOMDocument();
-    $charset = get_option('blog_charset');
-    $options = LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD;
-    $doc->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', $charset), $options);
-    $xpath = new \DOMXPath($doc);
-
-    // Select all filter links and add the query parameter to it.
-    $anchors = $xpath->query('//ul/li/a');
-    foreach ($anchors as $anchor) {
-      if (!$anchor->hasAttribute('href')) {
-        continue;
-      }
-      $link = $anchor->getAttribute('href');
-      $anchor->setAttribute('href', add_query_arg(
-        $arg,
-        implode(',', $args),
-        $link
-      ));
-    }
-    return $doc;
+    return $content;
   }
 
   /**

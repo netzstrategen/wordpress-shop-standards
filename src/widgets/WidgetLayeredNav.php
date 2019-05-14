@@ -27,10 +27,7 @@ class WidgetLayeredNav extends \WC_Widget_Layered_Nav {
     $found = parent::layered_nav_list($terms, $taxonomy, $query_type);
     $output = ob_get_clean();
 
-    if ($doc = Plugin::transformFilterLinks($output)) {
-      $output = $doc->saveHTML();
-    }
-
+    $output = Plugin::addFilterToNavLinks($output, 'delivery_time');
     echo $output;
     return $found;
   }
