@@ -241,6 +241,33 @@ class Plugin {
   }
 
   /**
+   * Adds the passed argument as query parameter to all matched hrefs.
+   *
+   * @param string $html_filter
+   *   The content to perform the transformation on.
+   * @param string $filter_name
+   *   The query parameter to add.
+   *
+   * @return string
+   */
+  public static function addFilterToNavLinks(string $html_filter, string $filter_name): string {
+    if ($filter_args = $_GET[$filter_name] ?? []) {
+      $filter_args = array_filter(array_map('absint', explode(',', wp_unslash($filter_args))));
+    }
+    // Return early if filter is currently not active.
+    if (!$filter_args) {
+      return $html_filter;
+    }
+    // Add query parameter to all found hrefs.
+    $html_filter = preg_replace_callback('@href="(.+?[^"])"@', function ($match) use ($filter_name, $filter_args) {
+      $link = 'href="' . esc_url(add_query_arg($filter_name, implode(',', $filter_args), $match[1])) . '"';
+      return $link;
+    }, $html_filter);
+
+    return $html_filter;
+  }
+
+  /**
    * Enqueues plugin scripts.
    *
    * @implements wp_enqueue_scripts
