@@ -16,6 +16,11 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
   const WIDGET_NAME = Plugin::L10N . '_widget_filter_delivery_time';
 
   /**
+   * @var array
+   */
+  public static $delivery_times = [];
+
+  /**
    * Constructor.
    */
   public function __construct() {
@@ -121,13 +126,18 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
    *   Products delivery times.
    */
   public static function getProductsDeliveryTimes(array $args = []) {
+    if (static::$delivery_times) {
+      return static::$delivery_times;
+    }
     $query_args = wp_parse_args($args, [
       'taxonomy' => 'product_delivery_times',
       'hide_empty' => FALSE,
       'orderby' => 'slug',
       'order' => 'ASC',
     ]);
-    return get_terms($query_args);
+    $terms = get_terms($query_args);
+    static::$delivery_times = $terms;
+    return $terms;
   }
 
   /**
