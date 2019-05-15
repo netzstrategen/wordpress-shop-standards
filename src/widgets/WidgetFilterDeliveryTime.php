@@ -86,8 +86,15 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
       else {
         $values = array_diff($values, [$delivery_time->term_id]);
       }
+      // Add filter values as query argument or remove parameter if empty.
+      // If the current value is selected the value will not be added.
+      if ($values) {
+        $link = add_query_arg('delivery_time', implode(',', $values));
+      }
+      else {
+        $link = remove_query_arg('delivery_time');
+      }
       $chosen = in_array($delivery_time->term_id, $filter_values, TRUE);
-      $link = add_query_arg('delivery_time', implode(',', $values));
       echo sprintf('<li class="%s">', $chosen ? $item_class . ' ' . $item_chosen_class : $item_class);
       echo sprintf('<a rel="nofollow" href="%s">%s</a>', $link, $delivery_time->name);
     }
