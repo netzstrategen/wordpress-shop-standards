@@ -57,8 +57,6 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
       return;
     }
 
-    $filter_delivery_time = isset($_GET['delivery_time']) ? intval($_GET['delivery_time']) : 0;
-
     ob_start();
 
     $this->widget_start($args, array_merge($instance, ['title' => __('Delivery Time:', 'woocommerce-german-market')]));
@@ -66,12 +64,30 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
     $item_class = 'woocommerce-widget-layered-nav-list__item wc-layered-nav-term';
     $item_chosen_class = 'woocommerce-widget-layered-nav-list__item--chosen chosen';
 
+    if ($filter_delivery_time = $_GET['delivery_time'] ?? []) {
+      $filter_delivery_time = array_filter(array_map('absint', explode(',', wp_unslash($filter_delivery_time))));
+    }
+
     echo '<ul class="product_delivery_time_widget">';
     foreach ($delivery_times as $delivery_time) {
-      if ($instance['delivery_time-' . $delivery_time->term_id]) {
-        echo sprintf('<li class="%s">', $delivery_time->term_id === $filter_delivery_time ? implode(' ', [$item_class, $item_chosen_class]) : $item_class);
-        echo sprintf('<a rel="nofollow" href="%s">%s</a>', add_query_arg('delivery_time', $delivery_time->term_id), $delivery_time->name);
+      if (!isset($instance['delivery_time-' . $delivery_time->term_id])) {
+        continue;
       }
+      $delivery_time_value = $filter_delivery_time;
+      // Add delivery time to filter array if not active already, remove otherwise.
+      if (!in_array($delivery_time->term_id, $delivery_time_value, TRUE)) {
+        $delivery_time_value[] = $delivery_time->term_id;
+      }
+      else {
+        $delivery_time_value = array_diff($delivery_time_value, [$delivery_time->term_id]);
+      }
+      $item_classes = $item_class;
+      if (in_array($delivery_time->term_id, $filter_delivery_time, TRUE)) {
+        $item_classes = $item_class . ' ' . $item_chosen_class;
+      }
+      $link = add_query_arg('delivery_time', implode(',', $delivery_time_value));
+      echo sprintf('<li class="%s">', $item_classes);
+      echo sprintf('<a rel="nofollow" href="%s">%s</a>', $link, $delivery_time->name);
     }
     echo '</ul>';
     $this->widget_end($args);
