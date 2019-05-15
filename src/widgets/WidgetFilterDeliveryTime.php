@@ -75,7 +75,7 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
 
     echo '<ul class="product_delivery_time_widget">';
     foreach ($delivery_times as $delivery_time) {
-      if (!isset($instance['delivery_time-' . $delivery_time->term_id])) {
+      if (!$instance['delivery_time-' . $delivery_time->term_id]) {
         continue;
       }
       $values = $filter_values;
