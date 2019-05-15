@@ -673,13 +673,13 @@ class WooCommerce {
   }
 
   public static function pre_get_posts($query) {
-    if (is_admin() || !$query->is_main_query() || !$delivery_time_value = $_GET['delivery_time'] ?? []) {
+    if (is_admin() || !$query->is_main_query() || !$filter_values = $_GET['delivery_time'] ?? []) {
       return;
     }
-    $delivery_time_value = array_filter(array_map('absint', explode(',', wp_unslash($delivery_time_value))));
+    $filter_values = array_filter(array_map('absint', explode(',', wp_unslash($filter_values))));
     $meta_query = [[
       'key' => '_lieferzeit',
-      'value' => $delivery_time_value,
+      'value' => $filter_values,
       'compare' => 'IN',
     ]];
     $query->set('meta_query', $meta_query);
