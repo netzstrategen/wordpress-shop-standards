@@ -64,8 +64,8 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
     $item_class = 'woocommerce-widget-layered-nav-list__item wc-layered-nav-term';
     $item_chosen_class = 'woocommerce-widget-layered-nav-list__item--chosen chosen';
 
-    if ($filter_delivery_time = $_GET['delivery_time'] ?? []) {
-      $filter_delivery_time = array_filter(array_map('absint', explode(',', wp_unslash($filter_delivery_time))));
+    if ($filter_values = $_GET['delivery_time'] ?? []) {
+      $filter_values = array_filter(array_map('absint', explode(',', wp_unslash($filter_values))));
     }
 
     echo '<ul class="product_delivery_time_widget">';
@@ -73,19 +73,19 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
       if (!isset($instance['delivery_time-' . $delivery_time->term_id])) {
         continue;
       }
-      $delivery_time_value = $filter_delivery_time;
+      $values = $filter_values;
       // Add delivery time to filter array if not active already, remove otherwise.
-      if (!in_array($delivery_time->term_id, $delivery_time_value, TRUE)) {
-        $delivery_time_value[] = $delivery_time->term_id;
+      if (!in_array($delivery_time->term_id, $values, TRUE)) {
+        $values[] = $delivery_time->term_id;
       }
       else {
-        $delivery_time_value = array_diff($delivery_time_value, [$delivery_time->term_id]);
+        $values = array_diff($values, [$delivery_time->term_id]);
       }
       $item_classes = $item_class;
-      if (in_array($delivery_time->term_id, $filter_delivery_time, TRUE)) {
+      if (in_array($delivery_time->term_id, $filter_values, TRUE)) {
         $item_classes = $item_class . ' ' . $item_chosen_class;
       }
-      $link = add_query_arg('delivery_time', implode(',', $delivery_time_value));
+      $link = add_query_arg('delivery_time', implode(',', $values));
       echo sprintf('<li class="%s">', $item_classes);
       echo sprintf('<a rel="nofollow" href="%s">%s</a>', $link, $delivery_time->name);
     }
