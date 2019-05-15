@@ -673,10 +673,7 @@ class WooCommerce {
   }
 
   public static function pre_get_posts($query) {
-    if (is_admin() || !$query->is_main_query()) {
-      return;
-    }
-    if (!$delivery_time_value = $_GET['delivery_time'] ?? []) {
+    if (is_admin() || !$query->is_main_query() || !$delivery_time_value = $_GET['delivery_time'] ?? []) {
       return;
     }
     $delivery_time_value = array_filter(array_map('absint', explode(',', wp_unslash($delivery_time_value))));
