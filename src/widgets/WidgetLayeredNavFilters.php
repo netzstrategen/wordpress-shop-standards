@@ -27,6 +27,13 @@ class WidgetLayeredNavFilters extends \WC_Widget_Layered_Nav_Filters {
     parent::widget($args, $instance);
     $output = ob_get_clean();
     $output = Plugin::addFilterToNavLinks($output, 'delivery_time');
+    if (empty($output) && isset($_GET['delivery_time'])) {
+      ob_start();
+      $this->widget_start($args, $instance);
+      echo '<ul></ul>';
+      $this->widget_end($args);
+      $output = ob_get_clean();
+    }
     if (isset($_GET['delivery_time'])) {
       $link = remove_query_arg('delivery_time');
       $link = '<li class="chosen"><a rel="nofollow" aria-label="' . esc_attr__('Remove filter', 'woocommerce') . '" href="' . esc_url($link) . '">' . __('Delivery Time', 'woocommerce-german-market') . '</a></li>';
