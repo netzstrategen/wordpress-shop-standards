@@ -25,6 +25,8 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
     $this->widget_description = __('Display a list of delivery times to filter products in your store.', Plugin::L10N);
 
     parent::__construct();
+
+    add_filter('get_terms_orderby', __CLASS__ . '::get_terms_orderby', 10, 3);
   }
 
   /**
@@ -113,6 +115,20 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
       'order' => 'ASC',
     ]);
     return get_terms($query_args);
+  }
+
+  /**
+   * Typecasts slug to integer to achieve proper numeric sorting.
+   *
+   * @implements get_terms_orderby
+   *
+   * @return string
+   */
+  public static function get_terms_orderby(string $orderby, array $query_vars, array $taxonomy): string {
+    if (in_array('product_delivery_times', $taxonomy, TRUE) && $query_vars['orderby'] === 'slug') {
+      $orderby = $orderby . '+0';
+    }
+    return $orderby;
   }
 
 }
