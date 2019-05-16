@@ -108,6 +108,16 @@ class Plugin {
     // Adds product attributes to order emails.
     add_filter('woocommerce_display_item_meta', __NAMESPACE__ . '\WooCommerce::woocommerce_display_item_meta', 10, 3);
 
+    if (class_exists('Woocommerce_German_Market')) {
+      // Remove delivery time from product name in order emails, added by
+      // woocommerce-german-market.
+      remove_filter('woocommerce_order_item_name', ['WGM_Template', 'add_delivery_time_to_product_title']);
+
+      // Removes SKU from order item name, added by woocommerce-german-market.
+      add_action('wgm_email_after_item_name', __NAMESPACE__ . '\WooCommerce::wgm_email_after_item_name', 10, 1);
+      add_action('woocommerce_order_item_meta_start', __NAMESPACE__ . '\WooCommerce::woocommerce_order_item_meta_start', 10, 4);
+    }
+
     // Enqueues plugin scripts.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
   }

@@ -562,6 +562,24 @@ class WooCommerce {
   }
 
   /**
+   * Removes SKU from order item name, added by woocommerce-german-market.
+   *
+   * @implements wgm_email_after_item_name
+   */
+  public static function wgm_email_after_item_name($order_item) {
+    ob_start();
+  }
+
+  /**
+   * Removes SKU from order item name, added by woocommerce-german-market.
+   *
+   * @implements woocommerce_order_item_meta_start
+   */
+  public static function woocommerce_order_item_meta_start($item_id, $item, $order, $plain_text) {
+    echo preg_replace('@\s*\(#.+\)@', '', ob_get_clean());
+  }
+
+  /**
    * Retrieves basic data (SKU, dimensions and weight) for a given product.
    *
    * @param WC_Product $product
