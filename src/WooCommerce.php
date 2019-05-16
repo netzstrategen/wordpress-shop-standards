@@ -562,6 +562,16 @@ class WooCommerce {
   }
 
   /**
+   * Removes SKU from order item name, added by woocommerce-german-market.
+   *
+   * @implements woocommerce_email_order_items_args
+   */
+  public static function woocommerce_email_order_items_args($args) {
+    $args['show_sku'] = FALSE;
+    return $args;
+  }
+
+  /**
    * Retrieves basic data (SKU, dimensions and weight) for a given product.
    *
    * @param WC_Product $product
