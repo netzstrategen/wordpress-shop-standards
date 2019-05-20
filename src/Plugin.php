@@ -105,6 +105,9 @@ class Plugin {
     // Adds basic information (e.g. weight, SKU, etc.) and product attributes to cart item data.
     add_action('woocommerce_get_item_data', __NAMESPACE__ . '\WooCommerce::woocommerce_get_item_data', 10, 2);
 
+    // Removes SKU from order item name.
+    add_filter('woocommerce_email_order_items_args', __NAMESPACE__ . '\WooCommerce::woocommerce_email_order_items_args');
+
     // Adds product attributes to order emails.
     add_filter('woocommerce_display_item_meta', __NAMESPACE__ . '\WooCommerce::woocommerce_display_item_meta', 10, 3);
 
@@ -112,9 +115,6 @@ class Plugin {
       // Remove delivery time from product name in order emails, added by
       // woocommerce-german-market.
       remove_filter('woocommerce_order_item_name', ['WGM_Template', 'add_delivery_time_to_product_title']);
-
-      // Removes SKU from order item name, added by woocommerce-german-market.
-      add_filter('woocommerce_email_order_items_args', __NAMESPACE__ . '\WooCommerce::woocommerce_email_order_items_args');
     }
 
     // Enqueues plugin scripts.
