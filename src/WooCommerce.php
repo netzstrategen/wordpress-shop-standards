@@ -564,19 +564,11 @@ class WooCommerce {
   /**
    * Removes SKU from order item name, added by woocommerce-german-market.
    *
-   * @implements wgm_email_after_item_name
+   * @implements woocommerce_email_order_items_args
    */
-  public static function wgm_email_after_item_name($order_item) {
-    ob_start();
-  }
-
-  /**
-   * Removes SKU from order item name, added by woocommerce-german-market.
-   *
-   * @implements woocommerce_order_item_meta_start
-   */
-  public static function woocommerce_order_item_meta_start($item_id, $item, $order, $plain_text) {
-    echo preg_replace('@\s*\(#.+\)@', '', ob_get_clean());
+  public static function woocommerce_email_order_items_args($args) {
+    $args['show_sku'] = FALSE;
+    return $args;
   }
 
   /**

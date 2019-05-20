@@ -114,8 +114,7 @@ class Plugin {
       remove_filter('woocommerce_order_item_name', ['WGM_Template', 'add_delivery_time_to_product_title']);
 
       // Removes SKU from order item name, added by woocommerce-german-market.
-      add_action('wgm_email_after_item_name', __NAMESPACE__ . '\WooCommerce::wgm_email_after_item_name', 10, 1);
-      add_action('woocommerce_order_item_meta_start', __NAMESPACE__ . '\WooCommerce::woocommerce_order_item_meta_start', 10, 4);
+      add_filter('woocommerce_email_order_items_args', __NAMESPACE__ . '\WooCommerce::woocommerce_email_order_items_args');
     }
 
     // Enqueues plugin scripts.
