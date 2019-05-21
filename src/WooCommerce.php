@@ -528,7 +528,7 @@ class WooCommerce {
     // Add product data (SKU, dimensions and weight) and attributes.
     // Note: we display parent attributes for production variations.
     $product_data_set = array_merge(static::getProductData($product), $data, $filtered_attributes);
-    
+
     return $product_data_set;
   }
 
