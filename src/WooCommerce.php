@@ -541,17 +541,17 @@ class WooCommerce {
     $strings = [];
     $data = [];
     $product = $item->get_product();
-    // Extract label/value pairs from passed HTML and add it to the product data set.
-    $matched = preg_match_all('@<strong[^>]*>(.+?)</strong>.+?<p>(.+?)</p>@', $html, $matches, PREG_SET_ORDER);
-    if ($matched) {
-      foreach ($matches as $match) {
-        $data[] = [
-          'name' => rtrim($match[1], ':'),
-          'value' => $match[2],
-        ];
-      }
+    foreach ($item->get_formatted_meta_data() as $meta_id => $meta) {
+      $data[] = [
+        'name' => $meta->display_key,
+        'value' => strip_tags($meta->display_value),
+      ];
     }
-    $product_data_set = array_merge(static::getProductData($product), $data, static::getProductAttributes($product));
+    $separator = [[
+      'name' => '',
+      'value' => '<hr>',
+    ]];
+    $product_data_set = array_merge(static::getProductData($product), $separator, $data, static::getProductAttributes($product));
 
     // Display delivery time from woocommerce-german-market for each order item.
     $delivery_time = wc_get_order_item_meta($item->get_id(), '_deliverytime');
@@ -563,7 +563,16 @@ class WooCommerce {
     }
 
     foreach ($product_data_set as $productData) {
-      $strings[] = '<strong class="wc-item-meta-label">' . $productData['name'] . ':</strong> ' . $productData['value'];
+      $string = '';
+      if (!empty($productData['name'])) {
+        $string .= '<strong class="wc-item-meta-label">' . $productData['name'] . ':</strong> ';
+      }
+      if (!empty($productData['value'])) {
+        $string .= $productData['value'];
+      }
+      if (!empty($string)) {
+        $strings[] = $string;
+      }
     }
 
     if ($strings) {
