@@ -16,6 +16,11 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
   const WIDGET_NAME = Plugin::L10N . '_widget_filter_delivery_time';
 
   /**
+   * @var array
+   */
+  public static $delivery_times = [];
+
+  /**
    * Constructor.
    */
   public function __construct() {
@@ -25,6 +30,8 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
     $this->widget_description = __('Display a list of delivery times to filter products in your store.', Plugin::L10N);
 
     parent::__construct();
+
+    add_filter('get_terms_orderby', __CLASS__ . '::get_terms_orderby', 10, 3);
   }
 
   /**
@@ -55,8 +62,6 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
       return;
     }
 
-    $filter_delivery_time = isset($_GET['delivery_time']) ? intval($_GET['delivery_time']) : 0;
-
     ob_start();
 
     $this->widget_start($args, array_merge($instance, ['title' => __('Delivery Time:', 'woocommerce-german-market')]));
@@ -64,12 +69,34 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
     $item_class = 'woocommerce-widget-layered-nav-list__item wc-layered-nav-term';
     $item_chosen_class = 'woocommerce-widget-layered-nav-list__item--chosen chosen';
 
+    if ($filter_values = $_GET['delivery_time'] ?? []) {
+      $filter_values = array_filter(array_map('absint', explode(',', wp_unslash($filter_values))));
+    }
+
     echo '<ul class="product_delivery_time_widget">';
     foreach ($delivery_times as $delivery_time) {
-      if ($instance['delivery_time-' . $delivery_time->term_id]) {
-        echo sprintf('<li class="%s">', $delivery_time->term_id === $filter_delivery_time ? implode(' ', [$item_class, $item_chosen_class]) : $item_class);
-        echo sprintf('<a rel="nofollow" href="%s">%s</a>', add_query_arg('delivery_time', $delivery_time->term_id), $delivery_time->name);
+      if (!$instance['delivery_time-' . $delivery_time->term_id]) {
+        continue;
       }
+      $values = $filter_values;
+      // Add delivery time to filter array if not active already, remove otherwise.
+      if (!in_array($delivery_time->term_id, $values, TRUE)) {
+        $values[] = $delivery_time->term_id;
+      }
+      else {
+        $values = array_diff($values, [$delivery_time->term_id]);
+      }
+      // Add filter values as query argument or remove parameter if empty.
+      // If the current value is selected the value will not be added.
+      if ($values) {
+        $link = add_query_arg('delivery_time', implode(',', $values));
+      }
+      else {
+        $link = remove_query_arg('delivery_time');
+      }
+      $chosen = in_array($delivery_time->term_id, $filter_values, TRUE);
+      echo sprintf('<li class="%s">', $chosen ? $item_class . ' ' . $item_chosen_class : $item_class);
+      echo sprintf('<a rel="nofollow" href="%s">%s</a>', $link, $delivery_time->name);
     }
     echo '</ul>';
     $this->widget_end($args);
@@ -106,13 +133,32 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
    *   Products delivery times.
    */
   public static function getProductsDeliveryTimes(array $args = []) {
+    if (static::$delivery_times) {
+      return static::$delivery_times;
+    }
     $query_args = wp_parse_args($args, [
       'taxonomy' => 'product_delivery_times',
       'hide_empty' => FALSE,
       'orderby' => 'slug',
       'order' => 'ASC',
     ]);
-    return get_terms($query_args);
+    $terms = get_terms($query_args);
+    static::$delivery_times = $terms;
+    return $terms;
+  }
+
+  /**
+   * Typecasts slug to integer to achieve proper numeric sorting.
+   *
+   * @implements get_terms_orderby
+   *
+   * @return string
+   */
+  public static function get_terms_orderby(string $orderby, array $query_vars, array $taxonomy): string {
+    if (in_array('product_delivery_times', $taxonomy, TRUE) && $query_vars['orderby'] === 'slug') {
+      $orderby = $orderby . '+0';
+    }
+    return $orderby;
   }
 
 }
