@@ -1,6 +1,6 @@
 <?php
 
-namespace Netzstrategen\ShopStandards\Widgets;
+namespace Netzstrategen\ShopStandards\ProductFilters;
 
 use Netzstrategen\ShopStandards\Plugin;
 
@@ -16,6 +16,8 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
   const WIDGET_NAME = Plugin::L10N . '_widget_filter_delivery_time';
 
   /**
+   * List of delivery time values.
+   *
    * @var array
    */
   public static $delivery_times = [];
@@ -151,8 +153,6 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
    * Typecasts slug to integer to achieve proper numeric sorting.
    *
    * @implements get_terms_orderby
-   *
-   * @return string
    */
   public static function get_terms_orderby(string $orderby, array $query_vars, array $taxonomy): string {
     if (in_array('product_delivery_times', $taxonomy, TRUE) && $query_vars['orderby'] === 'slug') {

@@ -27,13 +27,7 @@ function classloader($class) {
     if ($ns_offset === NULL) {
       $ns_offset = strlen(__NAMESPACE__) + 1;
     }
-    $folder = '/src/';
-    $class_name = strtr(substr($class, $ns_offset), '\\', '/');
-    if (strpos($class_name, 'Widgets/') === 0) {
-      $folder .= 'widgets/';
-      $class_name = substr($class_name, 8);
-    }
-    include __DIR__ . $folder . $class_name . '.php';
+    include __DIR__ . '/src/' . strtr(substr($class, $ns_offset), '\\', '/') . '.php';
   }
 }
 
