@@ -541,7 +541,7 @@ class WooCommerce {
     $strings = [];
     $data = [];
     $product = $item->get_product();
-    // Extract key/value pairs from passed html and add it to the product data set.
+    // Extract label/value pairs from passed HTML and add it to the product data set.
     $matched = preg_match_all('@<strong.+[^>]>(.+)</strong>.+<p>(.+)</p>@', $html, $matches, PREG_SET_ORDER);
     if ($matched) {
       foreach ($matches as $match) {
