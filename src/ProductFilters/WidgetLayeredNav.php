@@ -1,8 +1,6 @@
 <?php
 
-namespace Netzstrategen\ShopStandards\Widgets;
-
-use Netzstrategen\ShopStandards\Plugin;
+namespace Netzstrategen\ShopStandards\ProductFilters;
 
 /**
  * Widget layered nav class.
@@ -27,7 +25,7 @@ class WidgetLayeredNav extends \WC_Widget_Layered_Nav {
     $found = parent::layered_nav_list($terms, $taxonomy, $query_type);
     $output = ob_get_clean();
 
-    $output = Plugin::addFilterToNavLinks($output, 'delivery_time');
+    $output = DeliveryTime::addFilterToNavLinks($output, 'delivery_time');
     echo $output;
     return $found;
   }
@@ -35,7 +33,7 @@ class WidgetLayeredNav extends \WC_Widget_Layered_Nav {
   /**
    * @todo Implement output.
    */
-  protected function layered_nav_dropdown( $terms, $taxonomy, $query_type ) {
+  protected function layered_nav_dropdown($terms, $taxonomy, $query_type) {
     return parent::layered_nav_dropdown($terms, $taxonomy, $query_type);
   }
 

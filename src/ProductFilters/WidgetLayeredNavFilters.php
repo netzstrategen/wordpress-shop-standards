@@ -1,6 +1,6 @@
 <?php
 
-namespace Netzstrategen\ShopStandards\Widgets;
+namespace Netzstrategen\ShopStandards\ProductFilters;
 
 use Netzstrategen\ShopStandards\Plugin;
 
@@ -33,7 +33,7 @@ class WidgetLayeredNavFilters extends \WC_Widget_Layered_Nav_Filters {
       $this->widget_end($args);
       $output = ob_get_clean();
     }
-    $output = Plugin::addFilterToNavLinks($output, 'delivery_time');
+    $output = DeliveryTime::addFilterToNavLinks($output, 'delivery_time');
     if (!$filter_values = $_GET['delivery_time'] ?? []) {
       echo $output;
       return;
@@ -53,7 +53,7 @@ class WidgetLayeredNavFilters extends \WC_Widget_Layered_Nav_Filters {
       $links[] = '<li class="chosen"><a rel="nofollow" aria-label="' . esc_attr__('Remove filter', 'woocommerce') . '" href="' . esc_url($link) . '">' . $name . '</a></li>';
     }
     // Append delivery time filter to active filter list.
-    $output = preg_replace('@</ul>@', implode("\n", $links) . '</ul>' , $output);
+    $output = preg_replace('@</ul>@', implode("\n", $links) . '</ul>', $output);
     echo $output;
   }
 
