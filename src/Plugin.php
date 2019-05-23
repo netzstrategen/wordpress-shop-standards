@@ -128,6 +128,9 @@ class Plugin {
       // Remove delivery time from product name in order emails, added by
       // woocommerce-german-market.
       remove_filter('woocommerce_order_item_name', ['WGM_Template', 'add_delivery_time_to_product_title']);
+
+      // Ensure product details column is wide enough.
+      add_filter('woocommerce_email_styles', __NAMESPACE__ . '\WooCommerce::woocommerce_email_styles');
     }
 
     // Enqueues plugin scripts.
