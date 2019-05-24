@@ -154,8 +154,8 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
    *
    * @implements get_terms_orderby
    */
-  public static function get_terms_orderby(string $orderby, array $query_vars, array $taxonomy): string {
-    if (in_array('product_delivery_times', $taxonomy, TRUE) && $query_vars['orderby'] === 'slug') {
+  public static function get_terms_orderby(string $orderby, array $query_vars, ?array $taxonomy): string {
+    if ($taxonomy && in_array('product_delivery_times', $taxonomy, TRUE) && $query_vars['orderby'] === 'slug') {
       $orderby = $orderby . '+0';
     }
     return $orderby;
