@@ -21,16 +21,29 @@
 
   const $variationsForm = $('.variations_form');
   const $variationsSelectDropdowns = $('.variations_form .variations select');
+  let $variationSelectChanged = false;
+
+  $variationsSelectDropdowns.change(function variationSelectDropdownChanged() {
+    $variationSelectChanged = $(this);
+  });
 
   $('.variations_form').on('woocommerce_variation_has_changed', () => {
-    // If there is only one option left in any of current variation attributes
-    // dropdowns, it should be auto-selected.
-    $variationsSelectDropdowns.each(function setVariationSelectDropdowns() {
-      const $this = $(this);
-      if ($this.find('option').size() === 2) {
-        $this.val($this.find('option').eq(1).val());
-      }
+    // Selecting the initial empty value in any of current variation attributes
+    // dropdowns resets them all.
+    if ($variationSelectChanged && $variationSelectChanged.val() === '') {
+      $variationSelectChanged = false;
+      $variationsSelectDropdowns.val('');
       $variationsForm.trigger('check_variations');
-    });
+    } else {
+      // If there is only one option left in any of current variation attributes
+      // dropdowns, it should be auto-selected.
+      $variationsSelectDropdowns.each(function setVariationSelectDropdowns() {
+        const $this = $(this);
+        if ($this.find('option').size() === 2) {
+          $this.val($this.find('option').eq(1).val());
+        }
+        $variationsForm.trigger('check_variations');
+      });
+    }
   });
 }(jQuery));
