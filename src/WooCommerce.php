@@ -572,6 +572,16 @@ class WooCommerce {
   }
 
   /**
+   * Ensures product details column is wide enough.
+   *
+   * @implements woocommerce_email_styles
+   */
+  public static function woocommerce_email_styles($css) {
+    $css .= '.order_item td:first-child {width: 75%;}';
+    return $css;
+  }
+
+  /**
    * Retrieves basic data (SKU, dimensions and weight) for a given product.
    *
    * @param WC_Product $product
