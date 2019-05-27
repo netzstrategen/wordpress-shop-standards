@@ -18,4 +18,19 @@
   $(document.body).on('checkout_error', () => {
     $('#place_order').prop('value', placeOrderBtnInitialValue).removeClass('disabled');
   });
+
+  const $variationsForm = $('.variations_form');
+  const $variationsSelectDropdowns = $('.variations_form .variations select');
+
+  $('.variations_form').on('woocommerce_variation_has_changed', () => {
+    // If there is only one option left in any of current variation attributes
+    // dropdowns, it should be auto-selected.
+    $variationsSelectDropdowns.each(function setVariationSelectDropdowns() {
+      const $this = $(this);
+      if ($this.find('option').size() === 2) {
+        $this.val($this.find('option').eq(1).val());
+      }
+      $variationsForm.trigger('check_variations');
+    });
+  });
 }(jQuery));
