@@ -534,6 +534,15 @@ class WooCommerce {
 
   /**
    * Adds basic information (e.g. weight, sku, etc.) and product attributes to order emails.
+   * 
+   * @param string $html
+   *  Rendered list of product meta.
+   * 
+   * @param object $item
+   *  The processed item object.
+   *
+   * @param array $args
+   *   The array of formatting arguments.
    *
    * @implements woocommerce_display_item_meta
    */
@@ -541,10 +550,12 @@ class WooCommerce {
     $strings = [];
     $product = $item->get_product();
     $data = static::getProductData($product);
+    // @todo The separator element is stripped from the sent mail. 
     $data[] = [
       'name' => '',
       'value' => '<hr>',
     ];
+    // Add product meta which is contained in $html after product data.
     foreach ($item->get_formatted_meta_data() as $meta_id => $meta) {
       $data[] = [
         'name' => $meta->display_key,
