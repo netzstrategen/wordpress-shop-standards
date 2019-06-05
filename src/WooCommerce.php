@@ -534,10 +534,10 @@ class WooCommerce {
 
   /**
    * Adds basic information (e.g. weight, sku, etc.) and product attributes to order emails.
-   * 
+   *
    * @param string $html
    *  Rendered list of product meta.
-   * 
+   *
    * @param object $item
    *  The processed item object.
    *
@@ -550,7 +550,7 @@ class WooCommerce {
     $strings = [];
     $product = $item->get_product();
     $data = static::getProductData($product);
-    // @todo The separator element is stripped from the sent mail. 
+    // @todo The separator element is stripped from the sent mail.
     $data[] = [
       'name' => '',
       'value' => '<hr>',
