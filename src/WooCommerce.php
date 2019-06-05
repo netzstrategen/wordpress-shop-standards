@@ -535,12 +535,34 @@ class WooCommerce {
   /**
    * Adds basic information (e.g. weight, sku, etc.) and product attributes to order emails.
    *
+   * @param string $html
+   *  Rendered list of product meta.
+   *
+   * @param object $item
+   *  The processed item object.
+   *
+   * @param array $args
+   *   The array of formatting arguments.
+   *
    * @implements woocommerce_display_item_meta
    */
   public static function woocommerce_display_item_meta($html, $item, $args) {
     $strings = [];
     $product = $item->get_product();
-    $product_data_set = array_merge(static::getProductData($product), static::getProductAttributes($product));
+    $data = static::getProductData($product);
+    // @todo The separator element is stripped from the sent mail.
+    $data[] = [
+      'name' => '',
+      'value' => '<hr>',
+    ];
+    // Add product meta which is contained in $html after product data.
+    foreach ($item->get_formatted_meta_data() as $meta_id => $meta) {
+      $data[] = [
+        'name' => $meta->display_key,
+        'value' => strip_tags($meta->display_value),
+      ];
+    }
+    $product_data_set = array_merge($data, static::getProductAttributes($product));
 
     // Display delivery time from woocommerce-german-market for each order item.
     $delivery_time = wc_get_order_item_meta($item->get_id(), '_deliverytime');
@@ -552,11 +574,20 @@ class WooCommerce {
     }
 
     foreach ($product_data_set as $productData) {
-      $strings[] = '<strong class="wc-item-meta-label">' . $productData['name'] . ':</strong> ' . $productData['value'];
+      $string = NULL;
+      if (!empty($productData['name'])) {
+        $string .= '<strong class="wc-item-meta-label">' . $productData['name'] . ':</strong> ';
+      }
+      if (isset($productData['value'])) {
+        $string .= $productData['value'];
+      }
+      if (isset($string)) {
+        $strings[] = $string;
+      }
     }
 
     if ($strings) {
-      $html = $args['before'] . implode($args['separator'], $strings) . $args['after'] . $html;
+      $html = $args['before'] . implode($args['separator'], $strings) . $args['after'];
     }
     return $html;
   }
