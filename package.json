@@ -1,5 +1,5 @@
 {
-  "version": "1.23.3",
+  "version": "1.24.0",
   "title": "shop-standards",
   "description": "Standard refinements for e-commerce websites.",
   "dependencies": {
@@ -17,6 +17,10 @@
   },
   "gulpPaths": {
     "destDir": "./dist",
+    "fonts": {
+      "src": "./assets/fonts/**/*.{eot,svg,ttf,woff,woff2}",
+      "dest": "./dist/fonts"
+    },
     "images": {
       "src": "./assets/img/**/*.{jpg,jpeg,png,gif,svg}",
       "dest": "./dist/img"
