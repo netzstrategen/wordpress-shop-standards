@@ -28,11 +28,11 @@
   });
 
   $('.variations_form').on('woocommerce_variation_has_changed', () => {
-    // Selecting the initial empty value in any of current variation attributes
-    // dropdowns resets them all.
+    // Selecting the initial empty value of a variation attributes dropdown
+    // resets it.
     if ($variationSelectChanged && $variationSelectChanged.val() === '') {
+      $variationSelectChanged.val('');
       $variationSelectChanged = false;
-      $variationsSelectDropdowns.val('');
       $variationsForm.trigger('check_variations');
     } else {
       // If there is only one option left in any of current variation attributes
