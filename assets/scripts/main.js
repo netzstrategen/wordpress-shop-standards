@@ -28,8 +28,8 @@
   });
 
   $('.variations_form').on('woocommerce_variation_has_changed', () => {
-    // Selecting the initial empty value of a variation attributes dropdown
-    // resets it.
+    // Allow selecting the default empty value of an attributes dropdown
+    // without modifying the value of the others.
     if ($variationSelectChanged && $variationSelectChanged.val() === '') {
       $variationSelectChanged.val('');
       $variationSelectChanged = false;
