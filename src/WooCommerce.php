@@ -144,6 +144,13 @@ class WooCommerce {
       'description' => __('The label will only be displayed if "Sale price was displayed as regular price" setting is checked.', Plugin::L10N),
     ]);
     echo '</div>';
+    // Hide sale percentage flash label.
+    echo '<div class="options_group">';
+    woocommerce_wp_checkbox([
+      'id' => '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label',
+      'label' => __('Hide sale percentage bubble', Plugin::L10N),
+    ]);
+    echo '</div>';
     // Hide add to cart button.
     echo '<div class="options_group show_if_simple show_if_external">';
     woocommerce_wp_checkbox([
@@ -206,6 +213,7 @@ class WooCommerce {
       '_' . Plugin::PREFIX . '_show_sale_price_only',
       '_' . Plugin::PREFIX . '_hide_add_to_cart_button',
       '_' . Plugin::PREFIX . '_price_comparison_focus',
+      '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label',
     ];
 
     foreach ($custom_fields_checkbox as $field) {
@@ -418,7 +426,7 @@ class WooCommerce {
     else {
       $sale_percentage = get_post_meta($product->get_id(), '_sale_percentage', TRUE);
     }
-    if (((!is_single() && $sale_percentage >= 10) || is_single()) && get_post_meta($product->get_id(), '_custom_hide_sale_percentage_flash_label', TRUE) !== 'yes') {
+    if (((!is_single() && $sale_percentage >= 10) || is_single()) && get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label', TRUE) !== 'yes') {
       $output = '<span class="onsale" data="' . $sale_percentage . '">-' . $sale_percentage . '%</span>';
     }
     else {

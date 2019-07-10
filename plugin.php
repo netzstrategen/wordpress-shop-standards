@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: Shop Standards
-  Version: 1.24.1
+  Version: 1.24.2
   Text Domain: shop-standards
   Description: Standard refinements for e-commerce websites.
   Author: netzstrategen
