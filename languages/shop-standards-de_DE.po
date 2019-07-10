@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-05-10 14:39+0200\n"
-"PO-Revision-Date: 2019-05-10 14:48+0200\n"
+"POT-Creation-Date: 2019-07-10 10:54+0200\n"
+"PO-Revision-Date: 2019-07-10 10:55+0200\n"
 "Last-Translator: Joan López <joan@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.3\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
@@ -49,48 +49,56 @@ msgstr ""
 msgid "Shop Standards"
 msgstr ""
 
-#: src/Plugin.php:55 src/Plugin.php:56 src/Plugin.php:147 src/Plugin.php:186
+#: src/Plugin.php:68 src/Plugin.php:69 src/Plugin.php:168 src/Plugin.php:207
 msgid "Hide \"Add to Cart\" button"
 msgstr "“In den Warenkorb”-Verhalten"
 
-#: src/Plugin.php:151
+#: src/Plugin.php:172
 msgid "Product categories"
 msgstr "Produktkategorien"
 
-#: src/Plugin.php:152
+#: src/Plugin.php:173
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
 "ausgeblendet."
 
-#: src/Plugin.php:164
+#: src/Plugin.php:185
 msgid "Product brands"
 msgstr "Produktmarken"
 
-#: src/Plugin.php:165
+#: src/Plugin.php:186
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
 "ausgeblendet."
 
-#: src/Plugin.php:177
+#: src/Plugin.php:198
 msgid "Notice"
 msgstr "Hinweis"
 
-#: src/Plugin.php:179
+#: src/Plugin.php:200
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 "Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
 
-#: src/WidgetFilterDeliveryTime.php:31
+#: src/ProductFilters/WidgetFilterDeliveryTime.php:31
 msgid "Filter Products by Delivery Time"
 msgstr "Produkte nach Lieferzeit filtern"
 
-#: src/WidgetFilterDeliveryTime.php:32
+#: src/ProductFilters/WidgetFilterDeliveryTime.php:32
 msgid "Display a list of delivery times to filter products in your store."
 msgstr ""
 "Zeigen Sie eine Liste der Lieferzeiten an, um Produkte in Ihrer Filiale zu "
 "filtern."
+
+#: src/ProductFilters/WidgetFilterDeliveryTime.php:69
+msgid "Delivery Time:"
+msgstr ""
+
+#: src/ProductFilters/WidgetLayeredNavFilters.php:53
+msgid "Remove filter"
+msgstr ""
 
 #: src/WooCommerce.php:80
 msgid "Out of stock"
@@ -104,7 +112,7 @@ msgstr ""
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:121 src/WooCommerce.php:303
+#: src/WooCommerce.php:121 src/WooCommerce.php:311
 msgid "Enter the Global Trade Item Number"
 msgstr "Geben Sie die Gesamtzahl des Handels ein"
 
@@ -128,31 +136,35 @@ msgstr ""
 "Das Label wird nur angezeigt, wenn “Sale Preis als regulären Preis anzeigen "
 "aktiviert wurde."
 
-#: src/WooCommerce.php:151 src/WooCommerce.php:319
+#: src/WooCommerce.php:151
+msgid "Hide sale percentage bubble"
+msgstr "Sale: Prozentangabe verbergen"
+
+#: src/WooCommerce.php:158 src/WooCommerce.php:327
 msgid "Hide add to cart button"
 msgstr "Warenkorb-Button verstecken"
 
-#: src/WooCommerce.php:158 src/WooCommerce.php:337
+#: src/WooCommerce.php:165 src/WooCommerce.php:345
 msgid "Price comparison focus product"
 msgstr "Preisbeobachtung Fokus-Produkt"
 
-#: src/WooCommerce.php:175
+#: src/WooCommerce.php:182
 msgid "Internal product notes"
 msgstr "Interne Anmerkungen"
 
-#: src/WooCommerce.php:302
+#: src/WooCommerce.php:310
 msgid "GTIN:"
 msgstr ""
 
-#: src/WooCommerce.php:311
+#: src/WooCommerce.php:319
 msgid "ERP/Inventory ID:"
 msgstr "ERP/Inventar ID:"
 
-#: src/WooCommerce.php:327
+#: src/WooCommerce.php:335
 msgid "Variation has insufficient images"
 msgstr "Variation hat ein unzureichendes Bilder"
 
-#: src/WooCommerce.php:329
+#: src/WooCommerce.php:337
 msgid ""
 "Allows this product to be identified and possibly be excluded by other "
 "processes and plugins (e.g. a custom filter for product feeds). Enabling "
@@ -162,30 +174,34 @@ msgstr ""
 "unzureichender Bilder auszuschließen. Das Setzen des Hakens hat keinen "
 "Einfluss auf das Frontend."
 
-#: src/WooCommerce.php:405
+#: src/WooCommerce.php:413
 msgid "Sort by discount"
 msgstr "Sortieren nach Rabatt"
 
-#: src/WooCommerce.php:460
+#: src/WooCommerce.php:468
 msgid "(Our price)"
 msgstr "(Online-Preis)"
 
-#: src/WooCommerce.php:580
+#: src/WooCommerce.php:523 src/WooCommerce.php:579
+msgid "Delivery Time"
+msgstr ""
+
+#: src/WooCommerce.php:639
 msgid "SKU"
 msgstr ""
 
-#: src/WooCommerce.php:584
+#: src/WooCommerce.php:643
 msgid "ERP/ID"
 msgstr ""
 
-#: src/WooCommerce.php:597
+#: src/WooCommerce.php:656
 msgid "Dimensions"
 msgstr ""
 
-#: src/WooCommerce.php:605
+#: src/WooCommerce.php:664
 msgid "Weight"
 msgstr ""
 
-#: src/WooCommerce.php:653
+#: src/WooCommerce.php:712
 msgid "Product "
 msgstr "Produkt "
