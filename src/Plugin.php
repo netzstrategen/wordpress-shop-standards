@@ -78,6 +78,16 @@ class Plugin {
     // Displays sale price as regular price if custom field is checked.
     add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_price_html', 10, 2);
 
+    // Ensures new product are saved before updating its meta data.
+    add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\WooCommerce::saveNewProductBeforeMetaUpdate', 1);
+    // Updates product delivery time with the lowest delivery time between its own variations.
+    add_action('updated_post_meta', __NAMESPACE__ . '\Admin::updateProductDeliveryTime', 10, 3);
+    // Updates sale percentage when regular price or sale price are updated.
+    add_action('updated_post_meta', __NAMESPACE__ . '\Admin::updateSalePercentage', 10, 4);
+
+    add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\WooCommerce::woocommerce_process_product_meta');
+    add_action('woocommerce_save_product_variation', __NAMESPACE__ . '\WooCommerce::woocommerce_save_product_variation', 10, 2);
+
     if (is_admin()) {
       return;
     }
