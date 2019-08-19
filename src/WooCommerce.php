@@ -466,7 +466,7 @@ class WooCommerce {
       $current_filter = current_filter();
       $priority = has_filter($current_filter, __CLASS__ . '::woocommerce_get_price_html');
       // Remove and re-add filter to avoid callback loop.
-      remove_filter($current_filter, __CLASS__ . '::woocommerce_get_price_html');
+      remove_filter($current_filter, __CLASS__ . '::woocommerce_get_price_html', $priority);
       $price = apply_filters($current_filter, $price, $product);
       add_filter($current_filter, __CLASS__ . '::woocommerce_get_price_html', $priority, 2);
 
