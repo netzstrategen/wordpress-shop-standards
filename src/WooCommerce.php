@@ -456,12 +456,20 @@ class WooCommerce {
           $sale_price[] = wc_price($sale_prices['max']);
         }
         $price = implode('-', $sale_price);
+        // Remove and re-add filter to avoid callback loop.
+        remove_filter('woocommerce_get_price_html', __CLASS__ . '::woocommerce_get_price_html');
+        $price = apply_filters('woocommerce_get_price_html', $price, $product);
+        add_filter('woocommerce_get_price_html', __CLASS__ . '::woocommerce_get_price_html', 10, 2);
       }
       else {
         if (!$product->get_sale_price()) {
           return $price;
         }
         $price = wc_price(wc_get_price_to_display($product)) . $product->get_price_suffix();
+        // Remove and re-add filter to avoid callback loop.
+        remove_filter('woocommerce_get_price_html', __CLASS__ . '::woocommerce_get_price_html');
+        $price = apply_filters('woocommerce_get_price_html', $price, $product);
+        add_filter('woocommerce_get_price_html', __CLASS__ . '::woocommerce_get_price_html', 10, 2);
       }
 
       if (is_product() && !static::isSideProduct()) {
