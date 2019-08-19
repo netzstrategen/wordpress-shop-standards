@@ -463,12 +463,12 @@ class WooCommerce {
         }
         $price = wc_price(wc_get_price_to_display($product)) . $product->get_price_suffix();
       }
+      // Invoke regular price_html filters (excluding this one).
       $current_filter = current_filter();
-      $priority = has_filter($current_filter, __CLASS__ . '::woocommerce_get_price_html');
-      // Remove and re-add filter to avoid callback loop.
-      remove_filter($current_filter, __CLASS__ . '::woocommerce_get_price_html', $priority);
+      $priority = has_filter($current_filter, __METHOD__);
+      remove_filter($current_filter, __METHOD__);
       $price = apply_filters($current_filter, $price, $product);
-      add_filter($current_filter, __CLASS__ . '::woocommerce_get_price_html', $priority, 2);
+      add_filter($current_filter, __METHOD__, $priority, 2);
 
       if (is_product() && !static::isSideProduct()) {
         $price_label = get_post_meta($product_id, '_' . Plugin::PREFIX . '_price_label', TRUE) ?: __('(Our price)', Plugin::L10N);
