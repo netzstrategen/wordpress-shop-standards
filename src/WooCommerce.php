@@ -728,4 +728,26 @@ class WooCommerce {
     return $data;
   }
 
+  /**
+   * Add salutation field for billing and shipping.
+   *
+   * @implements woocommerce_checkout_fields
+   */
+  public static function woocommerce_checkout_fields(?array $fields): array {
+    $fields['shipping']['shipping_salutation'] = [
+      'label' => __('Salutation', Plugin::L10N),
+      'class' => ['form-row-wide'],
+      'type' => 'select',
+      'options' => [
+        __('Mr', Plugin::L10N) => __('Mr', Plugin::L10N),
+        __('Ms', Plugin::L10N) => __('Ms', Plugin::L10N),
+        __('Company', Plugin::L10N) => __('Company', Plugin::L10N),
+      ],
+      'priority' => 5,
+    ];
+    $fields['billing']['billing_salutation'] = $fields['shipping']['shipping_salutation'];
+
+    return $fields;
+  }
+
 }

@@ -143,6 +143,11 @@ class Plugin {
       add_filter('woocommerce_email_styles', __NAMESPACE__ . '\WooCommerce::woocommerce_email_styles');
     }
 
+    if (get_option('_add_salutation_field') === 'yes') {
+      // Add salutation fields.
+      add_filter('woocommerce_checkout_fields', __NAMESPACE__ . '\WooCommerce::woocommerce_checkout_fields');
+    }
+
     // Enqueues plugin scripts.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
   }
