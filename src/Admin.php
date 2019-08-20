@@ -15,13 +15,6 @@ use WC_Admin_Settings;
 class Admin {
 
   /**
-   * Plugin configuration settings.
-   *
-   * @var array
-   */
-  public static $pluginSettings;
-
-  /**
    * Plugin backend initialization method.
    *
    * @implements admin_init
@@ -35,10 +28,9 @@ class Admin {
     // Adds products variations custom fields.
     add_action('woocommerce_product_after_variable_attributes', __NAMESPACE__ . '\WooCommerce::woocommerce_product_after_variable_attributes', 10, 3);
 
-    // Adds plugin configuration section to WooCommerce products settings section.
-    add_action('woocommerce_settings_tabs_array', __CLASS__ . '::woocommerce_settings_tabs_array', 30);
-    add_action('woocommerce_settings_shop_standards', __CLASS__ . '::woocommerce_settings_shop_standards');
-    add_action('woocommerce_settings_save_shop_standards', __CLASS__ . '::woocommerce_settings_save_shop_standards');
+    Settings::init();
+    Seo::init();
+    Checkout::init();
   }
 
   /**
@@ -128,82 +120,4 @@ class Admin {
     }
   }
 
-  /**
-   * Defines plugin configuration settings.
-   *
-   * @return array
-   */
-  public static function getSettings(): array {
-    if (!isset(static::$pluginSettings)) {
-      static::$pluginSettings = [
-        [
-          'name' => __('SEO settings', Plugin::L10N),
-          'type' => 'title',
-        ],
-        [
-          'id' => '_robots_noindex_secondary_product_listings',
-          'type' => 'checkbox',
-          'name' => __('Index first page of paginated products listings only', Plugin::L10N),
-          'desc_tip' => __('If checked, noindex meta tag will be added to paginated products listing pages, starting from the second page.', Plugin::L10N),
-        ],
-        [
-          'id' => '_wpseo_disable_adjacent_rel_links',
-          'type' => 'checkbox',
-          'name' => __('Disable Yoast SEO adjacent navigation links.', Plugin::L10N),
-          'desc_tip' => __('Avoids unwanted rankings of search result URLs as well as paginated listing pages in case the shop\'s product listing is using infinite scrolling or lazy loading to display further products without pagination links.', Plugin::L10N),
-        ],
-        [
-          'id' => Plugin::L10N,
-          'type' => 'sectionend',
-        ],
-        [
-          'name' => __('Checkout', Plugin::L10N),
-          'type' => 'title',
-        ],
-        [
-          'title' => __('Salutation field', Plugin::L10N),
-          'desc' => __('Add salutation field in checkout', Plugin::L10N),
-          'id' => '_add_salutation_field',
-          'type' => 'checkbox',
-          'default'  => 'no',
-          'desc_tip' => __('If checked a salutation field will be added to the shipping and billing address fields.', Plugin::L10N),
-        ],
-        [
-          'id' => Plugin::L10N,
-          'type' => 'sectionend',
-        ],
-      ];
-    }
-    return static::$pluginSettings;
-  }
-
-  /**
-   * Adds a Shop Standards section tab.
-   *
-   * @implements woocommerce_settings_tabs_array
-   */
-  public static function woocommerce_settings_tabs_array(array $tabs): array {
-    $tabs['shop_standards'] = __('Shop Standards', Plugin::L10N);
-    return $tabs;
-  }
-
-  /**
-   * Adds settings fields to corresponding WooCommerce settings section.
-   *
-   * @implements woocommerce_settings_<current_tab>
-   */
-  public static function woocommerce_settings_shop_standards() {
-    $settings = static::getSettings();
-    WC_Admin_Settings::output_fields($settings);
-  }
-
-  /**
-   * Triggers setting save.
-   *
-   * @implements woocommerce_settings_save_<current_tab>
-   */
-  public static function woocommerce_settings_save_shop_standards() {
-    $settings = static::getSettings();
-    WC_Admin_Settings::save_fields($settings);
-  }
 }
