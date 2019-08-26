@@ -31,28 +31,26 @@ class Seo {
    * @implements woocommerce_get_settings_shop_standards
    */
   public static function woocommerce_get_settings_shop_standards(array $settings): array {
-    $settings = array_merge($settings, [
-      [
-        'name' => __('SEO settings', Plugin::L10N),
-        'type' => 'title',
-      ],
-      [
-        'id' => '_robots_noindex_secondary_product_listings',
-        'type' => 'checkbox',
-        'name' => __('Index first page of paginated products listings only', Plugin::L10N),
-        'desc_tip' => __('If checked, noindex meta tag will be added to paginated products listing pages, starting from the second page.', Plugin::L10N),
-      ],
-      [
-        'id' => '_wpseo_disable_adjacent_rel_links',
-        'type' => 'checkbox',
-        'name' => __('Disable Yoast SEO adjacent navigation links.', Plugin::L10N),
-        'desc_tip' => __('Avoids unwanted rankings of search result URLs as well as paginated listing pages in case the shop\'s product listing is using infinite scrolling or lazy loading to display further products without pagination links.', Plugin::L10N),
-      ],
-      [
-        'id' => Plugin::L10N,
-        'type' => 'sectionend',
-      ],
-    ]);
+    $settings[] = [
+      'type' => 'title',
+      'name' => __('SEO settings', Plugin::L10N),
+    ];
+    $settings[] = [
+      'type' => 'checkbox',
+      'id' => '_robots_noindex_secondary_product_listings',
+      'name' => __('Index first page of paginated products listings only', Plugin::L10N),
+      'desc_tip' => __('If checked, noindex meta tag will be added to paginated products listing pages, starting from the second page.', Plugin::L10N),
+    ];
+    $settings[] = [
+      'type' => 'checkbox',
+      'id' => '_wpseo_disable_adjacent_rel_links',
+      'name' => __('Disable Yoast SEO adjacent navigation links.', Plugin::L10N),
+      'desc_tip' => __('Avoids unwanted rankings of search result URLs as well as paginated listing pages in case the shop\'s product listing is using infinite scrolling or lazy loading to display further products without pagination links.', Plugin::L10N),
+    ];
+    $settings[] = [
+      'type' => 'sectionend',
+      'id' => Plugin::L10N,
+    ];
     return $settings;
   }
 

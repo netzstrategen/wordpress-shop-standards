@@ -29,8 +29,6 @@ class Admin {
     add_action('woocommerce_product_after_variable_attributes', __NAMESPACE__ . '\WooCommerce::woocommerce_product_after_variable_attributes', 10, 3);
 
     Settings::init();
-    Seo::init();
-    Checkout::init();
   }
 
   /**
