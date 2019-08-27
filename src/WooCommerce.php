@@ -278,7 +278,7 @@ class WooCommerce {
    * Displays order notice for products that must not be sold online.
    */
   public static function woocommerce_single_product_summary() {
-    if (empty($notice = get_field('acf_hide_add_to_cart_product_notice', 'option')) || empty($product = wc_get_product())) {
+    if (function_exists('get_field') && empty($notice = get_field('acf_hide_add_to_cart_product_notice', 'option')) || empty($product = wc_get_product())) {
       return;
     }
     $product_id = $product->get_id();
@@ -292,7 +292,7 @@ class WooCommerce {
    * Checks whether a given post has a given term.
    */
   public static function productHasSpecificTaxonomyTerm($post_id, $taxonomy_name) {
-    if (class_exists('acf') && $excluded_terms = get_field('acf_hide_add_to_cart_' . $taxonomy_name, 'option')) {
+    if (function_exists('get_field') && $excluded_terms = get_field('acf_hide_add_to_cart_' . $taxonomy_name, 'option')) {
       return has_term($excluded_terms, $taxonomy_name, $post_id);
     }
   }
