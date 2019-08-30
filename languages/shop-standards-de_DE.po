@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-07-10 10:54+0200\n"
-"PO-Revision-Date: 2019-07-10 10:55+0200\n"
+"POT-Creation-Date: 2019-08-30 17:30+0200\n"
+"PO-Revision-Date: 2019-08-30 17:32+0200\n"
 "Last-Translator: Joan López <joan@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -20,64 +20,72 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 
-#: src/Admin.php:50
+#: src/Admin.php:40
+msgid "Shop Standards products"
+msgstr ""
+
+#: src/Admin.php:46
+msgid "Minimum discount percentage to display product sale label"
+msgstr "Minimaler Rabattprozentsatz zur Anzeige des Produktverkaufslabels"
+
+#: src/Admin.php:54
 msgid "Shop Standards SEO settings"
 msgstr ""
 
-#: src/Admin.php:56
+#: src/Admin.php:60
 msgid "Index first page of paginated products listings only"
 msgstr ""
 
-#: src/Admin.php:57
+#: src/Admin.php:61
 msgid ""
 "If checked, noindex meta tag will be added to paginated products listing "
 "pages, starting from the second page."
 msgstr ""
 
-#: src/Admin.php:62
+#: src/Admin.php:66
 msgid "Disable Yoast SEO adjacent navigation links."
 msgstr ""
 
-#: src/Admin.php:63
+#: src/Admin.php:67
 msgid ""
 "Avoids unwanted rankings of search result URLs as well as paginated listing "
 "pages in case the shop's product listing is using infinite scrolling or lazy "
 "loading to display further products without pagination links."
 msgstr ""
 
-#: src/Admin.php:170
+#: src/Admin.php:174
 msgid "Shop Standards"
 msgstr ""
 
-#: src/Plugin.php:68 src/Plugin.php:69 src/Plugin.php:168 src/Plugin.php:207
+#: src/Plugin.php:68 src/Plugin.php:69 src/Plugin.php:178 src/Plugin.php:217
 msgid "Hide \"Add to Cart\" button"
 msgstr "“In den Warenkorb”-Verhalten"
 
-#: src/Plugin.php:172
+#: src/Plugin.php:182
 msgid "Product categories"
 msgstr "Produktkategorien"
 
-#: src/Plugin.php:173
+#: src/Plugin.php:183
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
 "ausgeblendet."
 
-#: src/Plugin.php:185
+#: src/Plugin.php:195
 msgid "Product brands"
 msgstr "Produktmarken"
 
-#: src/Plugin.php:186
+#: src/Plugin.php:196
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
 "ausgeblendet."
 
-#: src/Plugin.php:198
+#: src/Plugin.php:208
 msgid "Notice"
 msgstr "Hinweis"
 
-#: src/Plugin.php:200
+#: src/Plugin.php:210
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 "Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
@@ -178,30 +186,30 @@ msgstr ""
 msgid "Sort by discount"
 msgstr "Sortieren nach Rabatt"
 
-#: src/WooCommerce.php:468
+#: src/WooCommerce.php:475
 msgid "(Our price)"
 msgstr "(Online-Preis)"
 
-#: src/WooCommerce.php:523 src/WooCommerce.php:579
+#: src/WooCommerce.php:530 src/WooCommerce.php:586
 msgid "Delivery Time"
 msgstr ""
 
-#: src/WooCommerce.php:639
+#: src/WooCommerce.php:646
 msgid "SKU"
 msgstr ""
 
-#: src/WooCommerce.php:643
+#: src/WooCommerce.php:650
 msgid "ERP/ID"
 msgstr ""
 
-#: src/WooCommerce.php:656
+#: src/WooCommerce.php:663
 msgid "Dimensions"
 msgstr ""
 
-#: src/WooCommerce.php:664
+#: src/WooCommerce.php:671
 msgid "Weight"
 msgstr ""
 
-#: src/WooCommerce.php:712
+#: src/WooCommerce.php:719
 msgid "Product "
 msgstr "Produkt "
