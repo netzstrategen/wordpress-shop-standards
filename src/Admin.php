@@ -37,6 +37,20 @@ class Admin {
     if (!isset(static::$pluginSettings)) {
       static::$pluginSettings = [
         [
+          'name' => __('Shop Standards products', Plugin::L10N),
+          'type' => 'title',
+        ],
+        [
+          'id' => '_minimum_sale_percentage_to_display_label',
+          'type' => 'text',
+          'name' => __('Minimum discount percentage to display product sale label', Plugin::L10N),
+          'default' => 10,
+        ],
+        [
+          'id' => Plugin::L10N,
+          'type' => 'sectionend',
+        ],
+        [
           'name' => __('Shop Standards SEO settings', Plugin::L10N),
           'type' => 'title',
         ],
