@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
 "POT-Creation-Date: 2019-08-30 17:30+0200\n"
-"PO-Revision-Date: 2019-08-30 17:32+0200\n"
+"PO-Revision-Date: 2019-09-02 09:47+0200\n"
 "Last-Translator: Joan López <joan@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: src/Admin.php:46
 msgid "Minimum discount percentage to display product sale label"
-msgstr "Minimaler Rabattprozentsatz zur Anzeige des Produktverkaufslabels"
+msgstr "Minimaler Rabattprozentsatz zur Anzeige des Sale-Prozent-Labels"
 
 #: src/Admin.php:54
 msgid "Shop Standards SEO settings"
