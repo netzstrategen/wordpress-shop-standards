@@ -2,13 +2,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-08-30 17:30+0200\n"
+"POT-Creation-Date: 2019-09-11 15:11+0200\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 1.8.10\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
@@ -18,63 +18,31 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: src/Admin.php:40
-msgid "Shop Standards products"
-msgstr ""
-
-#: src/Admin.php:46
-msgid "Minimum discount percentage to display product sale label"
-msgstr ""
-
-#: src/Admin.php:54
-msgid "Shop Standards SEO settings"
-msgstr ""
-
-#: src/Admin.php:60
-msgid "Index first page of paginated products listings only"
-msgstr ""
-
-#: src/Admin.php:61
-msgid "If checked, noindex meta tag will be added to paginated products listing pages, starting from the second page."
-msgstr ""
-
-#: src/Admin.php:66
-msgid "Disable Yoast SEO adjacent navigation links."
-msgstr ""
-
-#: src/Admin.php:67
-msgid "Avoids unwanted rankings of search result URLs as well as paginated listing pages in case the shop's product listing is using infinite scrolling or lazy loading to display further products without pagination links."
-msgstr ""
-
-#: src/Admin.php:174
-msgid "Shop Standards"
-msgstr ""
-
-#: src/Plugin.php:68 src/Plugin.php:69 src/Plugin.php:178 src/Plugin.php:217
+#: src/Plugin.php:68 src/Plugin.php:69 src/Plugin.php:176 src/Plugin.php:215
 msgid "Hide \"Add to Cart\" button"
 msgstr ""
 
-#: src/Plugin.php:182
+#: src/Plugin.php:180
 msgid "Product categories"
 msgstr ""
 
-#: src/Plugin.php:183
+#: src/Plugin.php:181
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 
-#: src/Plugin.php:195
+#: src/Plugin.php:193
 msgid "Product brands"
 msgstr ""
 
-#: src/Plugin.php:196
+#: src/Plugin.php:194
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 
-#: src/Plugin.php:208
+#: src/Plugin.php:206
 msgid "Notice"
 msgstr ""
 
-#: src/Plugin.php:210
+#: src/Plugin.php:208
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 
@@ -92,6 +60,30 @@ msgstr ""
 
 #: src/ProductFilters/WidgetLayeredNavFilters.php:53
 msgid "Remove filter"
+msgstr ""
+
+#: src/Seo.php:36
+msgid "SEO settings"
+msgstr ""
+
+#: src/Seo.php:41
+msgid "Index first page of paginated products listings only"
+msgstr ""
+
+#: src/Seo.php:42
+msgid "If checked, noindex meta tag will be added to paginated products listing pages, starting from the second page."
+msgstr ""
+
+#: src/Seo.php:47
+msgid "Disable Yoast SEO adjacent navigation links."
+msgstr ""
+
+#: src/Seo.php:48
+msgid "Avoids unwanted rankings of search result URLs as well as paginated listing pages in case the shop's product listing is using infinite scrolling or lazy loading to display further products without pagination links."
+msgstr ""
+
+#: src/Settings.php:38
+msgid "Shop Standards"
 msgstr ""
 
 #: src/WooCommerce.php:80
@@ -188,4 +180,32 @@ msgstr ""
 
 #: src/WooCommerce.php:719
 msgid "Product "
+msgstr ""
+
+#: src/WooCommerceSalutation.php:40
+msgid "Salutation field"
+msgstr ""
+
+#: src/WooCommerceSalutation.php:41
+msgid "Add salutation field in checkout"
+msgstr ""
+
+#: src/WooCommerceSalutation.php:44
+msgid "If checked a salutation field will be added to the shipping and billing address fields."
+msgstr ""
+
+#: src/WooCommerceSalutation.php:60
+msgid "Salutation"
+msgstr ""
+
+#: src/WooCommerceSalutation.php:64
+msgid "Mr"
+msgstr ""
+
+#: src/WooCommerceSalutation.php:65
+msgid "Ms"
+msgstr ""
+
+#: src/WooCommerceSalutation.php:66
+msgid "Company"
 msgstr ""
