@@ -61,9 +61,9 @@ class WooCommerceSalutation {
       'class' => ['form-row-wide'],
       'type' => 'select',
       'options' => [
-        __('Mr', Plugin::L10N) => __('Mr', Plugin::L10N),
-        __('Ms', Plugin::L10N) => __('Ms', Plugin::L10N),
-        __('Company', Plugin::L10N) => __('Company', Plugin::L10N),
+        'Mr' => __('Mr', Plugin::L10N),
+        'Ms' => __('Ms', Plugin::L10N),
+        'Company' => __('Company', Plugin::L10N),
       ],
       'priority' => 5,
     ];
