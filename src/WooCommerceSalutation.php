@@ -14,6 +14,7 @@ class WooCommerceSalutation {
 
   public static function init() {
     add_filter('woocommerce_get_settings_shop_standards', __CLASS__ . '::woocommerce_get_settings_shop_standards');
+    add_filter('get_user_metadata', __CLASS__ . '::get_user_metadata', 10, 4);
 
     if (is_admin()) {
       return;
@@ -48,6 +49,19 @@ class WooCommerceSalutation {
       'id' => Plugin::L10N,
     ];
     return $settings;
+  }
+
+  /**
+   * Returns the translated salutation value.
+   */
+  public static function get_user_metadata($value, $object_id, $meta_key, $single) {
+    if ($single && strpos($meta_key, '_salutation') !== FALSE) {
+      $current_filter = current_filter();
+      remove_filter($current_filter, __METHOD__);
+      $value = __(get_user_meta($object_id, $meta_key, $single), Plugin::L10N);
+      add_filter($current_filter, __METHOD__);
+    }
+    return $value;
   }
 
   /**
