@@ -27,6 +27,29 @@ class Plugin {
   private static $baseUrl;
 
   /**
+   * Scripts to be defer loaded.
+   *
+   * @var string
+   */
+  const SCRIPTS_LOAD_DEFER = [
+    'woocommerce/assets/js/jquery-blockui/jquery.blockUI.js',
+    'woocommerce/assets/js/frontend/add-to-cart.js',
+    'woocommerce/assets/js/js-cookie/js.cookie.js',
+    'woocommerce/assets/js/frontend/woocommerce.js',
+    'woocommerce/assets/js/frontend/cart-fragments.js',
+    'woocommerce/assets/js/selectWoo/selectWoo.full.js',
+    'woocommerce/assets/js/select2/select2.full.js',
+    'woocommerce/assets/js/frontend/country-select.js',
+  ];
+
+  /**
+   * WooCommerce scripts to be async loaded.
+   *
+   * @var string
+   */
+  const SCRIPTS_LOAD_ASYNC = [];
+
+  /**
    * Plugin initialization method with the lowest possible priority.
    *
    * @implements init
@@ -149,6 +172,9 @@ class Plugin {
       add_filter('woocommerce_email_styles', __NAMESPACE__ . '\WooCommerce::woocommerce_email_styles');
     }
 
+    // Loads scripts as deferred or async.
+    add_filter('script_loader_tag', __CLASS__ . '::script_loader_tag');
+
     // Enqueues plugin scripts.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
 
@@ -233,6 +259,27 @@ class Plugin {
     ]);
   }
 
+  /**
+   * Loads scripts as deferred or async.
+   *
+   * @implements script_loader_tag
+   */
+  public static function script_loader_tag($tag) {
+    $loading_types = [];
+    $loading_types['defer'] = apply_filters(Plugin::L10N . '/scripts_load_defer', static::SCRIPTS_LOAD_DEFER);
+    $loading_types['async'] = apply_filters(Plugin::L10N . '/scripts_load_async', static::SCRIPTS_LOAD_ASYNC);
+
+    foreach ($loading_types as $attr => $scripts) {
+      foreach ($scripts as $script) {
+        if (strpos($tag, $script) !== FALSE) {
+          $tag = str_replace(' src=', sprintf(' %s="%s" src=', $attr, $attr), $tag);
+          break 2;
+        }
+      }
+    }
+
+    return $tag;
+  }
   /**
    * Enqueues plugin scripts.
    *
