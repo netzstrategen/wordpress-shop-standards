@@ -8,6 +8,28 @@ namespace Netzstrategen\ShopStandards;
 class WooCommerce {
 
   /**
+   * Adds woocommerce specific settings.
+   *
+   * @implements woocommerce_get_settings_shop_standards
+   */
+  public static function woocommerce_get_settings_shop_standards(array $settings): array {
+    $settings[] = [
+      'type' => 'title',
+      'name' => __('Coupon settings', Plugin::L10N),
+    ];
+    $settings[] = [
+      'type' => 'checkbox',
+      'id' => '_' . Plugin::L10N . '_disable_coupon_checkout',
+      'name' => __('Disable coupon input field on checkout page', Plugin::L10N),
+    ];
+    $settings[] = [
+      'type' => 'sectionend',
+      'id' => Plugin::L10N,
+    ];
+    return $settings;
+  }
+
+  /**
    * Adds strike price for variable products above regular product price labels.
    *
    * @see https://github.com/woocommerce/woocommerce/issues/16169

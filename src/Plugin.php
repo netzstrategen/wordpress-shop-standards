@@ -88,6 +88,8 @@ class Plugin {
     add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\WooCommerce::woocommerce_process_product_meta');
     add_action('woocommerce_save_product_variation', __NAMESPACE__ . '\WooCommerce::woocommerce_save_product_variation', 10, 2);
 
+    add_filter('woocommerce_get_settings_shop_standards', __NAMESPACE__ . '\WooCommerce::woocommerce_get_settings_shop_standards');
+
     Seo::init();
     WooCommerceSalutation::init();
 
@@ -96,7 +98,9 @@ class Plugin {
     }
 
     // Removes coupon box from checkout.
-    remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10);
+    if (get_option('_' . Plugin::L10N . '_disable_coupon_checkout') === 'yes') {
+      remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10);
+    }
 
     // Changes the minimum amount of variations to trigger the AJAX handling.
     add_filter('woocommerce_ajax_variation_threshold', __NAMESPACE__ . '\WooCommerce::woocommerce_ajax_variation_threshold', 10, 2);
