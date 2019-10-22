@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-10-03 12:13+0200\n"
+"POT-Creation-Date: 2019-10-21 16:22+0200\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,31 +18,31 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: src/Plugin.php:68 src/Plugin.php:69 src/Plugin.php:176 src/Plugin.php:215
+#: src/Plugin.php:68 src/Plugin.php:69 src/Plugin.php:180 src/Plugin.php:219
 msgid "Hide \"Add to Cart\" button"
 msgstr ""
 
-#: src/Plugin.php:180
+#: src/Plugin.php:184
 msgid "Product categories"
 msgstr ""
 
-#: src/Plugin.php:181
+#: src/Plugin.php:185
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 
-#: src/Plugin.php:193
+#: src/Plugin.php:197
 msgid "Product brands"
 msgstr ""
 
-#: src/Plugin.php:194
+#: src/Plugin.php:198
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 
-#: src/Plugin.php:206
+#: src/Plugin.php:210
 msgid "Notice"
 msgstr ""
 
-#: src/Plugin.php:208
+#: src/Plugin.php:212
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 
@@ -86,99 +86,107 @@ msgstr ""
 msgid "Shop Standards"
 msgstr ""
 
-#: src/WooCommerce.php:80
+#: src/WooCommerce.php:18
+msgid "Coupon settings"
+msgstr ""
+
+#: src/WooCommerce.php:23
+msgid "Disable coupon input field on checkout page"
+msgstr ""
+
+#: src/WooCommerce.php:102
 msgid "Out of stock"
 msgstr ""
 
-#: src/WooCommerce.php:84
+#: src/WooCommerce.php:106
 msgid "In stock"
 msgstr ""
 
-#: src/WooCommerce.php:119
+#: src/WooCommerce.php:141
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:121 src/WooCommerce.php:311
+#: src/WooCommerce.php:143 src/WooCommerce.php:333
 msgid "Enter the Global Trade Item Number"
 msgstr ""
 
-#: src/WooCommerce.php:128
+#: src/WooCommerce.php:150
 msgid "ERP/Inventory ID"
 msgstr ""
 
-#: src/WooCommerce.php:135
+#: src/WooCommerce.php:157
 msgid "Display sale price as normal price"
 msgstr ""
 
-#: src/WooCommerce.php:142
+#: src/WooCommerce.php:164
 msgid "Custom price label"
 msgstr ""
 
-#: src/WooCommerce.php:144
+#: src/WooCommerce.php:166
 msgid "The label will only be displayed if \"Sale price was displayed as regular price\" setting is checked."
 msgstr ""
 
-#: src/WooCommerce.php:151
+#: src/WooCommerce.php:173
 msgid "Hide sale percentage bubble"
 msgstr ""
 
-#: src/WooCommerce.php:158 src/WooCommerce.php:327
+#: src/WooCommerce.php:180 src/WooCommerce.php:349
 msgid "Hide add to cart button"
 msgstr ""
 
-#: src/WooCommerce.php:165 src/WooCommerce.php:345
+#: src/WooCommerce.php:187 src/WooCommerce.php:367
 msgid "Price comparison focus product"
 msgstr ""
 
-#: src/WooCommerce.php:182
+#: src/WooCommerce.php:204
 msgid "Internal product notes"
 msgstr ""
 
-#: src/WooCommerce.php:310
+#: src/WooCommerce.php:332
 msgid "GTIN:"
 msgstr ""
 
-#: src/WooCommerce.php:319
+#: src/WooCommerce.php:341
 msgid "ERP/Inventory ID:"
 msgstr ""
 
-#: src/WooCommerce.php:335
+#: src/WooCommerce.php:357
 msgid "Variation has insufficient images"
 msgstr ""
 
-#: src/WooCommerce.php:337
+#: src/WooCommerce.php:359
 msgid "Allows this product to be identified and possibly be excluded by other processes and plugins (e.g. a custom filter for product feeds). Enabling this option has no effect on the output (by default)."
 msgstr ""
 
-#: src/WooCommerce.php:413
+#: src/WooCommerce.php:435
 msgid "Sort by discount"
 msgstr ""
 
-#: src/WooCommerce.php:475
+#: src/WooCommerce.php:497
 msgid "(Our price)"
 msgstr ""
 
-#: src/WooCommerce.php:530 src/WooCommerce.php:586
+#: src/WooCommerce.php:552 src/WooCommerce.php:608
 msgid "Delivery Time"
 msgstr ""
 
-#: src/WooCommerce.php:646
+#: src/WooCommerce.php:668
 msgid "SKU"
 msgstr ""
 
-#: src/WooCommerce.php:650
+#: src/WooCommerce.php:672
 msgid "ERP/ID"
 msgstr ""
 
-#: src/WooCommerce.php:663
+#: src/WooCommerce.php:685
 msgid "Dimensions"
 msgstr ""
 
-#: src/WooCommerce.php:671
+#: src/WooCommerce.php:693
 msgid "Weight"
 msgstr ""
 
-#: src/WooCommerce.php:719
+#: src/WooCommerce.php:741
 msgid "Product "
 msgstr ""
 
