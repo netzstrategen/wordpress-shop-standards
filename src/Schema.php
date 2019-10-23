@@ -27,36 +27,35 @@ class Schema {
 
   /**
    * Retrieves gtin product number and sets gtin property name.
+   *
+   * @implements woocommerce_structured_data_product
    */
   public static function get_product_gtin($data) {
     global $product;
-    $product_id = $product->get_id();
-    $gtin = get_post_meta($product_id, '_' . Plugin::PREFIX . '_gtin', TRUE);
-    $gtin_prop = "gtin12";
-    $gtin_length = strlen($gtin);
 
-    switch ($gtin_length) {
-      case $gtin_length == 12:
-        $gtin_prop = "gtin12";
-        break;
-
-      case $gtin_length == 13:
-        $gtin_prop = "gtin13";
-        break;
-
-      case $gtin_length == 14:
-        $gtin_prop = "gtin14";
-        break;
-
-      case $gtin_length == 8:
-        $gtin_prop = "gtin8";
-        break;
-    }
-
-    $data[$gtin_prop] = $gtin;
-    if ($data[$gtin_prop] !== '') {
+    if (!$gtin = get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_gtin', TRUE)) {
       return $data;
     }
+
+    switch (strlen($gtin)) {
+      case 8:
+        $gtin_format_type = 'gtin8';
+        break;
+
+      case 13:
+        $gtin_format_type = 'gtin13';
+        break;
+
+      case 14:
+        $gtin_format_type = 'gtin14';
+        break;
+
+      default:
+        $gtin_format_type = 'gtin12';
+    }
+
+    $data[$gtin_format_type] = $gtin;
+    return $data;
   }
 
 }
