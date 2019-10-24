@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-11-28 12:25+0100\n"
-"PO-Revision-Date: 2019-11-28 12:25+0100\n"
-"Last-Translator: Tom Hare <tom@netzstrategen.com>\n"
+"POT-Creation-Date: 2019-12-23 19:01+0100\n"
+"PO-Revision-Date: 2019-12-23 19:01+0100\n"
+"Last-Translator: Joan López <joan@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -20,35 +20,35 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 
-#: src/Plugin.php:68 src/Plugin.php:69 src/Plugin.php:189 src/Plugin.php:228
+#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:209 src/Plugin.php:248
 msgid "Hide \"Add to Cart\" button"
 msgstr "“In den Warenkorb”-Verhalten"
 
-#: src/Plugin.php:193
+#: src/Plugin.php:213
 msgid "Product categories"
 msgstr "Produktkategorien"
 
-#: src/Plugin.php:194
+#: src/Plugin.php:214
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
 "ausgeblendet."
 
-#: src/Plugin.php:206
+#: src/Plugin.php:226
 msgid "Product brands"
 msgstr "Produktmarken"
 
-#: src/Plugin.php:207
+#: src/Plugin.php:227
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
 "ausgeblendet."
 
-#: src/Plugin.php:219
+#: src/Plugin.php:239
 msgid "Notice"
 msgstr "Hinweis"
 
-#: src/Plugin.php:221
+#: src/Plugin.php:241
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 "Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
@@ -100,64 +100,68 @@ msgstr ""
 msgid "Shop Standards"
 msgstr ""
 
-#: src/WooCommerce.php:18
+#: src/WooCommerce.php:25
 msgid "Coupon settings"
 msgstr "Gutschein Einstellungen"
 
-#: src/WooCommerce.php:23
+#: src/WooCommerce.php:30
 msgid "Disable coupon input field on checkout page"
 msgstr "Gutscheinfeld an der Kasse ausblenden"
 
-#: src/WooCommerce.php:31
+#: src/WooCommerce.php:38
 msgid "Automatic sale category assignment"
 msgstr "Automatisches zuweisen einer „Sale“-Kategorie"
 
-#: src/WooCommerce.php:36
+#: src/WooCommerce.php:43
 msgid "Enable"
 msgstr "Aktivieren"
 
-#: src/WooCommerce.php:42
+#: src/WooCommerce.php:49
 msgid "Eligible delivery times"
 msgstr "Geeignete Lieferzeiten"
 
-#: src/WooCommerce.php:52
+#: src/WooCommerce.php:59
 msgid "Sale category to assign"
 msgstr "Zuzuweisende „Sale“-Kategorie"
 
-#: src/WooCommerce.php:132
-msgid "Out of stock"
-msgstr ""
+#: src/WooCommerce.php:67
+msgid "Products settings"
+msgstr "Produkte Einstellungen"
 
-#: src/WooCommerce.php:136
+#: src/WooCommerce.php:73
+msgid "Minimum discount percentage to display product sale label"
+msgstr "Minimaler Rabattprozentsatz zur Anzeige des Sale-Prozent-Labels"
+
+#: src/WooCommerce.php:175
 #, php-format
 msgid "Only %s in stock"
-msgstr "Nur noch %s Stück lieferbar"
+msgstr ""
 
-#: src/WooCommerce.php:140
+#: src/WooCommerce.php:179
 msgid "In stock"
 msgstr ""
 
-#: src/WooCommerce.php:175
+#: src/WooCommerce.php:215
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:177 src/WooCommerce.php:367
+#: src/WooCommerce.php:217 src/WooCommerce.php:407
 msgid "Enter the Global Trade Item Number"
 msgstr "Geben Sie die Gesamtzahl des Handels ein"
 
-#: src/WooCommerce.php:184
+#: src/WooCommerce.php:224
 msgid "ERP/Inventory ID"
 msgstr "ERP/Inventar ID"
 
-#: src/WooCommerce.php:191
+#: src/WooCommerce.php:231
 msgid "Display sale price as normal price"
 msgstr "Reduzierten Preis als normalen Preis anzeigen"
 
-#: src/WooCommerce.php:198
+#: src/WooCommerce.php:238
 msgid "Custom price label"
 msgstr "Individuelles Preis-Label anzeigen"
 
-#: src/WooCommerce.php:200
+#: src/WooCommerce.php:240
 msgid ""
 "The label will only be displayed if \"Sale price was displayed as regular "
 "price\" setting is checked."
@@ -165,35 +169,35 @@ msgstr ""
 "Das Label wird nur angezeigt, wenn “Sale Preis als regulären Preis anzeigen "
 "aktiviert wurde."
 
-#: src/WooCommerce.php:207
+#: src/WooCommerce.php:247
 msgid "Hide sale percentage bubble"
 msgstr "Sale: Prozentangabe verbergen"
 
-#: src/WooCommerce.php:214 src/WooCommerce.php:383
+#: src/WooCommerce.php:254 src/WooCommerce.php:423
 msgid "Hide add to cart button"
 msgstr "Warenkorb-Button verstecken"
 
-#: src/WooCommerce.php:221 src/WooCommerce.php:401
+#: src/WooCommerce.php:261 src/WooCommerce.php:441
 msgid "Price comparison focus product"
 msgstr "Preisbeobachtung Fokus-Produkt"
 
-#: src/WooCommerce.php:238
+#: src/WooCommerce.php:278
 msgid "Internal product notes"
 msgstr "Interne Anmerkungen"
 
-#: src/WooCommerce.php:366
+#: src/WooCommerce.php:406
 msgid "GTIN:"
 msgstr ""
 
-#: src/WooCommerce.php:375
+#: src/WooCommerce.php:415
 msgid "ERP/Inventory ID:"
 msgstr "ERP/Inventar ID:"
 
-#: src/WooCommerce.php:391
+#: src/WooCommerce.php:431
 msgid "Variation has insufficient images"
 msgstr "Variation hat ein unzureichendes Bilder"
 
-#: src/WooCommerce.php:393
+#: src/WooCommerce.php:433
 msgid ""
 "Allows this product to be identified and possibly be excluded by other "
 "processes and plugins (e.g. a custom filter for product feeds). Enabling "
@@ -203,35 +207,35 @@ msgstr ""
 "unzureichender Bilder auszuschließen. Das Setzen des Hakens hat keinen "
 "Einfluss auf das Frontend."
 
-#: src/WooCommerce.php:469
+#: src/WooCommerce.php:509
 msgid "Sort by discount"
 msgstr "Sortieren nach Rabatt"
 
-#: src/WooCommerce.php:531
+#: src/WooCommerce.php:571
 msgid "(Our price)"
 msgstr "(Online-Preis)"
 
-#: src/WooCommerce.php:586 src/WooCommerce.php:642
+#: src/WooCommerce.php:626 src/WooCommerce.php:682
 msgid "Delivery Time"
 msgstr ""
 
-#: src/WooCommerce.php:702
+#: src/WooCommerce.php:742
 msgid "SKU"
 msgstr ""
 
-#: src/WooCommerce.php:706
+#: src/WooCommerce.php:746
 msgid "ERP/ID"
 msgstr ""
 
-#: src/WooCommerce.php:719
+#: src/WooCommerce.php:759
 msgid "Dimensions"
 msgstr ""
 
-#: src/WooCommerce.php:727
+#: src/WooCommerce.php:767
 msgid "Weight"
 msgstr ""
 
-#: src/WooCommerce.php:773
+#: src/WooCommerce.php:813
 msgid "Product "
 msgstr "Produkt "
 
@@ -268,9 +272,3 @@ msgstr "Herr"
 #: src/WooCommerceSalutation.php:66
 msgid "Company"
 msgstr "Firma"
-
-#~ msgid "Ms"
-#~ msgstr "Frau"
-
-#~ msgid "Minimum discount percentage to display product sale label"
-#~ msgstr "Minimaler Rabattprozentsatz zur Anzeige des Sale-Prozent-Labels"
