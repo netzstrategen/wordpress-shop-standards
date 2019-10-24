@@ -277,7 +277,20 @@ class WooCommerce {
     foreach ($custom_fields as $field) {
       if (isset($_POST[$field])) {
         if (!is_array($_POST[$field]) && $_POST[$field]) {
-          update_post_meta($post_id, $field, $_POST[$field]);
+          if ($field !== '_' . Plugin::PREFIX . '_gtin') {
+            update_post_meta($post_id, $field, $_POST[$field]);
+          }
+          else {
+            $found_duplicate = self::is_existing_gtin($post_id, $_POST[$field]);
+
+            if (!$found_duplicate) {
+              // GTIN is only saved if unique.
+              update_post_meta($post_id, $field, $_POST[$field]);
+            }
+            else {
+              static::showDuplicateGtinErrorNotice($found_duplicate);
+            }
+          }
         }
         else {
           delete_post_meta($post_id, $field);
@@ -451,10 +464,24 @@ class WooCommerce {
       '_' . Plugin::PREFIX . '_gtin',
       '_' . Plugin::PREFIX . '_erp_inventory_id',
     ];
+
     foreach ($custom_fields as $field) {
       if (isset($_POST[$field]) && isset($_POST[$field][$loop])) {
         if ($_POST[$field][$loop]) {
-          update_post_meta($variation_id, $field, $_POST[$field][$loop]);
+          if ($field !== '_' . Plugin::PREFIX . '_gtin') {
+            update_post_meta($variation_id, $field, $_POST[$field][$loop]);
+          }
+          else {
+            $found_duplicate = self::is_existing_gtin($variation_id, $_POST[$field][$loop]);
+
+            if (!$found_duplicate) {
+              // GTIN is only saved if unique.
+              update_post_meta($variation_id, $field, $_POST[$field][$loop]);
+            }
+            else {
+              static::showDuplicateGtinErrorNotice($found_duplicate);
+            }
+          }
         }
         else {
           delete_post_meta($variation_id, $field);
@@ -886,6 +913,84 @@ class WooCommerce {
     }
 
     return $back_in_stock_date_string;
+  }
+
+  /**
+   * Check if product gtin is found for any other product IDs.
+   * Checks if product GTIN is found for any other product IDs.
+   *
+   * @param int $product_id
+   *   The Product ID.
+   *
+   * @param int $gtin
+   *   The GTIN.
+   *
+   * @return string|null
+   *   Database query result (post_id of first found duplicate GTIN as string), or null on failure.
+   */
+  public static function is_existing_gtin($product_id, $gtin) {
+    global $wpdb;
+
+    return $wpdb->get_var(
+      $wpdb->prepare(
+        "
+        SELECT pm.post_id
+        FROM {$wpdb->postmeta} pm
+        WHERE pm.meta_key = %s
+        AND pm.meta_value = %s
+        AND pm.post_id <> %d
+        LIMIT 1
+        ",
+        '_' . Plugin::PREFIX . '_gtin',
+        $gtin,
+        $product_id
+      )
+    );
+  }
+
+  /**
+   * Wraps is_existing_gtin for responding to ajax requests.
+   *
+   * @implements wp_ajax_is_existing_gtin
+   */
+  public static function wp_ajax_is_existing_gtin() {
+    $product_id = $_POST['product_id'];
+    $gtin = $_POST['gtin'];
+    $response = [
+      'is_unique' => TRUE,
+    ];
+    if ($found_duplicate = self::is_existing_gtin($product_id, $gtin)) {
+      // For product variations, we want to link to the edit page of the parent product.
+      $found_duplicate = get_post_type($found_duplicate) === 'product_variation' ? wp_get_post_parent_id($found_duplicate) : $found_duplicate;
+      $duplicate_edit_link = get_edit_post_link($found_duplicate);
+
+      $response = [
+        'is_unique' => FALSE,
+        'found_duplicate' => $found_duplicate,
+        'duplicate_edit_link' => $duplicate_edit_link,
+      ];
+    }
+    wp_send_json($response);
+  }
+
+  /**
+   * Shows error notice about duplicate GTIN that couldn't be saved.
+   *
+   * @param string $product_id
+   *   The product ID of the product that already contains the given GTIN.
+   */
+  public static function showDuplicateGtinErrorNotice($product_id = '') {
+    // Get link to the edit page of the given product.
+    $duplicate_edit_link = '';
+    if (!empty($product_id)) {
+      $found_duplicate = get_post_type($product_id) === 'product_variation' ? wp_get_post_parent_id($product_id) : $product_id;
+      $duplicate_edit_link = get_edit_post_link($found_duplicate);
+    }
+
+    \WC_Admin_Meta_Boxes::add_error(sprintf(
+      __('The entered GTIN <a href="%s">already exists</a>. It must be changed in order to save the product.', Plugin::L10N),
+      $duplicate_edit_link
+    ));
   }
 
 }

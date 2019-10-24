@@ -21,12 +21,47 @@ class Admin {
    */
   public static function init() {
     // Adds custom fields for single products.
-    add_action('woocommerce_product_options_general_product_data',  __NAMESPACE__ . '\WooCommerce::woocommerce_product_options_general_product_data');
+    add_action('woocommerce_product_options_general_product_data', __NAMESPACE__ . '\WooCommerce::woocommerce_product_options_general_product_data');
     // Appends product notes custom field as the last field in the product general options section.
     add_action('woocommerce_product_options_general_product_data', __NAMESPACE__ . '\WooCommerce::productNotesCustomField', 999);
 
     // Adds products variations custom fields.
     add_action('woocommerce_product_after_variable_attributes', __NAMESPACE__ . '\WooCommerce::woocommerce_product_after_variable_attributes', 10, 3);
+
+    // Assigns sale category conditionally on product update.
+    if (get_option('_' . Plugin::L10N . '_enable_auto_sale_category_assignment') === 'yes') {
+      add_action('woocommerce_update_product', __NAMESPACE__ . '\WooCommerce::woocommerce_update_product');
+    }
+
+    // Allow ajax requests to specified functions.
+    add_action('wp_ajax_is_existing_gtin', __NAMESPACE__ . '\WooCommerce::wp_ajax_is_existing_gtin');
+
+    // Enqueues admin plugin scripts.
+    add_action('admin_enqueue_scripts', __CLASS__ . '::admin_enqueue_scripts');
+  }
+
+  /**
+   * Enqueues admin plugin scripts.
+   *
+   * @implements admin_enqueue_scripts
+   */
+  public static function admin_enqueue_scripts($hook) {
+    $git_version = Plugin::getGitVersion();
+    global $post;
+    if ($hook === 'post-new.php' || $hook === 'post.php') {
+      if ($post->post_type === 'product') {
+        wp_enqueue_script(Plugin::PREFIX . '_admin', Plugin::getBaseUrl() . '/dist/scripts/admin.min.js', ['jquery'], $git_version, TRUE);
+        wp_localize_script(Plugin::PREFIX . '_admin', 'shop_standards_admin', array(
+          'product_id' => $post->ID,
+          'gtin_error_message' => sprintf(
+            __('The entered GTIN <a href="%s">already exists</a>. It must be changed in order to save the product.', Plugin::L10N),
+            '{{url}}'
+          ),
+          'gtin_success_message' => __('The entered GTIN is unique.', Plugin::L10N),
+        ));
+        wp_enqueue_style(Plugin::PREFIX . '_admin', Plugin::getBaseUrl() . '/dist/styles/admin.min.css');
+      }
+    }
   }
 
   /**
