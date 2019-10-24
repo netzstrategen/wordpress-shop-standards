@@ -26,7 +26,7 @@ class Schema {
   }
 
   /**
-   * Retrieves gtin product number and sets gtin property name.
+   * Retrieves GTIN product number and sets GTIN property name.
    *
    * @implements woocommerce_structured_data_product
    */
@@ -37,7 +37,7 @@ class Schema {
       return $data;
     }
 
-    switch (strlen($gtin)) {
+    switch (strlen(trim($gtin))) {
       case 8:
         $gtin_format_type = 'gtin8';
         break;
