@@ -76,4 +76,53 @@ class Seo {
     return get_option(Plugin::L10N . '_wpseo_disable_adjacent_rel_links');
   }
 
+  /**
+   * Adds product GTIN to schema.org structured data.
+   *
+   * @implements woocommerce_structured_data_product
+   */
+  public static function get_product_gtin($data) {
+    global $product;
+
+    if (!$gtin = get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_gtin', TRUE)) {
+      return $data;
+    }
+
+    switch (strlen(trim($gtin))) {
+      case 8:
+        $gtin_format_type = 'gtin8';
+        break;
+
+      case 13:
+        $gtin_format_type = 'gtin13';
+        break;
+
+      case 14:
+        $gtin_format_type = 'gtin14';
+        break;
+
+      default:
+    }
+
+    $gtin_format_type = 'gtin12';
+    $data[$gtin_format_type] = $gtin;
+
+    return $data;
+  }
+
+  /**
+   * Adds product brand to schema.org structured data.
+   *
+   * @implements woocommerce_structured_data_product
+   */
+  public static function get_product_brand($data) {
+    global $product;
+
+    if ($brand = get_the_terms($product->get_id(), apply_filters(Plugin::PREFIX . '_product_brand_taxonomy', 'pa_kategorie'))) {
+      $data['brand'] = $brand[0]->name;
+    }
+
+    return $data;
+  }
+
 }
