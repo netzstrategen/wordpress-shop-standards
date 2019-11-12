@@ -81,7 +81,7 @@ class Seo {
    *
    * @implements woocommerce_structured_data_product
    */
-  public static function get_product_gtin($data) {
+  public static function getProductGtin($data) {
     global $product;
 
     if (!$gtin = get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_gtin', TRUE)) {
@@ -102,11 +102,10 @@ class Seo {
         break;
 
       default:
+        $gtin_format_type = 'gtin12';
     }
 
-    $gtin_format_type = 'gtin12';
     $data[$gtin_format_type] = $gtin;
-
     return $data;
   }
 
@@ -115,7 +114,7 @@ class Seo {
    *
    * @implements woocommerce_structured_data_product
    */
-  public static function get_product_brand($data) {
+  public static function getProductBrand($data) {
     global $product;
 
     if ($brand = get_the_terms($product->get_id(), apply_filters(Plugin::PREFIX . '_product_brand_taxonomy', 'pa_marken'))) {
