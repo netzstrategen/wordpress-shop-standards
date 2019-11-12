@@ -137,6 +137,9 @@ class Plugin {
     // Adds product attributes to order emails.
     add_filter('woocommerce_display_item_meta', __NAMESPACE__ . '\WooCommerce::woocommerce_display_item_meta', 10, 3);
 
+    // Adds missing postcode validation for some countries.
+    add_filter('woocommerce_validate_postcode', __NAMESPACE__ . '\WooCommerce::woocommerce_validate_postcode', 10, 3);
+
     if (class_exists('Woocommerce_German_Market')) {
       // Remove delivery time from product name in order emails, added by
       // woocommerce-german-market.

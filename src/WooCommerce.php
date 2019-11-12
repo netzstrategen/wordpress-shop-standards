@@ -750,4 +750,27 @@ class WooCommerce {
     return $data;
   }
 
+  /**
+   * Adds missing postcode validation for some countries.
+   *
+   * @implements woocommerce_validate_postcode
+   */
+  public static function woocommerce_validate_postcode($valid, $postcode, $country) {
+    switch ($country) {
+      case 'DK':
+      case 'BE':
+      case 'LU':
+      case 'CH':
+        $valid = (bool) preg_match('@^\d{4}$@', $postcode);
+        break;
+
+      case 'LI':
+        $valid = (bool) preg_match('@^(948[5-9])|(949[0-7])$@', $postcode);
+
+      case 'NL':
+        $valid = (bool) preg_match('@\d{4} ?[A-Z]{2}@', $postcode);
+    }
+    return $valid;
+  }
+
 }
