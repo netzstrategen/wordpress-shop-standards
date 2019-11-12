@@ -150,7 +150,9 @@ class Plugin {
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
 
     // Adds GTIN product number in schema.org.
-    add_filter('woocommerce_structured_data_product', __NAMESPACE__ . '\Schema::get_product_gtin');
+    add_filter('woocommerce_structured_data_product', __NAMESPACE__ . '\Seo::getProductGtin');
+    // Adds Brand name to schema.org.
+    add_filter('woocommerce_structured_data_product', __NAMESPACE__ . '\Seo::getProductBrand');
   }
 
   /**
