@@ -46,4 +46,57 @@
       });
     }
   });
+
+  // Single product sale label DOM element.
+  const $singleProductSaleLabel = $('.single-product-summary .onsale');
+
+  /**
+   * Hides sale label if percentage value is lower than 10%.
+   */
+  $('.onsale').each(function hideSaleLabel() {
+    if (parseInt($(this).text().replace(/^\D+/g, ''), 10) < 10) {
+      $(this).hide();
+    }
+  });
+
+  /**
+   * Updates sale percentage value.
+   *
+   * @param {Integer} percentage
+   *   The product/variation sale percentage.
+   */
+  function updateSaleLabel(percentage) {
+    if (percentage >= 10) {
+      $singleProductSaleLabel.text(`-${percentage}%`);
+      $singleProductSaleLabel.show();
+    } else {
+      $singleProductSaleLabel.hide();
+    }
+  }
+
+  $('.single_variation_wrap')
+    .on('show_variation', (event, variation) => {
+      if (variation.display_price < variation.display_regular_price) {
+        // eslint-disable-next-line max-len
+        const percentage = Math.floor((variation.display_regular_price - variation.display_price) / variation.display_regular_price * 100);
+        updateSaleLabel(percentage);
+      }
+
+      // Updates discount table on product variation change.
+      $('[data-variations]').parent().hide();
+      $($('[data-variations]')).each(function updateDiscountTable() {
+        if ($(this).data('variations').indexOf(variation.variation_id.toString()) !== -1) {
+          $(this).parent().show();
+        }
+      });
+    })
+    .on('hide_variation', () => {
+      const $fallbackPercentage = $singleProductSaleLabel.attr('data-sale-percentage');
+      updateSaleLabel($fallbackPercentage);
+
+      // Hides all variation product discount table on product variation hide.
+      $($('[data-variations]')).each(function hideDiscountTable() {
+        $(this).parent().hide();
+      });
+    });
 }(jQuery));
