@@ -261,6 +261,9 @@ class Plugin {
   public static function wp_enqueue_scripts() {
     $git_version = static::getGitVersion();
     wp_enqueue_script(Plugin::PREFIX, static::getBaseUrl() . '/dist/scripts/main.min.js', ['jquery'], $git_version, TRUE);
+    wp_localize_script(Plugin::PREFIX, 'shop_standards_settings', [
+      'saleMinAmount' => WooCommerce::SALE_BUBBLE_MIN_AMOUNT,
+    ]);
   }
 
   /**
