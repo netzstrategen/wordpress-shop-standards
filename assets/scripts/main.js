@@ -1,3 +1,5 @@
+/* global shop_standards_settings */
+
 (function pageLoad($) {
   /**
    * Prevents multiple order to be sent.
@@ -54,7 +56,8 @@
    * Hides sale label if percentage value is lower than 10%.
    */
   $('.onsale').each(function hideSaleLabel() {
-    if (parseInt($(this).text().replace(/^\D+/g, ''), 10) < 10) {
+    const salePercentage = parseInt($(this).text().replace(/^\D+/g, ''), 10);
+    if (salePercentage < shop_standards_settings.saleMinAmount) {
       $(this).hide();
     }
   });
@@ -66,7 +69,7 @@
    *   The product/variation sale percentage.
    */
   function updateSaleLabel(percentage) {
-    if (percentage >= 10) {
+    if (percentage >= shop_standards_settings.saleMinAmount) {
       $singleProductSaleLabel.text(`-${percentage}%`);
       $singleProductSaleLabel.show();
     } else {
@@ -76,11 +79,12 @@
 
   $('.single_variation_wrap')
     .on('show_variation', (event, variation) => {
+      /* eslint-disable max-len */
       if (variation.display_price < variation.display_regular_price) {
-        // eslint-disable-next-line max-len
         const percentage = Math.floor((variation.display_regular_price - variation.display_price) / variation.display_regular_price * 100);
         updateSaleLabel(percentage);
       }
+      /* eslint-enable max-len */
 
       // Updates discount table on product variation change.
       $('[data-variations]').parent().hide();
