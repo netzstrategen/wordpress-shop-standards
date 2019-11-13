@@ -524,7 +524,7 @@ class WooCommerce {
     }
     $minimum_sale_percentage = get_option('_minimum_sale_percentage_to_display_label', static::SALE_BUBBLE_MIN_AMOUNT);
     if (((!is_single() && $sale_percentage >= $minimum_sale_percentage) || is_single()) && get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label', TRUE) !== 'yes') {
-      $output = '<span class="onsale" data-sale-percentage="-' . abs($sale_percentage) . '">-' . abs($sale_percentage) . '%</span>';
+      $output = '<span class="onsale" data-sale-percentage="' . abs($sale_percentage) . '">-' . abs($sale_percentage) . '%</span>';
     }
     else {
       $output = '';
