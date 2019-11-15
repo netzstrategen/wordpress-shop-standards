@@ -733,8 +733,6 @@ class WooCommerce {
    *
    * @param WC_Product $product
    *   Product for which attributes should be retrieved.
-   * @param string $separator
-   *   Separator between multiple values of an attribute.
    *
    * @return array
    *   List of attributes of the product.
@@ -801,9 +799,10 @@ class WooCommerce {
         $valid = (bool) preg_match('@\d{4} ?[A-Z]{2}@', $postcode);
     }
     return $valid;
+  }
 
   /**
-   * Assign sale category conditionally on product update.
+   * Assigns sale category conditionally on product update.
    *
    * @implements woocommerce_update_product
    */
@@ -826,14 +825,15 @@ class WooCommerce {
           break;
         }
       }
-
-    } else {
+    }
+    else {
       $add_sale_category = static::checkAddToSaleCategory($product_id, $product);
     }
 
     if ($add_sale_category) {
       $updated_category_ids = array_unique(array_merge($current_category_ids, [$sale_category_id]));
-    } else {
+    }
+    else {
       $updated_category_ids = array_diff($current_category_ids, [$sale_category_id]);
     }
 
@@ -844,7 +844,7 @@ class WooCommerce {
   }
 
   /**
-   * Check all conditions that need to be satisfied for adding the sale category to a product.
+   * Checks conditions required to add the sale category to a product.
    */
   public static function checkAddToSaleCategory($product_id, $product = FALSE) {
     if (!$product) {
@@ -890,13 +890,13 @@ class WooCommerce {
   }
 
   /**
-   * Prepare taxonomy terms as select field options
+   * Prepares taxonomy terms as select field options.
    */
   public static function getTaxonomyTermsAsSelectOptions($taxonomy) {
     $terms = get_terms([
       'taxonomy' => $taxonomy,
       'hide_empty' => false,
-     ]);
+    ]);
 
     $term_options = array_reduce($terms, function($result, $term) {
       $result[$term->term_id] = $term->name;
