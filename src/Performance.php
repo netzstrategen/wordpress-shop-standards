@@ -12,15 +12,15 @@ class Performance {
    *
    * @var array
    */
-  const SCRIPTS_ASYNC_LOAD = [
-    'jquery-blockui' => 'defer',
-    'wc-add-to-cart' => 'defer',
-    'js-cookie' => 'defer',
-    'woocommerce' => 'defer',
-    'wc-cart-fragments' => 'defer',
-    'selectWoo' => 'async',
-    'select2' => 'async',
-    'wc-country-select' => 'defer',
+  const ASYNC_LOAD_SCRIPTS = [
+    'select2' => ['async' => TRUE, 'defer' => FALSE],
+    'selectWoo' => ['async' => TRUE, 'defer' => FALSE],
+    'jquery-blockui' => ['async' => FALSE, 'defer' => TRUE],
+    'js-cookie' => ['async' => FALSE, 'defer' => TRUE],
+    'wc-add-to-cart' => ['async' => FALSE, 'defer' => TRUE],
+    'wc-cart-fragments' => ['async' => FALSE, 'defer' => TRUE],
+    'wc-country-select' => ['async' => FALSE, 'defer' => TRUE],
+    'woocommerce' => ['async' => FALSE, 'defer' => TRUE],
   ];
 
   /**
@@ -28,28 +28,28 @@ class Performance {
    *
    * @var array
    */
-  const STYLES_ASYNC_LOAD = [];
+  const ASYNC_LOAD_STYLES = [];
 
   /**
    * Scripts to be dequeued.
    *
    * @var array
    */
-  const SCRIPTS_DEQUEUE = [];
+  const DEQUEUE_SCRIPTS = [];
 
   /**
    * Styles to be dequeued.
    *
    * @var array
    */
-  const STYLES_DEQUEUE = [];
+  const DEQUEUE_STYLES = [];
 
   /**
    * URLs of resources to prefetch.
    *
    * @var array
    */
-  const RESOURCES_URL_PREFETCH = [];
+  const PREFETCH_RESOURCES_URL = [];
 
   /**
    * Dequeue unwanted scripts and styles.
@@ -74,8 +74,8 @@ class Performance {
    */
   public static function wp_head() {
     static::preloadScripts();
-    if ($styles = static::getAsyncStyles()) {
-      static::loadStylesAsync($styles);
+    if ($styles = static::getAsyncLoadStyles()) {
+      static::asyncLoadStyles($styles);
     }
   }
 
@@ -99,7 +99,7 @@ class Performance {
   /**
    * Loads non critical CSS files asynchronously.
    */
-  public static function loadStylesAsync(array $styles): void {
+  public static function asyncLoadStyles(array $styles): void {
     global $wp_styles;
 
     foreach ($wp_styles->queue as $handle) {
@@ -135,16 +135,24 @@ class Performance {
   }
 
   /**
-   * Loads scripts as deferred or async.
+   * Loads scripts as deferred, async or both.
    *
    * @implements script_loader_tag
    */
   public static function script_loader_tag($tag, $handle) {
-    $scripts_load = static::getAsyncScripts();
+    $scripts_load = static::getAsyncLoadScripts();
 
-    if (isset($scripts_load[$handle]) && strpos($tag, ' defer ') === FALSE && strpos($tag, ' async ') === FALSE) {
-      $tag = str_replace(' src=', sprintf(' %s src=', $scripts_load[$handle]), $tag);
+    if (!isset($scripts_load[$handle]) || strpos($tag, ' defer ') !== FALSE || strpos($tag, ' async ') !== FALSE) {
+      return $tag;
     }
+
+    $load_modes = [];
+    foreach ($scripts_load[$handle] as $key => $value) {
+      if ($value) {
+        $load_modes[] = $key;
+      }
+    }
+    $tag = str_replace(' src=', sprintf(' %s src=', implode(' ', $load_modes)), $tag);
 
     return $tag;
   }
@@ -156,7 +164,7 @@ class Performance {
    */
   public static function wp_resource_hints($urls, $relation_type) {
     if ($relation_type === 'dns-prefetch') {
-      $urls = array_merge($urls, static::getResourcesUrlPrefetch());
+      $urls = array_merge($urls, static::getPrefetchResourcesUrl());
     }
     return $urls;
   }
@@ -167,8 +175,8 @@ class Performance {
    * @return array
    *   URLs of resources to prefetch.
    */
-  public static function getResourcesUrlPrefetch() {
-    return apply_filters(Plugin::L10N . '/esources_url_prefetch', static::RESOURCES_URL_PREFETCH);
+  public static function getPrefetchResourcesUrl() {
+    return apply_filters(Plugin::L10N . '/prefetch_resources_url', static::PREFETCH_RESOURCES_URL);
   }
 
   /**
@@ -177,8 +185,8 @@ class Performance {
    * @return array
    *   Handles of scripts to async loaded.
    */
-  public static function getAsyncScripts(): array {
-    return apply_filters(Plugin::L10N . '/scripts_async_load', static::SCRIPTS_ASYNC_LOAD);
+  public static function getAsyncLoadScripts(): array {
+    return apply_filters(Plugin::L10N . '/async_load_scripts', static::ASYNC_LOAD_SCRIPTS);
   }
 
   /**
@@ -187,8 +195,8 @@ class Performance {
    * @return array
    *   Handles of styles to async loaded.
    */
-  public static function getAsyncStyles(): array {
-    return apply_filters(Plugin::L10N . '/styles_async_load', static::SCRIPTS_ASYNC_LOAD);
+  public static function getAsyncLoadStyles(): array {
+    return apply_filters(Plugin::L10N . '/async_load_styles', static::ASYNC_LOAD_STYLES);
   }
 
   /**
@@ -198,7 +206,7 @@ class Performance {
    *   Handles of scripts to be dequeued.
    */
   public static function getDequeueScripts(): array {
-    return apply_filters(Plugin::L10N . '/scripts_dequeue', static::SCRIPTS_DEQUEUE);
+    return apply_filters(Plugin::L10N . '/dequeue_scripts', static::DEQUEUE_SCRIPTS);
   }
 
   /**
@@ -208,7 +216,7 @@ class Performance {
    *   Handles of styles to be dequeued.
    */
   public static function getDequeueStyles(): array {
-    return apply_filters(Plugin::L10N . '/styles_dequeue', static::STYLES_DEQUEUE);
+    return apply_filters(Plugin::L10N . '/dequeue_styles', static::DEQUEUE_STYLES);
   }
 
 }

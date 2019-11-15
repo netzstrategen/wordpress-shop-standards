@@ -252,6 +252,7 @@ class Plugin {
       'active' => 1,
     ]);
   }
+
   /**
    * Enqueues plugin scripts.
    *
@@ -288,7 +289,7 @@ class Plugin {
    *
    * @return string
    */
-   public static function getGitVersion() {
+  public static function getGitVersion() {
     $git_version = NULL;
     if (is_dir(ABSPATH . '.git')) {
       $ref = trim(file_get_contents(ABSPATH . '.git/HEAD'));
