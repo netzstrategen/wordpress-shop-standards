@@ -50,24 +50,44 @@ class Admin {
     }
 
     $product = wc_get_product($object_id);
-    if ($product->is_type('variation')) {
-      $variation_deliveries_ranges = [];
-
-      $parent_product = wc_get_product($product->get_parent_id());
-      foreach ($parent_product->get_children() as $variation) {
-        $variation_term_id = get_post_meta($variation, '_lieferzeit', TRUE);
-        $variation_term_slug = get_term($variation_term_id)->slug;
-        // Matches every digits in the delivery time term slug.
-        preg_match('/(\d+)/', $variation_term_slug, $variation_delivery_days);
-        array_shift($variation_delivery_days);
-        if ($variation_delivery_days) {
-          $variation_deliveries_ranges[$variation_term_id] = $variation_delivery_days;
-        }
-      }
-
-      asort($variation_deliveries_ranges);
-      update_post_meta($product->get_parent_id(), $meta_key, array_keys($variation_deliveries_ranges)[0]);
+    if (!in_array($product->get_type(), ['variation', 'variable'])) {
+      return;
     }
+
+    if ($product->is_type('variable')) {
+      $parent_product = $product;
+    }
+    elseif ($product->is_type('variation')) {
+      $parent_product = wc_get_product($product->get_parent_id());
+    }
+    $shortest_delivery_time = static::getProductShortestDeliveryTime($parent_product);
+    update_post_meta($parent_product->get_id(), $meta_key, $shortest_delivery_time);
+  }
+
+  /**
+   * Retrieves the shortest delivery time from the variations of a product.
+   *
+   * @param \WC_Product $product
+   *   Variable product.
+   *
+   * @return string
+   *   Shortest delivery time.
+   */
+  public static function getProductShortestDeliveryTime(\WC_Product $product): string {
+    $variation_deliveries_ranges = [];
+
+    foreach ($product->get_children() as $variation) {
+      $variation_term_id = get_post_meta($variation, '_lieferzeit', TRUE);
+      $variation_term_slug = get_term($variation_term_id)->slug;
+      // Matches every digits in the delivery time term slug.
+      preg_match('/(\d+)/', $variation_term_slug, $variation_delivery_days);
+      array_shift($variation_delivery_days);
+      if ($variation_delivery_days) {
+        $variation_deliveries_ranges[$variation_term_id] = $variation_delivery_days;
+      }
+    }
+    asort($variation_deliveries_ranges);
+    return array_keys($variation_deliveries_ranges)[0];
   }
 
   /**
