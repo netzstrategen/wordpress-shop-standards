@@ -618,10 +618,11 @@ class WooCommerce {
     $product = $item->get_product();
     $data = static::getProductData($product);
     // @todo The separator element is stripped from the sent mail.
-    $data[] = [
+    $separator = [
       'name' => '',
       'value' => '<hr>',
     ];
+    $data[] = apply_filters(Plugin::PREFIX . '_display_email_item_meta_separator', $separator);
     // Add product meta which is contained in $html after product data.
     foreach ($item->get_formatted_meta_data() as $meta_id => $meta) {
       $data[] = [
