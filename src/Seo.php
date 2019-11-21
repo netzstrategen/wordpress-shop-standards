@@ -117,7 +117,8 @@ class Seo {
   public static function getProductBrand($data) {
     global $product;
 
-    if ($brand = get_the_terms($product->get_id(), apply_filters(Plugin::PREFIX . '_product_brand_taxonomy', 'pa_marken'))) {
+    $brand = get_the_terms($product->get_id(), apply_filters(Plugin::PREFIX . '_product_brand_taxonomy', 'pa_marken'));
+    if ($brand && !is_wp_error($brand)) {
       $data['brand'] = $brand[0]->name;
     }
 
