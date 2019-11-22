@@ -1,3 +1,5 @@
+/* global ga */
+
 (function pageLoad($) {
   /**
    * Prevents multiple order to be sent.
@@ -45,5 +47,35 @@
         $variationsForm.trigger('check_variations');
       });
     }
+  });
+
+  /**
+   * Tracks clicks on WooCommerce product gallery and sends event to Google Analytics.
+   */
+  $('.single-product .woocommerce-product-gallery').live('click', (ev) => {
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'Product | Image | $',
+      eventAction: 'Impression',
+      eventLabel: ev.target.currentSrc,
+    });
+  });
+
+  $('.single-product .lg-prev').live('click', () => {
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'Product | Image | $',
+      eventAction: 'Impression',
+      eventLabel: $('.lg-prev-slide .lg-image').attr('src'),
+    });
+  });
+
+  $('.single-product .lg-next').live('click', () => {
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'Product | Image | $',
+      eventAction: 'Impression',
+      eventLabel: $('.lg-next-slide .lg-image').attr('src'),
+    });
   });
 }(jQuery));
