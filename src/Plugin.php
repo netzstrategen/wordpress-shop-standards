@@ -27,6 +27,13 @@ class Plugin {
   private static $baseUrl;
 
   /**
+   * WordPress version.
+   *
+   * @var string
+   */
+  public static $version = '';
+
+  /**
    * Plugin initialization method with the lowest possible priority.
    *
    * @implements init
@@ -63,6 +70,10 @@ class Plugin {
    * @implements init
    */
   public static function init() {
+    if (!static::$version) {
+      static::$version = get_bloginfo('version');
+    }
+
     if (function_exists('register_field_group')) {
       acf_add_options_sub_page([
         'page_title' => __('Hide "Add to Cart" button', Plugin::L10N),
@@ -148,6 +159,15 @@ class Plugin {
       // Ensure product details column is wide enough.
       add_filter('woocommerce_email_styles', __NAMESPACE__ . '\WooCommerce::woocommerce_email_styles');
     }
+
+    // Prefetches DNS entries for particular resources.
+    add_filter('wp_resource_hints', __NAMESPACE__ . '\Performance::wp_resource_hints', 10, 2);
+    // Preloads scripts and loads styles asynchronously.
+    add_action('wp_head', __NAMESPACE__ . '\Performance::wp_head', 1);
+    // Loads scripts as deferred or async.
+    add_filter('script_loader_tag', __NAMESPACE__ . '\Performance::script_loader_tag', 10, 2);
+    // Dequeues unwanted scripts and styles.
+    add_action('wp_enqueue_scripts', __NAMESPACE__ . '\Performance::wp_enqueue_scripts', 999);
 
     // Enqueues plugin scripts.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
@@ -269,7 +289,7 @@ class Plugin {
    *
    * @return string
    */
-   public static function getGitVersion() {
+  public static function getGitVersion() {
     $git_version = NULL;
     if (is_dir(ABSPATH . '.git')) {
       $ref = trim(file_get_contents(ABSPATH . '.git/HEAD'));
