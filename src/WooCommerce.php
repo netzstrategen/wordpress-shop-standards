@@ -119,7 +119,7 @@ class WooCommerce {
   /**
    * Adds backordering with proper status messages.
    *
-   * Backoredering is added and status messages displayed for every product
+   * Backordering is added and status messages displayed for every product
    * whether stock managing is enabled or it's available.
    *
    * @implements woocommerce_get_availability
@@ -131,6 +131,10 @@ class WooCommerce {
       if (!$product->is_in_stock()) {
         $stock['availability'] = __('Out of stock', 'woocommerce');
         $stock['class'] = 'out-of-stock';
+      }
+      elseif ($product->get_stock_quantity() <= $product->get_low_stock_amount()) {
+        $stock['availability'] = sprintf(__('Only %s in stock', Plugin::L10N), $product->get_stock_quantity());
+        $stock['class'] = 'low-stock';
       }
       else {
         $stock['availability'] = __('In stock', 'woocommerce');
