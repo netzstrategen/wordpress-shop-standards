@@ -127,13 +127,23 @@ class WooCommerce {
   public static function woocommerce_get_availability($stock, $product) {
     $product->set_manage_stock('yes');
     $product->set_backorders('yes');
+
+    // Low stock level is only set on parent product.
+    // If product variation then manually get the value based on parent ID.
+    if ($product->is_type('variation')) {
+      $low_stock_amount = get_post_meta($product->get_parent_id(), '_low_stock_amount', TRUE);
+    }
+    else {
+      $low_stock_amount = $product->get_low_stock_amount();
+    }
+
     if ($product->managing_stock() && $product->backorders_allowed()) {
       if (!$product->is_in_stock()) {
         $stock['availability'] = __('Out of stock', 'woocommerce');
         $stock['class'] = 'out-of-stock';
       }
-      elseif ($product->get_stock_quantity() <= $product->get_low_stock_amount()) {
-        $stock['availability'] = sprintf(__('Only %s in stock', Plugin::L10N), $product->get_stock_quantity());
+      elseif ($product->get_stock_quantity() <= $low_stock_amount) {
+        $stock['availability'] = sprintf(__('Only %s in stock', Plugin::L10N), $low_stock_amount);
         $stock['class'] = 'low-stock';
       }
       else {
