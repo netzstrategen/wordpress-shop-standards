@@ -53,29 +53,32 @@
    * Tracks clicks on WooCommerce product gallery and sends event to Google Analytics.
    */
   $('.single-product .woocommerce-product-gallery').live('click', (ev) => {
-    ga('send', {
-      hitType: 'event',
-      eventCategory: 'Product | Image | $',
-      eventAction: 'Impression',
-      eventLabel: ev.target.currentSrc,
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': 'UniversalEvent',
+      'eventCategory': 'Product | Image | name',
+      'eventAction': 'Impression',
+      'eventLabel': ev.target.currentSrc
     });
   });
 
   $('.single-product .lg-prev').live('click', () => {
-    ga('send', {
-      hitType: 'event',
-      eventCategory: 'Product | Image | $',
-      eventAction: 'Impression',
-      eventLabel: $('.lg-prev-slide .lg-image').attr('src'),
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': 'UniversalEvent',
+      'eventCategory': 'Product | Image | name',
+      'eventAction': 'Impression',
+      'eventLabel': $('.lg-prev-slide .lg-image').attr('src')
     });
   });
 
   $('.single-product .lg-next').live('click', () => {
-    ga('send', {
-      hitType: 'event',
-      eventCategory: 'Product | Image | $',
-      eventAction: 'Impression',
-      eventLabel: $('.lg-next-slide .lg-image').attr('src'),
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': 'UniversalEvent',
+      'eventCategory': 'Product | Image | name',
+      'eventAction': 'Impression',
+      'eventLabel': $('.lg-next-slide .lg-image').attr('src')
     });
   });
 }(jQuery));
