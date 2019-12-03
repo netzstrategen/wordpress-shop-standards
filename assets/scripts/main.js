@@ -50,17 +50,17 @@
   /**
    * Tracks clicks on WooCommerce product gallery and sends event to Google Analytics.
    */
-  $('.single-product .woocommerce-product-gallery').on('click', (ev) => {
+  $(document).on('click', '.single-product .woocommerce-product-gallery', (event) => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: 'UniversalEvent',
       eventCategory: `Product | Image | ${document.documentElement.getAttribute('data-product-name')} `,
       eventAction: 'Impression',
-      eventLabel: ev.target.currentSrc,
+      eventLabel: event.target.href,
     });
   });
 
-  $('.single-product .lg-prev').on('click', () => {
+  $(document).on('click', '.single-product .lg-prev', () => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: 'UniversalEvent',
@@ -70,7 +70,7 @@
     });
   });
 
-  $('.single-product .lg-next').on('click', () => {
+  $(document).on('click', '.single-product .lg-next', () => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: 'UniversalEvent',
