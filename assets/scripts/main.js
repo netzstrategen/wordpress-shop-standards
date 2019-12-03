@@ -1,5 +1,3 @@
-/* global ga */
-
 (function pageLoad($) {
   /**
    * Prevents multiple order to be sent.
@@ -52,33 +50,33 @@
   /**
    * Tracks clicks on WooCommerce product gallery and sends event to Google Analytics.
    */
-  $('.single-product .woocommerce-product-gallery').live('click', (ev) => {
+  $('.single-product .woocommerce-product-gallery').on('click', (ev) => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
-      'event': 'UniversalEvent',
-      'eventCategory': 'Product | Image | name',
-      'eventAction': 'Impression',
-      'eventLabel': ev.target.currentSrc
+      event: 'UniversalEvent',
+      eventCategory: `Product | Image | ${document.documentElement.getAttribute('data-product-name')} `,
+      eventAction: 'Impression',
+      eventLabel: ev.target.currentSrc,
     });
   });
 
-  $('.single-product .lg-prev').live('click', () => {
+  $('.single-product .lg-prev').on('click', () => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
-      'event': 'UniversalEvent',
-      'eventCategory': 'Product | Image | name',
-      'eventAction': 'Impression',
-      'eventLabel': $('.lg-prev-slide .lg-image').attr('src')
+      event: 'UniversalEvent',
+      eventCategory: `Product | Image | ${document.documentElement.getAttribute('data-product-name')} `,
+      eventAction: 'Impression',
+      eventLabel: $('.lg-prev-slide .lg-image').attr('src'),
     });
   });
 
-  $('.single-product .lg-next').live('click', () => {
+  $('.single-product .lg-next').on('click', () => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
-      'event': 'UniversalEvent',
-      'eventCategory': 'Product | Image | name',
-      'eventAction': 'Impression',
-      'eventLabel': $('.lg-next-slide .lg-image').attr('src')
+      event: 'UniversalEvent',
+      eventCategory: `Product | Image | ${document.documentElement.getAttribute('data-product-name')} `,
+      eventAction: 'Impression',
+      eventLabel: $('.lg-next-slide .lg-image').attr('src'),
     });
   });
 }(jQuery));
