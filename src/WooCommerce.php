@@ -129,7 +129,7 @@ class WooCommerce {
     $product->set_backorders('yes');
 
     // Low stock level is only set on parent product.
-    // If product variation then manually get the value based on parent ID.
+    // If product is a variation then manually get the value based on parent ID.
     if ($product->is_type('variation')) {
       $low_stock_amount = get_post_meta($product->get_parent_id(), '_low_stock_amount', TRUE);
     }
