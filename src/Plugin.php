@@ -70,6 +70,8 @@ class Plugin {
    * @implements init
    */
   public static function init() {
+    Settings::init();
+
     if (!static::$version) {
       static::$version = get_bloginfo('version');
     }
@@ -104,6 +106,9 @@ class Plugin {
 
     Seo::init();
     WooCommerceSalutation::init();
+    if (class_exists('WC_Euenergylabel')) {
+      WooCommerceEnergyLabel::init();
+    }
 
     if (is_admin()) {
       return;
