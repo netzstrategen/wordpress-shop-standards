@@ -142,8 +142,8 @@ class WooCommerce {
         $stock['availability'] = __('Out of stock', 'woocommerce');
         $stock['class'] = 'out-of-stock';
       }
-      elseif ($product->get_stock_quantity() <= $low_stock_amount) {
-        $stock['availability'] = sprintf(__('Only %s in stock', Plugin::L10N), $low_stock_amount);
+      elseif ($product->get_stock_quantity() > 0 && $product->get_stock_quantity() <= $low_stock_amount) {
+        $stock['availability'] = sprintf(__('Only %s in stock', Plugin::L10N), $product->get_stock_quantity());
         $stock['class'] = 'low-stock';
       }
       else {
