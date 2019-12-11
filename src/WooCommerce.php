@@ -128,15 +128,22 @@ class WooCommerce {
     $product->set_manage_stock('yes');
     $product->set_backorders('yes');
 
-    // Low stock level is only set on parent product.
+    // Low stock level is set globally or on parent product.
     // If product is a variation then manually get the value based on parent ID.
+    // If parent product doesn't have value set then use global value.
     if ($product->is_type('variation')) {
       $low_stock_amount = get_post_meta($product->get_parent_id(), '_low_stock_amount', TRUE);
     }
-    else {
+    elseif ($product->get_low_stock_amount()) {
       $low_stock_amount = $product->get_low_stock_amount();
     }
+    else {
+      $low_stock_amount = get_option('woocommerce_notify_low_stock_amount');
+    }
 
+    // If stock level is zero but backorders allowed, show "Deliverable".
+    // If stock level below threshold (but above zero), show "Only x in stock".
+    // Otherwise, show in stock or out of stock notice as expected.
     if ($product->managing_stock() && $product->backorders_allowed()) {
       if (!$product->is_in_stock()) {
         $stock['availability'] = __('Out of stock', 'woocommerce');
