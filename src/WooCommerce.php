@@ -134,10 +134,10 @@ class WooCommerce {
     if ($product->is_type('variation')) {
       $low_stock_amount = get_post_meta($product->get_parent_id(), '_low_stock_amount', TRUE);
     }
-    elseif ($product->get_low_stock_amount()) {
+    else {
       $low_stock_amount = $product->get_low_stock_amount();
     }
-    else {
+    if (!$low_stock_amount) {
       $low_stock_amount = get_option('woocommerce_notify_low_stock_amount');
     }
 
@@ -158,6 +158,7 @@ class WooCommerce {
         $stock['class'] = 'in-stock';
       }
     }
+
     return $stock;
   }
 
