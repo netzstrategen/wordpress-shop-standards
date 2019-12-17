@@ -129,6 +129,8 @@ class WooCommerce {
     $product->set_backorders('yes');
 
     // If low stock threshold is not set at product level, get global option.
+    // Zero is allowed so just check for empty string as in WooCommerce Core.
+    // @see https://git.io/Je7ai
     if ($product->is_type('variation')) {
       $parent_product = wc_get_product($product->get_parent_id());
       $low_stock_amount = $parent_product->get_low_stock_amount();
@@ -136,7 +138,7 @@ class WooCommerce {
     else {
       $low_stock_amount = $product->get_low_stock_amount();
     }
-    if (empty($low_stock_amount)) {
+    if ($low_stock_amount === '') {
       $low_stock_amount = get_option('woocommerce_notify_low_stock_amount');
     }
 
