@@ -128,22 +128,30 @@ class WooCommerce {
     $product->set_manage_stock('yes');
     $product->set_backorders('yes');
 
-    // Low stock level is only set on parent product.
-    // If product is a variation then manually get the value based on parent ID.
+    // If low stock threshold is not set at product level, get global option.
+    // Zero is allowed so just check for empty string as in WooCommerce Core.
+    // @see https://git.io/Je7ai
     if ($product->is_type('variation')) {
-      $low_stock_amount = get_post_meta($product->get_parent_id(), '_low_stock_amount', TRUE);
+      $parent_product = wc_get_product($product->get_parent_id());
+      $low_stock_amount = $parent_product->get_low_stock_amount();
     }
     else {
       $low_stock_amount = $product->get_low_stock_amount();
     }
+    if ($low_stock_amount === '') {
+      $low_stock_amount = get_option('woocommerce_notify_low_stock_amount');
+    }
 
-    if ($product->managing_stock() && $product->backorders_allowed()) {
-      if (!$product->is_in_stock()) {
-        $stock['availability'] = __('Out of stock', 'woocommerce');
-        $stock['class'] = 'out-of-stock';
-      }
-      elseif ($product->get_stock_quantity() <= $low_stock_amount) {
-        $stock['availability'] = sprintf(__('Only %s in stock', Plugin::L10N), $low_stock_amount);
+    // Check global "Stock display format" option is set to show low stock notices.
+    $show_low_stock_amount = get_option('woocommerce_stock_format') === 'low_amount';
+
+    // is_in_stock() returns true if stock level is zero but backorders allowed.
+    // If stock level below threshold (but above zero), show "Only x in stock".
+    // Otherwise, show "In stock" (not shown by WooCommerce by default).
+    $product_stock_quantity = $product->get_stock_quantity();
+    if ($product->is_in_stock()) {
+      if ($show_low_stock_amount && $product_stock_quantity > 0 && $product_stock_quantity <= $low_stock_amount) {
+        $stock['availability'] = sprintf(__('Only %s in stock', Plugin::L10N), $product_stock_quantity);
         $stock['class'] = 'low-stock';
       }
       else {
@@ -151,6 +159,7 @@ class WooCommerce {
         $stock['class'] = 'in-stock';
       }
     }
+
     return $stock;
   }
 
