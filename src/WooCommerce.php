@@ -136,7 +136,7 @@ class WooCommerce {
     else {
       $low_stock_amount = $product->get_low_stock_amount();
     }
-    if ($low_stock_amount === '') {
+    if (empty($low_stock_amount)) {
       $low_stock_amount = get_option('woocommerce_notify_low_stock_amount');
     }
 
@@ -146,9 +146,10 @@ class WooCommerce {
     // is_in_stock() returns true if stock level is zero but backorders allowed.
     // If stock level below threshold (but above zero), show "Only x in stock".
     // Otherwise, show "In stock" (not shown by WooCommerce by default).
+    $product_stock_quantity = $product->get_stock_quantity();
     if ($product->is_in_stock()) {
-      if ($show_low_stock_amount && $product->get_stock_quantity() > 0 && $product->get_stock_quantity() <= $low_stock_amount) {
-        $stock['availability'] = sprintf(__('Only %s in stock', Plugin::L10N), $product->get_stock_quantity());
+      if ($show_low_stock_amount && $product_stock_quantity > 0 && $product_stock_quantity <= $low_stock_amount) {
+        $stock['availability'] = sprintf(__('Only %s in stock', Plugin::L10N), $product_stock_quantity);
         $stock['class'] = 'low-stock';
       }
       else {
