@@ -14,10 +14,11 @@ use WC_Admin_Settings;
  */
 class Settings {
 
-  public static function init() {
+  public static function woocommerce_get_settings_pages($settings) {
     add_action('woocommerce_settings_tabs_array', __CLASS__ . '::woocommerce_settings_tabs_array', 30);
     add_action('woocommerce_settings_shop_standards', __CLASS__ . '::woocommerce_settings_shop_standards');
     add_action('woocommerce_settings_save_shop_standards', __CLASS__ . '::woocommerce_settings_save_shop_standards');
+    return $settings;
   }
 
   /**

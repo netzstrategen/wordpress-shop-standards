@@ -33,7 +33,7 @@ class WooCommerceSalutation {
   public static function woocommerce_get_settings_shop_standards(array $settings): array {
     $settings[] = [
       'type' => 'title',
-      'name' => '',
+      'name' => __('Salutation', Plugin::L10N),
     ];
     $settings[] = [
       'type' => 'checkbox',

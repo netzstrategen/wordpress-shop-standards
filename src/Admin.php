@@ -7,8 +7,6 @@
 
 namespace Netzstrategen\ShopStandards;
 
-use WC_Admin_Settings;
-
 /**
  * Administrative back-end functionality.
  */
@@ -32,8 +30,6 @@ class Admin {
     if (get_option('_' . Plugin::L10N . '_enable_auto_sale_category_assignment') === 'yes') {
       add_action('woocommerce_update_product', __NAMESPACE__ . '\WooCommerce::woocommerce_update_product');
     }
-
-    Settings::init();
   }
 
   /**
