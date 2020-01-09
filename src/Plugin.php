@@ -99,8 +99,13 @@ class Plugin {
     add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\WooCommerce::woocommerce_process_product_meta');
     add_action('woocommerce_save_product_variation', __NAMESPACE__ . '\WooCommerce::woocommerce_save_product_variation', 10, 2);
 
-// Adds woocommerce specific settings.
+    // Adds woocommerce specific settings.
     add_filter('woocommerce_get_settings_shop_standards', __NAMESPACE__ . '\WooCommerce::woocommerce_get_settings_shop_standards');
+
+    // Assigns sale category conditionally on product update.
+    if (get_option('_' . Plugin::L10N . '_enable_auto_sale_category_assignment') === 'yes') {
+      add_action('woocommerce_update_product', __NAMESPACE__ . '\WooCommerce::woocommerce_update_product');
+    }
 
     Seo::init();
     WooCommerceSalutation::init();
