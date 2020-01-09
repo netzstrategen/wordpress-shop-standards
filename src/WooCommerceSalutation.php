@@ -21,7 +21,7 @@ class WooCommerceSalutation {
 
     // Add salutation field to checkout.
     if (get_option(Plugin::PREFIX . '_add_salutation_field') === 'yes') {
-      add_filter('woocommerce_checkout_fields', __CLASS__ . '::woocommerce_checkout_fields');
+      add_filter('woocommerce_default_address_fields', __CLASS__ . '::woocommerce_default_address_fields');
     }
   }
 
@@ -53,10 +53,10 @@ class WooCommerceSalutation {
   /**
    * Add salutation field for billing and shipping.
    *
-   * @implements woocommerce_checkout_fields
+   * @implements woocommerce_default_address_fields
    */
-  public static function woocommerce_checkout_fields(?array $fields): array {
-    $fields['shipping']['shipping_salutation'] = [
+  public static function woocommerce_default_address_fields(?array $fields): array {
+    $fields['salutation'] = [
       'label' => __('Salutation', Plugin::L10N),
       'class' => ['form-row-wide'],
       'type' => 'select',
@@ -67,8 +67,6 @@ class WooCommerceSalutation {
       ],
       'priority' => 5,
     ];
-    $fields['billing']['billing_salutation'] = $fields['shipping']['shipping_salutation'];
-
     return $fields;
   }
 
