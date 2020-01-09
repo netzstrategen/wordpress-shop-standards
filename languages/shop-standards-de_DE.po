@@ -264,11 +264,10 @@ msgid "Mr"
 msgstr "Herr"
 
 #: src/WooCommerceSalutation.php:65
-#, fuzzy
-#| msgid "Mr"
 msgid "Mrs"
-msgstr "Herr"
+msgstr "Frau"
 
 #: src/WooCommerceSalutation.php:66
 msgid "Company"
 msgstr "Firma"
+
