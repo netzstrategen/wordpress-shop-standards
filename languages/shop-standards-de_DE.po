@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-12-23 19:01+0100\n"
-"PO-Revision-Date: 2019-12-23 19:01+0100\n"
-"Last-Translator: Joan López <joan@netzstrategen.com>\n"
+"POT-Creation-Date: 2020-01-10 15:44+0100\n"
+"PO-Revision-Date: 2020-01-10 15:45+0100\n"
+"Last-Translator: Tom Hare <tom@netzstrategen.com>\n"
 "Language-Team: netzstrategen\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -96,7 +96,7 @@ msgid ""
 "loading to display further products without pagination links."
 msgstr ""
 
-#: src/Settings.php:38
+#: src/Settings.php:39
 msgid "Shop Standards"
 msgstr ""
 
@@ -134,8 +134,8 @@ msgstr "Minimaler Rabattprozentsatz zur Anzeige des Sale-Prozent-Labels"
 
 #: src/WooCommerce.php:175
 #, php-format
-msgid "Only %s in stock"
-msgstr ""
+msgid "Only %s immediately deliverable"
+msgstr "Nur noch %s Stück sofort ab Lager lieferbar"
 
 #: src/WooCommerce.php:179
 msgid "In stock"
@@ -239,6 +239,10 @@ msgstr ""
 msgid "Product "
 msgstr "Produkt "
 
+#: src/WooCommerceSalutation.php:36 src/WooCommerceSalutation.php:60
+msgid "Salutation"
+msgstr "Anrede"
+
 #: src/WooCommerceSalutation.php:40
 msgid "Salutation field"
 msgstr "Anrede Feld"
@@ -255,19 +259,14 @@ msgstr ""
 "Wenn aktiv, wird ein Anrede Feld zu den Versand- und Rechnungsfeldern im "
 "Checkout hinzugefügt."
 
-#: src/WooCommerceSalutation.php:60
-msgid "Salutation"
-msgstr "Anrede"
-
-#: src/WooCommerceSalutation.php:64
-msgid "Mr"
-msgstr "Herr"
-
 #: src/WooCommerceSalutation.php:65
 msgid "Mrs"
 msgstr "Frau"
 
 #: src/WooCommerceSalutation.php:66
+msgid "Mr"
+msgstr "Herr"
+
+#: src/WooCommerceSalutation.php:67
 msgid "Company"
 msgstr "Firma"
-

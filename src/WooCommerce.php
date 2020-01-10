@@ -172,7 +172,7 @@ class WooCommerce {
     $product_stock_quantity = $product->get_stock_quantity();
     if ($product->is_in_stock()) {
       if ($show_low_stock_amount && $product_stock_quantity > 0 && $product_stock_quantity <= $low_stock_amount) {
-        $stock['availability'] = sprintf(__('Only %s in stock', Plugin::L10N), $product_stock_quantity);
+        $stock['availability'] = sprintf(__('Only %s immediately deliverable', Plugin::L10N), $product_stock_quantity);
         $stock['class'] = 'low-stock';
       }
       else {
