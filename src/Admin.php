@@ -78,7 +78,8 @@ class Admin {
       }
     }
     asort($variation_deliveries_ranges);
-    return array_keys($variation_deliveries_ranges)[0];
+    $shortest_delivery_time = key($variation_deliveries_ranges) ?: '';
+    return $shortest_delivery_time;
   }
 
   /**
