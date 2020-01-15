@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2019-12-23 19:01+0100\n"
+"POT-Creation-Date: 2020-01-10 15:44+0100\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -82,7 +82,7 @@ msgstr ""
 msgid "Avoids unwanted rankings of search result URLs as well as paginated listing pages in case the shop's product listing is using infinite scrolling or lazy loading to display further products without pagination links."
 msgstr ""
 
-#: src/Settings.php:38
+#: src/Settings.php:39
 msgid "Shop Standards"
 msgstr ""
 
@@ -120,7 +120,7 @@ msgstr ""
 
 #: src/WooCommerce.php:175
 #, php-format
-msgid "Only %s in stock"
+msgid "Only %s immediately deliverable"
 msgstr ""
 
 #: src/WooCommerce.php:179
@@ -215,6 +215,10 @@ msgstr ""
 msgid "Product "
 msgstr ""
 
+#: src/WooCommerceSalutation.php:36 src/WooCommerceSalutation.php:60
+msgid "Salutation"
+msgstr ""
+
 #: src/WooCommerceSalutation.php:40
 msgid "Salutation field"
 msgstr ""
@@ -227,18 +231,14 @@ msgstr ""
 msgid "If checked a salutation field will be added to the shipping and billing address fields."
 msgstr ""
 
-#: src/WooCommerceSalutation.php:60
-msgid "Salutation"
-msgstr ""
-
-#: src/WooCommerceSalutation.php:64
-msgid "Mr"
-msgstr ""
-
 #: src/WooCommerceSalutation.php:65
 msgid "Mrs"
 msgstr ""
 
 #: src/WooCommerceSalutation.php:66
+msgid "Mr"
+msgstr ""
+
+#: src/WooCommerceSalutation.php:67
 msgid "Company"
 msgstr ""
