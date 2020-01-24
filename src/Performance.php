@@ -86,7 +86,7 @@ class Performance {
     global $wp_scripts;
 
     foreach ($wp_scripts->queue as $handle) {
-      $script = $wp_scripts->registered[$handle];
+      $script = $wp_scripts->registered[$handle] ?? [];
       // Weird way to check if script is being enqueued in the footer.
       if (!isset($script->extra['group']) || $script->extra['group'] !== 1) {
         continue;
