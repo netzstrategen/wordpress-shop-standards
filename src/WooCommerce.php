@@ -208,6 +208,16 @@ class WooCommerce {
    * @implements woocommerce_product_options_general_product_data
    */
   public static function woocommerce_product_options_general_product_data() {
+    // Back in stock date field.
+    echo '<div class="options_group show_if_simple show_if_external">';
+    woocommerce_wp_text_input([
+      'id' => '_' . Plugin::PREFIX . '_back_in_stock_date',
+      'type' => 'date',
+      'label' => __('Back in stock date', Plugin::L10N),
+      'desc_tip' => TRUE,
+      'description' => __('Enter the back in stock date', Plugin::L10N),
+    ]);
+    echo '</div>';
     // GTIN field.
     echo '<div class="options_group show_if_simple show_if_external">';
     woocommerce_wp_text_input([
@@ -288,6 +298,7 @@ class WooCommerce {
    */
   public static function woocommerce_process_product_meta($post_id) {
     $custom_fields = [
+      '_' . Plugin::PREFIX . '_back_in_stock_date',
       '_' . Plugin::PREFIX . '_gtin',
       '_' . Plugin::PREFIX . '_erp_inventory_id',
       '_' . Plugin::PREFIX . '_product_notes',
@@ -399,6 +410,17 @@ class WooCommerce {
    * @implements woocommerce_product_after_variable_attributes
    */
   public static function woocommerce_product_after_variable_attributes($loop, $variation_id, $variation) {
+    // Variation back in stock date field.
+    echo '<div style="clear:both">';
+    woocommerce_wp_text_input([
+      'id' => '_' . Plugin::PREFIX . '_back_in_stock_date[' . $loop . ']',
+      'type' => 'date',
+      'label' => __('Back in stock date', Plugin::L10N),
+      'desc_tip' => TRUE,
+      'description' => __('Enter the back in stock date', Plugin::L10N),
+      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_back_in_stock_date', TRUE),
+    ]);
+    echo '</div>';
     // Variation GTIN field.
     echo '<div style="clear:both">';
     woocommerce_wp_text_input([
@@ -455,8 +477,8 @@ class WooCommerce {
     }
     $variation_id = $_POST['variable_post_id'][$loop];
 
-    // Variation GTIN and ERP/Inventory ID fields.
     $custom_fields = [
+      '_' . Plugin::PREFIX . '_back_in_stock_date',
       '_' . Plugin::PREFIX . '_gtin',
       '_' . Plugin::PREFIX . '_erp_inventory_id',
     ];
@@ -948,6 +970,41 @@ class WooCommerce {
     });
 
     return is_wp_error($terms) ? [] : $term_options;
+  }
+
+  /**
+   * Adds back in stock date to delivery time string for simple products and product variants.
+   *
+   * See https://github.com/netzstrategen/wopa/blob/b3ed454d22f3da7cdee51e7273bda896d04e272c/local-plugins/woocommerce-german-market/inc/WGM_Template.php#L2582
+   *
+   * @implements woocommerce_de_get_deliverytime_string_label_string
+   */
+  public static function woocommerce_de_get_deliverytime_string_label_string($label_string, $product) {
+    $product_id = $product->get_id();
+
+    if ($back_in_stock_date = get_post_meta($product_id, '_' . Plugin::PREFIX . '_back_in_stock_date', TRUE)) {
+      $label_string .= ' ' . WooCommerce::getBackInStockDateString($back_in_stock_date);
+    }
+
+    return $label_string;
+  }
+
+  /**
+   * Returns the back in stock date string which can be appended to the delivery time.
+   *
+   * The provided $date_string needs to be in the format used by HTML5 date inputs: 'YYYY-MM-DD'.
+   */
+  public static function getBackInStockDateString($date_string) {
+    $current_date = date_i18n('Ymd');
+    $back_in_stock_date_string = '';
+
+    // Check if back in stock date is in the future.
+    if (date_i18n('Ymd', strtotime($date_string)) > $current_date) {
+      // translators: from date, e.g. available 'from 24.10.2019'
+      $back_in_stock_date_string = sprintf(__('from %1$s', Plugin::L10N), date_i18n('d.m.Y', strtotime($date_string)));
+    }
+
+    return $back_in_stock_date_string;
   }
 
 }

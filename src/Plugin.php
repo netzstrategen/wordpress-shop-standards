@@ -163,6 +163,9 @@ class Plugin {
 
       // Ensure product details column is wide enough.
       add_filter('woocommerce_email_styles', __NAMESPACE__ . '\WooCommerce::woocommerce_email_styles');
+
+      // Adds back in stock date to delivery time string for simple products and product variants.
+      add_filter('woocommerce_de_get_deliverytime_string_label_string', __NAMESPACE__ . '\WooCommerce::woocommerce_de_get_deliverytime_string_label_string', 10, 2);
     }
 
     // Prefetches DNS entries for particular resources.
