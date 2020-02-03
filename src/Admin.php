@@ -98,7 +98,7 @@ class Admin {
         $parent_id = $product->get_parent_id();
         static::saveSalePercentage($parent_id, get_post($parent_id));
       }
-      else {
+      elseif ($product->get_type() === 'simple' || $product->get_type() === 'bundle') {
         static::saveSalePercentage($object_id, get_post($object_id));
       }
     }
