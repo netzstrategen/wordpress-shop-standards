@@ -16,7 +16,7 @@ class WooCommerceSaleLabel {
     add_filter('woocommerce_get_settings_shop_standards', __CLASS__ . '::woocommerce_get_settings_shop_standards');
 
     // Assigns sale category conditionally on product update.
-    if (get_option('_' . Plugin::L10N . '_enable_auto_sale_category_assignment') === 'yes') {
+    if (get_option('_' . Plugin::L10N . '_sale_auto_label_enabled') === 'yes') {
       add_action('woocommerce_update_product', __CLASS__ . '::woocommerce_update_product');
     }
   }
@@ -33,13 +33,13 @@ class WooCommerceSaleLabel {
     ];
     $settings[] = [
       'type' => 'checkbox',
-      'id' => '_' . Plugin::L10N . '_enable_auto_sale_category_assignment',
+      'id' => '_' . Plugin::L10N . '_sale_auto_label_enabled',
       'name' => __('Enable', Plugin::L10N),
       'show_if_checked' => 'option',
     ];
     $settings[] = [
       'type' => 'multiselect',
-      'id' => '_' . Plugin::L10N . '_eligible_delivery_times',
+      'id' => '_' . Plugin::L10N . '_sale_auto_label_delivery_times',
       'name' => __('Eligible delivery times', Plugin::L10N),
       'options' => WooCommerce::getTaxonomyTermsAsSelectOptions('product_delivery_times'),
       'css' => 'height:auto',
@@ -49,7 +49,7 @@ class WooCommerceSaleLabel {
     ];
     $settings[] = [
       'type' => 'select',
-      'id' => '_' . Plugin::L10N . '_sale_category',
+      'id' => '_' . Plugin::L10N . '_sale_auto_label_category',
       'name' => __('Sale category to assign', Plugin::L10N),
       'options' => WooCommerce::getTaxonomyTermsAsSelectOptions('product_cat'),
     ];
@@ -67,7 +67,7 @@ class WooCommerceSaleLabel {
    */
   public static function woocommerce_update_product($product_id) {
     $product = wc_get_product($product_id);
-    $sale_category_id = (int) get_option('_' . Plugin::L10N . '_sale_category');
+    $sale_category_id = (int) get_option('_' . Plugin::L10N . '_sale_auto_label_category');
 
     if (!$product || !$sale_category_id) {
       return;
@@ -127,7 +127,7 @@ class WooCommerceSaleLabel {
     $is_in_stock = $product->is_in_stock();
 
     // Delivery time needs to be in defined set of eligible options.
-    $eligible_delivery_times = get_option('_' . Plugin::L10N . '_eligible_delivery_times');
+    $eligible_delivery_times = get_option('_' . Plugin::L10N . '_sale_auto_label_delivery_times');
     $delivery_time = get_post_meta($product_id, '_lieferzeit', TRUE);
     $has_eligible_delivery_time = in_array($delivery_time, $eligible_delivery_times);
 
