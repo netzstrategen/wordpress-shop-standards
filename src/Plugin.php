@@ -177,7 +177,7 @@ class Plugin {
     // Dequeues unwanted scripts and styles.
     add_action('wp_enqueue_scripts', __NAMESPACE__ . '\Performance::wp_enqueue_scripts', 999);
 
-    // Enqueues plugin scripts.
+    // Enqueues plugin scripts and styles.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
 
     // Adds GTIN product number in schema.org.
@@ -262,12 +262,15 @@ class Plugin {
   }
 
   /**
-   * Enqueues plugin scripts.
+   * Enqueues plugin scripts and styles.
    *
    * @implements wp_enqueue_scripts
    */
   public static function wp_enqueue_scripts() {
     $git_version = static::getGitVersion();
+
+    wp_enqueue_style(Plugin::PREFIX, static::getBaseUrl() . '/dist/styles/main.min.css', [], $git_version);
+
     wp_enqueue_script(Plugin::PREFIX, static::getBaseUrl() . '/dist/scripts/main.min.js', ['jquery'], $git_version, TRUE);
     wp_localize_script(Plugin::PREFIX, 'shop_standards_settings', [
       'saleMinAmount' => WooCommerce::SALE_BUBBLE_MIN_AMOUNT,
