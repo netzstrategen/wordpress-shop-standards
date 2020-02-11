@@ -77,11 +77,26 @@
     }
   }
 
+  /**
+   * Calculates the sale percentage applied to a product.
+   *
+   * @param {Integer} regularPrice
+   *   Product regular price.
+   * @param {Integer} salePrice
+   *   Product discounted price.
+   *
+   * @return {Integer}
+   *   Product sale precentage.
+   */
+  function calculateSalePercentage(regularPrice, salePrice) {
+    return Math.floor((regularPrice - salePrice) / regularPrice * 100);
+  }
+
   $('.single_variation_wrap')
     .on('show_variation', (event, variation) => {
       /* eslint-disable max-len */
       if (variation.display_price < variation.display_regular_price) {
-        const percentage = Math.floor((variation.display_regular_price - variation.display_price) / variation.display_regular_price * 100);
+        const percentage = calculateSalePercentage(variation.display_regular_price, variation.display_price);
         updateSaleLabel(percentage);
       }
       /* eslint-enable max-len */
@@ -95,7 +110,7 @@
       });
     })
     .on('hide_variation', () => {
-      const $fallbackPercentage = $singleProductSaleLabel.attr('data-sale-percentage');
+      const $fallbackPercentage = parseInt($singleProductSaleLabel.attr('data-sale-percentage'), 10);
       updateSaleLabel($fallbackPercentage);
 
       // Hides all variation product discount table on product variation hide.
