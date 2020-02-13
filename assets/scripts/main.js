@@ -95,10 +95,8 @@
   $('.single_variation_wrap')
     .on('show_variation', (event, variation) => {
       /* eslint-disable max-len */
-      if (variation.display_price < variation.display_regular_price) {
-        const percentage = calculateSalePercentage(variation.display_regular_price, variation.display_price);
-        updateSaleLabel(percentage);
-      }
+      const percentage = calculateSalePercentage(variation.display_regular_price, variation.display_price);
+      updateSaleLabel(percentage);
       /* eslint-enable max-len */
 
       // Updates discount table on product variation change.
@@ -110,8 +108,7 @@
       });
     })
     .on('hide_variation', () => {
-      const $fallbackPercentage = parseInt($singleProductSaleLabel.attr('data-sale-percentage'), 10);
-      updateSaleLabel($fallbackPercentage);
+      $singleProductSaleLabel.hide();
 
       // Hides all variation product discount table on product variation hide.
       $($('[data-variations]')).each(function hideDiscountTable() {
