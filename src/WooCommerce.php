@@ -108,16 +108,15 @@ class WooCommerce {
   }
 
   /**
-   * Adds backordering with proper status messages.
+   * Displays product availabitily status messages.
    *
-   * Backordering is added and status messages displayed for every product
+   * Status messages are displayed for every product
    * whether stock managing is enabled or it's available.
    *
    * @implements woocommerce_get_availability
    */
   public static function woocommerce_get_availability($stock, $product) {
     $product->set_manage_stock('yes');
-    $product->set_backorders('yes');
 
     // If low stock threshold is not set at product level, get global option.
     // Zero is allowed so just check for empty string as in WooCommerce Core.
