@@ -35,7 +35,6 @@
     if ($variationSelectChanged && $variationSelectChanged.val() === '') {
       $variationSelectChanged.val('');
       $variationSelectChanged = false;
-      $variationsForm.trigger('check_variations');
     } else {
       // If there is only one option left in any of current variation attributes
       // dropdowns, it should be auto-selected.
@@ -44,9 +43,14 @@
         if ($this.find('option').size() === 2) {
           $this.val($this.find('option').eq(1).val());
         }
-        $variationsForm.trigger('check_variations');
       });
     }
+    // Ensure the rigth product image is displayed.
+    // Some delay seems to be needed to refresh the product image.
+    // We couldn't find a proper event to hook on, so we used a timeout.
+    setTimeout(() => {
+      $variationsForm.trigger('check_variations');
+    }, 100);
   });
 
   // Single product sale label DOM element.
