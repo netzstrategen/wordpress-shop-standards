@@ -7,6 +7,8 @@
 
 namespace Netzstrategen\ShopStandards;
 
+use Svg\Tag\Ellipse;
+
 /**
  * Administrative back-end functionality.
  */
@@ -98,7 +100,7 @@ class Admin {
         $parent_id = $product->get_parent_id();
         static::saveSalePercentage($parent_id, get_post($parent_id));
       }
-      elseif ($product->get_type() === 'simple' || $product->get_type() === 'bundle') {
+      elseif (in_array($product->get_type(), ['simple', 'variable', 'bundle'])) {
         static::saveSalePercentage($object_id, get_post($object_id));
       }
     }
