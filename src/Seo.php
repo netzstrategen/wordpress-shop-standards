@@ -113,7 +113,7 @@ class Seo {
    */
   public static function dynamic_sidebar_after() {
     $sidebar_content = ob_get_clean();
-    $sidebar_content = preg_replace('@(<li\s+class="chosen.*)<a(.*)href="(.*)">(.*)</a></li>@', '$1<span$2data-url="$3">$4</a></li>', $sidebar_content);
+    $sidebar_content = preg_replace('@(<li\s+class="chosen.*)<a(.*)href="(.*)">(.*)</a></li>@', '$1<span data-url="$3">$4</a></li>', $sidebar_content);
     echo $sidebar_content;
   }
 
