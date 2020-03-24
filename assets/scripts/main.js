@@ -1,6 +1,19 @@
 /* global shop_standards_settings */
 
 (function pageLoad($) {
+  // Toggles product filtering by term.
+  $('body')
+    .on(
+      'click',
+      '.woocommerce-widget-layered-nav-list__item, .widget_layered_nav_filters .chosen, .shop-sidebar-widget .chosen',
+      (e) => {
+        const url = $(e.target).data('url');
+        if (url) {
+          document.location.href = url;
+        }
+      },
+    );
+
   /**
    * Prevents multiple order to be sent.
    *
