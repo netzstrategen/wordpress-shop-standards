@@ -2,19 +2,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2020-01-30 12:46+0100\n"
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-"POT-Creation-Date: 2019-12-23 19:01+0100\n"
-=======
-"POT-Creation-Date: 2020-01-09 16:09+0100\n"
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+"POT-Creation-Date: 2020-03-24 10:32+0100\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
@@ -24,12 +18,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-<<<<<<< HEAD
-#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:217 src/Plugin.php:256
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:209 src/Plugin.php:248
-=======
-#: src/Admin.php:57 src/WooCommerce.php:1053
+#: src/Admin.php:57 src/WooCommerce.php:991
 #, php-format
 msgid "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in order to save the product."
 msgstr ""
@@ -38,32 +27,31 @@ msgstr ""
 msgid "The entered GTIN is unique."
 msgstr ""
 
-#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:209 src/Plugin.php:248
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:213 src/Plugin.php:252
 msgid "Hide \"Add to Cart\" button"
 msgstr ""
 
-#: src/Plugin.php:221
+#: src/Plugin.php:217
 msgid "Product categories"
 msgstr ""
 
-#: src/Plugin.php:222
+#: src/Plugin.php:218
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 
-#: src/Plugin.php:234
+#: src/Plugin.php:230
 msgid "Product brands"
 msgstr ""
 
-#: src/Plugin.php:235
+#: src/Plugin.php:231
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 
-#: src/Plugin.php:247
+#: src/Plugin.php:243
 msgid "Notice"
 msgstr ""
 
-#: src/Plugin.php:249
+#: src/Plugin.php:245
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 
@@ -115,242 +103,144 @@ msgstr ""
 msgid "Disable coupon input field on checkout page"
 msgstr ""
 
-#: src/WooCommerce.php:38
-msgid "Automatic sale category assignment"
-msgstr ""
-
-#: src/WooCommerce.php:43
-msgid "Enable"
-msgstr ""
-
-#: src/WooCommerce.php:49
-msgid "Eligible delivery times"
-msgstr ""
-
-#: src/WooCommerce.php:59
-msgid "Sale category to assign"
-msgstr ""
-
-#: src/WooCommerce.php:67
+#: src/WooCommerce.php:37
 msgid "Products settings"
 msgstr ""
 
-#: src/WooCommerce.php:73
+#: src/WooCommerce.php:43
 msgid "Minimum discount percentage to display product sale label"
 msgstr ""
 
-#: src/WooCommerce.php:175
+#: src/WooCommerce.php:144
 #, php-format
 msgid "Only %s immediately deliverable"
 msgstr ""
 
-#: src/WooCommerce.php:179
+#: src/WooCommerce.php:148
 msgid "In stock"
 msgstr ""
 
-#: src/WooCommerce.php:216 src/WooCommerce.php:418
+#: src/WooCommerce.php:185 src/WooCommerce.php:400
 msgid "Back in stock date"
 msgstr ""
 
-#: src/WooCommerce.php:218 src/WooCommerce.php:420
+#: src/WooCommerce.php:187 src/WooCommerce.php:402
 msgid "Enter the back in stock date"
 msgstr ""
 
-#: src/WooCommerce.php:225
+#: src/WooCommerce.php:194
 msgid "GTIN"
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:227 src/WooCommerce.php:429
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:217 src/WooCommerce.php:407
-=======
-#: src/WooCommerce.php:217 src/WooCommerce.php:420
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:196 src/WooCommerce.php:411
 msgid "Enter the Global Trade Item Number"
 msgstr ""
 
-#: src/WooCommerce.php:234
+#: src/WooCommerce.php:203
 msgid "ERP/Inventory ID"
 msgstr ""
 
-#: src/WooCommerce.php:241
+#: src/WooCommerce.php:210
 msgid "Display sale price as normal price"
 msgstr ""
 
-#: src/WooCommerce.php:248
+#: src/WooCommerce.php:217
 msgid "Custom price label"
 msgstr ""
 
-#: src/WooCommerce.php:250
+#: src/WooCommerce.php:219
 msgid "The label will only be displayed if \"Sale price was displayed as regular price\" setting is checked."
 msgstr ""
 
-#: src/WooCommerce.php:257
+#: src/WooCommerce.php:226
 msgid "Hide sale percentage bubble"
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:264 src/WooCommerce.php:445
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:254 src/WooCommerce.php:423
-=======
-#: src/WooCommerce.php:254 src/WooCommerce.php:436
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:233 src/WooCommerce.php:427
 msgid "Hide add to cart button"
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:271 src/WooCommerce.php:463
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:261 src/WooCommerce.php:441
-=======
-#: src/WooCommerce.php:261 src/WooCommerce.php:454
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:240 src/WooCommerce.php:445
 msgid "Price comparison focus product"
 msgstr ""
 
-#: src/WooCommerce.php:288
+#: src/WooCommerce.php:257
 msgid "Internal product notes"
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:428
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:406
-=======
-#: src/WooCommerce.php:419
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:410
 msgid "GTIN:"
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:437
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:415
-=======
-#: src/WooCommerce.php:428
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:419
 msgid "ERP/Inventory ID:"
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:453
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:431
-=======
-#: src/WooCommerce.php:444
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:435
 msgid "Variation has insufficient images"
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:455
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:433
-=======
-#: src/WooCommerce.php:446
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:437
 msgid "Allows this product to be identified and possibly be excluded by other processes and plugins (e.g. a custom filter for product feeds). Enabling this option has no effect on the output (by default)."
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:531
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:509
-=======
-#: src/WooCommerce.php:536
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:527
 msgid "Sort by discount"
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:593
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:571
-=======
-#: src/WooCommerce.php:598
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:589
 msgid "(Our price)"
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:648 src/WooCommerce.php:704
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:626 src/WooCommerce.php:682
-=======
-#: src/WooCommerce.php:653 src/WooCommerce.php:709
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:644 src/WooCommerce.php:700
 msgid "Delivery Time"
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:764
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:742
-=======
-#: src/WooCommerce.php:769
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:760
 msgid "SKU"
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:768
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:746
-=======
-#: src/WooCommerce.php:773
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:764
 msgid "ERP/ID"
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:781
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:759
-=======
-#: src/WooCommerce.php:786
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:777
 msgid "Dimensions"
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:789
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:767
-=======
-#: src/WooCommerce.php:794
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:785
 msgid "Weight"
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:835
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-#: src/WooCommerce.php:813
-=======
-#: src/WooCommerce.php:840
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
+#: src/WooCommerce.php:831
 msgid "Product "
 msgstr ""
 
-<<<<<<< HEAD
-#: src/WooCommerce.php:1004
+#: src/WooCommerce.php:912
 #, php-format
 msgid "from %1$s"
 msgstr ""
 
+#: src/WooCommerceSaleLabel.php:32
+msgid "Automatic sale category assignment"
+msgstr ""
+
+#: src/WooCommerceSaleLabel.php:37
+msgid "Enable"
+msgstr ""
+
+#: src/WooCommerceSaleLabel.php:43
+msgid "Eligible delivery times"
+msgstr ""
+
+#: src/WooCommerceSaleLabel.php:53
+msgid "Sale category to assign"
+msgstr ""
+
 #: src/WooCommerceSalutation.php:36 src/WooCommerceSalutation.php:60
 msgid "Salutation"
 msgstr ""
 
-||||||| parent of 09aec68... Added validation to ensure that GTIN is unique.
-=======
-#: src/WooCommerceSalutation.php:36 src/WooCommerceSalutation.php:60
-msgid "Salutation"
-msgstr ""
-
->>>>>>> 09aec68... Added validation to ensure that GTIN is unique.
 #: src/WooCommerceSalutation.php:40
 msgid "Salutation field"
 msgstr ""
