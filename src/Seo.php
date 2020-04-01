@@ -23,6 +23,15 @@ class Seo {
     add_action('wp_head', __CLASS__ . '::wp_head');
     // Disables Yoast adjacent links.
     add_filter('wpseo_disable_adjacent_rel_links', __CLASS__ . '::wpseo_disable_adjacent_rel_links');
+
+    // To avoid all no-follow links introduced by the products filters sidebar
+    // widgets, we convert them into span tags.
+    // Removes link tags from list of products filters.
+    add_filter('woocommerce_layered_nav_term_html', __CLASS__ . '::woocommerce_layered_nav_term_html', 999, 4);
+    // Starts capturing the sidebar content.
+    add_action('dynamic_sidebar_before', __CLASS__ . '::dynamic_sidebar_before');
+    // Removes link tags from selected products filters tags.
+    add_action('dynamic_sidebar_after', __CLASS__ . '::dynamic_sidebar_after');
   }
 
   /**
@@ -55,7 +64,7 @@ class Seo {
   }
 
   /**
-   * Blocks search indexing on search pages.
+   * Removes link tags from list of products filters.
    *
    * @implements wp_head
    */
@@ -74,6 +83,38 @@ class Seo {
    */
   public static function wpseo_disable_adjacent_rel_links(): bool {
     return get_option(Plugin::L10N . '_wpseo_disable_adjacent_rel_links');
+  }
+
+  /**
+   * Removes link tags from list of products filters.
+   *
+   * @implements woocommerce_layered_nav_term_html
+   */
+  public static function woocommerce_layered_nav_term_html($term_html, $term, $link, $count) {
+    if (strpos($term_html, '<a') !== 0) {
+      return $term_html;
+    }
+    return sprintf('<span class="product-filter-term" data-url="%s">%s</span> <span class="count">(%d)</span>', $link, esc_html($term->name), $count);
+  }
+
+  /**
+   * Starts capturing the sidebar content.
+   *
+   * @implements dynamic_sidebar_before
+   */
+  public static function dynamic_sidebar_before() {
+    ob_start();
+  }
+
+  /**
+   * Removes link tags from selected products filters tags.
+   *
+   * @implements dynamic_sidebar_after
+   */
+  public static function dynamic_sidebar_after() {
+    $sidebar_content = ob_get_clean();
+    $sidebar_content = preg_replace('@(<li\s+class="chosen.*)<a(.*)href="(.*)">(.*)</a></li>@', '$1<span data-url="$3">$4</a></li>', $sidebar_content);
+    echo $sidebar_content;
   }
 
   /**
