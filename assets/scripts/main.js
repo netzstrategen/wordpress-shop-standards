@@ -125,7 +125,8 @@
       });
     })
     .on('hide_variation', () => {
-      $singleProductSaleLabel.hide();
+      // Displays the lowest sale percentage.
+      updateSaleLabel($singleProductSaleLabel.data('sale-percentage'));
 
       // Hides all variation product discount table on product variation hide.
       $($('[data-variations]')).each(function hideDiscountTable() {
