@@ -129,7 +129,7 @@ class Admin {
    * @implements updated_post_meta
    */
   public static function updateSalePercentage($check, $object_id, $meta_key, $meta_value) {
-    if ($meta_key === '_regular_price' || $meta_key === '_sale_price') {
+    if (in_array($meta_key, ['price', '_regular_price', '_sale_price'])) {
       $product = wc_get_product($object_id);
       if ($product->get_type() === 'variation') {
         $parent_id = $product->get_parent_id();
