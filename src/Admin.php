@@ -28,11 +28,6 @@ class Admin {
     // Adds products variations custom fields.
     add_action('woocommerce_product_after_variable_attributes', __NAMESPACE__ . '\WooCommerce::woocommerce_product_after_variable_attributes', 10, 3);
 
-    // Assigns sale category conditionally on product update.
-    if (get_option('_' . Plugin::L10N . '_enable_auto_sale_category_assignment') === 'yes') {
-      add_action('woocommerce_update_product', __NAMESPACE__ . '\WooCommerce::woocommerce_update_product');
-    }
-
     // Allow ajax requests to specified functions.
     add_action('wp_ajax_is_existing_gtin', __NAMESPACE__ . '\WooCommerce::wp_ajax_is_existing_gtin');
 
