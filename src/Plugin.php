@@ -267,7 +267,7 @@ class Plugin {
 
     wp_enqueue_script(Plugin::PREFIX, static::getBaseUrl() . '/dist/scripts/main.min.js', ['jquery'], $git_version, TRUE);
     wp_localize_script(Plugin::PREFIX, 'shop_standards_settings', [
-      'saleMinAmount' => WooCommerce::SALE_BUBBLE_MIN_AMOUNT,
+      'saleMinAmount' => get_option('_minimum_sale_percentage_to_display_label', WooCommerce::SALE_BUBBLE_MIN_AMOUNT),
     ]);
   }
 
