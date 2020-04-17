@@ -162,6 +162,14 @@ class Plugin {
 
       // Adds back in stock date to delivery time string for simple products and product variants.
       add_filter('woocommerce_de_get_deliverytime_string_label_string', __NAMESPACE__ . '\WooCommerce::woocommerce_de_get_deliverytime_string_label_string', 10, 2);
+
+      // Version 3.10 of WGM introduces changes that prevent delivery time to be
+      // displayed for variable products on products listing pages and on single
+      // product view page until a variation is selected.
+      if (\Woocommerce_German_Market::get_version() >= '3.10') {
+        remove_action('wgm_after_shipping_fee_single', ['WGM_Template', 'add_template_loop_shop'], 11);
+        add_action('wgm_after_shipping_fee_single', __NAMESPACE__ . '\WGMTemplate::add_template_loop_shop', 11);
+      }
     }
 
     // Prefetches DNS entries for particular resources.
