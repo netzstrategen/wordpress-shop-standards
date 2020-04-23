@@ -898,6 +898,24 @@ class WooCommerce {
   }
 
   /**
+   * Fixes delivery time is not displayed for variable products.
+   *
+   * Version 3.10 of WGM introduces changes that prevent delivery time to be
+   * displayed for variable products on products listing pages and on single
+   * product view page until a variation is selected.
+   *
+   * @implements wgm_deliverytime_loop
+   */
+  public static function wgm_deliverytime_loop($output, $label) {
+    global $product;
+
+    if (!$label) {
+      $output .= \WGM_Template::get_deliverytime_string($product);
+    }
+    return $output;
+  }
+
+  /**
    * Returns the back in stock date string which can be appended to the delivery time.
    *
    * The provided $date_string needs to be in the format used by HTML5 date inputs: 'YYYY-MM-DD'.
