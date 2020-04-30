@@ -105,6 +105,7 @@ class Plugin {
     WooCommerceSaleLabel::init();
     Seo::init();
     WooCommerceSalutation::init();
+    WooCommerceCheckout::init();
 
     if (is_admin()) {
       return;
@@ -275,6 +276,9 @@ class Plugin {
     wp_enqueue_script(Plugin::PREFIX, static::getBaseUrl() . '/dist/scripts/main.min.js', ['jquery'], $git_version, TRUE);
     wp_localize_script(Plugin::PREFIX, 'shop_standards_settings', [
       'saleMinAmount' => get_option('_minimum_sale_percentage_to_display_label', WooCommerce::SALE_BUBBLE_MIN_AMOUNT),
+    ]);
+    wp_localize_script(Plugin::PREFIX, 'shop_standards_settings', [
+      'emailConfirmationEmail' => get_option('_' . Plugin::L10N . '_checkout_email_confirmation_field'),
     ]);
   }
 
