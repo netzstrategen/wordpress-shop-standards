@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2020-03-24 10:32+0100\n"
+"POT-Creation-Date: 2020-05-06 11:00+0200\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,40 +18,40 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: src/Admin.php:57 src/WooCommerce.php:991
+#: src/Admin.php:52 src/WooCommerce.php:1009
 #, php-format
 msgid "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in order to save the product."
 msgstr ""
 
-#: src/Admin.php:60
+#: src/Admin.php:55
 msgid "The entered GTIN is unique."
 msgstr ""
 
-#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:213 src/Plugin.php:252
+#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:221 src/Plugin.php:260
 msgid "Hide \"Add to Cart\" button"
 msgstr ""
 
-#: src/Plugin.php:217
+#: src/Plugin.php:225
 msgid "Product categories"
 msgstr ""
 
-#: src/Plugin.php:218
+#: src/Plugin.php:226
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 
-#: src/Plugin.php:230
+#: src/Plugin.php:238
 msgid "Product brands"
 msgstr ""
 
-#: src/Plugin.php:231
+#: src/Plugin.php:239
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 
-#: src/Plugin.php:243
+#: src/Plugin.php:251
 msgid "Notice"
 msgstr ""
 
-#: src/Plugin.php:245
+#: src/Plugin.php:253
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 
@@ -71,23 +71,23 @@ msgstr ""
 msgid "Remove filter"
 msgstr ""
 
-#: src/Seo.php:36
+#: src/Seo.php:45
 msgid "SEO settings"
 msgstr ""
 
-#: src/Seo.php:41
+#: src/Seo.php:50
 msgid "Index first page of paginated products listings only"
 msgstr ""
 
-#: src/Seo.php:42
+#: src/Seo.php:51
 msgid "If checked, noindex meta tag will be added to paginated products listing pages, starting from the second page."
 msgstr ""
 
-#: src/Seo.php:47
+#: src/Seo.php:56
 msgid "Disable Yoast SEO adjacent navigation links."
 msgstr ""
 
-#: src/Seo.php:48
+#: src/Seo.php:57
 msgid "Avoids unwanted rankings of search result URLs as well as paginated listing pages in case the shop's product listing is using infinite scrolling or lazy loading to display further products without pagination links."
 msgstr ""
 
@@ -216,9 +216,25 @@ msgstr ""
 msgid "Product "
 msgstr ""
 
-#: src/WooCommerce.php:912
+#: src/WooCommerce.php:930
 #, php-format
 msgid "from %1$s"
+msgstr ""
+
+#: src/WooCommerceCheckout.php:35
+msgid "Checkout settings"
+msgstr ""
+
+#: src/WooCommerceCheckout.php:40
+msgid "Require users to enter billing email address twice"
+msgstr ""
+
+#: src/WooCommerceCheckout.php:63
+msgid "Repeat e-mail address"
+msgstr ""
+
+#: src/WooCommerceCheckout.php:79
+msgid "Your email addresses do not match"
 msgstr ""
 
 #: src/WooCommerceSaleLabel.php:32

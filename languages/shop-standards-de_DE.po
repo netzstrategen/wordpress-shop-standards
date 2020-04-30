@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2020-03-24 10:32+0100\n"
+"POT-Creation-Date: 2020-05-06 11:00+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.3\n"
 
-#: src/Admin.php:57 src/WooCommerce.php:991
+#: src/Admin.php:52 src/WooCommerce.php:1009
 #, php-format
 msgid ""
 "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in "
@@ -20,39 +20,39 @@ msgstr ""
 "Diese GTIN <a href=\"%s\">wird bereits verwendet</a>. Sie muss geändert "
 "werden bevor das Produkt gespeichert werden kann."
 
-#: src/Admin.php:60
+#: src/Admin.php:55
 msgid "The entered GTIN is unique."
 msgstr "Diese GTIN wird noch nicht verwendet."
 
-#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:213 src/Plugin.php:252
+#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:221 src/Plugin.php:260
 msgid "Hide \"Add to Cart\" button"
 msgstr "“In den Warenkorb”-Verhalten"
 
-#: src/Plugin.php:217
+#: src/Plugin.php:225
 msgid "Product categories"
 msgstr "Produktkategorien"
 
-#: src/Plugin.php:218
+#: src/Plugin.php:226
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
 "ausgeblendet."
 
-#: src/Plugin.php:230
+#: src/Plugin.php:238
 msgid "Product brands"
 msgstr "Produktmarken"
 
-#: src/Plugin.php:231
+#: src/Plugin.php:239
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
 "ausgeblendet."
 
-#: src/Plugin.php:243
+#: src/Plugin.php:251
 msgid "Notice"
 msgstr "Hinweis"
 
-#: src/Plugin.php:245
+#: src/Plugin.php:253
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 "Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
@@ -75,25 +75,25 @@ msgstr ""
 msgid "Remove filter"
 msgstr ""
 
-#: src/Seo.php:36
+#: src/Seo.php:45
 msgid "SEO settings"
 msgstr "SEO Einstellungen"
 
-#: src/Seo.php:41
+#: src/Seo.php:50
 msgid "Index first page of paginated products listings only"
 msgstr ""
 
-#: src/Seo.php:42
+#: src/Seo.php:51
 msgid ""
 "If checked, noindex meta tag will be added to paginated products listing "
 "pages, starting from the second page."
 msgstr ""
 
-#: src/Seo.php:47
+#: src/Seo.php:56
 msgid "Disable Yoast SEO adjacent navigation links."
 msgstr ""
 
-#: src/Seo.php:48
+#: src/Seo.php:57
 msgid ""
 "Avoids unwanted rankings of search result URLs as well as paginated listing "
 "pages in case the shop's product listing is using infinite scrolling or lazy "
@@ -237,10 +237,28 @@ msgstr ""
 msgid "Product "
 msgstr "Produkt "
 
-#: src/WooCommerce.php:912
+#: src/WooCommerce.php:930
 #, php-format
 msgid "from %1$s"
 msgstr "ab %1$s"
+
+#: src/WooCommerceCheckout.php:35
+msgid "Checkout settings"
+msgstr "Einstellungen Bestellprozess"
+
+#: src/WooCommerceCheckout.php:40
+msgid "Require users to enter billing email address twice"
+msgstr "Nutzer zur erneuten Eingabe der E-Mail-Adresse auffordern"
+
+#: src/WooCommerceCheckout.php:63
+msgid "Repeat e-mail address"
+msgstr "E-Mail-Adresse wiederholen"
+
+#: src/WooCommerceCheckout.php:79
+msgid "Your email addresses do not match"
+msgstr ""
+"Ihre E-Mail-Adressen stimmen nicht überein. Bitte überprüfen Sie Ihre "
+"Eingabe."
 
 #: src/WooCommerceSaleLabel.php:32
 msgid "Automatic sale category assignment"

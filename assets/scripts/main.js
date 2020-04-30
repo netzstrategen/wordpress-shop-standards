@@ -133,4 +133,24 @@
         $(this).parent().hide();
       });
     });
+
+  $(document).ready(() => {
+    // Disable copy/paste actions on billing email fields.
+    if (shop_standards_settings.emailConfirmationEmail === 'yes') {
+      $('#billing_email, #billing_email_confirmation').each(function() {
+        // eslint-disable-next-line max-nested-callbacks
+        $(this).on('cut copy paste', (e) => {
+          e.preventDefault();
+        });
+      });
+
+      // Marks email confirmation field as invalid if does not match email
+      // field on form submit.
+      $('form.woocommerce-checkout').on('input validate change', () => {
+        if ($('#billing_email').val() !== $('#billing_email_confirmation').val()) {
+          $('#billing_email_confirmation_field').removeClass('woocommerce-validated').addClass('woocommerce-invalid woocommerce-invalid-required-field');
+        }
+      });
+    }
+  });
 }(jQuery));
