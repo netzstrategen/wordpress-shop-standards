@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2020-05-06 11:00+0200\n"
+"POT-Creation-Date: 2020-05-06 15:17+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -24,38 +24,55 @@ msgstr ""
 msgid "The entered GTIN is unique."
 msgstr "Diese GTIN wird noch nicht verwendet."
 
-#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:221 src/Plugin.php:260
+#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:222 src/Plugin.php:261
 msgid "Hide \"Add to Cart\" button"
 msgstr "“In den Warenkorb”-Verhalten"
 
-#: src/Plugin.php:225
+#: src/Plugin.php:226
 msgid "Product categories"
 msgstr "Produktkategorien"
 
-#: src/Plugin.php:226
+#: src/Plugin.php:227
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
 "ausgeblendet."
 
-#: src/Plugin.php:238
+#: src/Plugin.php:239
 msgid "Product brands"
 msgstr "Produktmarken"
 
-#: src/Plugin.php:239
+#: src/Plugin.php:240
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
 "ausgeblendet."
 
-#: src/Plugin.php:251
+#: src/Plugin.php:252
 msgid "Notice"
 msgstr "Hinweis"
 
-#: src/Plugin.php:253
+#: src/Plugin.php:254
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 "Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
+
+#: src/PlusProducts.php:31
+msgid "Plus Product Settings"
+msgstr "Plus Produkt Einstellungen"
+
+#: src/PlusProducts.php:36
+msgid "Plus Products Category"
+msgstr "Plus Produkt Kategorien"
+
+#: src/PlusProducts.php:59
+msgid ""
+"Currently there are only Plus products in your shopping cart. Please, add at "
+"least one product from a different category to complete your order."
+msgstr ""
+"In Ihrem Warenkorb befinden sich aktuell nur Plus-Produkte. Bitte beachten "
+"Sie, dass Sie Ihre Bestellung nur abschließen können, wenn Sie Ihrem "
+"Warenkorb noch mindestens ein Produkt aus einer anderen Kategorie hinzufügen."
 
 #: src/ProductFilters/WidgetFilterDeliveryTime.php:31
 msgid "Filter Products by Delivery Time"
@@ -113,10 +130,8 @@ msgid "Disable coupon input field on checkout page"
 msgstr "Gutscheinfeld an der Kasse ausblenden"
 
 #: src/WooCommerce.php:37
-#, fuzzy
-#| msgid "Coupon settings"
 msgid "Products settings"
-msgstr "Gutschein Einstellungen"
+msgstr ""
 
 #: src/WooCommerce.php:43
 msgid "Minimum discount percentage to display product sale label"
