@@ -153,4 +153,11 @@
       });
     }
   });
+
+  // Disable checkout button if there are any WooCommerce error displayed.
+  $(document).on('ready updated_cart_totals', () => {
+    if ($('.woocommerce-error').length) {
+      $('.checkout-button').removeAttr('href').addClass('disabled');
+    }
+  });
 }(jQuery));
