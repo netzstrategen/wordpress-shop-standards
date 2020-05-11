@@ -49,8 +49,10 @@ class PlusProducts {
    * @implements woocommerce_check_cart_items
    */
   public static function displayPlusProductsNotice() {
+    if (WC()->cart->is_empty()) {
+      return;
+    }
     $plusCategory = get_term_by('id', get_option('_' . Plugin::L10N . '_plus_products_category'), 'product_cat');
-
     if (is_wp_error($plusCategory) || empty($plusCategory)) {
       return;
     }
