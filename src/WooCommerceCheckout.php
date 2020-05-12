@@ -18,7 +18,11 @@ class WooCommerceCheckout {
     }
 
     // Adds confirmation email field to the checkout page.
-    if (get_option('_' . Plugin::L10N . '_checkout_email_confirmation_field') === 'yes' && !is_user_logged_in()) {
+    if (
+      get_option('_' . Plugin::L10N . '_checkout_email_confirmation_field') === 'yes' &&
+      !is_user_logged_in() &&
+      !isset($_GET['woo-paypal-return'])
+    ) {
       add_filter('woocommerce_checkout_fields', __CLASS__ . '::addConfirmationEmailCheckoutField');
       add_action('woocommerce_checkout_process', __CLASS__ . '::checkConfirmationEmailField');
     }
