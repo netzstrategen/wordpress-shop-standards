@@ -158,6 +158,7 @@
   $(document).on('ready updated_cart_totals', () => {
     if ($('.woocommerce-error').length) {
       $('.checkout-button').removeAttr('href').addClass('disabled');
+      $('.wcppec-checkout-buttons').hide();
     }
   });
 }(jQuery));
