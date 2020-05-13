@@ -26,14 +26,6 @@ class WooCommerce {
       'type' => 'sectionend',
       'id' => Plugin::L10N,
     ];
-    $settings[] = [
-      'name' => __('Products settings', Plugin::L10N),
-      'type' => 'title',
-    ];
-    $settings[] = [
-      'id' => Plugin::L10N,
-      'type' => 'sectionend',
-    ];
     return $settings;
   }
 
