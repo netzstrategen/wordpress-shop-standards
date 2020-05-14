@@ -151,6 +151,26 @@ class WooCommerce {
   }
 
   /**
+   * Hides sale percentage label.
+   *
+   * @param string $output
+   *   The sale label HTML output.
+   * @param int $salePercentage
+   *   The sale percentage value.
+   * @param \WP_Product $product
+   *   The current WooCommerce product.
+   *
+   * @return string
+   *   The modified sale label HTML output.
+   */
+  public static function sale_percentage_output($output, $salePercentage, $product) {
+    if (get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label', TRUE) === 'yes') {
+      $output = '';
+    }
+    return $output;
+  }
+
+  /**
    * Displays custom fields for single products.
    *
    * @implements woocommerce_product_options_general_product_data

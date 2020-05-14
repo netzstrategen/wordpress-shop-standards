@@ -124,6 +124,9 @@ class Plugin {
     // Hides Add to Cart button for products that must not be sold online.
     add_filter('woocommerce_is_purchasable', __NAMESPACE__ . '\WooCommerce::is_purchasable', 10, 2);
 
+    // Hides sale percentage label.
+    add_filter('sale_percentage_output', __NAMESPACE__ . '\WooCommerce::sale_percentage_output', 10, 3);
+
     // Hides 'add to cart' button for products from specific categories or brands.
     add_action('wp_head', __NAMESPACE__ . '\WooCommerce::wp_head');
     add_action('wp', __NAMESPACE__ . '\WooCommerce::wp');
