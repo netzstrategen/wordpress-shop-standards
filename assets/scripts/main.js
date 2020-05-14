@@ -66,6 +66,23 @@
     }, 100);
   });
 
+  $('.single_variation_wrap')
+    .on('show_variation', (event, variation) => {
+      // Updates discount table on product variation change.
+      $('[data-variations]').parent().hide();
+      $($('[data-variations]')).each(function updateDiscountTable() {
+        if ($(this).data('variations').indexOf(variation.variation_id.toString()) !== -1) {
+          $(this).parent().show();
+        }
+      });
+    })
+    .on('hide_variation', () => {
+      // Hides all variation product discount table on product variation hide.
+      $($('[data-variations]')).each(function hideDiscountTable() {
+        $(this).parent().hide();
+      });
+    });
+
   $(document).ready(() => {
     // Disable copy/paste actions on billing email fields.
     if (shop_standards_settings.emailConfirmationEmail === 'yes') {
