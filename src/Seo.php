@@ -166,4 +166,22 @@ class Seo {
     return $data;
   }
 
+  /**
+   * Ensures the prices is the correct one, according to tax setings.
+   *
+   * @implements woocommerce_structured_data_product_offer
+   */
+  public static function adjustPrice($markup, $product) {
+    if (wc_prices_include_tax()) {
+      $product_price = wc_get_price_including_tax($product);
+    }
+    else {
+      $product_price = wc_get_price_excluding_tax($product);
+    }
+    $markup['price'] = $product_price;
+    $markup['priceSpecification']['price'] = $product_price;
+
+    return $markup;
+  }
+
 }

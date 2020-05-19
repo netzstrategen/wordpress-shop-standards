@@ -181,6 +181,8 @@ class Plugin {
     add_filter('woocommerce_structured_data_product', __NAMESPACE__ . '\Seo::getProductGtin');
     // Adds Brand name to schema.org.
     add_filter('woocommerce_structured_data_product', __NAMESPACE__ . '\Seo::getProductBrand');
+    // Adds correct price in schema.org.
+    add_filter('woocommerce_structured_data_product_offer', __NAMESPACE__ . '\Seo::adjustPrice', 10, 2);
   }
 
   /**
