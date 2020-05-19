@@ -8,13 +8,6 @@ namespace Netzstrategen\ShopStandards;
 class WooCommerce {
 
   /**
-   * Default minimum discount percentage to display product sale label.
-   *
-   * @var int
-   */
-  const SALE_BUBBLE_MIN_AMOUNT = 10;
-
-  /**
    * Adds woocommerce specific settings.
    *
    * @implements woocommerce_get_settings_shop_standards
@@ -32,20 +25,6 @@ class WooCommerce {
     $settings[] = [
       'type' => 'sectionend',
       'id' => Plugin::L10N,
-    ];
-    $settings[] = [
-      'name' => __('Products settings', Plugin::L10N),
-      'type' => 'title',
-    ];
-    $settings[] = [
-      'id' => '_minimum_sale_percentage_to_display_label',
-      'type' => 'text',
-      'name' => __('Minimum discount percentage to display product sale label', Plugin::L10N),
-      'default' => static::SALE_BUBBLE_MIN_AMOUNT,
-    ];
-    $settings[] = [
-      'id' => Plugin::L10N,
-      'type' => 'sectionend',
     ];
     return $settings;
   }
@@ -169,6 +148,26 @@ class WooCommerce {
     $product_id = $product->get_id();
     $hide_add_to_cart = get_post_meta($product_id, '_' . Plugin::PREFIX . '_hide_add_to_cart_button', TRUE);
     return !wc_string_to_bool($hide_add_to_cart);
+  }
+
+  /**
+   * Hides sale percentage label.
+   *
+   * @param string $output
+   *   The sale label HTML output.
+   * @param int $salePercentage
+   *   The sale percentage value.
+   * @param \WP_Product $product
+   *   The current WooCommerce product.
+   *
+   * @return string
+   *   The modified sale label HTML output.
+   */
+  public static function sale_percentage_output($output, $salePercentage, $product) {
+    if (get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label', TRUE) === 'yes') {
+      $output = '';
+    }
+    return $output;
   }
 
   /**
@@ -316,7 +315,7 @@ class WooCommerce {
    *
    * New products are still not saved when updated_post_meta hook is called.
    * Since we can not check if the meta keys were changed before running
-   * our custom functions (see updateDeliveryTime and updateSalePercentage),
+   * our custom functions (see updateDeliveryTime),
    * we are forcing the post to be saved before updating the meta keys.
    *
    * @implements woocommerce_process_product_meta
@@ -500,54 +499,6 @@ class WooCommerce {
     // Price comparison focus product.
     $price_comparison_focus = isset($_POST['_' . Plugin::PREFIX . '_price_comparison_focus']) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_price_comparison_focus']) ? 'yes' : 'no';
     update_post_meta($variation_id, '_' . Plugin::PREFIX . '_price_comparison_focus', $price_comparison_focus);
-  }
-
-  /**
-   * Sorts products by _sale_percentage.
-   *
-   * @implements woocommerce_get_catalog_ordering_args
-   */
-  public static function woocommerce_get_catalog_ordering_args($args) {
-    $orderby_value = isset($_GET['orderby']) ? wc_clean($_GET['orderby']) : apply_filters('woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby'));
-    if ('sale_percentage' === $orderby_value) {
-      $args['orderby'] = 'meta_value_num';
-      $args['order'] = 'DESC';
-      $args['meta_key'] = '_sale_percentage';
-    }
-    return $args;
-  }
-
-  /**
-   * Adds custom sortby option.
-   *
-   * @implements woocommerce_catalog_orderby
-   * @implements woocommerce_default_catalog_orderby_options
-   */
-  public static function orderbySalePercentage($sortby) {
-    $sortby['sale_percentage'] = __('Sort by discount', 'shop-standards');
-    return $sortby;
-  }
-
-  /**
-   * Changes sale flash label to display sale percentage.
-   *
-   * @implements woocommerce_sale_flash
-   */
-  public static function woocommerce_sale_flash($output, $post, $product) {
-    if ($product->get_type() === 'variation') {
-      $sale_percentage = get_post_meta($product->get_parent_id(), '_sale_percentage', TRUE);
-    }
-    else {
-      $sale_percentage = get_post_meta($product->get_id(), '_sale_percentage', TRUE);
-    }
-    $minimum_sale_percentage = get_option('_minimum_sale_percentage_to_display_label', static::SALE_BUBBLE_MIN_AMOUNT);
-    if (((!is_single() && $sale_percentage >= $minimum_sale_percentage) || is_single()) && get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label', TRUE) !== 'yes') {
-      $output = '<span class="onsale" data-sale-percentage="' . abs($sale_percentage) . '">-' . abs($sale_percentage) . '%</span>';
-    }
-    else {
-      $output = '';
-    }
-    return $output;
   }
 
   /**

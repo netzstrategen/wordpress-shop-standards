@@ -83,9 +83,6 @@ class Plugin {
       Plugin::register_acf();
     }
 
-    // Changes sale flash label to display sale percentage, also on instant search results panel.
-    add_filter('woocommerce_sale_flash', __NAMESPACE__ . '\WooCommerce::woocommerce_sale_flash', 10, 3);
-
     // Displays sale price as regular price if custom field is checked.
     add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_price_html', 10, 2);
 
@@ -93,8 +90,6 @@ class Plugin {
     add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\WooCommerce::saveNewProductBeforeMetaUpdate', 1);
     // Updates product delivery time with the lowest delivery time between its own variations.
     add_action('updated_post_meta', __NAMESPACE__ . '\Admin::updateProductDeliveryTime', 10, 3);
-    // Updates sale percentage when regular price or sale price are updated.
-    add_action('updated_post_meta', __NAMESPACE__ . '\Admin::updateSalePercentage', 10, 4);
 
     add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\WooCommerce::woocommerce_process_product_meta');
     add_action('woocommerce_save_product_variation', __NAMESPACE__ . '\WooCommerce::woocommerce_save_product_variation', 10, 2);
@@ -129,18 +124,15 @@ class Plugin {
     // Hides Add to Cart button for products that must not be sold online.
     add_filter('woocommerce_is_purchasable', __NAMESPACE__ . '\WooCommerce::is_purchasable', 10, 2);
 
+    // Hides sale percentage label.
+    add_filter('sale_percentage_output', __NAMESPACE__ . '\WooCommerce::sale_percentage_output', 10, 3);
+
     // Hides 'add to cart' button for products from specific categories or brands.
     add_action('wp_head', __NAMESPACE__ . '\WooCommerce::wp_head');
     add_action('wp', __NAMESPACE__ . '\WooCommerce::wp');
 
     // Displays order notice for products that must not be sold online.
     add_action('woocommerce_single_product_summary', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_summary');
-
-    // Sorts products by _sale_percentage.
-    add_filter('woocommerce_get_catalog_ordering_args', __NAMESPACE__ . '\WooCommerce::woocommerce_get_catalog_ordering_args');
-    // Adds custom sort by sale percentage option.
-    add_filter('woocommerce_default_catalog_orderby_options', __NAMESPACE__ . '\WooCommerce::orderbySalePercentage');
-    add_filter('woocommerce_catalog_orderby', __NAMESPACE__ . '\WooCommerce::orderbySalePercentage');
 
     // Adds basic information (e.g. weight, SKU, etc.) and product attributes to cart item data.
     add_action('woocommerce_get_item_data', __NAMESPACE__ . '\WooCommerce::woocommerce_get_item_data', 10, 2);
@@ -275,9 +267,6 @@ class Plugin {
     $git_version = static::getGitVersion();
 
     wp_enqueue_script(Plugin::PREFIX, static::getBaseUrl() . '/dist/scripts/main.min.js', ['jquery'], $git_version, TRUE);
-    wp_localize_script(Plugin::PREFIX, 'shop_standards_settings', [
-      'saleMinAmount' => get_option('_minimum_sale_percentage_to_display_label', WooCommerce::SALE_BUBBLE_MIN_AMOUNT),
-    ]);
     wp_localize_script(Plugin::PREFIX, 'shop_standards_settings', [
       'emailConfirmationEmail' => get_option('_' . Plugin::L10N . '_checkout_email_confirmation_field'),
     ]);

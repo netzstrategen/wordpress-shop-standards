@@ -66,56 +66,8 @@
     }, 100);
   });
 
-  // Single product sale label DOM element.
-  const $singleProductSaleLabel = $('.single-product-summary .onsale');
-
-  /**
-   * Hides sale label if percentage value is lower than 10%.
-   */
-  $('.onsale').each(function hideSaleLabel() {
-    const salePercentage = parseInt($(this).text().replace(/^\D+/g, ''), 10);
-    if (salePercentage < shop_standards_settings.saleMinAmount) {
-      $(this).hide();
-    }
-  });
-
-  /**
-   * Updates sale percentage value.
-   *
-   * @param {Integer} percentage
-   *   The product/variation sale percentage.
-   */
-  function updateSaleLabel(percentage) {
-    if (percentage >= shop_standards_settings.saleMinAmount) {
-      $singleProductSaleLabel.text(`-${percentage}%`);
-      $singleProductSaleLabel.show();
-    } else {
-      $singleProductSaleLabel.hide();
-    }
-  }
-
-  /**
-   * Calculates the sale percentage applied to a product.
-   *
-   * @param {Integer} regularPrice
-   *   Product regular price.
-   * @param {Integer} salePrice
-   *   Product discounted price.
-   *
-   * @return {Integer}
-   *   Product sale precentage.
-   */
-  function calculateSalePercentage(regularPrice, salePrice) {
-    return Math.floor((regularPrice - salePrice) / regularPrice * 100);
-  }
-
   $('.single_variation_wrap')
     .on('show_variation', (event, variation) => {
-      /* eslint-disable max-len */
-      const percentage = calculateSalePercentage(variation.display_regular_price, variation.display_price);
-      updateSaleLabel(percentage);
-      /* eslint-enable max-len */
-
       // Updates discount table on product variation change.
       $('[data-variations]').parent().hide();
       $($('[data-variations]')).each(function updateDiscountTable() {
@@ -125,9 +77,6 @@
       });
     })
     .on('hide_variation', () => {
-      // Displays the lowest sale percentage.
-      updateSaleLabel($singleProductSaleLabel.data('sale-percentage'));
-
       // Hides all variation product discount table on product variation hide.
       $($('[data-variations]')).each(function hideDiscountTable() {
         $(this).parent().hide();
