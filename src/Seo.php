@@ -167,7 +167,7 @@ class Seo {
   }
 
   /**
-   * Ensures the prices is the correct one, according to tax setings.
+   * Changes schema.org prices according to tax settings.
    *
    * @implements woocommerce_structured_data_product_offer
    */
