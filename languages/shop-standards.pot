@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2020-06-23 09:54+0200\n"
+"POT-Creation-Date: 2020-06-30 16:50+0200\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: src/Admin.php:52 src/WooCommerce.php:989
+#: src/Admin.php:52 src/WooCommerce.php:1017
 #, php-format
 msgid "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in order to save the product."
 msgstr ""
@@ -27,31 +27,31 @@ msgstr ""
 msgid "The entered GTIN is unique."
 msgstr ""
 
-#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:221 src/Plugin.php:260
+#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:227 src/Plugin.php:266
 msgid "Hide \"Add to Cart\" button"
 msgstr ""
 
-#: src/Plugin.php:225
+#: src/Plugin.php:231
 msgid "Product categories"
 msgstr ""
 
-#: src/Plugin.php:226
+#: src/Plugin.php:232
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 
-#: src/Plugin.php:238
+#: src/Plugin.php:244
 msgid "Product brands"
 msgstr ""
 
-#: src/Plugin.php:239
+#: src/Plugin.php:245
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 
-#: src/Plugin.php:251
+#: src/Plugin.php:257
 msgid "Notice"
 msgstr ""
 
-#: src/Plugin.php:253
+#: src/Plugin.php:259
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 
@@ -221,7 +221,11 @@ msgstr ""
 msgid "Product "
 msgstr ""
 
-#: src/WooCommerce.php:910
+#: src/WooCommerce.php:921
+msgid "Delivery Time: from"
+msgstr ""
+
+#: src/WooCommerce.php:938
 #, php-format
 msgid "from %1$s"
 msgstr ""

@@ -1,0 +1,27 @@
+From 85d85a524bba5ab1db56cba32e88ad3c47fbd267 Mon Sep 17 00:00:00 2001
+From: Luca Pipolo <luca@netzstrategen.com>
+Date: Wed, 27 May 2020 11:26:35 +0200
+Subject: [PATCH] Test.
+
+---
+ .../plugins/woocommerce-german-market/inc/WGM_Template.php    | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/wp-content/plugins/woocommerce-german-market/inc/WGM_Template.php b/wp-content/plugins/woocommerce-german-market/inc/WGM_Template.php
+index dd2341a6e..02b047f33 100644
+--- a/wp-content/plugins/woocommerce-german-market/inc/WGM_Template.php
++++ b/wp-content/plugins/woocommerce-german-market/inc/WGM_Template.php
+@@ -2473,8 +2473,8 @@ class WGM_Template {
+ 		$lieferzeit_output = '';
+ 
+ 		$delivery_time_label = __( 'Delivery Time:', 'woocommerce-german-market' );
+-		$delivery_time_label = apply_filters( 'woocommerce_de_delivery_time_label_shop', $delivery_time_label );
+-		
++		$delivery_time_label = apply_filters( 'woocommerce_de_delivery_time_label_shop', $delivery_time_label, $product );
++
+ 		// If the product is a product variation, check if each variation has the same delivery time
+ 		// => if not, do not display delivery time!
+ 		// Add "add_filter( 'woocommerce_de_use_delivery_time_of_variable_product', '__return_true' );" to your functions.php to use the delivery time of the variable product (parent product)
+-- 
+2.26.0
+

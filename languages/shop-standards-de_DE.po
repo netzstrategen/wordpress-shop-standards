@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2020-06-23 09:54+0200\n"
+"POT-Creation-Date: 2020-06-30 16:50+0200\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Joan López <joan@netzstrategen.com>\n"
+"Last-Translator: Luca Pipolo <luca@netzstrategen.com>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.3.1\n"
 
-#: src/Admin.php:52 src/WooCommerce.php:989
+#: src/Admin.php:52 src/WooCommerce.php:1017
 #, php-format
 msgid ""
 "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in "
@@ -24,35 +24,35 @@ msgstr ""
 msgid "The entered GTIN is unique."
 msgstr "Diese GTIN wird noch nicht verwendet."
 
-#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:221 src/Plugin.php:260
+#: src/Plugin.php:79 src/Plugin.php:80 src/Plugin.php:227 src/Plugin.php:266
 msgid "Hide \"Add to Cart\" button"
 msgstr "“In den Warenkorb”-Verhalten"
 
-#: src/Plugin.php:225
+#: src/Plugin.php:231
 msgid "Product categories"
 msgstr "Produktkategorien"
 
-#: src/Plugin.php:226
+#: src/Plugin.php:232
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
 "ausgeblendet."
 
-#: src/Plugin.php:238
+#: src/Plugin.php:244
 msgid "Product brands"
 msgstr "Produktmarken"
 
-#: src/Plugin.php:239
+#: src/Plugin.php:245
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
 "ausgeblendet."
 
-#: src/Plugin.php:251
+#: src/Plugin.php:257
 msgid "Notice"
 msgstr "Hinweis"
 
-#: src/Plugin.php:253
+#: src/Plugin.php:259
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 "Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
@@ -245,7 +245,11 @@ msgstr ""
 msgid "Product "
 msgstr "Produkt "
 
-#: src/WooCommerce.php:910
+#: src/WooCommerce.php:921
+msgid "Delivery Time: from"
+msgstr "Lieferzeit: ab"
+
+#: src/WooCommerce.php:938
 #, php-format
 msgid "from %1$s"
 msgstr "ab %1$s"
