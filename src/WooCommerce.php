@@ -910,6 +910,28 @@ class WooCommerce {
   }
 
   /**
+   * Changes WGM delivery time label for variable products.
+   *
+   * This method requires a patch to WGM_Template.php file (see .patches folder)
+   * By default, woocommerce-german-market is not passing the product as
+   * parameter, therefore we can not change the label only for the variable
+   * product instead of its variations. To prevent a PHP Fatal Error in case
+   * the patch is not applied, we are assigning NULL as default product value.
+   *
+   * @implements woocommerce_de_delivery_time_label_shop
+   */
+  public static function addsDeliveryTimeLabelSuffix($label, $product = NULL) {
+    if (!$product) {
+      return $label;
+    }
+
+    if ($product->is_type('variable')) {
+      $label = __('Delivery Time: from', Plugin::L10N);
+    }
+    return $label;
+  }
+
+  /**
    * Returns the back in stock date string which can be appended to the delivery time.
    *
    * The provided $date_string needs to be in the format used by HTML5 date inputs: 'YYYY-MM-DD'.

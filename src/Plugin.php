@@ -166,6 +166,10 @@ class Plugin {
       if (\Woocommerce_German_Market::get_version() >= '3.10') {
         add_filter('wgm_deliverytime_loop', __NAMESPACE__ . '\WooCommerce::wgm_deliverytime_loop', 10, 2);
       }
+
+      // Changes WGM delivery time label for variable products.
+      add_filter('woocommerce_de_delivery_time_label_shop', __NAMESPACE__ . '\WooCommerce::addsDeliveryTimeLabelSuffix', 10, 2);
+      add_filter('woocommerce_de_avoid_check_same_delivery_time_show_parent', '__return_true');
     }
 
     // Prefetches DNS entries for particular resources.
