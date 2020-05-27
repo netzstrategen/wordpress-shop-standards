@@ -112,6 +112,9 @@ class Plugin {
       remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10);
     }
 
+    // Shows coupon amount on cart totals template.
+    add_filter('woocommerce_cart_totals_coupon_label', __NAMESPACE__ . '\WooCommerce::addCouponAmount', 10, 2);
+
     // Changes the minimum amount of variations to trigger the AJAX handling.
     add_filter('woocommerce_ajax_variation_threshold', __NAMESPACE__ . '\WooCommerce::woocommerce_ajax_variation_threshold', 10, 2);
 

@@ -73,6 +73,35 @@ class WooCommerce {
   }
 
   /**
+   * Shows coupon amount on cart totals template.
+   *
+   * @implements woocommerce_cart_totals_coupon_label
+   */
+  public static function addCouponAmount($label, $coupon) {
+    $coupon_types = [
+      'fixed_cart',
+      'percent',
+      'store_credit',
+    ];
+
+    $discountType = $coupon->get_discount_type();
+    if (!in_array($discountType, $coupon_types)) {
+      return $label;
+    }
+
+    $amount = $coupon->get_amount();
+    if ($discountType === 'percent') {
+      $amount = $amount . '%';
+    }
+    else {
+      $amount = wc_price($amount);
+    }
+
+    $label .= '<br/>' . sprintf(__('Coupon value: %s', Plugin::L10N), $amount);
+    return $label;
+  }
+
+  /**
    * Changes the minimum amount of variations to trigger the AJAX handling.
    *
    * In the frontend, if a variable product has more than 20 variations, the
