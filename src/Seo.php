@@ -171,9 +171,9 @@ class Seo {
    *
    * When retrieving product prices to add into schema.org woocommerce is not
    * considering if they already includes taxes, as set in the backend. This
-   * seems to be caused by aelya-currency-switcher currency conversion.
+   * seems to be caused by aelia-currency-switcher currency conversion.
    *
-   * See https://github.com/woocommerce/woocommerce/blob/bfac625cdcda4d7d14e85ca3cf5534e86081e7bc/includes/class-wc-structured-data.php#L222-L223
+   * See https://bit.ly/2ZLZxIs
    *
    * @implements woocommerce_structured_data_product_offer
    */
@@ -185,7 +185,7 @@ class Seo {
     $prices_include_tax = wc_prices_include_tax();
 
     if ($product->get_type() === 'variable') {
-      $lowest  = $product->get_variation_price('min', $prices_include_tax);
+      $lowest = $product->get_variation_price('min', $prices_include_tax);
       $highest = $product->get_variation_price('max', $prices_include_tax);
       if ($lowest === $highest) {
         $markup['price'] = wc_format_decimal($lowest, wc_get_price_decimals());
