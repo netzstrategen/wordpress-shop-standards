@@ -991,4 +991,42 @@ class WooCommerce {
     ));
   }
 
+  /**
+   * Retrieves a list of product variation attributes from current URL.
+   *
+   * @return array
+   *   List of product variation attributes
+   */
+  public static function getVariationAttributesFromUrl() {
+    $attributes = [];
+    foreach (array_keys($_GET) as $key) {
+      if (
+        strpos($key, 'attribute_pa_') === 0 &&
+        $attribute = $_GET[$key]
+      ) {
+        $attributes[$key] = sanitize_text_field($attribute);
+      }
+    };
+
+    return $attributes;
+  }
+
+  /**
+   * Finds a product variation that matches a list of attributes.
+   *
+   * @param int $product_id
+   *   The parent product ID.
+   * @param array $attributes
+   *   List of attributes defining a product variation.
+   *
+   * @return int
+   *   ID of matching product variation.
+   */
+  public static function getVariationIdByAttributes($product_id, array $attributes) {
+    return (new \WC_Product_Data_Store_CPT())->find_matching_product_variation(
+      new \WC_Product($product_id),
+      $attributes
+    );
+  }
+
 }

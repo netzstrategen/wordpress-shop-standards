@@ -151,6 +151,37 @@ class Seo {
   }
 
   /**
+   * Adds product variation price to schema.org.
+   *
+   * @implements woocommerce_structured_data_product_offer
+   */
+  public static function getProductVariationPrice($markup, $product) {
+    if ($product->get_type() !== 'variable') {
+      return;
+    }
+
+    // Identify the variation that matches the attributes in the URL.
+    $attributes = WooCommerce::getVariationAttributesFromUrl();
+    if (
+      $attributes &&
+      $variationId = WooCommerce::getVariationIdByAttributes(
+        $product->get_id(),
+        $attributes
+      )
+    ) {
+      $variation = wc_get_product($variationId);
+      if ($variation) {
+        $price = wc_prices_include_tax() ?
+          wc_get_price_including_tax($variation) :
+          wc_get_price_excluding_tax($variation);
+        $markup['price'] = $price;
+      }
+    };
+
+    return $markup;
+  }
+
+  /**
    * Adds product brand to schema.org structured data.
    *
    * @implements woocommerce_structured_data_product
