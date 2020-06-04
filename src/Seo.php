@@ -161,7 +161,7 @@ class Seo {
     }
 
     // Identify the variation that matches the attributes in the URL.
-    $attributes = WooCommerce:: getVariationAttributesFromUrl();
+    $attributes = WooCommerce::getVariationAttributesFromUrl();
     if (
       $attributes &&
       $variationId = WooCommerce::getVariationIdByAttributes(
