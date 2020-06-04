@@ -1012,7 +1012,7 @@ class WooCommerce {
   }
 
   /**
-   * Finds a product variation that matched a list of attributes values.
+   * Finds a product variation that matches a list of attributes.
    *
    * @param int $product_id
    *   The parent product ID.
