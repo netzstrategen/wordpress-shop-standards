@@ -157,7 +157,7 @@ class Seo {
    */
   public static function getProductVariationPrice($markup, $product) {
     if ($product->get_type() !== 'variable') {
-      return;
+      return $markup;
     }
 
     // Identify the variation that matches the attributes in the URL.
