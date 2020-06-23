@@ -896,6 +896,20 @@ class WooCommerce {
   }
 
   /**
+   * Fixes WooCommerce strings translations.
+   *
+   * @implements gettext
+   */
+  public static function gettext($translation, $text, $domain) {
+    if ($domain === 'woocommerce') {
+      if ($text === 'Coupon: %s') {
+        $translation = 'Gutschein: %s';
+      }
+    }
+    return $translation;
+  }
+
+  /**
    * Returns the back in stock date string which can be appended to the delivery time.
    *
    * The provided $date_string needs to be in the format used by HTML5 date inputs: 'YYYY-MM-DD'.
