@@ -315,7 +315,3 @@ msgstr "Herr"
 #: src/WooCommerceSalutation.php:67
 msgid "Company"
 msgstr "Firma"
-
-#, php-format
-#~ msgid "Credit: %s"
-#~ msgstr "Wert: %s"
