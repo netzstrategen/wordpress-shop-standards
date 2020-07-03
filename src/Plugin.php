@@ -192,6 +192,8 @@ class Plugin {
     add_filter('woocommerce_structured_data_product_offer', __NAMESPACE__ . '\Seo::getProductVariationPrice', 10, 2);
     // Fixes schema.org prices according to tax settings.
     add_filter('woocommerce_structured_data_product_offer', __NAMESPACE__ . '\Seo::adjustPrice', 10, 2);
+    // Fixes product availability in schema.org.
+    add_filter('woocommerce_structured_data_product_offer', __NAMESPACE__ . '\Seo::adjustAvailability', 10, 2);
 
     // Fixes WooCommerce strings translations.
     add_filter('gettext', __NAMESPACE__ . '\WooCommerce::gettext', 10, 3);
