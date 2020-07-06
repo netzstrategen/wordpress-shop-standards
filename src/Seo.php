@@ -246,4 +246,16 @@ class Seo {
     return $markup;
   }
 
+  /**
+   * Fixes schema.org product availability.
+   *
+   * @implements woocommerce_structured_data_product_offer
+   */
+  public static function adjustAvailability($markup, $product) {
+    if ($product->get_stock_quantity() || $product->backorders_allowed()) {
+      $markup['availability'] = 'https://schema.org/InStock';
+    }
+    return $markup;
+  }
+
 }
