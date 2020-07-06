@@ -253,7 +253,7 @@ class Seo {
    */
   public static function adjustAvailability($markup, $product) {
     if ($product->get_stock_quantity() || $product->backorders_allowed()) {
-      $markup['availability'] = 'http://schema.org/InStock';
+      $markup['availability'] = 'https://schema.org/InStock';
     }
     return $markup;
   }
