@@ -26,6 +26,25 @@ class WooCommerce {
       'type' => 'sectionend',
       'id' => Plugin::L10N,
     ];
+
+    // Allow to force disable the display of product energy label added by
+    // plugin wc-eu-energy-label.
+    if (class_exists('WC_Euenergylabel')) {
+      $settings[] = [
+        'type' => 'title',
+        'name' => __('Energy label settings', Plugin::L10N),
+      ];
+      $settings[] = [
+        'type' => 'checkbox',
+        'id' => '_' . Plugin::L10N . '_disable_energy_label',
+        'name' => __('Disable product energy label', Plugin::L10N),
+      ];
+      $settings[] = [
+        'type' => 'sectionend',
+        'id' => Plugin::L10N,
+      ];
+    }
+
     return $settings;
   }
 
@@ -268,6 +287,34 @@ class WooCommerce {
       'label' => __('Price comparison focus product', Plugin::L10N),
     ]);
     echo '</div>';
+  }
+
+  /**
+   * Allows to force disabling the display of the product energy label.
+   *
+   * The backend seting for shop-standards overrides the product setting
+   * toggling the display of the energy label added by plugin
+   * wc-eu-energy-label.
+   *
+   * @implements get_post_metadata
+   */
+  public static function get_post_metadata($value, $object_id, $meta_key, $single) {
+    if ($meta_key === 'wc_eu_energy_label_disable_frontend') {
+      global $wpdb;
+
+      $disableLabel = wc_string_to_bool($wpdb->get_var(
+        $wpdb->prepare(
+          "SELECT meta_value FROM $wpdb->postmeta
+          WHERE post_id = %s
+          AND meta_key = %s",
+          $object_id,
+          'wc_eu_energy_label_disable_frontend'
+        )
+      ));
+      $forceDisableLabel = wc_string_to_bool(get_option('_' . Plugin::L10N . '_disable_energy_label'));
+      $value = $disableLabel || $forceDisableLabel ? 'yes' : 'no';
+    }
+    return $value;
   }
 
   /**

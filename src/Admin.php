@@ -24,6 +24,9 @@ class Admin {
     add_action('woocommerce_product_options_general_product_data', __NAMESPACE__ . '\WooCommerce::woocommerce_product_options_general_product_data');
     // Appends product notes custom field as the last field in the product general options section.
     add_action('woocommerce_product_options_general_product_data', __NAMESPACE__ . '\WooCommerce::productNotesCustomField', 999);
+    // Allows to force disabling the display of the product energy label added
+    // by plugin wc-eu-energy-label.
+    add_filter('get_post_metadata', __NAMESPACE__ . '\WooCommerce::get_post_metadata', 10, 4);
 
     // Adds products variations custom fields.
     add_action('woocommerce_product_after_variable_attributes', __NAMESPACE__ . '\WooCommerce::woocommerce_product_after_variable_attributes', 10, 3);
