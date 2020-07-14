@@ -39,6 +39,10 @@ class Plugin {
    * @implements init
    */
   public static function preInit() {
+    // Ensures a customer address is always set when using the WP CLI.
+    if (defined('WP_CLI') && WP_CLI) {
+      add_filter('pre_option_woocommerce_default_customer_address', function () { return 'base'; });
+    }
     // Enables revisions for product descriptions.
     // WooCommerce registers its post types very early in init with a priority
     // of 5, so we need to register upfront.
