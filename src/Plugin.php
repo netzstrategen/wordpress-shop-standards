@@ -44,10 +44,6 @@ class Plugin {
     // of 5, so we need to register upfront.
     add_filter('woocommerce_register_post_type_product', __NAMESPACE__ . '\WooCommerce::woocommerce_register_post_type_product');
 
-    // Adds strike price (range) labels for variable products, too.
-    add_filter('woocommerce_variable_sale_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_variable_sale_price_html', 10, 2);
-    add_filter('woocommerce_variable_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_variable_sale_price_html', 10, 2);
-
     add_action('parse_request', __CLASS__  . '::parse_request');
 
     // Allow to filter products by delivery time if woocommerce-german-market plugin is active.
@@ -85,6 +81,8 @@ class Plugin {
 
     // Displays sale price as regular price if custom field is checked.
     add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_price_html', 10, 2);
+    // Adds strike price (range) labels for variable products, too.
+    add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_variation_price_html', 10, 2);
 
     // Ensures new product are saved before updating its meta data.
     add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\WooCommerce::saveNewProductBeforeMetaUpdate', 1);
