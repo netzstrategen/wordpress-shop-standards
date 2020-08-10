@@ -34,10 +34,12 @@ class WooCommerce {
    *
    * @see https://github.com/woocommerce/woocommerce/issues/16169
    *
-   * @implements woocommerce_variable_sale_price_html
-   * @implements woocommerce_variable_price_html
+   * @implements woocommerce_get_price_html
    */
-  public static function woocommerce_variable_sale_price_html($price, $product) {
+  public static function woocommerce_get_variation_price_html($price, $product) {
+    if ($product->get_type() !== 'variable') {
+      return $price;
+    }
     $sale_prices = [
       'min' => $product->get_variation_price('min', TRUE),
       'max' => $product->get_variation_price('max', TRUE),
