@@ -65,6 +65,16 @@ class WooCommerce {
   }
 
   /**
+   * Remove "From" text prefixed to prices by B2B Market plugin (starting v1.0.6.1).
+   *
+   * @implements bm_original_price_html
+   */
+  public static function b2b_remove_prefix($html, $product_id) {
+    $html = preg_replace('@<span class="b2b-price-prefix">.[^<]*</span>@', '', $html);
+    return $html;
+  }
+
+  /**
    * Enables revisions for product descriptions.
    *
    * @implements woocommerce_register_post_type_product
