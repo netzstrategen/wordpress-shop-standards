@@ -882,6 +882,10 @@ class WooCommerce {
    * @implements woocommerce_de_get_deliverytime_string_label_string
    */
   public static function woocommerce_de_get_deliverytime_string_label_string($label_string, $product) {
+    if (!$product) {
+      return $label_string;
+    }
+
     $product_id = $product->get_id();
 
     if ($back_in_stock_date = get_post_meta($product_id, '_' . Plugin::PREFIX . '_back_in_stock_date', TRUE)) {
