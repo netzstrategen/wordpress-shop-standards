@@ -62,6 +62,7 @@ class WooCommerceCheckout {
    * @implements woocommerce_checkout_fields
    */
   public static function addConfirmationEmailCheckoutField(array $fields): array {
+    $fields['billing']['billing_vat_number']['priority'] = 140;
     $fields['billing']['billing_email']['class'] = ['form-row-first'];
     $fields['billing']['billing_email_confirmation'] = [
       'label' => __('Repeat e-mail address', Plugin::L10N),
