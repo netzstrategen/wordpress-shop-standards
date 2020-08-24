@@ -283,6 +283,19 @@ class WooCommerce {
   }
 
   /**
+   * Adds pricing custom fields.
+   *
+   * @implements woocommerce_product_options_pricing
+   */
+  public static function woocommerce_product_options_pricing() {
+    woocommerce_wp_text_input([
+      'id' => '_' . Plugin::PREFIX . '_purchasing_price',
+      'class' => 'wc_input_price short',
+      'label' => __('Purchasing Price', Plugin::L10N) . ' (' . get_woocommerce_currency_symbol() . ')',
+    ]);
+  }
+
+  /**
    * Adds product notes custom field.
    *
    * This field will be added as the last field in the product
@@ -312,6 +325,7 @@ class WooCommerce {
       '_' . Plugin::PREFIX . '_erp_inventory_id',
       '_' . Plugin::PREFIX . '_product_notes',
       '_' . Plugin::PREFIX . '_price_label',
+      '_' . Plugin::PREFIX . '_purchasing_price',
     ];
 
     foreach ($custom_fields as $field) {
@@ -489,6 +503,21 @@ class WooCommerce {
   }
 
   /**
+   * Adds pricing custom fields for product variations.
+   *
+   * @implements woocommerce_variation_options_pricing
+   */
+  public static function woocommerce_variation_options_pricing($loop, $variation_data, $variation) {
+    woocommerce_wp_text_input([
+      'id' => '_' . Plugin::PREFIX . '_purchasing_price[' . $loop . ']',
+      'class' => 'wc_input_price short form-row',
+      'wrapper_class' => 'form-row',
+      'label' => __('Purchasing Price', Plugin::L10N) . ' (' . get_woocommerce_currency_symbol() . ')',
+      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_purchasing_price', TRUE),
+    ]);
+  }
+
+  /**
    * Saves custom fields for product variations.
    *
    * @implements woocommerce_save_product_variation
@@ -503,6 +532,7 @@ class WooCommerce {
       '_' . Plugin::PREFIX . '_back_in_stock_date',
       '_' . Plugin::PREFIX . '_gtin',
       '_' . Plugin::PREFIX . '_erp_inventory_id',
+      '_' . Plugin::PREFIX . '_purchasing_price',
     ];
 
     foreach ($custom_fields as $field) {
