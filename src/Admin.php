@@ -22,11 +22,14 @@ class Admin {
   public static function init() {
     // Adds custom fields for single products.
     add_action('woocommerce_product_options_general_product_data', __NAMESPACE__ . '\WooCommerce::woocommerce_product_options_general_product_data');
+    add_action('woocommerce_product_options_pricing', __NAMESPACE__ . '\WooCommerce::woocommerce_product_options_pricing', 8);
+
     // Appends product notes custom field as the last field in the product general options section.
     add_action('woocommerce_product_options_general_product_data', __NAMESPACE__ . '\WooCommerce::productNotesCustomField', 999);
 
     // Adds products variations custom fields.
     add_action('woocommerce_product_after_variable_attributes', __NAMESPACE__ . '\WooCommerce::woocommerce_product_after_variable_attributes', 10, 3);
+    add_action('woocommerce_variation_options_pricing', __NAMESPACE__ . '\WooCommerce::woocommerce_variation_options_pricing', 10, 3);
 
     // Allow ajax requests to specified functions.
     add_action('wp_ajax_is_existing_gtin', __NAMESPACE__ . '\WooCommerce::wp_ajax_is_existing_gtin');
