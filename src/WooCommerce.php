@@ -109,7 +109,7 @@ class WooCommerce {
       $amount = wc_price($amount);
     }
 
-    $label .= '<br/>' . sprintf(__('Coupon value: %s', Plugin::L10N), $amount);
+    $label .= sprintf(__('Coupon value: %s', Plugin::L10N), wp_strip_all_tags($amount));
     return $label;
   }
 
