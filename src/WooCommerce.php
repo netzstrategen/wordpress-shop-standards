@@ -37,7 +37,10 @@ class WooCommerce {
    * @implements woocommerce_get_price_html
    */
   public static function woocommerce_get_variation_price_html($price, $product) {
-    if ($product->get_type() !== 'variable') {
+    if (
+      $product->get_type() !== 'variable' ||
+      get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_show_sale_price_only', TRUE) === 'yes'
+    ) {
       return $price;
     }
     $sale_prices = [
@@ -604,7 +607,7 @@ class WooCommerce {
       $current_filter = current_filter();
       $priority = has_filter($current_filter, __METHOD__);
       remove_filter($current_filter, __METHOD__);
-      $price = apply_filters($current_filter, $price, $product);
+      // $price = apply_filters($current_filter, $price, $product);
       add_filter($current_filter, __METHOD__, $priority, 2);
 
       if (is_product() && !static::isSideProduct()) {
