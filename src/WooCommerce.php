@@ -607,7 +607,7 @@ class WooCommerce {
       $current_filter = current_filter();
       $priority = has_filter($current_filter, __METHOD__);
       remove_filter($current_filter, __METHOD__);
-      // $price = apply_filters($current_filter, $price, $product);
+      $price = apply_filters($current_filter, $price, $product);
       add_filter($current_filter, __METHOD__, $priority, 2);
 
       if (is_product() && !static::isSideProduct()) {
