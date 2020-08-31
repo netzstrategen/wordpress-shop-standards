@@ -402,6 +402,24 @@ class WooCommerce {
     }
   }
 
+  /*
+   * Adds preload tag for main product image to improve largest contentful paint.
+   *
+   * @implements wp_head
+   */
+  public static function preloadMainProductImage() {
+    global $post;
+
+    if (!$post || !$post->post_type === 'product') {
+      return;
+    }
+
+    $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'woocommerce_single');
+    if ($image) {
+      echo '<link rel="preload" href="' . $image[0] . '" as="image">';
+    }
+  }
+
   /**
    * Hides 'add to cart' button for products from specific categories or brands.
    *
