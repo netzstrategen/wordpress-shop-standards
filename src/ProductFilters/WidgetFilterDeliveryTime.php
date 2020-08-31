@@ -66,7 +66,7 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
 
     ob_start();
 
-    $this->widget_start($args, array_merge($instance, ['title' => __('Delivery Time:', 'woocommerce-german-market')]));
+    $this->widget_start($args, array_merge($instance, ['title' => __('Quickly available:', Plugin::L10N)]));
 
     $item_class = 'woocommerce-widget-layered-nav-list__item wc-layered-nav-term';
     $item_chosen_class = 'woocommerce-widget-layered-nav-list__item--chosen chosen';
