@@ -128,7 +128,7 @@ class Performance {
       $version = '';
     }
     else {
-      $version = '?ver=' . ($handle->ver ? $handle->ver : Plugin::getGitVersion());
+      $version = '?ver=' . Plugin::getGitVersion();
     }
     $source = $handle->src . $version;
     return $source;
