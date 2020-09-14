@@ -104,6 +104,10 @@ class WooCommerce {
       return $label;
     }
 
+    if ($coupon->get_meta('_wjecf_is_auto_coupon') !== 'yes') {
+      $label .= '<br/>' . $coupon->get_description();
+    }
+
     $amount = $coupon->get_amount();
     if ($discountType === 'percent') {
       $amount = $amount . '%';
@@ -112,7 +116,7 @@ class WooCommerce {
       $amount = wc_price($amount);
     }
 
-    $label .= sprintf(__('Coupon value: %s', Plugin::L10N), wp_strip_all_tags($amount));
+    $label .= ' ' . sprintf(__('Coupon value: %s', Plugin::L10N), wp_strip_all_tags($amount));
     return $label;
   }
 
