@@ -73,26 +73,8 @@ class Performance {
    * @implements wp_head
    */
   public static function wp_head() {
-    static::preloadScripts();
     if ($styles = static::getAsyncLoadStyles()) {
       static::asyncLoadStyles($styles);
-    }
-  }
-
-  /**
-   * Preloads footer scripts in head.
-   */
-  public static function preloadScripts(): void {
-    global $wp_scripts;
-
-    foreach ($wp_scripts->queue as $handle) {
-      $script = $wp_scripts->registered[$handle] ?? [];
-      // Weird way to check if script is being enqueued in the footer.
-      if (!isset($script->extra['group']) || $script->extra['group'] !== 1) {
-        continue;
-      }
-      $source = static::getHandleSource($script);
-      echo '<link rel="preload" href="', esc_attr($source), '" as="script" />', "\n";
     }
   }
 
