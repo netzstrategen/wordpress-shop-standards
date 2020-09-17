@@ -15,7 +15,6 @@ class WooCommerceCheckout {
     // Removes city field from shipping calculator.
     add_filter('woocommerce_shipping_calculator_enable_city', '__return_false');
 
-
     if (is_admin()) {
       return;
     }
