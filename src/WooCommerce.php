@@ -414,9 +414,16 @@ class WooCommerce {
       return;
     }
 
-    $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'woocommerce_single');
+    $image_id = get_post_thumbnail_id($post->ID);
+    $image = wp_get_attachment_image_url($image_id, 'shop_single');
+
     if ($image) {
-      echo '<link rel="preload" href="' . $image[0] . '" as="image">';
+      printf(
+        '<link rel="preload" as="image" href="%s" imagesrcset="%s" imagesizes="%s">',
+        $image,
+        wp_get_attachment_image_srcset($image_id, 'full'),
+        wp_get_attachment_image_sizes($image_id, 'full')
+      );
     }
   }
 
