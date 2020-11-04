@@ -414,17 +414,33 @@ class WooCommerce {
       return;
     }
 
-    $image_id = get_post_thumbnail_id($post->ID);
-    $image = wp_get_attachment_image_url($image_id, 'shop_single');
-
-    if ($image) {
-      printf(
-        '<link rel="preload" as="image" href="%s" imagesrcset="%s" imagesizes="%s">',
-        $image,
-        wp_get_attachment_image_srcset($image_id, 'full'),
-        wp_get_attachment_image_sizes($image_id, 'full')
-      );
+    if (!$image_id = get_post_thumbnail_id($post->ID)) {
+      return;
     }
+
+    $main_image = wp_get_attachment_image_src($image_id, 'shop_single');
+    $image_sizes = apply_filters(Plugin::PREFIX . '_product_image_preload_sizes', $image_id);
+
+    if (!$main_image || !$image_sizes && count($image_sizes) > 0) {
+      return;
+    }
+
+    // Reduce the array of image size handles down into an image sourceset.
+    $image_srcset = array_reduce($image_sizes, function (string $carry, string $handle) use ($image_id): string {
+      if (!$image = wp_get_attachment_image_src($image_id, $handle)) {
+        return $carry;
+      }
+      if ($carry === '') {
+        return sprintf('%s %uw', $image[0], $image[1]);
+      }
+      return sprintf('%s, %s %uw', $carry, $image[0], $image[1]);
+    }, '');
+
+    printf(
+      '<link rel="preload" href="%s" imagesrcset="%s" as="image">',
+      $main_image[0],
+      $image_srcset
+    );
   }
 
   /**
