@@ -134,9 +134,6 @@ class Plugin {
     add_action('wp_head', __NAMESPACE__ . '\WooCommerce::wp_head');
     add_action('wp', __NAMESPACE__ . '\WooCommerce::wp');
 
-    // Adds preload tag for main product image to improve largest contentful paint.
-    add_action('wp_head', __NAMESPACE__ . '\WooCommerce::preloadMainProductImage', 1);
-
     // Displays order notice for products that must not be sold online.
     add_action('woocommerce_single_product_summary', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_summary');
 
