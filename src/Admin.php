@@ -36,6 +36,9 @@ class Admin {
 
     // Enqueues admin plugin scripts.
     add_action('admin_enqueue_scripts', __CLASS__ . '::admin_enqueue_scripts');
+
+    // Removes woocommerce admin notices.
+    add_filter('woocommerce_helper_suppress_admin_notices', '__return_true');
   }
 
   /**
