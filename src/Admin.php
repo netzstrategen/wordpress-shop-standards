@@ -39,6 +39,9 @@ class Admin {
 
     // Removes woocommerce admin notices.
     add_filter('woocommerce_helper_suppress_admin_notices', '__return_true');
+
+    // Removes only woocommerce connect related admin notices.
+    add_filter('woocommerce_helper_suppress_connect_notice', '__return_true');
   }
 
   /**
