@@ -36,6 +36,10 @@ class Admin {
 
     // Enqueues admin plugin scripts.
     add_action('admin_enqueue_scripts', __CLASS__ . '::admin_enqueue_scripts');
+
+    // Removes admin notices about updating to version and connecting to WooCommerce.com.
+    add_filter('woocommerce_helper_suppress_admin_notices', '__return_true');
+    add_filter('woocommerce_helper_suppress_connect_notice', '__return_true');
   }
 
   /**
