@@ -905,9 +905,11 @@ class WooCommerce {
 
       case 'LI':
         $valid = (bool) preg_match('@^(948[5-9])|(949[0-7])$@', $postcode);
+        break;
 
       case 'NL':
         $valid = (bool) preg_match('@\d{4} ?[A-Z]{2}@', $postcode);
+        break;
     }
     return $valid;
   }
