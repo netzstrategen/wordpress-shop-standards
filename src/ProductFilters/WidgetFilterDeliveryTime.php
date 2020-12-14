@@ -92,13 +92,14 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
       // If the current value is selected the value will not be added.
       if ($values) {
         $link = add_query_arg('delivery_time', implode(',', $values));
+        $value = implode(',', $values);
       }
       else {
         $link = remove_query_arg('delivery_time');
       }
       $chosen = in_array($delivery_time->term_id, $filter_values, TRUE);
       echo sprintf('<li class="%s">', $chosen ? $item_class . ' ' . $item_chosen_class : $item_class);
-      echo sprintf('<a rel="nofollow" href="%s">%s</a></li>', $link, $delivery_time->name);
+      echo sprintf('<button type="submit" class="product-filter-term" formmethod="GET" name="delivery_time" value="%s" formnovalidate>%s</button>', $value, $delivery_time->name);
     }
     echo '</ul>';
     $this->widget_end($args);
