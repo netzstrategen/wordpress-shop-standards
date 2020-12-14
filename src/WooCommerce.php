@@ -880,6 +880,11 @@ class WooCommerce {
           $taxonomy_label = str_replace(__('Product ', Plugin::L10N), '', $taxonomy_object->labels->name);
         }
 
+        $excluded_taxonomies = apply_filters(Plugin::PREFIX . '/product_attributes/excluded_taxonomies', []);
+        if (in_array($taxonomy_label, $excluded_taxonomies)) {
+          continue;
+        }
+
         $data[] = [
           'name' => $taxonomy_label,
           'value' => implode(', ', wp_list_pluck($terms, 'name')),
