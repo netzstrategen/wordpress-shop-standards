@@ -103,6 +103,9 @@ class Plugin {
     WooCommerceCheckout::init();
     PlusProducts::init();
 
+    // Add back in stock date to order item titles.
+    add_filter('wgm_shipping_time_product_string', __NAMESPACE__ . '\WooCommerce::wgm_shipping_time_product_string', 10, 3);
+
     if (is_admin()) {
       return;
     }

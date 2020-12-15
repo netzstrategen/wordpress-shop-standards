@@ -177,6 +177,12 @@ class WooCommerce {
       }
     }
 
+    if ($product->backorders_allowed() && $back_in_stock_date = get_post_meta($product->get_id(), '_shop-standards_back_in_stock_date', TRUE)) {
+      if ($date_string = static::getBackInStockDateString($back_in_stock_date)) {
+        $stock['availability'] = sprintf(__('Back in stock %s', Plugin::L10N), $date_string);
+      }
+    }
+
     return $stock;
   }
 
@@ -955,6 +961,18 @@ class WooCommerce {
     }
 
     return $label_string;
+  }
+
+  /**
+   * Adds back in stock date to order item titles.
+   *
+   * @implements wgm_shipping_time_product_string
+   */
+  public static function wgm_shipping_time_product_string($shipping_time_output, $shipping_time, $item) {
+    if (method_exists($item, 'get_product') && $product = $item->get_product()) {
+      $shipping_time_output = static::woocommerce_de_get_deliverytime_string_label_string($shipping_time_output, $product);
+    }
+    return $shipping_time_output;
   }
 
   /**
