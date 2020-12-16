@@ -749,11 +749,11 @@ class WooCommerce {
     $product_data_set = array_merge($data, static::getProductAttributes($product));
 
     // Display delivery time from woocommerce-german-market for each order item.
-    $delivery_time = wc_get_order_item_meta($item->get_id(), '_deliverytime');
-    if ($delivery_time && $delivery_time = get_term($delivery_time, 'product_delivery_times')) {
+    $delivery_time = \WGM_Template::get_deliverytime_string($product);
+    if ($delivery_time) {
       array_splice($product_data_set, 1, 0, [[
         'name' => __('Delivery Time', 'woocommerce-german-market'),
-        'value' => $delivery_time->name,
+        'value' => $delivery_time,
       ]]);
     }
 
@@ -961,18 +961,6 @@ class WooCommerce {
     }
 
     return $label_string;
-  }
-
-  /**
-   * Adds back in stock date to order item titles.
-   *
-   * @implements wgm_shipping_time_product_string
-   */
-  public static function wgm_shipping_time_product_string($shipping_time_output, $shipping_time, $item) {
-    if (method_exists($item, 'get_product') && $product = $item->get_product()) {
-      $shipping_time_output = static::woocommerce_de_get_deliverytime_string_label_string($shipping_time_output, $product);
-    }
-    return $shipping_time_output;
   }
 
   /**
