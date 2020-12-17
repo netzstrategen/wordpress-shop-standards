@@ -86,7 +86,7 @@
   $(document).ready(() => {
     // Disable copy/paste actions on billing email fields.
     if (shop_standards_settings.emailConfirmationEmail === 'yes') {
-      $('#billing_email, #billing_email_confirmation').each(function() {
+      $('#billing_email, #billing_email_confirmation').each(function x() {
         // eslint-disable-next-line max-nested-callbacks
         $(this).on('cut copy paste', (e) => {
           e.preventDefault();
