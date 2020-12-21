@@ -177,6 +177,12 @@ class WooCommerce {
       }
     }
 
+    if ($product->backorders_allowed() && $back_in_stock_date = get_post_meta($product->get_id(), '_shop-standards_back_in_stock_date', TRUE)) {
+      if ($date_string = static::getBackInStockDateString($back_in_stock_date)) {
+        $stock['availability'] = sprintf(__('Back in stock %s', Plugin::L10N), $date_string);
+      }
+    }
+
     return $stock;
   }
 
@@ -743,11 +749,18 @@ class WooCommerce {
     $product_data_set = array_merge($data, static::getProductAttributes($product));
 
     // Display delivery time from woocommerce-german-market for each order item.
-    $delivery_time = wc_get_order_item_meta($item->get_id(), '_deliverytime');
-    if ($delivery_time && $delivery_time = get_term($delivery_time, 'product_delivery_times')) {
+    if (method_exists('WGM_Template', 'get_deliverytime_string')) {
+      $delivery_time = \WGM_Template::get_deliverytime_string($product);
+    }
+    else {
+      $delivery_time = wc_get_order_item_meta($item->get_id(), '_deliverytime');
+      $delivery_time = get_term($delivery_time, 'product_delivery_times');
+      $delivery_time = $delivery_time->name ?? '';
+    }
+    if ($delivery_time) {
       array_splice($product_data_set, 1, 0, [[
         'name' => __('Delivery Time', 'woocommerce-german-market'),
-        'value' => $delivery_time->name,
+        'value' => $delivery_time,
       ]]);
     }
 
