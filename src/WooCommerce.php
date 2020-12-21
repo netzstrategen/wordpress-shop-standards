@@ -749,7 +749,14 @@ class WooCommerce {
     $product_data_set = array_merge($data, static::getProductAttributes($product));
 
     // Display delivery time from woocommerce-german-market for each order item.
-    $delivery_time = \WGM_Template::get_deliverytime_string($product);
+    if (method_exists('WGM_Template', 'get_deliverytime_string')) {
+      $delivery_time = \WGM_Template::get_deliverytime_string($product);
+    }
+    else {
+      $delivery_time = wc_get_order_item_meta($item->get_id(), '_deliverytime');
+      $delivery_time = get_term($delivery_time, 'product_delivery_times');
+      $delivery_time = $delivery_time->name ?? '';
+    }
     if ($delivery_time) {
       array_splice($product_data_set, 1, 0, [[
         'name' => __('Delivery Time', 'woocommerce-german-market'),
