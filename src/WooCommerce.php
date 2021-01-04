@@ -296,6 +296,20 @@ class WooCommerce {
   }
 
   /**
+   * Displays custom fields in the Linked Products tab.
+   *
+   * @implements woocommerce_product_options_related
+   */
+  public static function woocommerce_product_options_related(): void {
+    echo '<div class="options_group">';
+    woocommerce_wp_checkbox([
+      'id' => '_' . Plugin::PREFIX . '_disable_related_products',
+      'label' => __('Disable related products', Plugin::L10N),
+    ]);
+    echo '</div>';
+  }
+
+  /**
    * Adds pricing custom fields.
    *
    * @implements woocommerce_product_options_pricing
@@ -339,6 +353,7 @@ class WooCommerce {
       '_' . Plugin::PREFIX . '_product_notes',
       '_' . Plugin::PREFIX . '_price_label',
       '_' . Plugin::PREFIX . '_purchasing_price',
+      '_' . Plugin::PREFIX . '_disable_related_products',
     ];
 
     foreach ($custom_fields as $field) {
@@ -370,6 +385,7 @@ class WooCommerce {
       '_' . Plugin::PREFIX . '_hide_add_to_cart_button',
       '_' . Plugin::PREFIX . '_price_comparison_focus',
       '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label',
+      '_' . Plugin::PREFIX . '_disable_related_products',
     ];
 
     foreach ($custom_fields_checkbox as $field) {
@@ -1156,6 +1172,16 @@ class WooCommerce {
       new \WC_Product($product_id),
       $attributes
     );
+  }
+
+  /**
+   * Disables output of related products if over-ride checkbox is enabled.
+   */
+  public static function disableRelatedProducts(): void {
+    global $product;
+    if (get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_disable_related_products', true) === 'yes') {
+      add_filter('woocommerce_product_related_posts_force_display', '__return_false', 20, 2);
+    }
   }
 
 }
