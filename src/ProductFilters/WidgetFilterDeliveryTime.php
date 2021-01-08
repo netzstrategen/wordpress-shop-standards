@@ -93,9 +93,6 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
       if ($values) {
         $value = implode(',', $values);
       }
-      else {
-        $link = remove_query_arg('delivery_time');
-      }
       $chosen = in_array($delivery_time->term_id, $filter_values, TRUE);
       echo sprintf('<li class="%s">', $chosen ? $item_class . ' ' . $item_chosen_class : $item_class);
       echo sprintf('<button type="submit" class="product-filter-term" formmethod="GET" name="delivery_time" value="%s">%s</button>', $value, $delivery_time->name);
