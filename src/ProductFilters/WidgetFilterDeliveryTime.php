@@ -91,7 +91,6 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
       // Add filter values as query argument or remove parameter if empty.
       // If the current value is selected the value will not be added.
       if ($values) {
-        $link = add_query_arg('delivery_time', implode(',', $values));
         $value = implode(',', $values);
       }
       else {
