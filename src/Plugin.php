@@ -202,7 +202,7 @@ class Plugin {
     add_filter('gettext', __NAMESPACE__ . '\WooCommerce::gettext', 10, 3);
 
     // Disables output of related products if over-ride checkbox is enabled.
-    add_action('woocommerce_after_single_product_summary', __NAMESPACE__ . '\WooCommerce::disableRelatedProducts');
+    add_action('woocommerce_after_single_product_summary', __NAMESPACE__ . '\WooCommerce::disableRelatedProducts', 0, 20);
   }
 
   /**
