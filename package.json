@@ -2,6 +2,9 @@
   "version": "1.37.2",
   "title": "shop-standards",
   "description": "Standard refinements for e-commerce websites.",
+  "scripts": {
+    "build": "gulp build --concat=false --production"
+  },
   "dependencies": {
     "@netzstrategen/gulp-task-collection": "^1.0.3"
   },

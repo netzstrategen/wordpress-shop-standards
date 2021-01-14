@@ -1,6 +1,4 @@
-/* global shop_standards_settings */
-
-(function pageLoad($) {
+(function pageLoad($, shopStandardsSettings) {
   // Toggles product filtering by term.
   $('body')
     .on(
@@ -85,8 +83,8 @@
 
   $(document).ready(() => {
     // Disable copy/paste actions on billing email fields.
-    if (shop_standards_settings.emailConfirmationEmail === 'yes') {
-      $('#billing_email, #billing_email_confirmation').each(function x() {
+    if (shopStandardsSettings.emailConfirmationEmail === 'yes') {
+      $('#billing_email, #billing_email_confirmation').each(function () {
         // eslint-disable-next-line max-nested-callbacks
         $(this).on('cut copy paste', (e) => {
           e.preventDefault();
@@ -110,4 +108,4 @@
       $('.wcppec-checkout-buttons').hide();
     }
   });
-}(jQuery));
+}(jQuery, window.shop_standards_settings));
