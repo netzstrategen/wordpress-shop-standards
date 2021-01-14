@@ -1149,10 +1149,19 @@ class WooCommerce {
    * Define the ajax endpoint to add multiple products to te cart
    */
   public static function multiple_add_to_cart() {
-    if (empty($_POST['products'])) die();
-    $products = [];
-    
-    foreach ($_POST['products'] as $product_id) {
+    // if (empty($_POST['products'])) die();
+    $content = 'ok';
+    $fp = fopen(__DIR__ . "/ajaxlog.txt", "w");
+    fwrite($fp, $content);
+    fclose($fp);
+
+    $products = explode(',', $_POST['products']);
+    $products = array_map(function($product){
+      return (int) $product;
+    }, $products);
+    wp_send_json($products);
+
+    foreach ($products as $product_id) {
       $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint($product_id));
       $quantity = 1;
       $passed_validation = apply_filters('woocommerce_add_to_cart_validation', true, $product_id, $quantity);
@@ -1173,7 +1182,7 @@ class WooCommerce {
       );
       wp_send_json($data);
     }
- 
+
     // if ($passed_validation && WC()->cart->add_to_cart($product_id, $quantity) && 'publish' === $product_status) {
     //   do_action('woocommerce_ajax_added_to_cart', $product_id);
     //   wc_add_to_cart_message($product_id);
@@ -1186,8 +1195,8 @@ class WooCommerce {
     //   );
     //   wp_send_json($data);
     // }
-  
+
     die();
   }
-  
+
 }

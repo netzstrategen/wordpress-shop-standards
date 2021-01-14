@@ -42,8 +42,8 @@ add_action('init', __NAMESPACE__ . '\Plugin::preInit', 0);
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
 add_filter('woocommerce_get_settings_pages', __NAMESPACE__ . '\Settings::woocommerce_get_settings_pages');
 add_action('admin_init', __NAMESPACE__ . '\Admin::init');
-add_action('wp_ajax_multiple_add_to_cart', __NAMESPACE__ . '\WooCommerce::multiple_add_to_cart');
-add_action('wp_ajax_nopriv_multiple_add_to_cart', __NAMESPACE__ . '\WooCommerce::multiple_add_to_cart');
+add_action('wp_ajax_wss_multiple_add_to_cart', __NAMESPACE__ . '\WooCommerce::multiple_add_to_cart');
+add_action('wp_ajax_nopriv_wss_multiple_add_to_cart', __NAMESPACE__ . '\WooCommerce::multiple_add_to_cart');
 
 if (defined('WP_CLI') && WP_CLI) {
   \WP_CLI::add_command('shop-standards', __NAMESPACE__ . '\CliCommand');
