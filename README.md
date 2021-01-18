@@ -1,4 +1,4 @@
-# Shop-Standards
+# Shop Standards plugin
 
 This plugin adds what we consider standard refinements for e-commerce websites.
 This refinements include diverse customizations to WooCommerce and related
