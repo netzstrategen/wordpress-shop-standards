@@ -97,7 +97,7 @@ Performance improvements are mainly implemented in class [Performance](https://g
 - [DNS prefetching for resources](https://github.com/netzstrategen/wordpress-shop-standards/blob/master/src/Performance.php#L147).
 - [Prevent loading of unwanted assets](https://github.com/netzstrategen/wordpress-shop-standards/blob/master/src/Performance.php#L59).
 
-## Customizations on third part plugins
+## Customizations on third party plugins
 
 ### WooCommerce German Market
 
