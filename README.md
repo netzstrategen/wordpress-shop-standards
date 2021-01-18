@@ -4,7 +4,7 @@ This plugin adds what we consider standard refinements for e-commerce websites. 
 
 ## Configuration settings
 
-The plugin adds several configuration settings in xx main points of the backend admin:
+The plugin adds several configuration settings in two main points of the backend admin:
 - [Custom tab in WooCommerce configuration page](https://github.com/netzstrategen/wordpress-shop-standards/blob/master/src/WooCommerce.php#L15).
 - Products options ([simple products](https://github.com/netzstrategen/wordpress-shop-standards/blob/master/src/WooCommerce.php#L226), [products variations](https://github.com/netzstrategen/wordpress-shop-standards/blob/master/src/WooCommerce.php#L473)).
 
