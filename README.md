@@ -80,8 +80,6 @@ The whole implementation is contained in folder [src/ProductFilters](https://git
 
 The time delivery product filter widget can be used in any products listing page, as any other WooCommerce (so called) layered navigation widget.
 
-### Plus Products category
-???
 
 ### Cart and checkout
 - [Add salutation custom field for billing and shipping](https://github.com/netzstrategen/wordpress-shop-standards/blob/a15cb7d86afc6a7808cee6e9177a0c2c604e6119/src/WooCommerceSalutation.php#L54). This is controlled by a backend [configuration setting](https://github.com/netzstrategen/wordpress-shop-standards/blob/a15cb7d86afc6a7808cee6e9177a0c2c604e6119/src/WooCommerceSalutation.php#L33).
