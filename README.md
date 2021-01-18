@@ -1,8 +1,6 @@
 # Shop Standards plugin
 
-This plugin adds what we consider standard refinements for e-commerce websites.
-This refinements include diverse customizations to WooCommerce and related
-plugins, like WooCommerce German Market.
+This plugin adds what we consider standard refinements for e-commerce websites. These refinements include diverse customizations to WooCommerce and related plugins, like WooCommerce German Market.
 
 ## Configuration settings
 
