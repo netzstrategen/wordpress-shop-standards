@@ -179,7 +179,7 @@ class WooCommerce {
 
     if ($product->backorders_allowed() && $back_in_stock_date = get_post_meta($product->get_id(), '_shop-standards_back_in_stock_date', TRUE)) {
       if ($date_string = static::getBackInStockDateString($back_in_stock_date)) {
-        $stock['availability'] = sprintf(__('Back in stock %s', Plugin::L10N), $date_string);
+        $stock['availability'] = '<strong>' . sprintf(__('Back in stock %s', Plugin::L10N), $date_string) . '</strong>';
       }
     }
 
@@ -964,7 +964,7 @@ class WooCommerce {
     $product_id = $product->get_id();
 
     if ($back_in_stock_date = get_post_meta($product_id, '_' . Plugin::PREFIX . '_back_in_stock_date', TRUE)) {
-      $label_string .= ' ' . WooCommerce::getBackInStockDateString($back_in_stock_date);
+      $label_string .= ' <strong>' . WooCommerce::getBackInStockDateString($back_in_stock_date) . '</strong>';
     }
 
     return $label_string;
