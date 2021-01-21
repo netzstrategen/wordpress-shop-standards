@@ -1179,8 +1179,9 @@ class WooCommerce {
    */
   public static function disableRelatedProducts(): void {
     global $product;
+    $product_id = $product->get_id();
     if (get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_disable_related_products', true) === 'yes') {
-      add_filter('woocommerce_product_related_posts_force_display', '__return_false', 20, 2);
+      add_filter('woocommerce_product_related_posts_force_display', false, $product_id, 20, 2);
     }
   }
 
