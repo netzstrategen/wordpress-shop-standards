@@ -1182,6 +1182,7 @@ class WooCommerce {
     $product_id = $product->get_id();
     if (get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_disable_related_products', true) === 'yes') {
       add_filter('woocommerce_product_related_posts_force_display', '__return_false', 40, 2);
+      add_filter('woocommerce_related_products', '__return_empty_array');
     }
   }
 
