@@ -23,6 +23,7 @@ class Admin {
     // Adds custom fields for single products.
     add_action('woocommerce_product_options_general_product_data', __NAMESPACE__ . '\WooCommerce::woocommerce_product_options_general_product_data');
     add_action('woocommerce_product_options_pricing', __NAMESPACE__ . '\WooCommerce::woocommerce_product_options_pricing', 8);
+    add_action('woocommerce_product_options_related', __NAMESPACE__ . '\WooCommerce::woocommerce_product_options_related', 9);
 
     // Appends product notes custom field as the last field in the product general options section.
     add_action('woocommerce_product_options_general_product_data', __NAMESPACE__ . '\WooCommerce::productNotesCustomField', 999);
