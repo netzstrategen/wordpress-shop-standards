@@ -293,6 +293,13 @@ class WooCommerce {
       'label' => __('Price comparison focus product', Plugin::L10N),
     ]);
     echo '</div>';
+    // Discontinued product.
+    echo '<div class="options_group">';
+    woocommerce_wp_checkbox([
+      'id' => '_' . Plugin::PREFIX . '_discontinued_product',
+      'label' => __('Discontinued Product', Plugin::L10N),
+    ]);
+    echo '</div>';
   }
 
   /**
@@ -386,6 +393,7 @@ class WooCommerce {
       '_' . Plugin::PREFIX . '_price_comparison_focus',
       '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label',
       '_' . Plugin::PREFIX . '_disable_related_products',
+      '_' . Plugin::PREFIX . '_discontinued_product',
     ];
 
     foreach ($custom_fields_checkbox as $field) {
@@ -547,6 +555,14 @@ class WooCommerce {
       'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_price_comparison_focus', TRUE),
     ]);
     echo '</div>';
+    // Discontinued product.
+    echo '<div style="clear:both">';
+    woocommerce_wp_checkbox([
+      'id' => '_' . Plugin::PREFIX . '_discontinued_product',
+      'label' => __('Discontinued Product', Plugin::L10N),
+      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_discontinued_product', TRUE),
+    ]);
+    echo '</div>';
   }
 
   /**
@@ -617,6 +633,10 @@ class WooCommerce {
     // Price comparison focus product.
     $price_comparison_focus = isset($_POST['_' . Plugin::PREFIX . '_price_comparison_focus']) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_price_comparison_focus']) ? 'yes' : 'no';
     update_post_meta($variation_id, '_' . Plugin::PREFIX . '_price_comparison_focus', $price_comparison_focus);
+
+    // Discontinued Product.
+    $discontinued_product = isset($_POST['_' . Plugin::PREFIX . '_discontinued_product']) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_discontinued_product']) ? 'yes' : 'no';
+    update_post_meta($variation_id, '_' . Plugin::PREFIX . '_discontinued_product', $discontinued_product);
   }
 
   /**
