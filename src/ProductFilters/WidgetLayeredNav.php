@@ -38,7 +38,7 @@ class WidgetLayeredNav extends \WC_Widget_Layered_Nav {
     $found = parent::layered_nav_dropdown($terms, $taxonomy, $query_type);
     $output = ob_get_clean();
 
-    $output =  preg_replace("/gartenmoebel\//", "gartenmoebel", $output);;
+    $output =  preg_replace("/gartenmoebel\//", "gartenmoebel", $output);
     echo $output;
     return $found;
   }
