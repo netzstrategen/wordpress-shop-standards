@@ -288,6 +288,7 @@ class Plugin {
   public static function wp_enqueue_scripts() {
     $git_version = static::getGitVersion();
 
+    wp_enqueue_style(Plugin::PREFIX, static::getBaseUrl() . '/dist/styles/main.min.css', FALSE, $git_version);
     wp_enqueue_script(Plugin::PREFIX, static::getBaseUrl() . '/dist/scripts/main.min.js', ['jquery'], $git_version, TRUE);
     wp_localize_script(Plugin::PREFIX, 'shop_standards_settings', [
       'emailConfirmationEmail' => get_option('_' . Plugin::L10N . '_checkout_email_confirmation_field'),
