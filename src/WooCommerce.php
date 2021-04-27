@@ -1041,12 +1041,6 @@ class WooCommerce {
   /**
    * Changes WGM delivery time label for variable products.
    *
-   * This method requires a patch to WGM_Template.php file (see .patches folder)
-   * By default, woocommerce-german-market is not passing the product as
-   * parameter, therefore we can not change the label only for the variable
-   * product instead of its variations. To prevent a PHP Fatal Error in case
-   * the patch is not applied, we are assigning NULL as default product value.
-   *
    * @implements woocommerce_de_delivery_time_label_shop
    */
   public static function addsDeliveryTimeLabelSuffix($label, $product = NULL) {
