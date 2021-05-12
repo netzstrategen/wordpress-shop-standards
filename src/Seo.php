@@ -254,7 +254,7 @@ class Seo {
   public static function adjustAvailability($markup, $product) {
     if ($product->get_type() === 'variable') {
       $in_stock = (bool) count(array_filter($product->get_available_variations('object'), function ($variant) {
-        return $variant->is_in_stock();
+        return $variant->get_stock_quantity() || $variant->backorders_allowed();
       }));
     }
     if ($product->get_stock_quantity() || $product->backorders_allowed() || !empty($in_stock)) {
