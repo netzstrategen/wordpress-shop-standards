@@ -209,7 +209,7 @@ class Plugin {
      */
     add_filter('paginate_links', function ($link) {
       $link = preg_replace('@/page/1/?(\?|$)@', '$1', $link);
-      return $link;
+      return user_trailingslashit($link);
     });
   }
 
