@@ -1200,12 +1200,4 @@ class WooCommerce {
     }
   }
 
-  /**
-   * Removes the `/page/1` suffix from archive URLs.
-   */
-  add_filter('paginate_links', function ($link) {
-    $link = preg_replace('@/page/1/?(\?|$)@', '$1', $link);
-    return $link;
-  });
-
 }
