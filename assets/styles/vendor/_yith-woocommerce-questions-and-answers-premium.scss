@@ -1,29 +1,24 @@
 input {
+  border-radius: 5px;
+
   &#ywqa-submit-question {
-    border-radius: 5px;
     background-color: #153d89;
   }
 
   &#ywqa-submit-answer {
     padding: 12px;
-    border-radius: 5px;
-    background-color: #153d89;
     background-color: #153d89;
   }
 
   &#ywqa-submit-question:hover {
-    border-radius: 5px;
     background-color: #2886c9;
     color: #fff;
   }
 
   &#ywqa-submit-answer:hover {
     padding: 12px;
-    border-radius: 5px;
-    background-color: #2886c9;
     color: #fff;
     background-color: #2886c9;
-    color: #fff;
   }
 }
 
