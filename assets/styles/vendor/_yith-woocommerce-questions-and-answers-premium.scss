@@ -1,0 +1,134 @@
+input {
+  &#ywqa-submit-question {
+    border-radius: 5px;
+    background-color: #153d89;
+  }
+
+  &#ywqa-submit-answer {
+    padding: 12px;
+    border-radius: 5px;
+    background-color: #153d89;
+    background-color: #153d89;
+  }
+
+  &#ywqa-submit-question:hover {
+    border-radius: 5px;
+    background-color: #2886c9;
+    color: #fff;
+  }
+
+  &#ywqa-submit-answer:hover {
+    padding: 12px;
+    border-radius: 5px;
+    background-color: #2886c9;
+    color: #fff;
+    background-color: #2886c9;
+    color: #fff;
+  }
+}
+
+div.question-content {
+  margin-bottom: 25px;
+  font-style: normal;
+}
+
+#ywqa_question_list a.write-first-answer {
+  height: 23px;
+  border-radius: 5px;
+  background-color: #153d89;
+}
+
+div.question-content a.answer-now {
+  height: 23px;
+  border-radius: 5px;
+  margin-top: 0;
+  background-color: #153d89;
+}
+
+#ywqa_question_list a.write-first-answer:hover,
+div.question-content a.answer-now:hover {
+  height: 23px;
+  border-radius: 5px;
+  background-color: #2886c9;
+  color: #fff;
+}
+
+span {
+  &.question-symbol {
+    border-radius: 30px;
+    background-color: #33a357;
+  }
+
+  &.answer-symbol {
+    background-color: #4c4c4c;
+  }
+}
+
+div.notify-answers {
+  width: 300px !important;
+  padding-top: 0;
+
+  input.enable-notification {
+    position: relative;
+    top: 2px;
+    margin-bottom: 40px;
+    margin-left: 0;
+  }
+}
+
+.questions-section h3 {
+  display: none;
+}
+
+.ywqa-answers-list {
+  margin-bottom: 7px;
+}
+
+textarea#ywqa_user_content {
+  margin-top: 10px;
+}
+
+label[for='ywqa_user_content'] {
+  padding-top: 20px;
+}
+
+ol.ywqa-items-list {
+  font-size: 16px;
+
+  &.questions {
+    margin-left: 0;
+  }
+}
+
+div.parent-question {
+  color: #000;
+  font-weight: 600;
+  font-style: normal;
+}
+
+#ywqa_answer_list ol.ywqa-items-list {
+  margin-left: 0 !important;
+}
+
+.ywqa-items-list .answer-container .answer:before {
+  display: inline-block;
+  width: 25px;
+  padding-left: 7px;
+  margin-right: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  content: "A";
+  background-color: #4c4c4c;
+  color: #ffff;
+  line-height: 1.5;
+}
+
+@media screen and (max-width: 600px) {
+  .woocommerce-tabs .tabs {
+    flex-direction: column !important;
+
+    li + li {
+      margin-left: 0 !important;
+    }
+  }
+}
