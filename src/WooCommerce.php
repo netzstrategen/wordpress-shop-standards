@@ -177,7 +177,7 @@ class WooCommerce {
       }
     }
 
-    if ($product->backorders_allowed() && $back_in_stock_date = get_post_meta($product->get_id(), '_shop-standards_back_in_stock_date', TRUE)) {
+    if ($product->backorders_allowed() && $back_in_stock_date = self::getBackInStockMeta($product)) {
       if ($date_string = static::getBackInStockDateString($back_in_stock_date)) {
         $stock['availability'] = '<strong>' . sprintf(__('Back in stock %s', Plugin::L10N), $date_string) . '</strong>';
       }
@@ -986,6 +986,30 @@ class WooCommerce {
   }
 
   /**
+   * Retrieves the earliest "back in stock" date from a product or its variations.
+   * @param WC_Product
+   *    The product object.
+   * @return string
+   *    The earliest back in stock date, if any.
+   */
+  public static function getBackInStockMeta($product) {
+    $meta_key = '_' . Plugin::PREFIX . '_back_in_stock_date';
+    $back_in_stock_date = get_post_meta($product->get_id(), $meta_key, TRUE);
+
+    if ($product->is_type('variable')) {
+      $variations = $product->get_available_variations();
+      foreach ($variations as $variation) {
+        $variation_stock_date = get_post_meta($variation['variation_id'], $meta_key, TRUE);
+        if (!$back_in_stock_date || $back_in_stock_date > $variation_stock_date) {
+          $back_in_stock_date = $variation_stock_date;
+        }
+      }
+    }
+
+    return $back_in_stock_date;
+  }
+
+  /**
    * Adds back in stock date to delivery time string for simple products and product variants.
    *
    * See https://github.com/netzstrategen/wopa/blob/b3ed454d22f3da7cdee51e7273bda896d04e272c/local-plugins/woocommerce-german-market/inc/WGM_Template.php#L2582
@@ -997,9 +1021,7 @@ class WooCommerce {
       return $label_string;
     }
 
-    $product_id = $product->get_id();
-
-    if ($back_in_stock_date = get_post_meta($product_id, '_' . Plugin::PREFIX . '_back_in_stock_date', TRUE)) {
+    if ($back_in_stock_date = self::getBackInStockMeta($product)) {
       $label_string .= ' <strong>' . WooCommerce::getBackInStockDateString($back_in_stock_date) . '</strong>';
     }
 
