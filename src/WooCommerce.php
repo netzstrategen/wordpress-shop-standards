@@ -177,7 +177,7 @@ class WooCommerce {
       }
     }
 
-    if ($product->backorders_allowed() && $back_in_stock_date = self::getBackInStockMeta($product)) {
+    if ($product->backorders_allowed() && $back_in_stock_date = self::getEarliestBackInStock($product)) {
       if ($date_string = static::getBackInStockDateString($back_in_stock_date)) {
         $stock['availability'] = '<strong>' . sprintf(__('Back in stock %s', Plugin::L10N), $date_string) . '</strong>';
       }
@@ -987,18 +987,26 @@ class WooCommerce {
 
   /**
    * Retrieves the earliest "back in stock" date from a product or its variations.
+   * If there's stock, the product is considered available and nothing is returned.
    * @param WC_Product
    *    The product object.
    * @return string
    *    The earliest back in stock date, if any.
    */
-  public static function getBackInStockMeta($product) {
+  public static function getEarliestBackInStock($product) {
+    if (!$product->get_stock_quantity()) {
+      return '';
+    }
+
     $meta_key = '_' . Plugin::PREFIX . '_back_in_stock_date';
     $back_in_stock_date = get_post_meta($product->get_id(), $meta_key, TRUE);
 
     if ($product->is_type('variable')) {
       $variations = $product->get_available_variations();
       foreach ($variations as $variation) {
+        if ($variation['max_qty'] > 0) {
+          return '';
+        }
         $variation_stock_date = get_post_meta($variation['variation_id'], $meta_key, TRUE);
         if (!$back_in_stock_date || $back_in_stock_date > $variation_stock_date) {
           $back_in_stock_date = $variation_stock_date;
@@ -1021,7 +1029,7 @@ class WooCommerce {
       return $label_string;
     }
 
-    if ($back_in_stock_date = self::getBackInStockMeta($product)) {
+    if ($back_in_stock_date = self::getEarliestBackInStock($product)) {
       $label_string .= ' <strong>' . WooCommerce::getBackInStockDateString($back_in_stock_date) . '</strong>';
     }
 
