@@ -1005,10 +1005,12 @@ class WooCommerce {
       $variations = $product->get_available_variations();
       foreach ($variations as $variation) {
         $variation_obj = wc_get_product($variation['variation_id']);
-        if ($variation_obj->get_stock_quantity()> 0) {
+        $variation_stock_date = get_post_meta($variation['variation_id'], $meta_key, TRUE);
+        // If a variation has stock or doesn't have a "back in stock" date
+        // it's considered to be immediately available for purchase.
+        if ($variation_obj->get_stock_quantity() > 0 || !$variation_stock_date) {
           return '';
         }
-        $variation_stock_date = get_post_meta($variation['variation_id'], $meta_key, TRUE);
         if (!$back_in_stock_date || $back_in_stock_date > $variation_stock_date) {
           $back_in_stock_date = $variation_stock_date;
         }
