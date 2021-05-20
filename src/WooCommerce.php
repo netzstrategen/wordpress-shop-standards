@@ -994,17 +994,18 @@ class WooCommerce {
    *    The earliest back in stock date, if any.
    */
   public static function getEarliestBackInStock($product) {
-    if (!$product->get_stock_quantity()) {
+    if ($product->get_stock_quantity() > 0) {
       return '';
     }
 
     $meta_key = '_' . Plugin::PREFIX . '_back_in_stock_date';
-    $back_in_stock_date = get_post_meta($product->get_id(), $meta_key, TRUE);
+    $back_in_stock_date = get_post_meta($product->get_id(), $meta_key, TRUE) ?? '';
 
     if ($product->is_type('variable')) {
       $variations = $product->get_available_variations();
       foreach ($variations as $variation) {
-        if ($variation['max_qty'] > 0) {
+        $variation_obj = wc_get_product($variation['variation_id']);
+        if ($variation_obj->get_stock_quantity()> 0) {
           return '';
         }
         $variation_stock_date = get_post_meta($variation['variation_id'], $meta_key, TRUE);
