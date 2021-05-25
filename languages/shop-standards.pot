@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2021-03-01 13:03+0100\n"
+"POT-Creation-Date: 2021-05-26 01:18+0200\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: src/Admin.php:60 src/WooCommerce.php:1153
+#: src/Admin.php:60 src/WooCommerce.php:1148
 #, php-format
 msgid "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in order to save the product."
 msgstr ""
@@ -134,11 +134,11 @@ msgstr ""
 msgid "Back in stock %s"
 msgstr ""
 
-#: src/WooCommerce.php:238 src/WooCommerce.php:508
+#: src/WooCommerce.php:238 src/WooCommerce.php:509
 msgid "Back in stock date"
 msgstr ""
 
-#: src/WooCommerce.php:240 src/WooCommerce.php:510
+#: src/WooCommerce.php:240 src/WooCommerce.php:511
 msgid "Enter the back in stock date"
 msgstr ""
 
@@ -146,7 +146,7 @@ msgstr ""
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:249 src/WooCommerce.php:519
+#: src/WooCommerce.php:249 src/WooCommerce.php:520
 msgid "Enter the Global Trade Item Number"
 msgstr ""
 
@@ -170,97 +170,101 @@ msgstr ""
 msgid "Hide sale percentage bubble"
 msgstr ""
 
-#: src/WooCommerce.php:286 src/WooCommerce.php:535
+#: src/WooCommerce.php:286 src/WooCommerce.php:536
 msgid "Hide add to cart button"
 msgstr ""
 
-#: src/WooCommerce.php:293 src/WooCommerce.php:553
+#: src/WooCommerce.php:293 src/WooCommerce.php:554
 msgid "Price comparison focus product"
 msgstr ""
 
-#: src/WooCommerce.php:299 src/WooCommerce.php:561
+#: src/WooCommerce.php:300 src/WooCommerce.php:562
 msgid "Discontinued Product"
 msgstr ""
 
-#: src/WooCommerce.php:313
+#: src/WooCommerce.php:314
 msgid "Disable related products"
 msgstr ""
 
-#: src/WooCommerce.php:327 src/WooCommerce.php:577
+#: src/WooCommerce.php:328 src/WooCommerce.php:578
 msgid "Purchasing Price"
 msgstr ""
 
-#: src/WooCommerce.php:343
+#: src/WooCommerce.php:344
 msgid "Internal product notes"
 msgstr ""
 
-#: src/WooCommerce.php:518
+#: src/WooCommerce.php:519
 msgid "GTIN:"
 msgstr ""
 
-#: src/WooCommerce.php:527
+#: src/WooCommerce.php:528
 msgid "ERP/Inventory ID:"
 msgstr ""
 
-#: src/WooCommerce.php:543
+#: src/WooCommerce.php:544
 msgid "Variation has insufficient images"
 msgstr ""
 
-#: src/WooCommerce.php:545
+#: src/WooCommerce.php:546
 msgid "Allows this product to be identified and possibly be excluded by other processes and plugins (e.g. a custom filter for product feeds). Enabling this option has no effect on the output (by default)."
 msgstr ""
 
-#: src/WooCommerce.php:677
+#: src/WooCommerce.php:678
 msgid "(Our price)"
 msgstr ""
 
-#: src/WooCommerce.php:732 src/WooCommerce.php:797
+#: src/WooCommerce.php:733 src/WooCommerce.php:798
 msgid "Delivery Time"
 msgstr ""
 
-#: src/WooCommerce.php:857
+#: src/WooCommerce.php:858
 msgid "SKU"
 msgstr ""
 
-#: src/WooCommerce.php:861
+#: src/WooCommerce.php:862
 msgid "ERP/ID"
 msgstr ""
 
-#: src/WooCommerce.php:874
+#: src/WooCommerce.php:875
 msgid "Dimensions"
 msgstr ""
 
-#: src/WooCommerce.php:882
+#: src/WooCommerce.php:883
 msgid "Weight"
 msgstr ""
 
-#: src/WooCommerce.php:928
+#: src/WooCommerce.php:929
 msgid "Product "
 msgstr ""
 
-#: src/WooCommerce.php:1057
+#: src/WooCommerce.php:1052
 msgid "Delivery Time: from"
 msgstr ""
 
-#: src/WooCommerce.php:1074
+#: src/WooCommerce.php:1069
 #, php-format
 msgid "from %1$s"
 msgstr ""
 
-#: src/WooCommerceCheckout.php:41
+#: src/WooCommerceCheckout.php:45
 msgid "Checkout settings"
 msgstr ""
 
-#: src/WooCommerceCheckout.php:46
+#: src/WooCommerceCheckout.php:50
 msgid "Require users to enter billing email address twice"
 msgstr ""
 
-#: src/WooCommerceCheckout.php:70
+#: src/WooCommerceCheckout.php:74
 msgid "Repeat e-mail address"
 msgstr ""
 
-#: src/WooCommerceCheckout.php:86
+#: src/WooCommerceCheckout.php:90
 msgid "Your email addresses do not match"
+msgstr ""
+
+#: src/WooCommerceCheckout.php:119
+msgid "Billing and shipping salutation must match for business orders."
 msgstr ""
 
 #: src/WooCommerceSaleLabel.php:32

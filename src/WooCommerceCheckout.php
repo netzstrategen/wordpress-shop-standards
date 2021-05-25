@@ -28,6 +28,10 @@ class WooCommerceCheckout {
       add_filter('woocommerce_checkout_fields', __CLASS__ . '::addConfirmationEmailCheckoutField');
       add_action('woocommerce_checkout_process', __CLASS__ . '::checkConfirmationEmailField');
     }
+
+    // Ensure shipping and billing salutation align for company orders.
+    add_action('woocommerce_after_checkout_validation', __CLASS__ . '::ensureCompanyShipping', 10, 2);
+    add_action('woocommerce_checkout_update_order_review', __CLASS__ . '::ensureCompanyShipping', 10, 2);
   }
 
   /**
@@ -84,6 +88,42 @@ class WooCommerceCheckout {
   public static function checkConfirmationEmailField() {
     if ($_POST['billing_email'] !== $_POST['billing_email_confirmation']) {
       wc_add_notice(__('Your email addresses do not match', Plugin::L10N), 'error');
+    }
+  }
+
+  /**
+   * Ensures the billing and shipping salutation align for company orders.
+   *
+   * Since two hooks, with different parameters are used, check for a combination
+   * of post data and the errors object to identify how to display the error.
+   *
+   * @implements woocommerce_checkout_update_order_review
+   * @implements woocommerce_after_checkout_validation
+   *
+   * @param array $data
+   * @param \WP_error|null $errors
+   */
+  public static function ensureCompanyShipping($data = [], \WP_error $errors = NULL): void {
+    if (!$data) {
+      return;
+    }
+    if (!empty($_POST['post_data'])) {
+      parse_str($_POST['post_data'], $form_data);
+      $data = $form_data;
+    }
+    if (!empty($data['ship_to_different_address'])) {
+      $billing_salutation = wc_clean(wp_unslash($data['billing_salutation'] ?? ''));
+      $shipping_salutation = wc_clean(wp_unslash($data['shipping_salutation'] ?? ''));
+
+      if ($billing_salutation === 'Company' && $billing_salutation !== $shipping_salutation) {
+        $error = __('Billing and shipping salutation must match for business orders.', Plugin::L10N);
+        if ($errors) {
+          $errors->add('shipping', $error);
+        }
+        else {
+          wc_add_notice($error, 'error');
+        }
+      }
     }
   }
 
