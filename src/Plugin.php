@@ -204,13 +204,8 @@ class Plugin {
     // Disables output of related products if over-ride checkbox is enabled.
     add_action('woocommerce_after_single_product_summary', __NAMESPACE__ . '\WooCommerce::disableRelatedProducts', 0, 2);
 
-    /**
-     * Removes the `/page/1` suffix from archive URLs.
-     */
-    add_filter('paginate_links', function ($link) {
-      $link = preg_replace('@/page/1/?(\?|$)@', '$1', $link);
-      return user_trailingslashit($link);
-    });
+    // Removes the `/page/1` suffix from archive URLs.
+    add_filter('paginate_links', __CLASS__  . '::paginate_links');
   }
 
   /**
@@ -352,6 +347,16 @@ class Plugin {
    */
   public static function loadTextdomain() {
     load_plugin_textdomain(static::L10N, FALSE, static::L10N . '/languages/');
+  }
+
+  /**
+   * Removes the `/page/1` suffix from archive URLs.
+   *
+   * @return string
+   */
+  public static function paginate_links($link) {
+    $link = preg_replace('@/page/1/?(\?|$)@', '$1', $link);
+    return user_trailingslashit($link);
   }
 
 }
