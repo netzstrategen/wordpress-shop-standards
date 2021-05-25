@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2021-05-26 01:18+0200\n"
+"POT-Creation-Date: 2021-05-26 15:33+0200\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -263,8 +263,8 @@ msgstr ""
 msgid "Your email addresses do not match"
 msgstr ""
 
-#: src/WooCommerceCheckout.php:119
-msgid "Billing and shipping salutation must match for business orders."
+#: src/WooCommerceCheckout.php:120
+msgid "The order must be shipped to a company address. If a VAT is filled."
 msgstr ""
 
 #: src/WooCommerceSaleLabel.php:32

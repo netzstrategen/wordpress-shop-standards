@@ -1,4 +1,4 @@
-/* global shop_standards_settings */
+/* global jQuery, shop_standards_settings */
 
 (function pageLoad($) {
   // Toggles product filtering by term.
@@ -86,7 +86,7 @@
   $(document).ready(() => {
     // Disable copy/paste actions on billing email fields.
     if (shop_standards_settings.emailConfirmationEmail === 'yes') {
-      $('#billing_email, #billing_email_confirmation').each(function() {
+      $('#billing_email, #billing_email_confirmation').each(() => {
         // eslint-disable-next-line max-nested-callbacks
         $(this).on('cut copy paste', (e) => {
           e.preventDefault();
@@ -101,16 +101,23 @@
         }
       });
     }
-    $('form.woocommerce-checkout #billing_salutation, form.woocommerce-checkout #shipping_salutation').on('input validate change', () => {
-      const isCompany = $('#billing_salutation').val() === 'Company';
-      if (isCompany) {
+    $('form.woocommerce-checkout').on('input', '#billing_salutation, #shipping_salutation, #woocommerce_eu_vat_number', (e) => {
+      const billingSalutation = $('#billing_salutation').val();
+      const shippingSalutation = $('#shipping_salutation').val();
+      const billingVat = $('#woocommerce_eu_vat_number');
+      if (billingSalutation === 'Company' && billingVat.val() && shippingSalutation !== billingSalutation) {
         $('#shipping_salutation')
           .val($('#billing_salutation').val())
-          .css('pointer-events', 'none');
+          .css('pointer-events', 'none')
+          .trigger('change');
         $('#shipping_salutation option:not(:selected)').prop('disabled', true);
-      } else {
+      } else if (e.target.name === 'billing_salutation' && billingVat.val()) {
         $('#shipping_salutation').css('pointer-events', 'initial');
         $('#shipping_salutation option:not(:selected)').prop('disabled', false);
+        billingVat.val('');
+      }
+      if (e.target.name.indexOf('salutation') !== -1) {
+        $(document.body).trigger('update_checkout');
       }
     });
   });
@@ -131,9 +138,9 @@
       $widget.attr('id', $widget.attr('data-id'));
     }
     $('.elementor-widget-woocommerce-products .page-numbers a').each((i, a) => {
-      $(a).attr('href', $(a).attr('href') + '#' + $(a).closest($widget).attr('id'));
+      $(a).attr('href', `${$(a).attr('href')}#${$(a).closest($widget).attr('id')}`);
       // Remove event listeners to prevent Elementor from treating links as anchor target links.
-      $(a).off('click').on('click', e => e.stopImmediatePropagation());
+      $(a).off('click').on('click', (e) => e.stopImmediatePropagation());
     });
   });
 }(jQuery));
