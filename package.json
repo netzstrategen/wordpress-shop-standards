@@ -1,5 +1,5 @@
 {
-  "version": "1.38.5",
+  "version": "1.39.0",
   "title": "shop-standards",
   "description": "Standard refinements for e-commerce websites.",
   "dependencies": {
@@ -14,6 +14,10 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.10.0",
     "prettier": "^1.14.0"
+  },
+  "scripts": {
+    "watch": "gulp --concat false",
+    "build": "gulp build --concat false --production"
   },
   "gulpPaths": {
     "destDir": "./dist",

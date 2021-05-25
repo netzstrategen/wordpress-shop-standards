@@ -292,9 +292,10 @@ class Plugin {
    */
   public static function wp_enqueue_scripts() {
     $git_version = static::getGitVersion();
+    $suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 
-    wp_enqueue_style(Plugin::PREFIX, static::getBaseUrl() . '/dist/styles/main.min.css', FALSE, $git_version);
-    wp_enqueue_script(Plugin::PREFIX, static::getBaseUrl() . '/dist/scripts/main.min.js', ['jquery'], $git_version, TRUE);
+    wp_enqueue_style(Plugin::PREFIX, static::getBaseUrl() . '/dist/styles/main' . $suffix . '.css', FALSE, $git_version);
+    wp_enqueue_script(Plugin::PREFIX, static::getBaseUrl() . '/dist/scripts/main' . $suffix . '.js', ['jquery'], $git_version, TRUE);
     wp_localize_script(Plugin::PREFIX, 'shop_standards_settings', [
       'emailConfirmationEmail' => get_option('_' . Plugin::L10N . '_checkout_email_confirmation_field'),
     ]);

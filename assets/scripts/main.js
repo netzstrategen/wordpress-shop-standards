@@ -101,6 +101,18 @@
         }
       });
     }
+    $('form.woocommerce-checkout #billing_salutation, form.woocommerce-checkout #shipping_salutation').on('input validate change', () => {
+      const isCompany = $('#billing_salutation').val() === 'Company';
+      if (isCompany) {
+        $('#shipping_salutation')
+          .val($('#billing_salutation').val())
+          .css('pointer-events', 'none');
+        $('#shipping_salutation option:not(:selected)').prop('disabled', true);
+      } else {
+        $('#shipping_salutation').css('pointer-events', 'initial');
+        $('#shipping_salutation option:not(:selected)').prop('disabled', false);
+      }
+    });
   });
 
   // Disable checkout button if there are any WooCommerce error displayed.
