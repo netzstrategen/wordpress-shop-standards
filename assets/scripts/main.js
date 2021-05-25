@@ -115,8 +115,9 @@
   // Must be combined with <a name="widget"></a> in title.
   // https://github.com/elementor/elementor/issues/4703
   $(document).ready(() => {
+    $('.elementor-widget-woocommerce-products').attr('id', $('.elementor-widget-woocommerce-products').attr('data-id'));
     $('.elementor-widget-woocommerce-products .page-numbers a').each((i, a) => {
-      $(a).attr('href', $(a).attr('href') + '#widget');
+      $(a).attr('href', $(a).attr('href') + '#' + $('.elementor-widget-woocommerce-products').attr('id'));
     });
   });
 }(jQuery));
