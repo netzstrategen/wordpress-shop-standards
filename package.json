@@ -1,34 +1,22 @@
 {
-  "version": "1.39.0",
+  "version": "1.40.0",
   "title": "shop-standards",
   "description": "Standard refinements for e-commerce websites.",
   "dependencies": {
-    "@netzstrategen/gulp-task-collection": "^1.0.3"
+    "@netzstrategen/gulp-task-collection": "^3.1.1"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^17.0.0",
+    "@netzstrategen/eslint-config": "^1.0.1",
+    "@netzstrategen/stylelint-config": "^2.1.0",
     "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-prettier": "^2.6.2",
-    "eslint-plugin-react": "^7.10.0",
     "prettier": "^1.14.0"
   },
   "scripts": {
     "watch": "gulp --concat false",
-    "build": "gulp build --concat false --production"
+    "build": "gulp build --concat false --production && gulp scripts styles --concat false"
   },
   "gulpPaths": {
     "destDir": "./dist",
-    "fonts": {
-      "src": "./assets/fonts/**/*.{eot,svg,ttf,woff,woff2}",
-      "dest": "./dist/fonts"
-    },
-    "images": {
-      "src": "./assets/img/**/*.{jpg,jpeg,png,gif,svg}",
-      "dest": "./dist/img"
-    },
     "scripts": {
       "src": "./assets/scripts/**/*.js",
       "dest": "./dist/scripts"
@@ -39,7 +27,6 @@
         "./assets/styles/**/*.scss"
       ],
       "dest": "./dist/styles"
-    },
-    "templates": "./templates/**/*.twig"
+    }
   }
 }

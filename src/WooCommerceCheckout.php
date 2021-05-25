@@ -113,10 +113,11 @@ class WooCommerceCheckout {
     }
     if (!empty($data['ship_to_different_address'])) {
       $billing_salutation = wc_clean(wp_unslash($data['billing_salutation'] ?? ''));
+      $billing_vat_number = wc_clean(wp_unslash($data['billing_vat_number'] ?? ''));
       $shipping_salutation = wc_clean(wp_unslash($data['shipping_salutation'] ?? ''));
 
-      if ($billing_salutation === 'Company' && $billing_salutation !== $shipping_salutation) {
-        $error = __('Billing and shipping salutation must match for business orders.', Plugin::L10N);
+      if ($billing_salutation === 'Company' && $billing_vat_number && $billing_salutation !== $shipping_salutation) {
+        $error = __('The order must be shipped to a company address. If a VAT is filled.', Plugin::L10N);
         if ($errors) {
           $errors->add('shipping', $error);
         }

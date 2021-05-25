@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2021-05-26 01:18+0200\n"
+"POT-Creation-Date: 2021-05-26 15:33+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Fabian Marz <fabian@netzstrategen.com>\n"
 "Language-Team: \n"
@@ -288,10 +288,11 @@ msgid "Your email addresses do not match"
 msgstr ""
 "Ihre E-Mail-Adressen stimmen nicht überein. Bitte überprüfen Sie Ihre Eingabe"
 
-#: src/WooCommerceCheckout.php:119
-msgid "Billing and shipping salutation must match for business orders."
+#: src/WooCommerceCheckout.php:120
+msgid "The order must be shipped to a company address. If a VAT is filled."
 msgstr ""
-"Rechnungs- und Versandanrede müssen bei Firmenbestellungen übereinstimmen."
+"Die Bestellung muss an eine Firmenadresse gesendet werden, wenn eine USt-ID "
+"Nummer angegeben wurde."
 
 #: src/WooCommerceSaleLabel.php:32
 msgid "Automatic sale category assignment"
@@ -340,3 +341,7 @@ msgstr "Herr"
 #: src/WooCommerceSalutation.php:67
 msgid "Company"
 msgstr "Firma"
+
+#~ msgid "Billing and shipping salutation must match for business orders."
+#~ msgstr ""
+#~ "Rechnungs- und Versandanrede müssen bei Firmenbestellungen übereinstimmen."
