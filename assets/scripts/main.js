@@ -119,7 +119,7 @@
       $widget.attr('id', $widget.attr('data-id'));
     }
     $('.elementor-widget-woocommerce-products .page-numbers a').each((i, a) => {
-      $(a).attr('href', $(a).attr('href') + '#' + $(a).closest('.elementor-widget-woocommerce-products').attr('id'));
+      $(a).attr('href', $(a).attr('href') + '#' + $(a).closest($widget).attr('id'));
     });
   });
 }(jQuery));
