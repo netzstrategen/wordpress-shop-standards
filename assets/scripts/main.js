@@ -112,12 +112,14 @@
   });
   
   // Fixes missing anchor on elementor widget pagination.
-  // Must be combined with <a name="widget"></a> in title.
   // https://github.com/elementor/elementor/issues/4703
   $(document).ready(() => {
-    $('.elementor-widget-woocommerce-products').attr('id', $('.elementor-widget-woocommerce-products').attr('data-id'));
+    const $widget = $('.elementor-widget-woocommerce-products');
+    if (!$widget.attr('id')) {
+      $widget.attr('id', $widget.attr('data-id'));
+    }
     $('.elementor-widget-woocommerce-products .page-numbers a').each((i, a) => {
-      $(a).attr('href', $(a).attr('href') + '#' + $('.elementor-widget-woocommerce-products').attr('id'));
+      $(a).attr('href', $(a).attr('href') + '#' + $(a).closest('.elementor-widget-woocommerce-products').attr('id'));
     });
   });
 }(jQuery));
