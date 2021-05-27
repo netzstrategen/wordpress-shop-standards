@@ -290,14 +290,14 @@ class Plugin {
     // Add alternative title to page categorization.
     register_field_group([
     	'key' => 'group_60afa34a62839',
-    	'title' => 'Other',
+    	'title' => __('Other', Plugin::L10N),
     	'fields' => [
     		[
     			'key' => 'field_60afa47226f5f',
-    			'label' => 'Page Name',
+    			'label' => __('Page Name', Plugin::L10N),
     			'name' => 'page_name',
     			'type' => 'text',
-    			'instructions' => 'Only changes how the name appears on the page. Leaves the filter drop-down menu alone.',
+    			'instructions' => __('Only changes how the name appears on the page. Leaves the filter drop-down menu alone.', Plugin::L10N),
     			'required' => 0,
     			'conditional_logic' => 0,
     			'wrapper' => [
