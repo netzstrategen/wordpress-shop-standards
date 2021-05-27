@@ -2,6 +2,8 @@
 
 namespace Netzstrategen\ShopStandards;
 
+use Netzstrategen\ShopStandards\ProductAttributePageTitle;
+
 /**
  * Main front-end functionality.
  */
@@ -74,16 +76,12 @@ class Plugin {
     }
 
     if (function_exists('register_field_group')) {
-      // ACF
-      add_filter( 'acf/location/rule_types', __NAMESPACE__ . '\WooCommerce::rule_types');
-      add_filter( 'acf/location/rule_values/wc_prod_attr', __NAMESPACE__ . '\WooCommerce::wc_prod_attr');
-      add_filter( 'acf/location/rule_match/wc_prod_attr', __NAMESPACE__ . '\WooCommerce::wc_prod_attr_2', 10, 3);
-
       acf_add_options_sub_page([
         'page_title' => __('Hide "Add to Cart" button', Plugin::L10N),
         'menu_title' => __('Hide "Add to Cart" button', Plugin::L10N),
         'parent_slug' => 'woocommerce',
       ]);
+      ProductAttributePageTitle::register_acf_page_title_init();
       Plugin::register_acf();
     }
 
@@ -285,50 +283,6 @@ class Plugin {
       'label_placement' => 'top',
       'instruction_placement' => 'label',
       'active' => 1,
-    ]);
-
-    // Add alternative title to page categorization.
-    register_field_group([
-    	'key' => 'group_60afa34a62839',
-    	'title' => __('Other', Plugin::L10N),
-    	'fields' => [
-    		[
-    			'key' => 'field_60afa47226f5f',
-    			'label' => __('Page Name', Plugin::L10N),
-    			'name' => 'page_name',
-    			'type' => 'text',
-    			'instructions' => __('Only changes how the name appears on the page. Leaves the filter drop-down menu alone.', Plugin::L10N),
-    			'required' => 0,
-    			'conditional_logic' => 0,
-    			'wrapper' => [
-    				'width' => '',
-    				'class' => '',
-    				'id' => '',
-    			],
-    			'default_value' => '',
-    			'placeholder' => '',
-    			'prepend' => '',
-    			'append' => '',
-    			'maxlength' => '',
-    		],
-    	],
-    	'location' => [
-    		[
-    			[
-    				'param' => 'wc_prod_attr',
-    				'operator' => '==',
-    				'value' => 'pa_funktion',
-    			],
-    		],
-    	],
-    	'menu_order' => 0,
-    	'position' => 'normal',
-    	'style' => 'default',
-    	'label_placement' => 'top',
-    	'instruction_placement' => 'label',
-    	'hide_on_screen' => '',
-    	'active' => true,
-    	'description' => '',
     ]);
   }
 

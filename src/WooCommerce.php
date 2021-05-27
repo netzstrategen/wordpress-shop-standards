@@ -1236,34 +1236,4 @@ class WooCommerce {
     }
   }
 
-  /**
-   *
-   */
-  // Adds a custom rule type.
-  public static function rule_types( $choices ){
-      $choices[ __("Other",'acf') ]['wc_prod_attr'] = 'WC Product Attribute';
-      return $choices;
-  }
-
-  // Adds custom rule values.
-  public static function wc_prod_attr( $choices ){
-      foreach ( wc_get_attribute_taxonomies() as $attr ) {
-          $pa_name = wc_attribute_taxonomy_name( $attr->attribute_name );
-          $choices[ $pa_name ] = $attr->attribute_label;
-      }
-      return $choices;
-  }
-
-  // Matching the custom rule.
-  public static function wc_prod_attr_2( $match, $rule, $options ){
-      if ( isset( $options['taxonomy'] ) ) {
-          if ( '==' === $rule['operator'] ) {
-              $match = $rule['value'] === $options['taxonomy'];
-          } elseif ( '!=' === $rule['operator'] ) {
-              $match = $rule['value'] !== $options['taxonomy'];
-          }
-      }
-      return $match;
-  }
-
 }
