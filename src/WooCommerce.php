@@ -988,12 +988,14 @@ class WooCommerce {
   /**
    * Retrieves the earliest "back in stock" date from a product or its variations.
    * If there's stock, the product is considered available and nothing is returned.
+   *
    * @param WC_Product
    *    The product object.
+   *
    * @return string
    *    The earliest back in stock date, if any.
    */
-  public static function getEarliestBackInStock($product) {
+  public static function getEarliestBackInStock(\WC_Product $product): string {
     if ($product->get_stock_quantity() > 0) {
       return '';
     }
@@ -1004,11 +1006,11 @@ class WooCommerce {
     if ($product->is_type('variable')) {
       $variations = $product->get_available_variations();
       foreach ($variations as $variation) {
-        $variation_obj = wc_get_product($variation['variation_id']);
+        $product_variation = wc_get_product($variation['variation_id']);
         $variation_stock_date = get_post_meta($variation['variation_id'], $meta_key, TRUE);
         // If a variation has stock or doesn't have a "back in stock" date
         // it's considered to be immediately available for purchase.
-        if ($variation_obj->get_stock_quantity() > 0 || !$variation_stock_date) {
+        if ($product_variation->get_stock_quantity() > 0 || !$variation_stock_date) {
           return '';
         }
         if (!$back_in_stock_date || $back_in_stock_date > $variation_stock_date) {
