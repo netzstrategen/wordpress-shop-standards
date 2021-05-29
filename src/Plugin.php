@@ -81,7 +81,7 @@ class Plugin {
         'menu_title' => __('Hide "Add to Cart" button', Plugin::L10N),
         'parent_slug' => 'woocommerce',
       ]);
-      ProductAttributePageTitle::register_acf_page_title_init();
+      ProductAttributePageTitle::init();
       Plugin::register_acf();
     }
 
