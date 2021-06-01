@@ -6,9 +6,10 @@ namespace Netzstrategen\ShopStandards;
  * Allows optional customization of page title.
  */
 class ProductAttributePageTitle {
+
   public static function init() {
     // Register ACF field.
-    ProductAttributePageTitle::register_acf_page_title($group_filter);
+    ProductAttributePageTitle::register_acf_page_title();
 
     // Front-end output of title.
     add_filter('woocommerce_page_title', __CLASS__.'::woocommerce_page_title');
@@ -17,7 +18,7 @@ class ProductAttributePageTitle {
   /**
    * Register ACF field.
    */
-  public static function register_acf_page_title($group_filter) {
+  public static function register_acf_page_title() {
     register_field_group([
       'key' => 'acf_group_page_title',
       'title' => __('Listing Page', Plugin::L10N),
@@ -30,16 +31,6 @@ class ProductAttributePageTitle {
           'instructions' => __('Only changes how the name appears on the page. Leaves the filter drop-down menu alone.', Plugin::L10N),
           'required' => 0,
           'conditional_logic' => 0,
-          'wrapper' => [
-            'width' => '',
-            'class' => '',
-            'id' => '',
-          ],
-          'default_value' => '',
-          'placeholder' => '',
-          'prepend' => '',
-          'append' => '',
-          'maxlength' => '',
         ],
       ],
       'location' => [
@@ -67,8 +58,7 @@ class ProductAttributePageTitle {
    */
   public static function woocommerce_page_title($title) {
     $page_title = get_field('page_title', get_queried_object());
-    return $page_title ?
-           $page_title :
-           $title;
+    return $page_title ? esc_html($page_title) : $title;
   }
+
 }
