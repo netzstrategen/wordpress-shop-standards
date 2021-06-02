@@ -1020,7 +1020,7 @@ class WooCommerce {
     }
 
     // Returns the date only if it's in the future.
-    return $back_in_stock_date > time() ? $back_in_stock_date : '';
+    return strtotime($back_in_stock_date) > time() ? $back_in_stock_date : '';
   }
 
   /**
