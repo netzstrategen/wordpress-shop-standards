@@ -355,8 +355,7 @@ class Plugin {
    * @return string
    */
   public static function paginate_links($link) {
-    $link = preg_replace('@/page/1/?(\?|$)@', '$1', $link);
-    return user_trailingslashit($link);
+    return preg_replace('@page/1/?(\?|$)@', '$1', $link);
   }
 
 }
