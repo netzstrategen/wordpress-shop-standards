@@ -8,8 +8,19 @@ namespace Netzstrategen\ShopStandards;
 class ProductAttributePageTitle {
 
   public static function init() {
+    $attribute_terms = wc_get_attribute_taxonomy_names();
+    $group_filter = [];
+
+    foreach( $attribute_terms as $attribute_term ) {
+      $group_filter[] = [[
+        'param'    => 'taxonomy',
+        'operator' => '==',
+        'value'    => $attribute_term,
+      ]];
+    }
+
     // Register ACF field.
-    ProductAttributePageTitle::register_acf_page_title();
+    ProductAttributePageTitle::register_acf_page_title($group_filter);
 
     // Front-end output of title.
     add_filter('woocommerce_page_title', __CLASS__.'::woocommerce_page_title');
@@ -18,7 +29,7 @@ class ProductAttributePageTitle {
   /**
    * Register ACF field.
    */
-  public static function register_acf_page_title() {
+  public static function register_acf_page_title($group_filter) {
     register_field_group([
       'key' => 'acf_group_page_title',
       'title' => __('Listing Page', Plugin::L10N),
@@ -33,15 +44,7 @@ class ProductAttributePageTitle {
           'conditional_logic' => 0,
         ],
       ],
-      'location' => [
-        [
-          [
-            'param'    => 'taxonomy',
-            'operator' => '==',
-            'value'    => 'all',
-          ],
-        ],
-      ],
+      'location' => $group_filter,
       'menu_order' => 0,
       'position' => 'normal',
       'style' => 'default',
