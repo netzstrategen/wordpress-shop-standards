@@ -132,7 +132,7 @@
 
   // Fixes missing anchor on elementor widget pagination.
   // https://github.com/elementor/elementor/issues/4703
-  $(document).ready(() => {
+  document.addEventListener('DOMContentLoaded', () => {
     const $widget = $('.elementor-widget-woocommerce-products');
     if (!$widget.attr('id')) {
       $widget.attr('id', $widget.attr('data-id'));
