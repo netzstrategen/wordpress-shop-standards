@@ -80,9 +80,6 @@ class Plugin {
         'parent_slug' => 'woocommerce',
       ]);
       Plugin::register_acf();
-
-      // Adds optional customization of page title.
-      add_action('init', __NAMESPACE__ . '\ProductAttributePageTitle::init', 20);
     }
 
     // Displays sale price as regular price if custom field is checked.
@@ -110,6 +107,11 @@ class Plugin {
     PlusProducts::init();
 
     if (is_admin()) {
+      if (function_exists('register_field_group')) {
+        // Adds optional customization of page title.
+        ProductAttributePageTitle::admin_init();
+      }
+
       return;
     }
 
@@ -210,6 +212,9 @@ class Plugin {
 
     // Removes the suffix '/page/1' from archive URLs.
     add_filter('paginate_links', __CLASS__  . '::paginate_links');
+
+    // Front-end output of custom page title.
+    add_filter('woocommerce_page_title', __CLASS__.'::woocommerce_page_title');
   }
 
   /**
@@ -369,6 +374,14 @@ class Plugin {
       $link = preg_replace('@/page/1/?(\?|$)@', user_trailingslashit('') . '$1', $link);
     }
     return $link;
+  }
+
+  /**
+   * Front-end output of custom page title.
+   */
+  public static function woocommerce_page_title($title) {
+    $page_title = get_field('page_title', get_queried_object());
+    return $page_title ? esc_html($page_title) : $title;
   }
 
 }

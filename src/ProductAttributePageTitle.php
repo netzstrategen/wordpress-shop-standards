@@ -7,14 +7,7 @@ namespace Netzstrategen\ShopStandards;
  */
 class ProductAttributePageTitle {
 
-  public static function init() {
-    // Front-end output of title.
-    add_filter('woocommerce_page_title', __CLASS__.'::woocommerce_page_title');
-
-    if (!is_admin()) {
-      return;
-    }
-
+  public static function admin_init() {
     $attribute_terms = wc_get_attribute_taxonomy_names();
     $group_filter = [];
 
@@ -30,9 +23,6 @@ class ProductAttributePageTitle {
 
     // Register ACF field.
     ProductAttributePageTitle::register_acf_page_title($group_filter);
-
-    // Front-end output of title.
-    add_filter('woocommerce_page_title', __CLASS__.'::woocommerce_page_title');
   }
 
   /**
@@ -55,13 +45,4 @@ class ProductAttributePageTitle {
       'location' => $group_filter,
     ]);
   }
-
-  /**
-   * Front-end output of title.
-   */
-  public static function woocommerce_page_title($title) {
-    $page_title = get_field('page_title', get_queried_object());
-    return $page_title ? esc_html($page_title) : $title;
-  }
-
 }
