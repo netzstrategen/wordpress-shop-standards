@@ -82,6 +82,9 @@ class Plugin {
         'parent_slug' => 'woocommerce',
       ]);
       Plugin::register_acf();
+
+      // Adds optional customization of page title.
+      add_action('init', __NAMESPACE__ . '\ProductAttributePageTitle::init', 20);
     }
 
     // Displays sale price as regular price if custom field is checked.
