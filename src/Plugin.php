@@ -2,8 +2,6 @@
 
 namespace Netzstrategen\ShopStandards;
 
-use Netzstrategen\ShopStandards\ProductAttributePageTitle;
-
 /**
  * Main front-end functionality.
  */
