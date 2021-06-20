@@ -8,15 +8,24 @@ namespace Netzstrategen\ShopStandards;
 class ProductAttributePageTitle {
 
   public static function init() {
+    // Front-end output of title.
+    add_filter('woocommerce_page_title', __CLASS__.'::woocommerce_page_title');
+
+    if (!is_admin()) {
+      return;
+    }
+
     $attribute_terms = wc_get_attribute_taxonomy_names();
     $group_filter = [];
 
-    foreach( $attribute_terms as $attribute_term ) {
-      $group_filter[] = [[
-        'param'    => 'taxonomy',
-        'operator' => '==',
-        'value'    => $attribute_term,
-      ]];
+    foreach ($attribute_terms as $attribute_term) {
+      $group_filter[] = [
+        [
+          'param' => 'taxonomy',
+          'operator' => '==',
+          'value' => $attribute_term,
+        ]
+      ];
     }
 
     // Register ACF field.
