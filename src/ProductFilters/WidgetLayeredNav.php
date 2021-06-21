@@ -34,7 +34,15 @@ class WidgetLayeredNav extends \WC_Widget_Layered_Nav {
    * @todo Implement output.
    */
   protected function layered_nav_dropdown($terms, $taxonomy, $query_type) {
-    return parent::layered_nav_dropdown($terms, $taxonomy, $query_type);
+    ob_start();
+    $found = parent::layered_nav_dropdown($terms, $taxonomy, $query_type);
+    $output = ob_get_clean();
+    $pattern = '@(?<=action=\")(.*?)(?=\")@';
+    preg_match($pattern, $output, $matches);
+    $output = preg_replace($pattern, $matches[0] . '#woocommerce_layered_nav_filters-2', $output);
+
+    echo $output;
+    return $found;
   }
 
 }
