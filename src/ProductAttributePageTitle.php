@@ -45,4 +45,5 @@ class ProductAttributePageTitle {
       'location' => $group_filter,
     ]);
   }
+
 }
