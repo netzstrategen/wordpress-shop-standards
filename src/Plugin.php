@@ -107,11 +107,6 @@ class Plugin {
     PlusProducts::init();
 
     if (is_admin()) {
-      if (function_exists('register_field_group')) {
-        // Adds optional customization of page title.
-        ProductAttributePageTitle::admin_init();
-      }
-
       return;
     }
 
