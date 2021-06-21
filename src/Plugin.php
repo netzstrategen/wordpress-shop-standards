@@ -188,7 +188,7 @@ class Plugin {
 
     // Enqueues plugin scripts and styles.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
-    add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_elementor_script', 9);
+    add_action('elementor/frontend/before_enqueue_scripts', __CLASS__ . '::wp_enqueue_elementor_script');
 
     // Adds GTIN product number in schema.org.
     add_filter('woocommerce_structured_data_product', __NAMESPACE__ . '\Seo::getProductGtin');
