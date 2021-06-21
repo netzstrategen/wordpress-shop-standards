@@ -1,6 +1,6 @@
 /* global jQuery */
 
-(function pageLoad($) {
+(function elementorAnchor($) {
   // Fixes missing anchor on elementor widget pagination.
   // https://github.com/elementor/elementor/issues/4703
   $(document).ready(() => {

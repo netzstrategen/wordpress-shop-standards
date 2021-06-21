@@ -188,7 +188,7 @@ class Plugin {
 
     // Enqueues plugin scripts and styles.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
-    add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_elementor_script', 999);
+    add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_elementor_script', 9);
 
     // Adds GTIN product number in schema.org.
     add_filter('woocommerce_structured_data_product', __NAMESPACE__ . '\Seo::getProductGtin');
@@ -305,7 +305,7 @@ class Plugin {
   public static function wp_enqueue_elementor_script() {
     $git_version = static::getGitVersion();
     $suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
-    wp_enqueue_script(Plugin::PREFIX, static::getBaseUrl() . '/dist/scripts/vendor/elementor' . $suffix . '.js', ['jquery'], $git_version, TRUE);
+    wp_enqueue_script(Plugin::PREFIX . '/elementor', static::getBaseUrl() . '/dist/scripts/vendor/elementor' . '.js', ['jquery'], $git_version);
   }
 
   /**
