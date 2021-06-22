@@ -43,7 +43,7 @@ class Admin {
     add_filter('woocommerce_helper_suppress_connect_notice', '__return_true');
 
     if (function_exists('register_field_group')) {
-      // Adds optional customization of page title.
+      // Add field to set custom page title for product attribute listing pages.
       ProductAttributePageTitle::admin_init();
     }
   }

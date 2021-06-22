@@ -46,4 +46,12 @@ class ProductAttributePageTitle {
     ]);
   }
 
+  /**
+   * Overrides page title on product attribute pages.
+   */
+  public static function woocommerce_page_title($title) {
+    $page_title = get_field('page_title', get_queried_object());
+    return $page_title ? esc_html($page_title) : $title;
+  }
+
 }
