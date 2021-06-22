@@ -2,8 +2,6 @@
 
 namespace Netzstrategen\ShopStandards;
 
-use Netzstrategen\ShopStandards\ProductAttributePageTitle;
-
 /**
  * Main front-end functionality.
  */
@@ -208,6 +206,9 @@ class Plugin {
 
     // Removes the suffix '/page/1' from archive URLs.
     add_filter('paginate_links', __CLASS__  . '::paginate_links');
+
+    // Override page title on product attribute pages.
+    add_filter('woocommerce_page_title', __NAMESPACE__ . '\ProductAttributePageTitle::woocommerce_page_title');
   }
 
   /**
