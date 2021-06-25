@@ -304,7 +304,7 @@ class Plugin {
 
   public static function wp_enqueue_elementor_script() {
     $git_version = static::getGitVersion();
-    wp_enqueue_script(Plugin::PREFIX . '/elementor', static::getBaseUrl() . '/dist/scripts/vendor/elementor' . '.js', ['jquery'], $git_version);
+    wp_enqueue_script(Plugin::PREFIX . '/elementor', static::getBaseUrl() . '/dist/scripts/vendor/elementor.js', ['jquery'], $git_version);
   }
 
   /**
