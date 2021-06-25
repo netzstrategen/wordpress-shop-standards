@@ -188,6 +188,7 @@ class Plugin {
 
     // Enqueues plugin scripts and styles.
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
+    add_action('elementor/frontend/before_enqueue_scripts', __CLASS__ . '::wp_enqueue_elementor_script');
 
     // Adds GTIN product number in schema.org.
     add_filter('woocommerce_structured_data_product', __NAMESPACE__ . '\Seo::getProductGtin');
@@ -299,6 +300,11 @@ class Plugin {
     wp_localize_script(Plugin::PREFIX, 'shop_standards_settings', [
       'emailConfirmationEmail' => get_option('_' . Plugin::L10N . '_checkout_email_confirmation_field'),
     ]);
+  }
+
+  public static function wp_enqueue_elementor_script() {
+    $git_version = static::getGitVersion();
+    wp_enqueue_script(Plugin::PREFIX . '/elementor', static::getBaseUrl() . '/dist/scripts/vendor/elementor.js', ['jquery'], $git_version);
   }
 
   /**
