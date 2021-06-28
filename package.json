@@ -13,7 +13,7 @@
   },
   "scripts": {
     "watch": "gulp --concat false",
-    "build": "gulp build --concat false --production && gulp scripts styles --concat false"
+    "build": "gulp build:production --concat false && gulp scripts styles --concat false"
   },
   "gulpPaths": {
     "destDir": "./dist",
