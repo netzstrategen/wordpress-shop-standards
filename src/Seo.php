@@ -32,6 +32,20 @@ class Seo {
     add_action('dynamic_sidebar_before', __CLASS__ . '::dynamic_sidebar_before');
     // Removes link tags from selected products filters tags.
     add_action('dynamic_sidebar_after', __CLASS__ . '::dynamic_sidebar_after');
+
+    // Prevent Google bot from indexing URLs in the JavaScript of the
+    // woocommerce-gateway-amazon-payments-advanced plugin.
+    // WC_Amazon_Payments_Advanced::init_handlers() uses priority 11.
+    add_action('wp_loaded', __CLASS__ . '::wp_loaded', 12);
+  }
+
+  public static function wp_loaded() {
+    if (function_exists('wc_apa')) {
+      remove_action( 'wp_head', array( wc_apa(), 'init_amazon_login_app_widget' ) );
+      add_action('wp_head', __CLASS__ . '::wp_head_google_off', 11);
+      add_action( 'wp_head', array( wc_apa(), 'init_amazon_login_app_widget' ), 12 );
+      add_action('wp_head', __CLASS__ . '::wp_head_google_on', 13);
+    }
   }
 
   /**
@@ -74,6 +88,16 @@ class Seo {
     if (is_search() || (is_paged() && $noindex_second_page)) {
       echo '<meta name="robots" content="noindex">';
     }
+  }
+
+  public static function wp_head_google_off() {
+    echo '<!--googleoff: index-->
+';
+  }
+
+  public static function wp_head_google_on() {
+    echo '<!--googleon: index-->
+';
   }
 
   /**
