@@ -96,12 +96,13 @@ class Seo {
    * @implements wp_loaded
    */
   public static function wp_loaded() {
-    if (function_exists('wc_apa')) {
-      remove_action('wp_head', [(wc_apa(), 'init_amazon_login_app_widget')]);
-      add_action('wp_head', __CLASS__ . '::wp_head_google_off', 11);
-      add_action('wp_head', array(wc_apa(), 'init_amazon_login_app_widget'), 12);
-      add_action('wp_head', __CLASS__ . '::wp_head_google_on', 13);
+    if (!function_exists('wc_apa')) {
+      return;
     }
+    remove_action('wp_head', [wc_apa(), 'init_amazon_login_app_widget']);
+    add_action('wp_head', __CLASS__ . '::wp_head_google_off', 11);
+    add_action('wp_head', [wc_apa(), 'init_amazon_login_app_widget'], 12);
+    add_action('wp_head', __CLASS__ . '::wp_head_google_on', 13);
   }
 
   /**
