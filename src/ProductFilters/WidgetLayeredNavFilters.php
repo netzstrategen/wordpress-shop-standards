@@ -26,6 +26,10 @@ class WidgetLayeredNavFilters extends \WC_Widget_Layered_Nav_Filters {
     ob_start();
     parent::widget($args, $instance);
     $output = ob_get_clean();
+    // Append anchor to active filters widget.
+    $pattern = '@(?<=href=\")(.*?)(?=\")@';
+    preg_match($pattern, $output, $matches);
+    $output = preg_replace($pattern, $matches[0] . '#shop-sidebar', $output);
     if (empty($output) && isset($_GET['delivery_time'])) {
       ob_start();
       $this->widget_start($args, $instance);

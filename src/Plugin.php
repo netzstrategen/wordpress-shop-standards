@@ -114,7 +114,7 @@ class Plugin {
 
     // Adds an anchor to scroll to top on filter selection.
     add_filter('woocommerce_layered_nav_link', function($link) {
-      return $link . '#woocommerce_layered_nav_filters-2';
+      return $link . '#shop-sidebar';
     });
 
     // Removes coupon box from checkout.

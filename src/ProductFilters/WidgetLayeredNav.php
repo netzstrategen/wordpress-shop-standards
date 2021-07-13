@@ -39,7 +39,7 @@ class WidgetLayeredNav extends \WC_Widget_Layered_Nav {
     $output = ob_get_clean();
     $pattern = '@(?<=action=\")(.*?)(?=\")@';
     preg_match($pattern, $output, $matches);
-    $output = preg_replace($pattern, $matches[0] . '#woocommerce_layered_nav_filters-2', $output);
+    $output = preg_replace($pattern, $matches[0] . '#shop-sidebar', $output);
 
     echo $output;
     return $found;
