@@ -112,6 +112,11 @@ class Plugin {
       return;
     }
 
+    // Adds an anchor to scroll to top on filter selection.
+    add_filter('woocommerce_layered_nav_link', function($link) {
+      return $link . '#woocommerce_layered_nav_filters-2';
+    });
+
     // Removes coupon box from checkout.
     if (get_option('_' . Plugin::L10N . '_disable_coupon_checkout') === 'yes') {
       remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10);

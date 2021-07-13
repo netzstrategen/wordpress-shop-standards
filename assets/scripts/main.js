@@ -143,14 +143,4 @@
       $(a).off('click').on('click', (e) => e.stopImmediatePropagation());
     });
   });
-
-  $(document).ready(() => {
-    const $priceFilters = $('.widget_price_filter');
-    console.log($priceFilters.closest('form'));
-    //const $filters = $('.woocommerce-widget-layered-nav');
-    $($priceFilters).closest('form').each((i, a) => {
-      console.log(a, i);
-      $(a).attr('action', `${$(a).attr('action')}#${'woocommerce_layered_nav_filters-2'}`);
-    });
-  });
 }(jQuery));
