@@ -19,8 +19,7 @@ class ProductAttributePageTitle {
         'param'    => 'taxonomy',
         'operator' => '==',
         'value'    => $attribute_term,
-      ]
-];
+      ]];
     }
 
     // Register ACF field.
