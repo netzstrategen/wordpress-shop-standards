@@ -7,23 +7,27 @@ namespace Netzstrategen\ShopStandards;
  */
 class ProductAttributePageTitle {
 
+  /**
+   * Initializes Product Attribute Page Title.
+   */
   public static function init() {
     $attribute_terms = wc_get_attribute_taxonomy_names();
     $group_filter = [];
 
-    foreach( $attribute_terms as $attribute_term ) {
+    foreach ($attribute_terms as $attribute_term) {
       $group_filter[] = [[
         'param'    => 'taxonomy',
         'operator' => '==',
         'value'    => $attribute_term,
-      ]];
+      ]
+];
     }
 
     // Register ACF field.
     ProductAttributePageTitle::register_acf_page_title($group_filter);
 
     // Front-end output of title.
-    add_filter('woocommerce_page_title', __CLASS__.'::woocommerce_page_title');
+    add_filter('woocommerce_page_title', __CLASS__ . '::woocommerce_page_title');
   }
 
   /**
@@ -51,7 +55,7 @@ class ProductAttributePageTitle {
       'label_placement' => 'top',
       'instruction_placement' => 'label',
       'hide_on_screen' => '',
-      'active' => true,
+      'active' => TRUE,
       'description' => '',
     ]);
   }
