@@ -31,7 +31,17 @@ class WidgetLayeredNav extends \WC_Widget_Layered_Nav {
   }
 
   /**
-   * @todo Implement output.
+   * Adds an anchor to the dropdown filters.
+   *
+   * @param array $terms
+   *   Terms.
+   * @param string $taxonomy
+   *   Taxonomy.
+   * @param string $query_type
+   *   Query Type.
+   *
+   * @return bool
+   *   Returns TRUE if the layered nav dropdown is displayed, otherwise FALSE.
    */
   protected function layered_nav_dropdown($terms, $taxonomy, $query_type) {
     ob_start();
