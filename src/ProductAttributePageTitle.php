@@ -20,7 +20,9 @@ class ProductAttributePageTitle {
     }
 
     // Register ACF field.
-    ProductAttributePageTitle::register_acf_page_title($group_filter);
+    if (function_exists('register_field_group')) {
+      ProductAttributePageTitle::register_acf_page_title($group_filter);
+    }
 
     // Front-end output of title.
     add_filter('woocommerce_page_title', __CLASS__.'::woocommerce_page_title');

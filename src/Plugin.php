@@ -75,7 +75,7 @@ class Plugin {
       static::$version = get_bloginfo('version');
     }
 
-    if (function_exists('register_field_group')) {
+    if (function_exists('register_field_group') && function_exists('acf_add_options_sub_page')) {
       acf_add_options_sub_page([
         'page_title' => __('Hide "Add to Cart" button', Plugin::L10N),
         'menu_title' => __('Hide "Add to Cart" button', Plugin::L10N),
