@@ -48,21 +48,21 @@ class DeliveryTime {
     $meta_query = [
       'relation' => 'AND',
       [
-        'key' => '_lieferzeit',
-        'value' => $filter_values,
-        'compare' => 'IN',
-      ],
-      [
         'relation' => 'OR',
+        [
+          'key' => '_shop-standards_back_in_stock_date',
+          'compare' => 'NOT EXISTS',
+        ],
         [
           'key' => '_shop-standards_back_in_stock_date',
           'value' => date('Y-m-d'),
           'compare' => '<=',
-        ],
-        [
-          'key' => '_shop-standards_back_in_stock_date',
-          'compare' => 'NOT EXISTS',
         ]
+      ],
+      [
+        'key' => '_lieferzeit',
+        'value' => $filter_values,
+        'compare' => 'IN',
       ]
     ];
 
