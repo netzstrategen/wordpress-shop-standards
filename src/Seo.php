@@ -288,7 +288,7 @@ class Seo {
    * @implements woocommerce_structured_data_product_offer
    */
   public static function adjustAvailability($markup, $product) {
-    if ($product->get_type() === 'variable') {
+    if ($product->get_type() === 'variable' && isset($variant)) {
       $in_stock = (bool) count(array_filter($product->get_available_variations('object'), function ($variant) {
         return ($variant->get_stock_quantity() > 0) || $variant->backorders_allowed();
       }));
