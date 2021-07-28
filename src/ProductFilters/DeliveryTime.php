@@ -45,27 +45,16 @@ class DeliveryTime {
       return;
     }
     $filter_values = array_filter(array_map('absint', explode(',', wp_unslash($filter_values))));
-    $meta_query = [
-      'relation' => 'AND',
-      [
-        'relation' => 'OR',
-        [
-          'key' => '_shop-standards_back_in_stock_date',
-          'compare' => 'NOT EXISTS',
-        ],
-        [
-          'key' => '_shop-standards_back_in_stock_date',
-          'value' => date('Y-m-d'),
-          'compare' => '<=',
-        ]
-      ],
-      [
-        'key' => '_lieferzeit',
-        'value' => $filter_values,
-        'compare' => 'IN',
-      ]
-    ];
-
+    $meta_query = [[
+      'key' => '_lieferzeit',
+      'value' => $filter_values,
+      'compare' => 'IN',
+    ],
+    [
+      'key' => '_stock_status',
+      'value' => 'instock',
+      'compare' => '='
+    ]];
     $query->set('meta_query', $meta_query);
   }
 
