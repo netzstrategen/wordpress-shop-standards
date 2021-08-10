@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2021-05-26 15:33+0200\n"
+"POT-Creation-Date: 2021-08-10 15:14+0200\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: src/Admin.php:60 src/WooCommerce.php:1148
+#: src/Admin.php:60 src/WooCommerce.php:1182
 #, php-format
 msgid "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in order to save the product."
 msgstr ""
@@ -27,31 +27,31 @@ msgstr ""
 msgid "The entered GTIN is unique."
 msgstr ""
 
-#: src/Plugin.php:78 src/Plugin.php:79 src/Plugin.php:236 src/Plugin.php:275
+#: src/Plugin.php:80 src/Plugin.php:81 src/Plugin.php:242 src/Plugin.php:281
 msgid "Hide \"Add to Cart\" button"
 msgstr ""
 
-#: src/Plugin.php:240
+#: src/Plugin.php:246
 msgid "Product categories"
 msgstr ""
 
-#: src/Plugin.php:241
+#: src/Plugin.php:247
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 
-#: src/Plugin.php:253
+#: src/Plugin.php:259
 msgid "Product brands"
 msgstr ""
 
-#: src/Plugin.php:254
+#: src/Plugin.php:260
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 
-#: src/Plugin.php:266
+#: src/Plugin.php:272
 msgid "Notice"
 msgstr ""
 
-#: src/Plugin.php:268
+#: src/Plugin.php:274
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 
@@ -65,6 +65,18 @@ msgstr ""
 
 #: src/PlusProducts.php:61
 msgid "Currently there are only Plus products in your shopping cart. Please, add at least one product from a different category to complete your order."
+msgstr ""
+
+#: src/ProductAttributePageTitle.php:36
+msgid "Listing Page"
+msgstr ""
+
+#: src/ProductAttributePageTitle.php:40
+msgid "Page Title"
+msgstr ""
+
+#: src/ProductAttributePageTitle.php:43
+msgid "Only changes how the name appears on the page. Leaves the filter drop-down menu alone."
 msgstr ""
 
 #: src/ProductFilters/WidgetFilterDeliveryTime.php:31
@@ -83,23 +95,23 @@ msgstr ""
 msgid "Remove filter"
 msgstr ""
 
-#: src/Seo.php:45
+#: src/Seo.php:50
 msgid "SEO settings"
 msgstr ""
 
-#: src/Seo.php:50
+#: src/Seo.php:55
 msgid "Index first page of paginated products listings only"
 msgstr ""
 
-#: src/Seo.php:51
+#: src/Seo.php:56
 msgid "If checked, noindex meta tag will be added to paginated products listing pages, starting from the second page."
 msgstr ""
 
-#: src/Seo.php:56
+#: src/Seo.php:61
 msgid "Disable Yoast SEO adjacent navigation links."
 msgstr ""
 
-#: src/Seo.php:57
+#: src/Seo.php:62
 msgid "Avoids unwanted rankings of search result URLs as well as paginated listing pages in case the shop's product listing is using infinite scrolling or lazy loading to display further products without pagination links."
 msgstr ""
 
@@ -214,57 +226,53 @@ msgstr ""
 msgid "(Our price)"
 msgstr ""
 
-#: src/WooCommerce.php:733 src/WooCommerce.php:798
+#: src/WooCommerce.php:733 src/WooCommerce.php:796
 msgid "Delivery Time"
 msgstr ""
 
-#: src/WooCommerce.php:858
+#: src/WooCommerce.php:856
 msgid "SKU"
 msgstr ""
 
-#: src/WooCommerce.php:862
+#: src/WooCommerce.php:860
 msgid "ERP/ID"
 msgstr ""
 
-#: src/WooCommerce.php:875
+#: src/WooCommerce.php:873
 msgid "Dimensions"
 msgstr ""
 
-#: src/WooCommerce.php:883
+#: src/WooCommerce.php:881
 msgid "Weight"
 msgstr ""
 
-#: src/WooCommerce.php:929
+#: src/WooCommerce.php:927
 msgid "Product "
 msgstr ""
 
-#: src/WooCommerce.php:1052
+#: src/WooCommerce.php:1086
 msgid "Delivery Time: from"
 msgstr ""
 
-#: src/WooCommerce.php:1069
+#: src/WooCommerce.php:1103
 #, php-format
 msgid "from %1$s"
 msgstr ""
 
-#: src/WooCommerceCheckout.php:45
+#: src/WooCommerceCheckout.php:41
 msgid "Checkout settings"
 msgstr ""
 
-#: src/WooCommerceCheckout.php:50
+#: src/WooCommerceCheckout.php:46
 msgid "Require users to enter billing email address twice"
 msgstr ""
 
-#: src/WooCommerceCheckout.php:74
+#: src/WooCommerceCheckout.php:70
 msgid "Repeat e-mail address"
 msgstr ""
 
-#: src/WooCommerceCheckout.php:90
+#: src/WooCommerceCheckout.php:86
 msgid "Your email addresses do not match"
-msgstr ""
-
-#: src/WooCommerceCheckout.php:120
-msgid "The order must be shipped to a company address. If a VAT is filled."
 msgstr ""
 
 #: src/WooCommerceSaleLabel.php:32

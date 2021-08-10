@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2021-05-26 15:33+0200\n"
+"POT-Creation-Date: 2021-08-10 15:14+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Fabian Marz <fabian@netzstrategen.com>\n"
 "Language-Team: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: src/Admin.php:60 src/WooCommerce.php:1148
+#: src/Admin.php:60 src/WooCommerce.php:1182
 #, php-format
 msgid ""
 "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in "
@@ -24,35 +24,35 @@ msgstr ""
 msgid "The entered GTIN is unique."
 msgstr "Diese GTIN wird noch nicht verwendet."
 
-#: src/Plugin.php:78 src/Plugin.php:79 src/Plugin.php:236 src/Plugin.php:275
+#: src/Plugin.php:80 src/Plugin.php:81 src/Plugin.php:242 src/Plugin.php:281
 msgid "Hide \"Add to Cart\" button"
 msgstr "“In den Warenkorb”-Verhalten"
 
-#: src/Plugin.php:240
+#: src/Plugin.php:246
 msgid "Product categories"
 msgstr "Produktkategorien"
 
-#: src/Plugin.php:241
+#: src/Plugin.php:247
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
 "ausgeblendet."
 
-#: src/Plugin.php:253
+#: src/Plugin.php:259
 msgid "Product brands"
 msgstr "Produktmarken"
 
-#: src/Plugin.php:254
+#: src/Plugin.php:260
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
 "ausgeblendet."
 
-#: src/Plugin.php:266
+#: src/Plugin.php:272
 msgid "Notice"
 msgstr "Hinweis"
 
-#: src/Plugin.php:268
+#: src/Plugin.php:274
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 "Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
@@ -74,6 +74,20 @@ msgstr ""
 "Sie, dass Sie Ihre Bestellung nur abschließen können, wenn Sie Ihrem "
 "Warenkorb noch mindestens ein Produkt aus einer anderen Kategorie hinzufügen."
 
+#: src/ProductAttributePageTitle.php:36
+msgid "Listing Page"
+msgstr ""
+
+#: src/ProductAttributePageTitle.php:40
+msgid "Page Title"
+msgstr ""
+
+#: src/ProductAttributePageTitle.php:43
+msgid ""
+"Only changes how the name appears on the page. Leaves the filter drop-down "
+"menu alone."
+msgstr ""
+
 #: src/ProductFilters/WidgetFilterDeliveryTime.php:31
 msgid "Filter Products by Delivery Time"
 msgstr "Produkte nach Lieferzeit filtern"
@@ -92,25 +106,25 @@ msgstr "Schnell verfügbar:"
 msgid "Remove filter"
 msgstr ""
 
-#: src/Seo.php:45
+#: src/Seo.php:50
 msgid "SEO settings"
 msgstr "SEO Einstellungen"
 
-#: src/Seo.php:50
+#: src/Seo.php:55
 msgid "Index first page of paginated products listings only"
 msgstr ""
 
-#: src/Seo.php:51
+#: src/Seo.php:56
 msgid ""
 "If checked, noindex meta tag will be added to paginated products listing "
 "pages, starting from the second page."
 msgstr ""
 
-#: src/Seo.php:56
+#: src/Seo.php:61
 msgid "Disable Yoast SEO adjacent navigation links."
 msgstr ""
 
-#: src/Seo.php:57
+#: src/Seo.php:62
 msgid ""
 "Avoids unwanted rankings of search result URLs as well as paginated listing "
 "pages in case the shop's product listing is using infinite scrolling or lazy "
@@ -238,61 +252,55 @@ msgstr ""
 msgid "(Our price)"
 msgstr "(Online-Preis)"
 
-#: src/WooCommerce.php:733 src/WooCommerce.php:798
+#: src/WooCommerce.php:733 src/WooCommerce.php:796
 msgid "Delivery Time"
 msgstr ""
 
-#: src/WooCommerce.php:858
+#: src/WooCommerce.php:856
 msgid "SKU"
 msgstr ""
 
-#: src/WooCommerce.php:862
+#: src/WooCommerce.php:860
 msgid "ERP/ID"
 msgstr ""
 
-#: src/WooCommerce.php:875
+#: src/WooCommerce.php:873
 msgid "Dimensions"
 msgstr ""
 
-#: src/WooCommerce.php:883
+#: src/WooCommerce.php:881
 msgid "Weight"
 msgstr ""
 
-#: src/WooCommerce.php:929
+#: src/WooCommerce.php:927
 msgid "Product "
 msgstr "Produkt "
 
-#: src/WooCommerce.php:1052
+#: src/WooCommerce.php:1086
 msgid "Delivery Time: from"
 msgstr "Lieferzeit: ab"
 
-#: src/WooCommerce.php:1069
+#: src/WooCommerce.php:1103
 #, php-format
 msgid "from %1$s"
 msgstr "ab %1$s"
 
-#: src/WooCommerceCheckout.php:45
+#: src/WooCommerceCheckout.php:41
 msgid "Checkout settings"
 msgstr "Einstellungen Bestellprozess"
 
-#: src/WooCommerceCheckout.php:50
+#: src/WooCommerceCheckout.php:46
 msgid "Require users to enter billing email address twice"
 msgstr "Nutzer zur erneuten Eingabe der E-Mail-Adresse auffordern"
 
-#: src/WooCommerceCheckout.php:74
+#: src/WooCommerceCheckout.php:70
 msgid "Repeat e-mail address"
 msgstr "E-Mail-Adresse wiederholen"
 
-#: src/WooCommerceCheckout.php:90
+#: src/WooCommerceCheckout.php:86
 msgid "Your email addresses do not match"
 msgstr ""
 "Ihre E-Mail-Adressen stimmen nicht überein. Bitte überprüfen Sie Ihre Eingabe"
-
-#: src/WooCommerceCheckout.php:120
-msgid "The order must be shipped to a company address. If a VAT is filled."
-msgstr ""
-"Die Bestellung muss an eine Firmenadresse gesendet werden, wenn eine USt-ID "
-"Nummer angegeben wurde."
 
 #: src/WooCommerceSaleLabel.php:32
 msgid "Automatic sale category assignment"
@@ -341,7 +349,3 @@ msgstr "Herr"
 #: src/WooCommerceSalutation.php:67
 msgid "Company"
 msgstr "Firma"
-
-#~ msgid "Billing and shipping salutation must match for business orders."
-#~ msgstr ""
-#~ "Rechnungs- und Versandanrede müssen bei Firmenbestellungen übereinstimmen."

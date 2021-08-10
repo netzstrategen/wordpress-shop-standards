@@ -83,7 +83,6 @@ The time delivery product filter widget can be used in any products listing page
 
 ### Cart and checkout
 - [Add salutation custom field for billing and shipping](https://github.com/netzstrategen/wordpress-shop-standards/blob/a15cb7d86afc6a7808cee6e9177a0c2c604e6119/src/WooCommerceSalutation.php#L54). This is controlled by a backend [configuration setting](https://github.com/netzstrategen/wordpress-shop-standards/blob/a15cb7d86afc6a7808cee6e9177a0c2c604e6119/src/WooCommerceSalutation.php#L33).
-    - Note: If the salutation field is enabled, billing and shipping salutation must align for type "Company".
 - [Add a confirmation email custom field on the checkout page](https://github.com/netzstrategen/wordpress-shop-standards/blob/a15cb7d86afc6a7808cee6e9177a0c2c604e6119/src/WooCommerceCheckout.php#L66).This is controlled by a backend [configuration setting](https://github.com/netzstrategen/wordpress-shop-standards/blob/a15cb7d86afc6a7808cee6e9177a0c2c604e6119/src/WooCommerceCheckout.php#L38).
 - [Add basic information (e.g. weight, sku, etc.) and product attributes to cart item data](https://github.com/netzstrategen/wordpress-shop-standards/blob/a15cb7d86afc6a7808cee6e9177a0c2c604e6119/src/WooCommerce.php#L673).
 

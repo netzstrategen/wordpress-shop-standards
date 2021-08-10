@@ -101,25 +101,6 @@
         }
       });
     }
-    $('form.woocommerce-checkout').on('input', '#billing_salutation, #shipping_salutation, #woocommerce_eu_vat_number', (e) => {
-      const billingSalutation = $('#billing_salutation').val();
-      const shippingSalutation = $('#shipping_salutation').val();
-      const billingVat = $('#woocommerce_eu_vat_number');
-      if (billingSalutation === 'Company' && billingVat.val() && shippingSalutation !== billingSalutation) {
-        $('#shipping_salutation')
-          .val($('#billing_salutation').val())
-          .css('pointer-events', 'none')
-          .trigger('change');
-        $('#shipping_salutation option:not(:selected)').prop('disabled', true);
-      } else if (e.target.name === 'billing_salutation' && billingVat.val()) {
-        $('#shipping_salutation').css('pointer-events', 'initial');
-        $('#shipping_salutation option:not(:selected)').prop('disabled', false);
-        billingVat.val('');
-      }
-      if (e.target.name.indexOf('salutation') !== -1) {
-        $(document.body).trigger('update_checkout');
-      }
-    });
   });
 
   // Disable checkout button if there are any WooCommerce error displayed.
