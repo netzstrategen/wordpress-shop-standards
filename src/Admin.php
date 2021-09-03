@@ -41,6 +41,11 @@ class Admin {
     // Removes admin notices about updating to version and connecting to WooCommerce.com.
     add_filter('woocommerce_helper_suppress_admin_notices', '__return_true');
     add_filter('woocommerce_helper_suppress_connect_notice', '__return_true');
+
+    if (function_exists('register_field_group')) {
+      // Add field to set custom page title for product attribute listing pages.
+      ProductAttributePageTitle::admin_init();
+    }
   }
 
   /**
