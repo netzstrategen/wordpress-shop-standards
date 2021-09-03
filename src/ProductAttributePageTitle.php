@@ -39,7 +39,6 @@ class ProductAttributePageTitle {
           'name' => 'page_title',
           'type' => 'text',
           'instructions' => __('Only changes how the name appears on the page. Leaves the filter drop-down menu alone.', Plugin::L10N),
-          
         ],
       ],
       'location' => $group_filter,
