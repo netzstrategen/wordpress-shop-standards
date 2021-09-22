@@ -46,7 +46,11 @@ class DeliveryTime {
     }
     $filter_values = array_filter(array_map('absint', explode(',', wp_unslash($filter_values))));
     $meta_query = [
-      'relation' => 'AND',
+      [
+        'key' => '_lieferzeit',
+        'value' => $filter_values,
+        'compare' => 'IN',
+      ],
       [
         'relation' => 'OR',
         [
@@ -57,13 +61,8 @@ class DeliveryTime {
           'key' => '_shop-standards_back_in_stock_date',
           'value' => date('Y-m-d'),
           'compare' => '<=',
-        ]
+        ],
       ],
-      [
-        'key' => '_lieferzeit',
-        'value' => $filter_values,
-        'compare' => 'IN',
-      ]
     ];
 
     $query->set('meta_query', $meta_query);
