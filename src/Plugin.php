@@ -34,6 +34,13 @@ class Plugin {
   public static $version = '';
 
   /**
+   * Cron event name for checking database indexes.
+   *
+   * @var string
+   */
+  const CRON_EVENT_ENSURE_BACK_IN_STOCK = Plugin::PREFIX . '/cron/ensure-back-in-stock';
+
+  /**
    * Plugin initialization method with the lowest possible priority.
    *
    * @implements init
@@ -210,6 +217,11 @@ class Plugin {
 
     // Override page title on product attribute pages.
     add_filter('woocommerce_page_title', __NAMESPACE__ . '\ProductAttributePageTitle::woocommerce_page_title');
+
+    add_action(self::CRON_EVENT_ENSURE_BACK_IN_STOCK, __NAMESPACE__ . '\Schema::cron_ensure_back_in_stock');
+    if (!wp_next_scheduled(static::CRON_EVENT_ENSURE_BACK_IN_STOCK)) {
+      wp_schedule_event(strtotime('3am tomorrow'), 'daily', self::CRON_EVENT_ENSURE_BACK_IN_STOCK);
+    }
   }
 
   /**
