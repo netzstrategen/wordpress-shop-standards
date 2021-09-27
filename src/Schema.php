@@ -42,6 +42,10 @@ class Schema {
 
     foreach ($ids as $id) {
       delete_post_meta($id, '_' . Plugin::PREFIX . '_back_in_stock_date');
+      if (function_exists('wc_get_product')) {
+        $product = wc_get_product($product);
+        $product->save();
+      }
     }
   }
 
