@@ -34,7 +34,7 @@ class Plugin {
   public static $version = '';
 
   /**
-   * Cron event name for checking database indexes.
+   * Cron event name for removing outdated back-in-stock product metadata.
    *
    * @var string
    */
