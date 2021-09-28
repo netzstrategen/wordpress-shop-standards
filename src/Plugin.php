@@ -38,7 +38,7 @@ class Plugin {
    *
    * @var string
    */
-  const CRON_EVENT_ENSURE_BACK_IN_STOCK = Plugin::PREFIX . '/remove-past-back-in-stock';
+  const CRON_EVENT_REMOVE_BACK_IN_STOCK = Plugin::PREFIX . '/remove-past-back-in-stock';
 
   /**
    * Plugin initialization method with the lowest possible priority.
@@ -182,9 +182,11 @@ class Plugin {
       add_filter('woocommerce_de_avoid_check_same_delivery_time_show_parent', '__return_true');
     }
 
-    add_action(self::CRON_EVENT_ENSURE_BACK_IN_STOCK, __NAMESPACE__ . '\WooCommerce::cron_ensure_back_in_stock');
-    if (!wp_next_scheduled(static::CRON_EVENT_ENSURE_BACK_IN_STOCK)) {
-      wp_schedule_event(strtotime('3am tomorrow'), 'daily', self::CRON_EVENT_ENSURE_BACK_IN_STOCK);
+    if (function_exists('wc_get_product')) {
+      add_action(self::CRON_EVENT_REMOVE_BACK_IN_STOCK, __NAMESPACE__ . '\WooCommerce::cron_remove_back_in_stock');
+      if (!wp_next_scheduled(static::CRON_EVENT_REMOVE_BACK_IN_STOCK)) {
+        wp_schedule_event(strtotime('03:00:00'), 'daily', self::CRON_EVENT_REMOVE_BACK_IN_STOCK);
+      }
     }
 
     // Prefetches DNS entries for particular resources.

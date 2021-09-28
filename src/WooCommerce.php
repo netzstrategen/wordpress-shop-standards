@@ -191,18 +191,18 @@ class WooCommerce {
    */
   public static function cron_ensure_back_in_stock() {
     global $wpdb;
-    $ids = $wpdb->get_col($wpdb->prepare("SELECT ID FROM {$wpdb->posts}
-      INNER JOIN {$wpdb->postmeta} pm ON {$wpdb->posts}.ID = pm.post_id
-      LEFT JOIN {$wpdb->postmeta} moeve ON {$wpdb->posts}.ID = moeve.post_id AND moeve.meta_key LIKE %s
-      WHERE pm.meta_key = %s
-        AND pm.meta_value <= %s
+    $ids = $wpdb->get_col($wpdb->prepare("SELECT p.ID FROM {$wpdb->posts} p
+      INNER JOIN {$wpdb->postmeta} backinstock ON p.ID = backinstock.post_id
+      LEFT JOIN {$wpdb->postmeta} moeve ON p.ID = moeve.post_id AND moeve.meta_key LIKE %s
+      WHERE backinstock.meta_key = %s
+        AND backinstock.meta_value <= %s
         AND moeve.meta_id IS NULL", [
           '_woocommerce-moeve_id_%',
           '_' . Plugin::PREFIX . '_back_in_stock_date',
-          date('Y-m-d H:i:s'),
+          date('Y-m-d'),
     ]));
     foreach ($ids as $id) {
-      if (function_exists('wc_get_product') && $product = wc_get_product($id)) {
+      if ($product = wc_get_product($id)) {
         $product->delete_meta_data('_' . Plugin::PREFIX . '_back_in_stock_date');
         $product->save();
       }
