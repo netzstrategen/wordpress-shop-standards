@@ -187,6 +187,29 @@ class WooCommerce {
   }
 
   /**
+   * Cron event callback to remove outdated back-in-stock product metadata.
+   */
+  public static function cron_ensure_back_in_stock() {
+    global $wpdb;
+    $ids = $wpdb->get_col($wpdb->prepare("SELECT ID FROM {$wpdb->posts}
+      INNER JOIN {$wpdb->postmeta} pm ON {$wpdb->posts}.ID = pm.post_id
+      LEFT JOIN {$wpdb->postmeta} moeve ON {$wpdb->posts}.ID = moeve.post_id AND moeve.meta_key LIKE %s
+      WHERE pm.meta_key = %s
+        AND pm.meta_value <= %s
+        AND moeve.meta_id IS NULL", [
+          '_woocommerce-moeve_id_%',
+          '_' . Plugin::PREFIX . '_back_in_stock_date',
+          date('Y-m-d H:i:s'),
+    ]));
+    foreach ($ids as $id) {
+      if (function_exists('wc_get_product') && $product = wc_get_product($id)) {
+        $product->delete_meta_data('_' . Plugin::PREFIX . '_back_in_stock_date');
+        $product->save();
+      }
+    }
+  }
+
+  /**
    * Changes number of displayed products.
    *
    * @implement loop_shop_per_page

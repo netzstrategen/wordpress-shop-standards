@@ -182,6 +182,11 @@ class Plugin {
       add_filter('woocommerce_de_avoid_check_same_delivery_time_show_parent', '__return_true');
     }
 
+    add_action(self::CRON_EVENT_ENSURE_BACK_IN_STOCK, __NAMESPACE__ . '\WooCommerce::cron_ensure_back_in_stock');
+    if (!wp_next_scheduled(static::CRON_EVENT_ENSURE_BACK_IN_STOCK)) {
+      wp_schedule_event(strtotime('3am tomorrow'), 'daily', self::CRON_EVENT_ENSURE_BACK_IN_STOCK);
+    }
+
     // Prefetches DNS entries for particular resources.
     add_filter('wp_resource_hints', __NAMESPACE__ . '\Performance::wp_resource_hints', 10, 2);
     // Preloads scripts and loads styles asynchronously.
@@ -217,11 +222,6 @@ class Plugin {
 
     // Override page title on product attribute pages.
     add_filter('woocommerce_page_title', __NAMESPACE__ . '\ProductAttributePageTitle::woocommerce_page_title');
-
-    add_action(self::CRON_EVENT_ENSURE_BACK_IN_STOCK, __NAMESPACE__ . '\Schema::cron_ensure_back_in_stock');
-    if (!wp_next_scheduled(static::CRON_EVENT_ENSURE_BACK_IN_STOCK)) {
-      wp_schedule_event(strtotime('3am tomorrow'), 'daily', self::CRON_EVENT_ENSURE_BACK_IN_STOCK);
-    }
   }
 
   /**
