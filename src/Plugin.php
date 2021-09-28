@@ -34,6 +34,13 @@ class Plugin {
   public static $version = '';
 
   /**
+   * Cron event name for removing outdated back-in-stock product metadata.
+   *
+   * @var string
+   */
+  const CRON_EVENT_REMOVE_BACK_IN_STOCK = Plugin::PREFIX . '/remove-past-back-in-stock';
+
+  /**
    * Plugin initialization method with the lowest possible priority.
    *
    * @implements init
@@ -173,6 +180,13 @@ class Plugin {
       // Changes WGM delivery time label for variable products.
       add_filter('woocommerce_de_delivery_time_label_shop', __NAMESPACE__ . '\WooCommerce::addsDeliveryTimeLabelSuffix', 10, 2);
       add_filter('woocommerce_de_avoid_check_same_delivery_time_show_parent', '__return_true');
+    }
+
+    if (function_exists('wc_get_product')) {
+      add_action(self::CRON_EVENT_REMOVE_BACK_IN_STOCK, __NAMESPACE__ . '\WooCommerce::cron_remove_back_in_stock');
+      if (!wp_next_scheduled(static::CRON_EVENT_REMOVE_BACK_IN_STOCK)) {
+        wp_schedule_event(strtotime('03:00:00'), 'daily', self::CRON_EVENT_REMOVE_BACK_IN_STOCK);
+      }
     }
 
     // Prefetches DNS entries for particular resources.
