@@ -38,7 +38,7 @@ class Plugin {
    *
    * @var string
    */
-  const CRON_EVENT_ENSURE_BACK_IN_STOCK = Plugin::PREFIX . '/cron/ensure-back-in-stock';
+  const CRON_EVENT_ENSURE_BACK_IN_STOCK = Plugin::PREFIX . '/remove-past-back-in-stock';
 
   /**
    * Plugin initialization method with the lowest possible priority.
