@@ -189,7 +189,7 @@ class WooCommerce {
   /**
    * Cron event callback to remove outdated back-in-stock product metadata.
    */
-  public static function cron_ensure_back_in_stock() {
+  public static function cron_remove_back_in_stock() {
     global $wpdb;
     $ids = $wpdb->get_col($wpdb->prepare("SELECT p.ID FROM {$wpdb->posts} p
       INNER JOIN {$wpdb->postmeta} backinstock ON p.ID = backinstock.post_id
