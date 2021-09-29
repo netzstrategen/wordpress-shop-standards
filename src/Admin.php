@@ -19,7 +19,7 @@ class Admin {
    *
    * @implements admin_init
    */
-  public static function init(){
+  public static function init() {
     // Adds custom fields for single products.
     add_action('woocommerce_product_options_general_product_data', __NAMESPACE__ . '\WooCommerce::woocommerce_product_options_general_product_data');
     add_action('woocommerce_product_options_pricing', __NAMESPACE__ . '\WooCommerce::woocommerce_product_options_pricing', 8);
