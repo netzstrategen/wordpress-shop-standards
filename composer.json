@@ -11,5 +11,20 @@
     "require": {
         "php": ">=7.0.0",
         "composer/installers": "^1"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/netzstrategen/phpcs-config.git"
+        }
+    ],
+    "require-dev": {
+        "netzstrategen/phpcs-config": "dev-main",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "cp ./vendor/netzstrategen/phpcs-config/phpcs.xml ."
+        ]
     }
 }

@@ -3,17 +3,26 @@
   "title": "shop-standards",
   "description": "Standard refinements for e-commerce websites.",
   "dependencies": {
-    "@netzstrategen/gulp-task-collection": "^3.1.1"
+    "@netzstrategen/gulp-task-collection": "https://github.com/netzstrategen/gulp-task-collection.git#fix\/url-hash-permissions-fab"
   },
   "devDependencies": {
     "@netzstrategen/eslint-config": "^1.0.1",
     "@netzstrategen/stylelint-config": "^2.1.0",
     "eslint-config-prettier": "^2.9.0",
+    "husky": "^7.0.0",
+    "lint-staged": "^11.1.2",
     "prettier": "^1.14.0"
   },
   "scripts": {
     "watch": "gulp --concat false",
-    "build": "gulp build:production --concat false && gulp scripts styles --concat false"
+    "build": "gulp build:production --concat false && gulp scripts styles --concat false",
+    "prepare": "husky install",
+    "lint": "npm run lint:css && npm run lint:js",
+    "lint:css": "stylelint ./assets/**/*.scss --cache",
+    "lint:js": "eslint ./scripts/**/*.js --cache",
+    "lint:php": "php ./vendor/bin/phpcs --extensions=php .",
+    "lint:staged": "npx lint-staged",
+    "fix:php:staged": "php ./vendor/bin/phpcbf --filter=gitstaged ."
   },
   "gulpPaths": {
     "destDir": "./dist",
@@ -28,5 +37,10 @@
       ],
       "dest": "./dist/styles"
     }
+  },
+  "lint-staged": {
+    "*.php": "npm run lint:php -- --filter=gitstaged",
+    "*.scss": "npm --prefix ./wp-content/themes/haur-digi run lint:css",
+    "*.js": "npm --prefix ./wp-content/themes/haur-digi run lint:js"
   }
 }
