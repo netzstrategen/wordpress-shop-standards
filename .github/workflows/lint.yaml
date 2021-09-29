@@ -43,7 +43,7 @@ jobs:
 
       - name: Install JS dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci --ignore-scripts
+        run: npm install
 
       - name: Install reviewdog
         uses: reviewdog/action-setup@v1
