@@ -3,7 +3,7 @@
   "title": "shop-standards",
   "description": "Standard refinements for e-commerce websites.",
   "dependencies": {
-    "@netzstrategen/gulp-task-collection": "https://github.com/netzstrategen/gulp-task-collection.git#url-hash-permissions-fab"
+    "@netzstrategen/gulp-task-collection": "https://github.com/netzstrategen/gulp-task-collection.git#fix\/url-hash-permissions-fab"
   },
   "devDependencies": {
     "@netzstrategen/eslint-config": "^1.0.1",
