@@ -316,11 +316,12 @@ class WooCommerce {
       'label' => __('Price comparison focus product', Plugin::L10N),
     ]);
     echo '</div>';
-    // Discontinued product.
+    // Marketing Focus Product
+    $fieldId = '_' . Plugin::PREFIX . '_marketing_focus';
     echo '<div class="options_group">';
     woocommerce_wp_checkbox([
-      'id' => '_' . Plugin::PREFIX . '_discontinued_product',
-      'label' => __('Discontinued Product', Plugin::L10N),
+      'id' => $fieldId,
+      'label' => __('Marketing focus product', Plugin::L10N),
     ]);
     echo '</div>';
   }
@@ -414,6 +415,7 @@ class WooCommerce {
       '_' . Plugin::PREFIX . '_show_sale_price_only',
       '_' . Plugin::PREFIX . '_hide_add_to_cart_button',
       '_' . Plugin::PREFIX . '_price_comparison_focus',
+      '_' . Plugin::PREFIX . '_marketing_focus',
       '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label',
       '_' . Plugin::PREFIX . '_disable_related_products',
       '_' . Plugin::PREFIX . '_discontinued_product',
@@ -578,12 +580,13 @@ class WooCommerce {
       'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_price_comparison_focus', TRUE),
     ]);
     echo '</div>';
-    // Discontinued product.
+    // Marketing Focus Product
+    $fieldId = '_' . Plugin::PREFIX . '_marketing_focus';
     echo '<div style="clear:both">';
     woocommerce_wp_checkbox([
-      'id' => '_' . Plugin::PREFIX . '_discontinued_product',
-      'label' => __('Discontinued Product', Plugin::L10N),
-      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_discontinued_product', TRUE),
+      'id' => $fieldId,
+      'label' => __('Marketing focus product', Plugin::L10N),
+      'value' => get_post_meta($variation->ID, $fieldId, TRUE),
     ]);
     echo '</div>';
   }
@@ -657,9 +660,10 @@ class WooCommerce {
     $price_comparison_focus = isset($_POST['_' . Plugin::PREFIX . '_price_comparison_focus']) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_price_comparison_focus']) ? 'yes' : 'no';
     update_post_meta($variation_id, '_' . Plugin::PREFIX . '_price_comparison_focus', $price_comparison_focus);
 
-    // Discontinued Product.
-    $discontinued_product = isset($_POST['_' . Plugin::PREFIX . '_discontinued_product']) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_discontinued_product']) ? 'yes' : 'no';
-    update_post_meta($variation_id, '_' . Plugin::PREFIX . '_discontinued_product', $discontinued_product);
+     // Marketing focus product.
+     $marketingFocusFieldId = '_' . Plugin::PREFIX . '_marketing_focus';
+     $marketingFocusFieldValue = isset($_POST[$marketingFocusFieldId]) && wc_string_to_bool($_POST[$marketingFocusFieldId]) ? 'yes' : 'no';
+     update_post_meta($variation_id, $marketingFocusFieldId, $marketingFocusFieldValue);
   }
 
   /**
