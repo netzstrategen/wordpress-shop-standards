@@ -7,6 +7,17 @@ namespace Netzstrategen\ShopStandards;
  */
 class WooCommerce {
 
+  const FIELD_MARKETING_FOCUS = '_' . Plugin::PREFIX . '_marketing_focus';
+  const FIELD_PRICE_COMPARISON_FOCUS = '_' . Plugin::PREFIX . '_price_comparison_focus';
+  const FIELD_HIDE_ADD_TO_CART_BUTTON = '_' . Plugin::PREFIX . '_hide_add_to_cart_button';
+  const FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL = '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label';
+  const FIELD_PRICE_LABEL = '_' . Plugin::PREFIX . '_price_label';
+  const FIELD_SHOW_SALE_PRICE_ONLY = '_' . Plugin::PREFIX . '_show_sale_price_only';
+  const FIELD_ERP_INVENTORY = '_' . Plugin::PREFIX . '_erp_inventory_id';
+  const FIELD_GTIN = '_' . Plugin::PREFIX . '_gtin';
+  const FIELD_BACK_IN_STOCK_DATE = '_' . Plugin::PREFIX . '_back_in_stock_date';
+  const FIELD_DISABLE_RELATED_PRODUCTS = '_' . Plugin::PREFIX . '_disable_related_products';
+
   /**
    * Adds woocommerce specific settings.
    *
@@ -39,7 +50,7 @@ class WooCommerce {
   public static function woocommerce_get_variation_price_html($price, $product) {
     if (
       $product->get_type() !== 'variable' ||
-      get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_show_sale_price_only', TRUE) === 'yes'
+      get_post_meta($product->get_id(), self::FIELD_SHOW_SALE_PRICE_ONLY, TRUE) === 'yes'
     ) {
       return $price;
     }
@@ -198,12 +209,12 @@ class WooCommerce {
         AND backinstock.meta_value <= %s
         AND moeve.meta_id IS NULL", [
           '_woocommerce-moeve_id_%',
-          '_' . Plugin::PREFIX . '_back_in_stock_date',
+      self::FIELD_BACK_IN_STOCK_DATE,
           date('Y-m-d'),
     ]));
     foreach ($ids as $id) {
       if ($product = wc_get_product($id)) {
-        $product->delete_meta_data('_' . Plugin::PREFIX . '_back_in_stock_date');
+        $product->delete_meta_data(self::FIELD_BACK_IN_STOCK_DATE);
         $product->save();
       }
     }
@@ -223,7 +234,7 @@ class WooCommerce {
    */
   public static function is_purchasable($purchasable, $product) {
     $product_id = $product->get_id();
-    $hide_add_to_cart = get_post_meta($product_id, '_' . Plugin::PREFIX . '_hide_add_to_cart_button', TRUE);
+    $hide_add_to_cart = get_post_meta($product_id, self::FIELD_HIDE_ADD_TO_CART_BUTTON, TRUE);
     return !wc_string_to_bool($hide_add_to_cart);
   }
 
@@ -241,7 +252,7 @@ class WooCommerce {
    *   The modified sale label HTML output.
    */
   public static function sale_percentage_output($output, $salePercentage, $product) {
-    if (get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label', TRUE) === 'yes') {
+    if (get_post_meta($product->get_id(), self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL, TRUE) === 'yes') {
       $output = '';
     }
     return $output;
@@ -256,7 +267,7 @@ class WooCommerce {
     // Back in stock date field.
     echo '<div class="options_group show_if_simple show_if_external">';
     woocommerce_wp_text_input([
-      'id' => '_' . Plugin::PREFIX . '_back_in_stock_date',
+      'id' => self::FIELD_BACK_IN_STOCK_DATE,
       'type' => 'date',
       'label' => __('Back in stock date', Plugin::L10N),
       'desc_tip' => TRUE,
@@ -266,7 +277,7 @@ class WooCommerce {
     // GTIN field.
     echo '<div class="options_group show_if_simple show_if_external">';
     woocommerce_wp_text_input([
-      'id' => '_' . Plugin::PREFIX . '_gtin',
+      'id' => self::FIELD_GTIN,
       'label' => __('GTIN', Plugin::L10N),
       'desc_tip' => 'true',
       'description' => __('Enter the Global Trade Item Number', Plugin::L10N),
@@ -275,21 +286,21 @@ class WooCommerce {
     // ERP/Inventory ID field.
     echo '<div class="options_group show_if_simple show_if_external">';
     woocommerce_wp_text_input([
-      'id' => '_' . Plugin::PREFIX . '_erp_inventory_id',
+      'id' => self::FIELD_ERP_INVENTORY,
       'label' => __('ERP/Inventory ID', Plugin::L10N),
     ]);
     echo '</div>';
     // Show `sale price only` checkbox.
     echo '<div class="options_group">';
     woocommerce_wp_checkbox([
-      'id' => '_' . Plugin::PREFIX . '_show_sale_price_only',
+      'id' => self::FIELD_SHOW_SALE_PRICE_ONLY,
       'label' => __('Display sale price as normal price', Plugin::L10N),
     ]);
     echo '</div>';
     // Custom price label
     echo '<div class="options_group">';
     woocommerce_wp_text_input([
-      'id' => '_' . Plugin::PREFIX . '_price_label',
+      'id' => self::FIELD_PRICE_LABEL,
       'label' => __('Custom price label', Plugin::L10N),
       'desc_tip' => 'true',
       'description' => __('The label will only be displayed if "Sale price was displayed as regular price" setting is checked.', Plugin::L10N),
@@ -298,29 +309,29 @@ class WooCommerce {
     // Hide sale percentage flash label.
     echo '<div class="options_group">';
     woocommerce_wp_checkbox([
-      'id' => '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label',
+      'id' => self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL,
       'label' => __('Hide sale percentage bubble', Plugin::L10N),
     ]);
     echo '</div>';
     // Hide add to cart button.
     echo '<div class="options_group show_if_simple show_if_external">';
     woocommerce_wp_checkbox([
-      'id' => '_' . Plugin::PREFIX . '_hide_add_to_cart_button',
+      'id' => self::FIELD_HIDE_ADD_TO_CART_BUTTON,
       'label' => __('Hide add to cart button', Plugin::L10N),
     ]);
     echo '</div>';
     // Price comparison focus product.
     echo '<div class="options_group">';
     woocommerce_wp_checkbox([
-      'id' => '_' . Plugin::PREFIX . '_price_comparison_focus',
+      'id' => self::FIELD_PRICE_COMPARISON_FOCUS,
       'label' => __('Price comparison focus product', Plugin::L10N),
     ]);
     echo '</div>';
-    // Discontinued product.
+    // Marketing Focus Product
     echo '<div class="options_group">';
     woocommerce_wp_checkbox([
-      'id' => '_' . Plugin::PREFIX . '_discontinued_product',
-      'label' => __('Discontinued Product', Plugin::L10N),
+      'id' => self::FIELD_MARKETING_FOCUS,
+      'label' => __('Marketing focus product', Plugin::L10N),
     ]);
     echo '</div>';
   }
@@ -333,7 +344,7 @@ class WooCommerce {
   public static function woocommerce_product_options_related(): void {
     echo '<div class="options_group">';
     woocommerce_wp_checkbox([
-      'id' => '_' . Plugin::PREFIX . '_disable_related_products',
+      'id' => self::FIELD_DISABLE_RELATED_PRODUCTS,
       'label' => __('Disable related products', Plugin::L10N),
     ]);
     echo '</div>';
@@ -377,19 +388,19 @@ class WooCommerce {
    */
   public static function woocommerce_process_product_meta($post_id) {
     $custom_fields = [
-      '_' . Plugin::PREFIX . '_back_in_stock_date',
-      '_' . Plugin::PREFIX . '_gtin',
-      '_' . Plugin::PREFIX . '_erp_inventory_id',
+      self::FIELD_BACK_IN_STOCK_DATE,
+      self::FIELD_GTIN,
+      self::FIELD_ERP_INVENTORY,
       '_' . Plugin::PREFIX . '_product_notes',
-      '_' . Plugin::PREFIX . '_price_label',
+      self::FIELD_PRICE_LABEL,
       '_' . Plugin::PREFIX . '_purchasing_price',
-      '_' . Plugin::PREFIX . '_disable_related_products',
+      self::FIELD_DISABLE_RELATED_PRODUCTS,
     ];
 
     foreach ($custom_fields as $field) {
       if (isset($_POST[$field])) {
         if (!is_array($_POST[$field]) && $_POST[$field]) {
-          if ($field !== '_' . Plugin::PREFIX . '_gtin') {
+          if ($field !== self::FIELD_GTIN) {
             update_post_meta($post_id, $field, $_POST[$field]);
           }
           else {
@@ -411,12 +422,12 @@ class WooCommerce {
     }
 
     $custom_fields_checkbox = [
-      '_' . Plugin::PREFIX . '_show_sale_price_only',
-      '_' . Plugin::PREFIX . '_hide_add_to_cart_button',
-      '_' . Plugin::PREFIX . '_price_comparison_focus',
-      '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label',
-      '_' . Plugin::PREFIX . '_disable_related_products',
-      '_' . Plugin::PREFIX . '_discontinued_product',
+      self::FIELD_SHOW_SALE_PRICE_ONLY,
+      self::FIELD_HIDE_ADD_TO_CART_BUTTON,
+      self::FIELD_PRICE_COMPARISON_FOCUS,
+      self::FIELD_MARKETING_FOCUS,
+      self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL,
+      self::FIELD_DISABLE_RELATED_PRODUCTS,
     ];
 
     foreach ($custom_fields_checkbox as $field) {
@@ -532,7 +543,7 @@ class WooCommerce {
       'label' => __('Back in stock date', Plugin::L10N),
       'desc_tip' => TRUE,
       'description' => __('Enter the back in stock date', Plugin::L10N),
-      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_back_in_stock_date', TRUE),
+      'value' => get_post_meta($variation->ID, self::FIELD_BACK_IN_STOCK_DATE, TRUE),
     ]);
     echo '</div>';
     // Variation GTIN field.
@@ -541,7 +552,7 @@ class WooCommerce {
       'id' => '_' . Plugin::PREFIX . '_gtin[' . $loop . ']',
       'label' => __('GTIN:', Plugin::L10N),
       'placeholder' => __('Enter the Global Trade Item Number', Plugin::L10N),
-      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_gtin', TRUE),
+      'value' => get_post_meta($variation->ID, self::FIELD_GTIN, TRUE),
     ]);
     echo '</div>';
     // Variation ERP/Inventory ID field.
@@ -549,7 +560,7 @@ class WooCommerce {
     woocommerce_wp_text_input([
       'id' => '_' . Plugin::PREFIX . '_erp_inventory_id[' . $loop . ']',
       'label' => __('ERP/Inventory ID:', Plugin::L10N),
-      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_erp_inventory_id', TRUE),
+      'value' => get_post_meta($variation->ID, self::FIELD_ERP_INVENTORY, TRUE),
     ]);
     echo '</div>';
     // Variation hide add to cart button.
@@ -557,7 +568,7 @@ class WooCommerce {
     woocommerce_wp_checkbox([
       'id' => '_' . Plugin::PREFIX . '_hide_add_to_cart_button_' . $variation->ID,
       'label' => __('Hide add to cart button', Plugin::L10N),
-      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_hide_add_to_cart_button', TRUE),
+      'value' => get_post_meta($variation->ID, self::FIELD_HIDE_ADD_TO_CART_BUTTON, TRUE),
     ]);
     echo '</div>';
     // Insufficient variant images button checkbox.
@@ -573,17 +584,17 @@ class WooCommerce {
     // Price comparison focus product.
     echo '<div style="clear:both">';
     woocommerce_wp_checkbox([
-      'id' => '_' . Plugin::PREFIX . '_price_comparison_focus',
+      'id' => self::FIELD_PRICE_COMPARISON_FOCUS,
       'label' => __('Price comparison focus product', Plugin::L10N),
-      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_price_comparison_focus', TRUE),
+      'value' => get_post_meta($variation->ID, self::FIELD_PRICE_COMPARISON_FOCUS, TRUE),
     ]);
     echo '</div>';
-    // Discontinued product.
+    // Marketing Focus Product
     echo '<div style="clear:both">';
     woocommerce_wp_checkbox([
-      'id' => '_' . Plugin::PREFIX . '_discontinued_product',
-      'label' => __('Discontinued Product', Plugin::L10N),
-      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_discontinued_product', TRUE),
+      'id' => self::FIELD_MARKETING_FOCUS,
+      'label' => __('Marketing focus product', Plugin::L10N),
+      'value' => get_post_meta($variation->ID, self::FIELD_MARKETING_FOCUS, TRUE),
     ]);
     echo '</div>';
   }
@@ -615,16 +626,16 @@ class WooCommerce {
     $variation_id = $_POST['variable_post_id'][$loop];
 
     $custom_fields = [
-      '_' . Plugin::PREFIX . '_back_in_stock_date',
-      '_' . Plugin::PREFIX . '_gtin',
-      '_' . Plugin::PREFIX . '_erp_inventory_id',
+      self::FIELD_BACK_IN_STOCK_DATE,
+      self::FIELD_GTIN,
+      self::FIELD_ERP_INVENTORY,
       '_' . Plugin::PREFIX . '_purchasing_price',
     ];
 
     foreach ($custom_fields as $field) {
       if (isset($_POST[$field]) && isset($_POST[$field][$loop])) {
         if ($_POST[$field][$loop]) {
-          if ($field !== '_' . Plugin::PREFIX . '_gtin') {
+          if ($field !== self::FIELD_GTIN) {
             update_post_meta($variation_id, $field, $_POST[$field][$loop]);
           }
           else {
@@ -647,19 +658,19 @@ class WooCommerce {
 
     // Hide add to cart button.
     $hide_add_to_cart_button = isset($_POST['_' . Plugin::PREFIX . '_hide_add_to_cart_button_' . $variation_id]) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_hide_add_to_cart_button_' . $variation_id]) ? 'yes' : 'no';
-    update_post_meta($variation_id, '_' . Plugin::PREFIX . '_hide_add_to_cart_button', $hide_add_to_cart_button);
+    update_post_meta($variation_id, self::FIELD_HIDE_ADD_TO_CART_BUTTON, $hide_add_to_cart_button);
 
     // Insufficient images checkbox.
     $insufficient_variant_images = isset($_POST['_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id]) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_insufficient_variant_images_' . $variation_id]) ? 'yes' : 'no';
     update_post_meta($variation_id, '_' . Plugin::PREFIX . '_insufficient_variant_images', $insufficient_variant_images);
 
     // Price comparison focus product.
-    $price_comparison_focus = isset($_POST['_' . Plugin::PREFIX . '_price_comparison_focus']) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_price_comparison_focus']) ? 'yes' : 'no';
-    update_post_meta($variation_id, '_' . Plugin::PREFIX . '_price_comparison_focus', $price_comparison_focus);
+    $price_comparison_focus = isset($_POST[self::FIELD_PRICE_COMPARISON_FOCUS]) && wc_string_to_bool($_POST[self::FIELD_PRICE_COMPARISON_FOCUS]) ? 'yes' : 'no';
+    update_post_meta($variation_id, self::FIELD_PRICE_COMPARISON_FOCUS, $price_comparison_focus);
 
-    // Discontinued Product.
-    $discontinued_product = isset($_POST['_' . Plugin::PREFIX . '_discontinued_product']) && wc_string_to_bool($_POST['_' . Plugin::PREFIX . '_discontinued_product']) ? 'yes' : 'no';
-    update_post_meta($variation_id, '_' . Plugin::PREFIX . '_discontinued_product', $discontinued_product);
+     // Marketing focus product.
+     $marketingFocusFieldValue = isset($_POST[self::FIELD_MARKETING_FOCUS]) && wc_string_to_bool($_POST[self::FIELD_MARKETING_FOCUS]) ? 'yes' : 'no';
+     update_post_meta($variation_id, self::FIELD_MARKETING_FOCUS, $marketingFocusFieldValue);
   }
 
   /**
@@ -669,7 +680,7 @@ class WooCommerce {
    */
   public static function woocommerce_get_price_html($price, $product) {
     $product_id = $product->get_type() === 'variation' ? $product->get_parent_id() : $product->get_id();
-    if (get_post_meta($product_id, '_' . Plugin::PREFIX . '_show_sale_price_only', TRUE) === 'yes') {
+    if (get_post_meta($product_id, self::FIELD_SHOW_SALE_PRICE_ONLY, TRUE) === 'yes') {
       if ($product->get_type() === 'variable') {
         if ($product->get_variation_sale_price() === $product->get_variation_regular_price()) {
           return $price;
@@ -698,7 +709,7 @@ class WooCommerce {
       add_filter($current_filter, __METHOD__, $priority, 2);
 
       if (is_product() && !static::isSideProduct()) {
-        $price_label = get_post_meta($product_id, '_' . Plugin::PREFIX . '_price_label', TRUE) ?: __('(Our price)', Plugin::L10N);
+        $price_label = get_post_meta($product_id, self::FIELD_PRICE_LABEL, TRUE) ?: __('(Our price)', Plugin::L10N);
         $price .= ' ' . $price_label;
       }
     }
@@ -879,7 +890,7 @@ class WooCommerce {
       $product_data_label[] = __('SKU', 'woocommerce');
       $product_data_value[] = $sku;
     }
-    if ($erp_id = get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_erp_inventory_id', TRUE)) {
+    if ($erp_id = get_post_meta($product->get_id(), self::FIELD_ERP_INVENTORY, TRUE)) {
       $product_data_label[] = __('ERP/ID', Plugin::L10N);
       $product_data_value[] = $erp_id;
     }
@@ -1021,7 +1032,7 @@ class WooCommerce {
       return '';
     }
 
-    $meta_key = '_' . Plugin::PREFIX . '_back_in_stock_date';
+    $meta_key = self::FIELD_BACK_IN_STOCK_DATE;
     $back_in_stock_date = get_post_meta($product->get_id(), $meta_key, TRUE) ?? '';
 
     if ($product->is_type('variable')) {
@@ -1155,7 +1166,7 @@ class WooCommerce {
         AND pm.post_id <> %d
         LIMIT 1
         ",
-        '_' . Plugin::PREFIX . '_gtin',
+        self::FIELD_GTIN,
         $gtin,
         $product_id
       )
@@ -1251,7 +1262,7 @@ class WooCommerce {
   public static function disableRelatedProducts(): void {
     global $product;
     $product_id = $product->get_id();
-    if (get_post_meta($product->get_id(), '_' . Plugin::PREFIX . '_disable_related_products', true) === 'yes') {
+    if (get_post_meta($product->get_id(), self::FIELD_DISABLE_RELATED_PRODUCTS, true) === 'yes') {
       add_filter('woocommerce_product_related_posts_force_display', '__return_false', 40, 2);
       add_filter('woocommerce_related_products', '__return_empty_array');
     }
