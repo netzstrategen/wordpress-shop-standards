@@ -208,7 +208,7 @@ msgstr "Warenkorb-Button verstecken"
 
 #: src/WooCommerce.php:316 src/WooCommerce.php:579
 msgid "Price comparison focus product"
-msgstr "Preisbeobachtung Fokus-Produkt"
+msgstr "Repricing: kein automatisches Repricing"
 
 #: src/WooCommerce.php:324 src/WooCommerce.php:588
 msgid "Marketing focus product"
