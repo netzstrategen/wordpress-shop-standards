@@ -178,20 +178,18 @@ class WooCommerce {
     // Otherwise, show "In stock" (not shown by WooCommerce by default).
     $product_stock_quantity = $product->get_stock_quantity();
     if ($product->is_in_stock()) {
+      $stock['availability'] = __('In stock', 'woocommerce');
+      $stock['class'] = 'in-stock';
+
       if ($show_low_stock_amount && $product_stock_quantity > 0 && $product_stock_quantity <= $low_stock_amount) {
         $stock['availability'] = sprintf(__('Only %s immediately deliverable', Plugin::L10N), $product_stock_quantity);
         $stock['class'] = 'low-stock';
       }
-      else {
-        $stock['availability'] = __('In stock', 'woocommerce');
-        $stock['class'] = 'in-stock';
-      }
     }
 
     if ($product->backorders_allowed() && $back_in_stock_date = self::getEarliestBackInStock($product)) {
-      if ($date_string = static::getBackInStockDateString($back_in_stock_date)) {
-        $stock['availability'] = '<strong>' . sprintf(__('Back in stock %s', Plugin::L10N), $date_string) . '</strong>';
-      }
+      $date_string = static::getFormatBackInStockDateString($back_in_stock_date);
+      $stock['availability'] = '<strong>' . sprintf(__('Back in stock %s', Plugin::L10N), $date_string) . '</strong>';
     }
 
     return $stock;
@@ -1032,20 +1030,22 @@ class WooCommerce {
       return '';
     }
 
-    $meta_key = self::FIELD_BACK_IN_STOCK_DATE;
-    $back_in_stock_date = get_post_meta($product->get_id(), $meta_key, TRUE) ?? '';
+    $back_in_stock_date = get_post_meta($product->get_id(), self::FIELD_BACK_IN_STOCK_DATE, TRUE) ?? '';
+    if(empty($back_in_stock_date)){
+      return '';
+    }
 
     if ($product->is_type('variable')) {
       $variations = $product->get_available_variations();
       foreach ($variations as $variation) {
         $product_variation = wc_get_product($variation['variation_id']);
-        $variation_stock_date = get_post_meta($variation['variation_id'], $meta_key, TRUE);
+        $variation_stock_date = get_post_meta($variation['variation_id'], self::FIELD_BACK_IN_STOCK_DATE, TRUE);
         // If a variation has stock or doesn't have a "back in stock" date
         // it's considered to be immediately available for purchase.
         if ($product_variation->get_stock_quantity() > 0 || !$variation_stock_date) {
           return '';
         }
-        if (!$back_in_stock_date || $back_in_stock_date > $variation_stock_date) {
+        if ($back_in_stock_date > $variation_stock_date) {
           $back_in_stock_date = $variation_stock_date;
         }
       }
@@ -1068,7 +1068,7 @@ class WooCommerce {
     }
 
     if ($back_in_stock_date = self::getEarliestBackInStock($product)) {
-      $label_string .= ' <strong>' . WooCommerce::getBackInStockDateString($back_in_stock_date) . '</strong>';
+      $label_string .= ' <strong>' . WooCommerce::getFormatBackInStockDateString($back_in_stock_date) . '</strong>';
     }
 
     return $label_string;
@@ -1126,18 +1126,12 @@ class WooCommerce {
    * Returns the back in stock date string which can be appended to the delivery time.
    *
    * The provided $date_string needs to be in the format used by HTML5 date inputs: 'YYYY-MM-DD'.
+   *
+   * The given input date must be already validated as in the future
    */
-  public static function getBackInStockDateString($date_string) {
-    $current_date = date_i18n('Ymd');
-    $back_in_stock_date_string = '';
-
-    // Check if back in stock date is in the future.
-    if (date_i18n('Ymd', strtotime($date_string)) > $current_date) {
-      // translators: from date, e.g. available 'from 24.10.2019'
-      $back_in_stock_date_string = sprintf(__('from %1$s', Plugin::L10N), date_i18n('d.m.Y', strtotime($date_string)));
-    }
-
-    return $back_in_stock_date_string;
+  public static function getFormatBackInStockDateString($date_string): string {
+    // translators: from date, e.g. available 'from 24.10.2019'
+    return sprintf(__('from %1$s', Plugin::L10N), date_i18n('d.m.Y', strtotime($date_string)));
   }
 
   /**
