@@ -1063,7 +1063,9 @@ class WooCommerce {
    * @implements woocommerce_de_get_deliverytime_string_label_string
    */
   public static function woocommerce_de_get_deliverytime_string_label_string($label_string, $product) {
-    if (!$product) {
+    // Avoid the execution of this function for product variants which can be
+    // evaluated over the parent product in the next method
+    if (!$product || $product instanceof \WC_Product_Variation) {
       return $label_string;
     }
 
