@@ -188,7 +188,7 @@ class WooCommerce {
     }
 
     if ($product->backorders_allowed() && $back_in_stock_date = self::getEarliestBackInStock($product)) {
-      $date_string = static::getFormatBackInStockDateString($back_in_stock_date);
+      $date_string = static::getFormattedBackInStockDateString($back_in_stock_date);
       $stock['availability'] = '<strong>' . sprintf(__('Back in stock %s', Plugin::L10N), $date_string) . '</strong>';
     }
 
@@ -1036,10 +1036,10 @@ class WooCommerce {
     }
 
     if ($product->is_type('variable')) {
-      $variations = $product->get_available_variations();
+      $variations = $product->get_children();
       foreach ($variations as $variation) {
-        $product_variation = wc_get_product($variation['variation_id']);
-        $variation_stock_date = get_post_meta($variation['variation_id'], self::FIELD_BACK_IN_STOCK_DATE, TRUE);
+        $product_variation = wc_get_product($variation);
+        $variation_stock_date = get_post_meta($variation, self::FIELD_BACK_IN_STOCK_DATE, TRUE);
         // If a variation has stock or doesn't have a "back in stock" date
         // it's considered to be immediately available for purchase.
         if ($product_variation->get_stock_quantity() > 0 || !$variation_stock_date) {
@@ -1068,7 +1068,7 @@ class WooCommerce {
     }
 
     if ($back_in_stock_date = self::getEarliestBackInStock($product)) {
-      $label_string .= ' <strong>' . WooCommerce::getFormatBackInStockDateString($back_in_stock_date) . '</strong>';
+      $label_string .= ' <strong>' . WooCommerce::getFormattedBackInStockDateString($back_in_stock_date) . '</strong>';
     }
 
     return $label_string;
@@ -1129,7 +1129,7 @@ class WooCommerce {
    *
    * The given input date must be already validated as in the future
    */
-  public static function getFormatBackInStockDateString($date_string): string {
+  public static function getFormattedBackInStockDateString($date_string): string {
     // translators: from date, e.g. available 'from 24.10.2019'
     return sprintf(__('from %1$s', Plugin::L10N), date_i18n('d.m.Y', strtotime($date_string)));
   }
