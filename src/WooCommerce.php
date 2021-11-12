@@ -1030,7 +1030,7 @@ class WooCommerce {
       return '';
     }
 
-    $back_in_stock_date = get_post_meta($product->get_id(), self::FIELD_BACK_IN_STOCK_DATE, TRUE) ?? '';
+    $back_in_stock_date = get_post_meta($product->get_id(), self::FIELD_BACK_IN_STOCK_DATE, TRUE);
     if(empty($back_in_stock_date)){
       return '';
     }
