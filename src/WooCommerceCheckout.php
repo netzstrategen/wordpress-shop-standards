@@ -29,6 +29,7 @@ class WooCommerceCheckout {
       add_action('woocommerce_checkout_process', __CLASS__ . '::checkConfirmationEmailField');
     }
 
+    // Add checkout error messages.
     add_filter( 'woocommerce_form_field', __CLASS__ . '::woocommerceFormField', 10, 4 );
   }
 
