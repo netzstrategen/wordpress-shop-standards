@@ -48,7 +48,7 @@ class WooCommerceCheckout {
     $error = [];
     if ($args['required'] ?? FALSE) {
       $errorMessage = sprintf(__('%s is a required field.', 'woocommerce'), $args['label']);
-      $error[]      = '<span class="error-required" style="display:none">' . $errorMessage . '</span>';
+      $error[] = '<span class="error-required" style="display:none">' . $error_message . '</span>';
     }
     if ($args['validate'] ?? FALSE) {
       $errorMessage = __('Invalid field', 'woocommerce');
