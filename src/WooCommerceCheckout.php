@@ -28,6 +28,37 @@ class WooCommerceCheckout {
       add_filter('woocommerce_checkout_fields', __CLASS__ . '::addConfirmationEmailCheckoutField');
       add_action('woocommerce_checkout_process', __CLASS__ . '::checkConfirmationEmailField');
     }
+
+    // Add checkout error messages.
+    add_filter( 'woocommerce_form_field', __CLASS__ . '::woocommerceFormField', 10, 4 );
+  }
+
+  /**
+   * Adds inline error messages to checkout fields when needed.
+   *
+   * @implements woocommerce_form_field
+   *
+   * @return string
+   */
+  public static function woocommerceFormField($field, $key, $args, $value) {
+    if (strpos($field, '</label>') === FALSE) {
+      return $field;
+    }
+
+    $error = [];
+    if ($args['required'] ?? FALSE) {
+      $errorMessage = sprintf(__('%s is a required field.', 'woocommerce'), $args['label']);
+      $error[] = '<span class="error-required" style="display:none">' . $error_message . '</span>';
+    }
+    if ($args['validate'] ?? FALSE) {
+      $errorMessage = __('Invalid field', 'woocommerce');
+      $error[]      = '<span class="error-validate" style="display:none">' . $errorMessage . '</span>';
+    }
+
+    if (empty($error)) {
+      return $field;
+    }
+    return substr_replace($field, join('', $error), strpos($field, '</label>'), 0);
   }
 
   /**
