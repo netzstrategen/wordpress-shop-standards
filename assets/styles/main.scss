@@ -5,8 +5,7 @@
 }
 
 .woocommerce-checkout p.woocommerce-invalid-required-field span.error-required,
-.woocommerce-checkout p.woocommerce-invalid span.error-validate {
+.woocommerce-checkout p.woocommerce-invalid:not(.woocommerce-invalid-required-field) span.error-validate {
   display: block !important; // This important key is needed to override the inline css in the element
-  font-weight: bold;
-  color: #e2401c;
+  color: #aa0001;
 }

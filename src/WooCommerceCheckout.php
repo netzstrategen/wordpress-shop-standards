@@ -47,18 +47,18 @@ class WooCommerceCheckout {
 
     $error = [];
     if ($args['required'] ?? FALSE) {
-      $errorMessage = sprintf(__('%s is a required field.', 'woocommerce'), $args['label']);
+      $error_message = sprintf(__('%s is a required field.', 'woocommerce'), $args['label']);
       $error[] = '<span class="error-required" style="display:none">' . $error_message . '</span>';
     }
     if ($args['validate'] ?? FALSE) {
-      $errorMessage = __('Invalid field', 'woocommerce');
-      $error[]      = '<span class="error-validate" style="display:none">' . $errorMessage . '</span>';
+      $error_message = __('Invalid format', Plugin::L10N);
+      $error[]      = '<span class="error-validate" style="display:none">' . $error_message . '</span>';
     }
 
-    if (empty($error)) {
-      return $field;
+    if (!empty($error)) {
+      $field = substr_replace($field, join('', $error), strpos($field, '</label>'), 0);;
     }
-    return substr_replace($field, join('', $error), strpos($field, '</label>'), 0);
+    return $field;
   }
 
   /**
