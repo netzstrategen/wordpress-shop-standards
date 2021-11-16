@@ -292,7 +292,7 @@ msgstr ""
 
 #: src/WooCommerceCheckout.php:54
 msgid "Invalid format"
-msgstr "Ungültiges Feld"
+msgstr "Ungültiges Format"
 
 #: src/WooCommerceCheckout.php:72
 msgid "Checkout settings"
