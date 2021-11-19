@@ -11,6 +11,8 @@ class Products {
 
   const TAX_PRODUCT_CAT = 'product_cat';
 
+  private string $product_base_link;
+
   /**
    *
    */
@@ -26,8 +28,12 @@ class Products {
     if ($post->post_type !== self::POST_TYPE_PRODUCT) {
       return $post_link;
     }
-    $main_term_id = get_post_meta($post->ID, '_yoast_wpseo_primary_product_cat', TRUE);
-    $main_term_slug = get_term($main_term_id, self::TAX_PRODUCT_CAT)->slug ?? NULL;
+
+    $main_term_id   = get_post_meta($post->ID,
+      '_yoast_wpseo_primary_product_cat',
+      TRUE);
+    $main_term_slug = get_term($main_term_id,
+        self::TAX_PRODUCT_CAT)->slug ?? NULL;
     if (empty($main_term_slug)) {
       return $post_link;
     }
@@ -36,20 +42,37 @@ class Products {
       return $post_link;
     }
 
+    $base_permalink = $this->get_product_base_link();
+    if (empty($base_permalink)) {
+      return $post_link;
+    }
+
+    $product_link = str_replace($product_cat_placeholder,
+      $main_term_slug,
+      $base_permalink);
+    $product_link = sprintf('%s/%s',
+      untrailingslashit($product_link),
+      trailingslashit($post->post_name));
+    return home_url($product_link);
+  }
+
+  public function get_product_base_link(): string {
+    if (isset($this->product_base_link)) {
+      return $this->product_base_link;
+    }
+
     $product_permalink = get_option('woocommerce_permalinks');
     if (empty($product_permalink)) {
-      return $post_link;
+      return '';
     }
 
     $base_permalink = $product_permalink['product_base'];
-    $product_cat_placeholder = '%' . self::TAX_PRODUCT_CAT . '%';
-    if (strpos($base_permalink, $product_cat_placeholder) === FALSE) {
-      return $post_link;
-    }
 
-    $product_link = str_replace($product_cat_placeholder, $main_term_slug, $base_permalink);
-    $product_link = sprintf('%s/%s', untrailingslashit($product_link), trailingslashit($post->post_name));
-    return home_url($product_link);
+    $product_cat_placeholder = '%' . self::TAX_PRODUCT_CAT . '%';
+    if (strpos($base_permalink, $product_cat_placeholder) !== FALSE) {
+      $this->product_base_link = $base_permalink;
+    }
+    return $this->product_base_link ?? '';
   }
 
 }
