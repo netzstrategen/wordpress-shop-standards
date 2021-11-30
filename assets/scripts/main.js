@@ -5,9 +5,9 @@
   $('body')
     .on(
       'click',
-      '.woocommerce-widget-layered-nav-list__item, .widget_layered_nav_filters .chosen, .shop-sidebar-widget .chosen',
+      '[data-url]',
       (e) => {
-        const url = $(e.target).data('url');
+        const url = $(e.target).data('url') || $(e.target).closest('[data-url]').data('url');
         if (url) {
           document.location.href = url;
         }
