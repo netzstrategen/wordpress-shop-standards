@@ -126,7 +126,7 @@ class Products {
       return '';
     }
 
-    $base_permalink = $product_permalink['product_base'];;
+    $base_permalink = $product_permalink['product_base'];
     if (strpos($base_permalink, $cat_placeholder) !== FALSE) {
       $this->product_base_link = $base_permalink;
     }
