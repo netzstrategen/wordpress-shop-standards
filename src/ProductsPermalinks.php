@@ -3,9 +3,9 @@
 namespace Netzstrategen\ShopStandards;
 
 /**
- * Meant to handle special Product features.
+ * Meant to handle Product permalinks features.
  */
-class Products {
+class ProductsPermalinks {
 
   const POST_TYPE_PRODUCT = 'product';
 
@@ -25,9 +25,11 @@ class Products {
    */
   public static function init(): void {
     $obj = new self();
+    // Set up the product link filter only when the setting is active.
     if (get_option(self::FIELD_ENFORCE_CAT_LINKS)) {
       add_filter('post_type_link', [$obj, 'get_product_permalink'], 10, 2);
     }
+    // Set up admin actions to handle product setting.
     add_action('admin_init', [$obj, 'register_product_settings']);
     add_action('admin_init', [$obj, 'save_product_settings']);
   }
@@ -60,61 +62,52 @@ class Products {
    *   TRUE if the current screen is correct.
    */
   private function is_saving_settings(): bool {
-    return !empty($_POST) && strpos($_SERVER['REQUEST_URI'],
-        'options-permalink') !== FALSE;
+    return !empty($_POST) && strpos($_SERVER['REQUEST_URI'], 'options-permalink') !== FALSE;
   }
 
   /**
    * Renders custom option in page.
    */
   public function render_permalink_option() { ?>
-      <input name="<?= self::FIELD_ENFORCE_CAT_LINKS ?>" type="checkbox"
-             value="1" <?php
-              checked(get_option(self::FIELD_ENFORCE_CAT_LINKS)) ?> />
+      <input name="<?= self::FIELD_ENFORCE_CAT_LINKS ?>" type="checkbox" value="1" <?php checked(get_option(self::FIELD_ENFORCE_CAT_LINKS)) ?> />
     <?php
   }
 
   /**
    * Ensures the product link contains the main category.
    */
-  public function get_product_permalink(
-    string $post_link,
-    \WP_Post $post
-  ): string {
+  public function get_product_permalink(string $post_link, \WP_Post $post): string {
     if ($post->post_type !== self::POST_TYPE_PRODUCT) {
       return $post_link;
     }
 
-    $main_term_id   = get_post_meta($post->ID,
-      '_yoast_wpseo_primary_product_cat',
-      TRUE);
-    $main_term_slug = get_term($main_term_id,
-        self::TAX_PRODUCT_CAT)->slug ?? NULL;
+    $main_term_id   = get_post_meta($post->ID, '_yoast_wpseo_primary_product_cat', TRUE);
+    $main_term_slug = get_term($main_term_id, self::TAX_PRODUCT_CAT)->slug ?? NULL;
     if (empty($main_term_slug)) {
+      // No primary category found for this product.
       return $post_link;
     }
 
     if (strpos($post_link, "/$main_term_slug/") !== FALSE) {
+      // The product link already contains the primary category.
       return $post_link;
     }
 
     $product_cat_placeholder = '%' . self::TAX_PRODUCT_CAT . '%';
     $base_permalink          = $this->get_product_base_link($product_cat_placeholder);
     if (empty($base_permalink)) {
+      // The product permalink base structure is wrong.
       return $post_link;
     }
 
-    $product_link = str_replace($product_cat_placeholder,
-      $main_term_slug,
-      $base_permalink);
-    $product_link = sprintf('%s/%s',
-      untrailingslashit($product_link),
-      trailingslashit($post->post_name));
+    // Replace the placeholder with main category.
+    $product_link = str_replace($product_cat_placeholder, $main_term_slug, $base_permalink);
+    $product_link = sprintf('%s/%s', untrailingslashit($product_link), trailingslashit($post->post_name));
     return home_url($product_link);
   }
 
   /**
-   * Retrieves the current prodyct base link to be replaced.
+   * Retrieves the current product base link to be replaced.
    */
   public function get_product_base_link(string $cat_placeholder): string {
     if (isset($this->product_base_link)) {
