@@ -60,8 +60,8 @@ class ProductsPermalinks {
   /**
    * Renders custom option in page.
    */
-  public static function render_permalink_option() { ?>
-      <input name="<?= self::FIELD_ENFORCE_CAT_LINKS ?>" type="checkbox" value="1" <?php checked(get_option(self::FIELD_ENFORCE_CAT_LINKS)) ?> />
+  public static function render_permalink_option(): void { ?>
+      <input name="<?php echo self::FIELD_ENFORCE_CAT_LINKS; ?>" type="checkbox" value="1" <?php checked(get_option(self::FIELD_ENFORCE_CAT_LINKS)); ?> />
     <?php
   }
 
