@@ -14,33 +14,25 @@ class ProductsPermalinks {
   const FIELD_ENFORCE_CAT_LINKS = Plugin::PREFIX . '_enforce_main_category_links';
 
   /**
-   * Stores the product base link.
-   *
-   * @var string
-   */
-  private string $product_base_link;
-
-  /**
    * Initialize the product module.
    */
   public static function init(): void {
-    $obj = new self();
     // Set up the product link filter only when the setting is active.
     if (get_option(self::FIELD_ENFORCE_CAT_LINKS)) {
-      add_filter('post_type_link', [$obj, 'get_product_permalink'], 10, 2);
+      add_filter('post_type_link', __CLASS__ . '::get_product_permalink', 10, 2);
     }
     // Set up admin actions to handle product setting.
-    add_action('admin_init', [$obj, 'register_product_settings']);
-    add_action('admin_init', [$obj, 'save_product_settings']);
+    add_action('admin_init', __CLASS__ . '::register_product_settings');
+    add_action('admin_init', __CLASS__ . '::save_product_settings');
   }
 
   /**
    * Registers custom product settings.
    */
-  public function register_product_settings(): void {
+  public static function register_product_settings(): void {
     add_settings_field(self::FIELD_ENFORCE_CAT_LINKS,
       __('Enforce main category on product links', Plugin::L10N),
-      [$this, 'render_permalink_option'],
+      __CLASS__ . '::render_permalink_option',
       'permalink',
       'woocommerce-permalink');
   }
@@ -48,8 +40,8 @@ class ProductsPermalinks {
   /**
    * Persists custom product settings.
    */
-  public function save_product_settings(): void {
-    if ($this->is_saving_settings()) {
+  public static function save_product_settings(): void {
+    if (self::is_saving_settings()) {
       $option_checked = $_POST[self::FIELD_ENFORCE_CAT_LINKS] ?? 0;
       update_option(self::FIELD_ENFORCE_CAT_LINKS, $option_checked);
     }
@@ -61,14 +53,14 @@ class ProductsPermalinks {
    * @return bool
    *   TRUE if the current screen is correct.
    */
-  private function is_saving_settings(): bool {
+  private static function is_saving_settings(): bool {
     return !empty($_POST) && strpos($_SERVER['REQUEST_URI'], 'options-permalink') !== FALSE;
   }
 
   /**
    * Renders custom option in page.
    */
-  public function render_permalink_option() { ?>
+  public static function render_permalink_option() { ?>
       <input name="<?= self::FIELD_ENFORCE_CAT_LINKS ?>" type="checkbox" value="1" <?php checked(get_option(self::FIELD_ENFORCE_CAT_LINKS)) ?> />
     <?php
   }
@@ -76,7 +68,7 @@ class ProductsPermalinks {
   /**
    * Ensures the product link contains the main category.
    */
-  public function get_product_permalink(string $post_link, \WP_Post $post): string {
+  public static function get_product_permalink(string $post_link, \WP_Post $post): string {
     if ($post->post_type !== self::POST_TYPE_PRODUCT) {
       return $post_link;
     }
@@ -94,7 +86,7 @@ class ProductsPermalinks {
     }
 
     $product_cat_placeholder = '%' . self::TAX_PRODUCT_CAT . '%';
-    $base_permalink          = $this->get_product_base_link($product_cat_placeholder);
+    $base_permalink          = self::get_product_base_link($product_cat_placeholder);
     if (empty($base_permalink)) {
       // The product permalink base structure is wrong.
       return $post_link;
@@ -109,21 +101,14 @@ class ProductsPermalinks {
   /**
    * Retrieves the current product base link to be replaced.
    */
-  public function get_product_base_link(string $cat_placeholder): string {
-    if (isset($this->product_base_link)) {
-      return $this->product_base_link;
-    }
-
+  public static function get_product_base_link(string $cat_placeholder): string {
     $product_permalink = get_option('woocommerce_permalinks');
     if (empty($product_permalink)) {
       return '';
     }
 
     $base_permalink = $product_permalink['product_base'];
-    if (strpos($base_permalink, $cat_placeholder) !== FALSE) {
-      $this->product_base_link = $base_permalink;
-    }
-    return $this->product_base_link ?? '';
+    return strpos($base_permalink, $cat_placeholder) !== FALSE ? $base_permalink : '';
   }
 
 }
