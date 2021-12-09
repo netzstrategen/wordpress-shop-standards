@@ -15,7 +15,7 @@ class WooCommerceCheckout {
     // Removes city field from shipping calculator.
     add_filter('woocommerce_shipping_calculator_enable_city', '__return_false');
 
-    if (is_admin()) {
+    if (is_admin() || wp_doing_cron()) {
       return;
     }
 
@@ -129,7 +129,7 @@ class WooCommerceCheckout {
    */
   public static function isAmazonPayV2Checkout(): bool {
     $is_amzon_pay_active = is_plugin_active('woocommerce-gateway-amazon-payments-advanced/woocommerce-gateway-amazon-payments-advanced.php') ?: FALSE;
-    if ($is_amzon_pay_active) {
+    if ($is_amzon_pay_active && isset(WC()->session)) {
       if(version_compare(WC_AMAZON_PAY_VERSION, '2.0', '>=') && WC()->session->get('amazon_checkout_session_id') !== null) {
         return true;
       }
