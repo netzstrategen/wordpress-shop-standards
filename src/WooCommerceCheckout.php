@@ -23,7 +23,8 @@ class WooCommerceCheckout {
     if (
       get_option('_' . Plugin::L10N . '_checkout_email_confirmation_field') === 'yes' &&
       !is_user_logged_in() &&
-      !isset($_GET['woo-paypal-return'])
+      !isset($_GET['woo-paypal-return']) &&
+      !self::isAmazonPayV2Checkout()
     ) {
       add_filter('woocommerce_checkout_fields', __CLASS__ . '::addConfirmationEmailCheckoutField');
       add_action('woocommerce_checkout_process', __CLASS__ . '::checkConfirmationEmailField');
@@ -31,6 +32,12 @@ class WooCommerceCheckout {
 
     // Add checkout error messages.
     add_filter( 'woocommerce_form_field', __CLASS__ . '::woocommerceFormField', 10, 4 );
+
+    // Remove required fields when checking out via Amazon using
+    // woocommerce-gateway-amazon-payments-advanced.
+    if (self::isAmazonPayV2Checkout()) {
+      add_filter('woocommerce_checkout_fields', __CLASS__ . '::removeRequiredFieldsforAmazonPay');
+    }
   }
 
   /**
@@ -116,6 +123,31 @@ class WooCommerceCheckout {
     if ($_POST['billing_email'] !== $_POST['billing_email_confirmation']) {
       wc_add_notice(__('Your email addresses do not match', Plugin::L10N), 'error');
     }
+  }
+
+  /**
+   * Check if we are using Amazon V2 in the checkout.
+   *
+   * @return bool
+   */
+  public static function isAmazonPayV2Checkout(): bool {
+    $is_amazon_pay_active = is_plugin_active('woocommerce-gateway-amazon-payments-advanced/woocommerce-gateway-amazon-payments-advanced.php');
+    if ($is_amazon_pay_active && isset(WC()->session)) {
+      if (defined('WC_AMAZON_PAY_VERSION') && version_compare(WC_AMAZON_PAY_VERSION, '2.0', '>=') && !empty(WC()->session->get('amazon_checkout_session_id'))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Remove required fields when checking out via Amazon using woocommerce-gateway-amazon-payments-advanced.
+   * 
+   * @implements woocommerce_checkout_fields
+   */
+  public static function removeRequiredFieldsforAmazonPay(array $fields): array {
+    unset($fields['billing']['billing_address_1']);
+    return $fields;
   }
 
 }
