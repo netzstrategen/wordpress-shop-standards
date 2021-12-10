@@ -33,7 +33,8 @@ class WooCommerceCheckout {
     // Add checkout error messages.
     add_filter( 'woocommerce_form_field', __CLASS__ . '::woocommerceFormField', 10, 4 );
 
-    // Remove required fields while using Amazon Pay  V2.
+    // Remove required fields when checking out via Amazon using
+    // woocommerce-gateway-amazon-payments-advanced.
     if (self::isAmazonPayV2Checkout()) {
       add_filter('woocommerce_checkout_fields', __CLASS__ . '::removeRequiredFieldsforAmazonPay');
     }
@@ -140,8 +141,7 @@ class WooCommerceCheckout {
   }
 
   /**
-   * Remove required fields when checking out via Amazon using
-   * woocommerce-gateway-amazon-payments-advanced.
+   * Remove required fields when checking out via Amazon using woocommerce-gateway-amazon-payments-advanced.
    * 
    * @implements woocommerce_checkout_fields
    */
