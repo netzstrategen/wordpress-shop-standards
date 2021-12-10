@@ -15,7 +15,7 @@ class WooCommerceCheckout {
     // Removes city field from shipping calculator.
     add_filter('woocommerce_shipping_calculator_enable_city', '__return_false');
 
-    if (is_admin() || wp_doing_cron()) {
+    if (is_admin()) {
       return;
     }
 
@@ -34,7 +34,9 @@ class WooCommerceCheckout {
     add_filter( 'woocommerce_form_field', __CLASS__ . '::woocommerceFormField', 10, 4 );
 
     // Remove required fields while using Amazon Pay  V2.
-    add_filter('woocommerce_checkout_fields', __CLASS__ . '::removeRequiredFieldsforAmazonPay', 5);
+    if (self::isAmazonPayV2Checkout()) {
+      add_filter('woocommerce_checkout_fields', __CLASS__ . '::removeRequiredFieldsforAmazonPay');
+    }
   }
 
   /**
@@ -130,7 +132,7 @@ class WooCommerceCheckout {
   public static function isAmazonPayV2Checkout(): bool {
     $is_amzon_pay_active = is_plugin_active('woocommerce-gateway-amazon-payments-advanced/woocommerce-gateway-amazon-payments-advanced.php') ?: FALSE;
     if ($is_amzon_pay_active && isset(WC()->session)) {
-      if(version_compare(WC_AMAZON_PAY_VERSION, '2.0', '>=') && WC()->session->get('amazon_checkout_session_id') !== null) {
+      if (defined('WC_AMAZON_PAY_VERSION') && version_compare(WC_AMAZON_PAY_VERSION, '2.0', '>=') && !empty(WC()->session->get('amazon_checkout_session_id'))) {
         return true;
       }
     }
@@ -138,18 +140,14 @@ class WooCommerceCheckout {
   }
 
   /**
-   * Remove Billing address when using Amazon Pay V2.
-   *
-   * * @return array
-   *   checkout fields.
+   * Remove required fields when checking out via Amazon using
+   * woocommerce-gateway-amazon-payments-advanced.
    * 
    * @implements woocommerce_checkout_fields
    */
   public static function removeRequiredFieldsforAmazonPay(array $fields): array {
-    if (self::isAmazonPayV2Checkout()) {
-        unset($fields['billing']['billing_address_1']);
-        return $fields;
-    }
+    unset($fields['billing']['billing_address_1']);
     return $fields;
   }
+
 }
