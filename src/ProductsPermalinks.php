@@ -76,8 +76,11 @@ class ProductsPermalinks {
     $main_term_id   = get_post_meta($post->ID, '_yoast_wpseo_primary_product_cat', TRUE);
     $main_term_slug = get_term($main_term_id, self::TAX_PRODUCT_CAT)->slug ?? NULL;
     if (empty($main_term_slug)) {
-      // No primary category found for this product.
-      return $post_link;
+      $main_term_slug = self::get_main_term_from_post($post);
+      if (empty($main_term_slug)) {
+        // No primary category found for this product.
+        return $post_link;
+      }
     }
 
     $product_cat_placeholder = '%' . self::TAX_PRODUCT_CAT . '%';
@@ -118,10 +121,34 @@ class ProductsPermalinks {
     $matches = [];
     // Replace category placeholder to match the expression.
     $pattern = str_replace($product_cat_placeholder, '[\w-]+', $base_permalink);
-    // Complete the pattern including product slug.
+    // Complete the pattern including product slug. e.g. /shop/some-category/foo-product/.
     $pattern = sprintf('<%s\/[\w-]+[/]?$>', untrailingslashit($pattern));
     preg_match($pattern, $link, $matches);
     return !empty($matches);
+  }
+
+  /**
+   * Determines the main taxonomy term based on the nesting level from them.
+   */
+  public static function get_main_term_from_post(\WP_Post $post): string {
+    $terms = get_the_terms($post, self::TAX_PRODUCT_CAT);
+    if (!$terms || !is_array($terms)) {
+      return '';
+    }
+
+    $term_hierarchy = [];
+    foreach ($terms as $term) {
+      $level = 0;
+      $slug = $term->slug;
+      while ($term->parent) {
+        $level++;
+        $term = get_term($term->parent, self::TAX_PRODUCT_CAT);
+      }
+      $term_hierarchy[] = ['level' => $level, 'slug' => $slug];
+    }
+    // Sort the terms using the nesting level as priority.
+    usort($term_hierarchy, fn($a, $b) => $b['level'] <=> $a['level']);
+    return current($term_hierarchy)['slug'];
   }
 
 }
