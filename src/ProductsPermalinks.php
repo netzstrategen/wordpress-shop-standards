@@ -87,13 +87,7 @@ class ProductsPermalinks {
       return $post_link;
     }
 
-    $matches = [];
-    // Replace category placeholder to match the expression.
-    $pattern = str_replace($product_cat_placeholder, '[\w-]+', $base_permalink);
-    // Complete the pattern including product slug.
-    $pattern = sprintf('<%s\/[\w-]+[/]?>', untrailingslashit($pattern));
-    preg_match($pattern, $post_link, $matches);
-    if (!empty($matches)) {
+    if (self::product_link_has_category($post_link, $product_cat_placeholder, $base_permalink)) {
       // The product link already contains the category.
       return $post_link;
     }
@@ -115,6 +109,19 @@ class ProductsPermalinks {
 
     $base_permalink = $product_permalink['product_base'];
     return strpos($base_permalink, $cat_placeholder) !== FALSE ? $base_permalink : '';
+  }
+
+  /**
+   * Checks whether the current link already contains the main category in it.
+   */
+  public static function product_link_has_category(string $link, string $product_cat_placeholder, string $base_permalink): bool {
+    $matches = [];
+    // Replace category placeholder to match the expression.
+    $pattern = str_replace($product_cat_placeholder, '[\w-]+', $base_permalink);
+    // Complete the pattern including product slug.
+    $pattern = sprintf('<%s\/[\w-]+[/]?$>', untrailingslashit($pattern));
+    preg_match($pattern, $link, $matches);
+    return !empty($matches);
   }
 
 }
