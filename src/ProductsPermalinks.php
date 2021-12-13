@@ -80,15 +80,21 @@ class ProductsPermalinks {
       return $post_link;
     }
 
-    if (strpos($post_link, "/$main_term_slug/") !== FALSE) {
-      // The product link already contains the primary category.
-      return $post_link;
-    }
-
     $product_cat_placeholder = '%' . self::TAX_PRODUCT_CAT . '%';
     $base_permalink          = self::get_product_base_link($product_cat_placeholder);
     if (empty($base_permalink)) {
       // The product permalink base structure is wrong.
+      return $post_link;
+    }
+
+    $matches = [];
+    // Replace category placeholder to match the expression.
+    $pattern = str_replace($product_cat_placeholder, '[\w-]+', $base_permalink);
+    // Complete the pattern including product slug.
+    $pattern = sprintf('<%s\/[\w-]+[/]?>', untrailingslashit($pattern));
+    preg_match($pattern, $post_link, $matches);
+    if (!empty($matches)) {
+      // The product link already contains the category.
       return $post_link;
     }
 
