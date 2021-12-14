@@ -19,11 +19,23 @@ class ProductsPermalinks {
   public static function init(): void {
     // Set up the product link filter only when the setting is active.
     if (get_option(self::FIELD_ENFORCE_CAT_LINKS)) {
-      add_filter('post_type_link', __CLASS__ . '::get_product_permalink', 10, 2);
+      add_filter('post_type_link', __CLASS__ . '::get_product_permalink', PHP_INT_MAX, 2);
+      add_filter('wpseo_canonical', __CLASS__ . '::match_canonical_url', PHP_INT_MAX);
     }
     // Set up admin actions to handle product setting.
     add_action('admin_init', __CLASS__ . '::register_product_settings');
     add_action('admin_init', __CLASS__ . '::save_product_settings');
+  }
+
+  /**
+   * Ensures the canonical url matches the same product link fixed.
+   */
+  public static function match_canonical_url(string $canonical): string {
+    if (is_product()) {
+      // Executes the same flow to get the right product link.
+      $canonical = get_the_permalink();
+    }
+    return $canonical;
   }
 
   /**
@@ -90,11 +102,6 @@ class ProductsPermalinks {
       return $post_link;
     }
 
-    if (self::product_link_has_category($post_link, $product_cat_placeholder, $base_permalink)) {
-      // The product link already contains the category.
-      return $post_link;
-    }
-
     // Replace the placeholder with main category.
     $product_link = str_replace($product_cat_placeholder, $main_term_slug, $base_permalink);
     $product_link = sprintf('%s/%s', untrailingslashit($product_link), trailingslashit($post->post_name));
@@ -112,19 +119,6 @@ class ProductsPermalinks {
 
     $base_permalink = $product_permalink['product_base'];
     return strpos($base_permalink, $cat_placeholder) !== FALSE ? $base_permalink : '';
-  }
-
-  /**
-   * Checks whether the current link already contains the main category in it.
-   */
-  public static function product_link_has_category(string $link, string $product_cat_placeholder, string $base_permalink): bool {
-    $matches = [];
-    // Replace category placeholder to match the expression.
-    $pattern = str_replace($product_cat_placeholder, '[\w-]+', $base_permalink);
-    // Complete the pattern including product slug. e.g. /shop/some-category/foo-product/.
-    $pattern = sprintf('<%s\/[\w-]+[/]?$>', untrailingslashit($pattern));
-    preg_match($pattern, $link, $matches);
-    return !empty($matches);
   }
 
   /**
