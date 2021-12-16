@@ -112,6 +112,7 @@ class Plugin {
     WooCommerceSalutation::init();
     WooCommerceCheckout::init();
     PlusProducts::init();
+    ProductsPermalinks::init();
 
     if (is_admin()) {
       return;
