@@ -98,7 +98,7 @@ class WidgetFilterDeliveryTime extends \WC_Widget {
       }
       $chosen = in_array($delivery_time->term_id, $filter_values, TRUE);
       echo sprintf('<li class="%s">', $chosen ? $item_class . ' ' . $item_chosen_class : $item_class);
-      echo sprintf('<a rel="nofollow" href="%s">%s</a></li>', $link, $delivery_time->name);
+      echo sprintf('<span data-url="%s">%s</span></li>', $link, $delivery_time->name);
     }
     echo '</ul>';
     $this->widget_end($args);

@@ -1004,15 +1004,10 @@ class WooCommerce {
   public static function getTaxonomyTermsAsSelectOptions($taxonomy) {
     $terms = get_terms([
       'taxonomy' => $taxonomy,
+      'fields' => 'id=>name',
       'hide_empty' => false,
     ]);
-
-    $term_options = array_reduce($terms, function($result, $term) {
-      $result[$term->term_id] = $term->name;
-      return $result;
-    });
-
-    return is_wp_error($terms) ? [] : $term_options;
+    return is_wp_error($terms) ? [] : $terms;
   }
 
   /**
