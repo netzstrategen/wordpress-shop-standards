@@ -81,7 +81,7 @@ class ProductsPermalinks {
    * Ensures the product link contains the main category.
    */
   public static function get_product_permalink(string $post_link, \WP_Post $post): string {
-    if ($post->post_type !== self::POST_TYPE_PRODUCT) {
+    if ($post->post_type !== self::POST_TYPE_PRODUCT || $post->post_status !== 'publish') {
       return $post_link;
     }
 
