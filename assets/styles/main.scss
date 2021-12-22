@@ -9,3 +9,15 @@
   display: block !important; // This important key is needed to override the inline css in the element
   color: #aa0001;
 }
+
+.checkbox-container {
+  .checkbox-text-container {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+
+    .checkbox-box {
+      margin-right: 25px;
+    }
+  }
+}
