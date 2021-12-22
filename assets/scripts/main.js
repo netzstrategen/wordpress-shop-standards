@@ -116,4 +116,11 @@
   $('[data-checkbox-toggle]').click(() => {
     $('.single_add_to_cart_button').toggleClass('disabled');
   });
+
+  $('.single_add_to_cart_button').click((e) => {
+    if ($('.single_add_to_cart_button').hasClass('disabled')) {
+      $('.checkbox-detail').addClass('expand');
+      e.preventDefault();
+    }
+  });
 }(jQuery));
