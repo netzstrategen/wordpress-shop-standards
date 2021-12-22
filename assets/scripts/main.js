@@ -114,6 +114,6 @@
   });
 
   $('[data-checkbox-toggle]').click(() => {
-    $('.single_add_to_cart_button').toggleClass('enable');
+    $('.single_add_to_cart_button').toggleClass('disabled');
   });
 }(jQuery));

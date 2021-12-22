@@ -11,10 +11,8 @@
 }
 
 .single_add_to_cart_button {
-  opacity: 50%;
-
-  &.enable {
-    opacity: unset;
+  &.disabled {
+    opacity: 50%;
   }
 }
 
