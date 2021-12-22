@@ -29,7 +29,7 @@ class UsedGoods {
       <div class="checkbox-detail">
         <p>Hinweis: Bitte beachten Sie, dass Sie die Ware nicht in den Warenkorb legen können, wenn Sie mit der Vereinbarung nicht einverstanden sind. Ihr Einverständnis mit der Vereinbarung erklären Sie durch Anklicken der Checkbox.</p>
         <div class="checkbox-text-container">
-          <input class="checkbox-box" type="checkbox" id="used-goods-consent" name="used-goods-consent" value="used-goods-consent-submit">
+          <input data-checkbox-toggle class="checkbox-box" type="checkbox" id="used-goods-consent" name="used-goods-consent" value="used-goods-consent-submit">
           <div class="checkbox-text">
             <p>Es wird vereinbart, dass die hier angebotene Ware in den folgenden Merkmalen in ihrer Beschaffenheit von den objektiven Anforderungen abweicht und ein Mängelgewährleistungsrecht diesbezüglich ausgeschlossen ist:</p>
             <p>-(z.B.: ' . $test . ')</p>
