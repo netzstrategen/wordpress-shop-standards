@@ -107,4 +107,8 @@
       $('.wcppec-checkout-buttons').hide();
     }
   });
+
+  $('[data-checkbox-detail-expand]').click(() => {
+    $('.checkbox-detail').toggleClass('expand');
+  });
 }(jQuery));
