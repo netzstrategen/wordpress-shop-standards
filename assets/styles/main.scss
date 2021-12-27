@@ -10,24 +10,24 @@
   color: #aa0001;
 }
 
+// ProductDefects consent box styling.
 .checkbox-container {
   margin-bottom: 10px;
+
+  .checkbox-read-more {
+    color: var(--c-brand);
+
+    &:hover {
+      color: var(--c-brand-hover);
+      cursor: pointer;
+    }
+  }
 
   .checkbox-detail {
     display: none;
 
     &.expand {
       display: unset;
-    }
-  }
-
-  .checkbox-text-container {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-
-    .checkbox-box {
-      margin-right: 25px;
     }
   }
 }
