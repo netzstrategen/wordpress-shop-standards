@@ -113,7 +113,7 @@ class Plugin {
     WooCommerceCheckout::init();
     PlusProducts::init();
     ProductsPermalinks::init();
-    UsedGoods::init();
+    ProductDefects::init();
 
     if (is_admin()) {
       return;
