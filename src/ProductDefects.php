@@ -33,14 +33,17 @@ class ProductDefects {
    * Displays the checkbox and agreement text.
    */
   public static function displayCheckbox() {
-    $test = 'attribute_pa_zustand';
+    global $product;
+    if ($product->is_type('variable')) {
+      $status = wc_get_product()->get_variation_attributes()['pa_zustand'][0];
+    }
     echo '<div class="checkbox-container">
       <input data-checkbox-toggle class="checkbox-box" type="checkbox" id="used-goods-consent" name="used-goods-consent" value="used-goods-consent-submit">
       <b data-checkbox-detail-expand>' . get_option(Plugin::PREFIX . '_defect_title_field') . '<br><span class="checkbox-read-more">' . __('Read More', Plugin::L10N) . '</span></b>
       <div class="checkbox-detail">
        <p>' . get_option(Plugin::PREFIX . '_defect_desc_field') . '</p>
        <p>' . get_option(Plugin::PREFIX . '_defect_attr_desc_field') . '</p>
-       <p>-(z.B.: ' . $test . ')</p>
+       <p>-(z.B.: ' . $status . ')</p>
       </div>
     </div>';
   }
