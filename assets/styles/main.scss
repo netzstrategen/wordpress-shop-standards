@@ -15,12 +15,15 @@
   margin-bottom: 10px;
 
   .checkbox-read-more {
-    margin-left: 5px;
     color: var(--c-brand);
 
     &:hover {
       color: var(--c-brand-hover);
       cursor: pointer;
+    }
+
+    &.hide {
+      display: none;
     }
   }
 
