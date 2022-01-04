@@ -16,13 +16,13 @@ class ProductDefects {
    * Checkbox consent initialization method.
    */
   public static function init() {
+    // Logs consent to defective or used product when product is added to cart.
     add_action('woocommerce_add_to_cart', function () {
-      // @TODO: Log consent using this post variable...
-      //var_dump($_POST['used-goods-consent']);
+      ProductDefects::logConsent();
     });
 
     add_action('wp', function () {
-      if (has_term(get_option(Plugin::PREFIX . '_add_category_field'), 'product_cat', get_the_ID())) {
+      if (get_post_meta(get_the_ID(), '_' . Plugin::PREFIX . '_show_product_defects_consent') || has_term(get_option(Plugin::PREFIX . '_add_category_field'), 'product_cat', get_the_ID())) {
         add_action('woocommerce_before_add_to_cart_button', __CLASS__ . '::displayCheckbox');
       }
     });
@@ -35,13 +35,29 @@ class ProductDefects {
   }
 
   /**
+   * Logs consent to defective or used product.
+   */
+  public static function logConsent() {
+    $uploads_dir = wp_upload_dir()['basedir'] . '/' . Plugin::PREFIX;
+    $logFile = $uploads_dir . '/defects-consent.log';
+    if (!dir($uploads_dir)) {
+      mkdir($uploads_dir);
+    }
+    $data = [
+      'timestamp' => date_i18n('c'),
+      'user' => get_current_user_id(),
+      'referrer' => $_SERVER['HTTP_REFERER'],
+      'consent' => $_POST['used-goods-consent'],
+      'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? '',
+    ];
+    $data = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    file_put_contents($logFile, $data . "\n", 8);
+  }
+
+  /**
    * Displays the checkbox and agreement text.
    */
   public static function displayCheckbox() {
-    global $product;
-    if ($product->is_type('variable')) {
-      $status = wc_get_product()->get_variation_attributes()['pa_zustand'][0];
-    }
     echo '<div class="checkbox-container">
       <input required data-checkbox-toggle class="checkbox-box" type="checkbox" id="used-goods-consent" name="used-goods-consent" value="used-goods-consent-true">
       <b>' . get_option(Plugin::PREFIX . '_defect_title_field') . '
@@ -50,7 +66,7 @@ class ProductDefects {
       <div class="checkbox-detail">
        <p>' . get_option(Plugin::PREFIX . '_defect_desc_field') . '</p>
        <p>' . get_option(Plugin::PREFIX . '_defect_attr_desc_field') . '</p>
-       <p>-(z.B.: ' . $status . ')</p>
+       <p>-(z.B.: <span class="zustand"></span>)</p>
       </div>
     </div>';
   }

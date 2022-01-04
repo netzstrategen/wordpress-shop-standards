@@ -113,4 +113,9 @@
     $('.checkbox-detail').toggleClass('expand');
     $('.checkbox-read-more').toggleClass('hide');
   });
+
+  $(document).on('show_variation', '.single_variation_wrap', (event, variation) => {
+    const zustand = variation.attributes.attribute_pa_zustand;
+    $('.zustand').text(zustand);
+  });
 }(jQuery));
