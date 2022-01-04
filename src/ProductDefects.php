@@ -24,12 +24,21 @@ class ProductDefects {
     add_action('wp', function () {
       $show_value = get_post_meta(get_the_ID(), '_' . Plugin::PREFIX . '_show_product_defects_consent');
       if ($show_value && $show_value[0] === 'yes') {
-        $show = TRUE;
+        $show_override = TRUE;
       }
       else {
-        $show = FALSE;
+        $show_override = FALSE;
       }
-      if ($show || has_term(get_option(Plugin::PREFIX . '_add_category_field'), 'product_cat', get_the_ID())) {
+
+      $categories_selected = get_option(Plugin::PREFIX . '_add_category_field');
+      if (!empty($categories_selected)) {
+        $show_categories = has_term($categories_selected, 'product_cat', get_the_ID());
+      }
+      else {
+        $show_categories = FALSE;
+      }
+
+      if ($show_override || $show_categories) {
         add_action('woocommerce_before_add_to_cart_button', __CLASS__ . '::displayCheckbox');
       }
     });
