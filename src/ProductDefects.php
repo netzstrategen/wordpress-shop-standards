@@ -43,10 +43,18 @@ class ProductDefects {
       }
     });
 
+    add_filter('woocommerce_available_variation', __CLASS__ . '::pass_variation_attribute', 10, 3);
+
     if (!is_admin()) {
       return;
     }
 
+    if (function_exists('register_field_group')) {
+      ProductDefects::register_acf_status_attribute();
+    }
+    add_action('woocommerce_variation_options', __CLASS__ . '::add_variant_option', 10, 3);
+    add_action('woocommerce_update_product_variation', __CLASS__ . '::update_variant_option', 10, 1);
+    add_action('woocommerce_save_product_variation', __CLASS__ . '::save_product_defective_type', 10, 1);
     add_filter('woocommerce_get_settings_shop_standards', __CLASS__ . '::woocommerce_get_settings_shop_standards');
   }
 
@@ -74,6 +82,14 @@ class ProductDefects {
    * Displays the checkbox and agreement text.
    */
   public static function displayCheckbox() {
+    global $product;
+    if ($product->is_type('variable')) {
+      // This is to initially set the status variable before js sets it dynamically on variant selection.
+      $status = wc_get_product()->get_variation_attributes()['pa_zustand'][0];
+    }
+    else {
+      // @TODO 'zustand' is not defined outside of variant type products. Clarify. Item condition? Or Does this mean only show on variants.
+    }
     echo '<div class="checkbox-container">
       <input required data-checkbox-toggle class="checkbox-box" type="checkbox" id="used-goods-consent" name="used-goods-consent" value="used-goods-consent-true">
       <b>' . get_option(Plugin::PREFIX . '_defect_title_field') . '
@@ -82,7 +98,7 @@ class ProductDefects {
       <div class="checkbox-detail">
        <p>' . get_option(Plugin::PREFIX . '_defect_desc_field') . '</p>
        <p>' . get_option(Plugin::PREFIX . '_defect_attr_desc_field') . '</p>
-       <p>-(z.B.: <span class="zustand"></span>)</p>
+       <p>-(z.B.: <span class="zustand">' . $status . '</span>)</p>
       </div>
     </div>';
   }
@@ -125,6 +141,99 @@ class ProductDefects {
       'id' => Plugin::L10N,
     ];
     return $settings;
+  }
+
+  /**
+   * Adds defective/used goods checkmark to variant level.
+   *
+   * @wp-hook woocommerce_variation_options
+   */
+  public static function add_variant_option($loop, $variation_data, $variation) {
+    $_defect = get_post_meta($variation->ID, '_defective', TRUE);
+    ?>
+    <label>
+      <input type="checkbox" id="_defective" class="checkbox variable_is_defective" name="variable_is_defective[<?php echo $loop; ?>]" <?php checked(isset($_defect) ? $_defect : '', 'yes'); ?> />
+      <?php _e('Defective/Used', Plugin::PREFIX); ?>
+      <a class="tips" data-tip="<?php esc_attr_e('Only products with this marker will be treated as “used or defective” in the context of the EU used or defective goods consent notice law of January 1, 2022.', Plugin::PREFIX); ?>" href="#">[?]</a>
+    </label>
+    <?php
+  }
+
+  /**
+   * Updates the variant defective option.
+   *
+   * @wp-hook woocommerce_update_product_variation
+   */
+  public static function update_variant_option($var_id) {
+    if (!isset($_POST['variable_post_id'])) {
+      return;
+    }
+    $variable_post_id = $_POST['variable_post_id'];
+    $max_loop = max(array_keys($_POST['variable_post_id']));
+    for ($i = 0; $i <= $max_loop; $i++) {
+      if (!isset($variable_post_id[$i])) {
+        continue;
+      }
+      $variable_is_defective = isset($_POST['variable_is_defective']) ? $_POST['variable_is_defective'] : [];
+      $variation_id = absint($variable_post_id[$i]);
+      if ($variation_id == $var_id) {
+        $is_defective = isset($variable_is_defective[$i]) ? 'yes' : 'no';
+        update_post_meta($var_id, '_defective', $is_defective);
+      }
+    }
+  }
+
+  /**
+   * Updates the variant defective option on post save.
+   *
+   * @wp-hook save_post
+   */
+  public static function save_product_defective_type($id) {
+    if (isset($_REQUEST['variable_is_defective'])) {
+      update_post_meta($id, '_defective', 'yes');
+    }
+    else {
+      update_post_meta($id, '_defective', 'no');
+    }
+  }
+
+  /**
+   * Register ACF field.
+   */
+  public static function register_acf_status_attribute() {
+    register_field_group([
+      'key' => 'acf_group_status_defect',
+      'title' => __('Defective/Used Consent', Plugin::L10N),
+      'fields' => [
+        [
+          'key' => 'acf_field_defective',
+          'label' => __('Defective/Used', Plugin::L10N),
+          'name' => Plugin::L10N . 'product_defect',
+          'type' => 'true_false',
+          'instructions' => __('Adds the consent text to used or defective variants.', Plugin::L10N),
+        ],
+      ],
+      'location' => [
+        [
+          [
+            'param' => 'taxonomy',
+            'operator' => '==',
+            'value' => 'pa_zustand',
+          ]
+        ]
+      ],
+    ]);
+  }
+
+  /**
+   * Passes the variation attribute to jquery object.
+   */
+  public static function pass_variation_attribute($data, $product, $variation) {
+    // @TODO: Use product_defect and _defective to more finely tune where checkbox consent is output (which variants).
+    // var_dump(get_field(Plugin::L10N . 'product_defect', $variation->get_id()));
+    $data['defective'] = get_post_meta($variation->get_id(), '_defective', TRUE);
+
+    return $data;
   }
 
 }
