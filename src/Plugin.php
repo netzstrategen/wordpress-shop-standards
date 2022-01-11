@@ -108,7 +108,7 @@ class Plugin {
     add_filter('woocommerce_get_settings_shop_standards', __NAMESPACE__ . '\WooCommerce::woocommerce_get_settings_shop_standards');
 
     // Replaces the order ID of imported Amazon orders with the custom order ID.
-    add_filter('woocommerce_amazon_pa_update_checkout_session_payload', __NAMESPACE__ . '\WooCommerce::woocommerce_amazon_pa_update_checkout_session_payload', 10, 3);
+    add_filter('woocommerce_amazon_pa_update_checkout_session_payload', __NAMESPACE__ . '\Amazon::woocommerce_amazon_pa_update_checkout_session_payload', 10, 3);
 
     WooCommerceSaleLabel::init();
     Seo::init();
