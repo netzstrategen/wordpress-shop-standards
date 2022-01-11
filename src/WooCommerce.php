@@ -1257,5 +1257,4 @@ class WooCommerce {
     }
   }
 
-
 }
