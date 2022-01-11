@@ -1,29 +1,28 @@
 <?php
 
 namespace Netzstrategen\ShopStandards;
+
 /**
  * Handles Amazon related functionality.
  */
 class Amazon {
 
   /**
-   * Returns Payload with modified custom order id for Amazon.
+   * Replaces the order ID of imported Amazon orders with the custom order ID.
    * 
-   * @implements woocommerce_amazon_pa_update_checkout_session_payload.
+   * @implements woocommerce_amazon_pa_update_checkout_session_payload
    */
-  public static function woocommerce_amazon_pa_update_checkout_session_payload ($payload, $checkout_session_id, $order) {
-    
-    if (empty($payload) && empty($order) && !self::isAmazonPayV2Checkout()) {
+  public static function woocommerce_amazon_pa_update_checkout_session_payload($payload, $checkout_session_id, $order) {
+    if (empty($payload) || empty($order) || !self::isAmazonPayV2Checkout()) {
       return $payload;
     }
-
     $payload['merchantMetadata']['merchantReferenceId'] = $order->get_order_number();
 
     return $payload;
   }
 
   /**
-   * Check if we are using Amazon V2.
+   * Returns whether we are using Amazon Pay v2.
    *
    * @return bool
    */
