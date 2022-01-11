@@ -29,7 +29,7 @@ class Amazon {
    */
   public static function isAmazonPayV2Checkout(): bool {
     $is_amazon_pay_active = is_plugin_active('woocommerce-gateway-amazon-payments-advanced/woocommerce-gateway-amazon-payments-advanced.php');
-    if ($is_amazon_pay_active && isset(WC()->session)) {
+    if ($is_amazon_pay_active) {
       return defined('WC_AMAZON_PAY_VERSION') && version_compare(WC_AMAZON_PAY_VERSION, '2.0', '>=');
     }
     return false;
