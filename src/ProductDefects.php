@@ -88,9 +88,10 @@ class ProductDefects {
       $status = wc_get_product()->get_variation_attributes()['pa_zustand'][0];
     }
     else {
-      // @TODO 'zustand' is not defined outside of variant type products. Clarify. Item condition? Or Does this mean only show on variants.
+      $status = wc_get_product()->get_attribute('pa_zustand');
     }
-    echo '<div class="checkbox-container">
+    if ($status != 'Originalverpackte Neuware') {
+      echo '<div class="checkbox-container">
       <input required data-checkbox-toggle class="checkbox-box" type="checkbox" id="used-goods-consent" name="used-goods-consent" value="used-goods-consent-true">
       <b>' . get_option(Plugin::PREFIX . '_defect_title_field') . '
         <span class="checkbox-read-more" data-checkbox-detail-expand>' . __('Read More', Plugin::L10N) . '...</span>
@@ -98,9 +99,10 @@ class ProductDefects {
       <div class="checkbox-detail">
        <p>' . get_option(Plugin::PREFIX . '_defect_desc_field') . '</p>
        <p>' . get_option(Plugin::PREFIX . '_defect_attr_desc_field') . '</p>
-       <p>-(z.B.: <span class="zustand">' . $status . '</span>)</p>
+       <p>-(z.B.: <span class="zustand">' . $status ?? '' . '</span>)</p>
       </div>
-    </div>';
+      </div>';
+    }
   }
 
   /**
