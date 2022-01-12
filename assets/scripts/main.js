@@ -114,8 +114,17 @@
     $('.checkbox-read-more').toggleClass('hide');
   });
 
-  $(document).on('show_variation', '.single_variation_wrap', (event, variation) => {
-    const zustand = variation.attributes.attribute_pa_zustand;
-    $('.zustand').text(zustand);
+  $(document).ready(() => {
+    const $checkboxElem = $('.checkbox-container');
+    $(document)
+      .on('show_variation', '.single_variation_wrap', (event, variation) => {
+        const zustand = variation.attributes.attribute_pa_zustand;
+        $checkboxElem.detach();
+        const placeholder = $('.product_meta');
+        if (zustand !== 'originalverpackte-neuware') {
+          $checkboxElem.insertAfter(placeholder);
+          $('.zustand').text(zustand);
+        }
+      });
   });
 }(jQuery));
