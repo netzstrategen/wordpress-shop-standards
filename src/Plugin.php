@@ -57,7 +57,8 @@ class Plugin {
     $active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
     if (in_array('woocommerce-german-market/WooCommerce-German-Market.php', $active_plugins)) {
       // Registers products filter widgets supporting delivery time.
-      add_action('widgets_init', __NAMESPACE__ . '\ProductFilters\DeliveryTime::widgets_init');
+      // Ensures the hook is called with a higher priority than others to work.
+      add_action('widgets_init', __NAMESPACE__ . '\ProductFilters\DeliveryTime::widgets_init', 99);
 
       if (!is_admin()) {
         // Adds custom query variable to filter products by delivery time.

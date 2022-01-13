@@ -7,6 +7,8 @@ namespace Netzstrategen\ShopStandards\ProductFilters;
  */
 class DeliveryTime {
 
+  const HTTP_QUERY_NAME = 'delivery_time';
+
   /**
    * Registers products filter widgets supporting delivery time.
    *
@@ -80,13 +82,11 @@ class DeliveryTime {
    *   Content modified to include given query parameter.
    */
   public static function addFilterToNavLinks(string $html_filter, string $filter_name): string {
-    if ($filter_args = $_GET[$filter_name] ?? []) {
-      $filter_args = array_filter(array_map('absint', explode(',', wp_unslash($filter_args))));
-    }
-    // Return early if filter is currently not active.
-    if (!$filter_args) {
+    if (!$filter_args = $_GET[$filter_name] ?? []) {
+      // Return early if filter is currently not active.
       return $html_filter;
     }
+    $filter_args = array_filter(array_map('absint', explode(',', wp_unslash($filter_args))));
     // Add query parameter to all found hrefs.
     $html_filter = preg_replace_callback('@href="(.+?[^"])"@', function ($match) use ($filter_name, $filter_args) {
       $link = 'href="' . esc_url(add_query_arg($filter_name, implode(',', $filter_args), $match[1])) . '"';
