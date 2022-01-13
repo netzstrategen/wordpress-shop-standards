@@ -21,6 +21,14 @@ class ProductAttributePageTitle {
       ];
     }
 
+    $group_filter[] = [
+      [
+        'param' => 'taxonomy',
+        'operator' => '==',
+        'value' => 'product_cat',
+      ]
+    ];
+
     // Register ACF field.
     ProductAttributePageTitle::register_acf_page_title($group_filter);
   }
