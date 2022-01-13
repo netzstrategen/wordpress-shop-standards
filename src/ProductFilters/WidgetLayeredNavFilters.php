@@ -27,7 +27,7 @@ class WidgetLayeredNavFilters extends \WC_Widget_Layered_Nav_Filters {
     parent::widget($args, $instance);
     $output = ob_get_clean();
     // Return the original widget output when no delivery time is present.
-    if (!isset($_GET[DeliveryTime::DELIVERY_TIME_VAR])) {
+    if (!isset($_GET[DeliveryTime::HTTP_QUERY_NAME])) {
       echo $output;
       return;
     }
@@ -40,8 +40,8 @@ class WidgetLayeredNavFilters extends \WC_Widget_Layered_Nav_Filters {
       $this->widget_end($args);
       $output = ob_get_clean();
     }
-    $output = DeliveryTime::addFilterToNavLinks($output, DeliveryTime::DELIVERY_TIME_VAR);
-    $filter_values = array_filter(array_map('absint', explode(',', wp_unslash($_GET[DeliveryTime::DELIVERY_TIME_VAR]))));
+    $output = DeliveryTime::addFilterToNavLinks($output, DeliveryTime::HTTP_QUERY_NAME);
+    $filter_values = array_filter(array_map('absint', explode(',', wp_unslash($_GET[DeliveryTime::HTTP_QUERY_NAME]))));
     $delivery_times = WidgetFilterDeliveryTime::getProductsDeliveryTimes();
     $delivery_times = wp_list_pluck($delivery_times, 'name', 'term_id');
     $links = [];
@@ -49,10 +49,10 @@ class WidgetLayeredNavFilters extends \WC_Widget_Layered_Nav_Filters {
       // Ensures the applied time filter exists and is valid.
       if ($name = $delivery_times[$filter_value] ?? FALSE) {
         if ($values = array_diff($filter_values, [$filter_value])) {
-          $link = add_query_arg(DeliveryTime::DELIVERY_TIME_VAR, implode(',', $values));
+          $link = add_query_arg(DeliveryTime::HTTP_QUERY_NAME, implode(',', $values));
         }
         else {
-          $link = remove_query_arg(DeliveryTime::DELIVERY_TIME_VAR);
+          $link = remove_query_arg(DeliveryTime::HTTP_QUERY_NAME);
         }
         $links[] = '<li class="chosen"><a rel="nofollow" aria-label="' . esc_attr__('Remove filter', 'woocommerce') . '" href="' . esc_url($link) . '">' . $name . '</a></li>';
       }

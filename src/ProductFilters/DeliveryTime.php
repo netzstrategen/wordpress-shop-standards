@@ -7,7 +7,7 @@ namespace Netzstrategen\ShopStandards\ProductFilters;
  */
 class DeliveryTime {
 
-  const DELIVERY_TIME_VAR = 'delivery_time';
+  const HTTP_QUERY_NAME = 'delivery_time';
 
   /**
    * Registers products filter widgets supporting delivery time.
