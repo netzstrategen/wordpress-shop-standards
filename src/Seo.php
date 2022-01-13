@@ -24,11 +24,6 @@ class Seo {
     // Disables Yoast adjacent links.
     add_filter('wpseo_disable_adjacent_rel_links', __CLASS__ . '::wpseo_disable_adjacent_rel_links');
 
-    // Prevent Google bot from indexing URLs in the JavaScript of the
-    // woocommerce-gateway-amazon-payments-advanced plugin.
-    // WC_Amazon_Payments_Advanced::init_handlers() uses priority 11.
-    add_action('wp_loaded', __CLASS__ . '::wp_loaded', 12);
-
     // To avoid all no-follow links introduced by the products filters sidebar
     // widgets, we convert them into span tags.
     // Removes link tags from list of products filters.
@@ -88,37 +83,6 @@ class Seo {
    */
   public static function wpseo_disable_adjacent_rel_links(): bool {
     return get_option(Plugin::L10N . '_wpseo_disable_adjacent_rel_links');
-  }
-
-  /**
-   * Prevent Google bot from indexing URLs in the JavaScript of the woocommerce-gateway-amazon-payments-advanced plugin.
-   *
-   * @implements wp_loaded
-   */
-  public static function wp_loaded() {
-    if (!function_exists('wc_apa')) {
-      return;
-    }
-    remove_action('wp_head', [wc_apa(), 'init_amazon_login_app_widget']);
-    add_action('wp_head', __CLASS__ . '::wp_head_google_off', 11);
-    add_action('wp_head', [wc_apa(), 'init_amazon_login_app_widget'], 12);
-    add_action('wp_head', __CLASS__ . '::wp_head_google_on', 13);
-  }
-
-  /**
-   * @implements wp_head
-   */
-  public static function wp_head_google_off() {
-    echo '<!--googleoff: index-->
-';
-  }
-
-  /**
-   * @implements wp_head
-   */
-  public static function wp_head_google_on() {
-    echo '<!--googleon: index-->
-';
   }
 
   /**
