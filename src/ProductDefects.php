@@ -92,14 +92,16 @@ class ProductDefects {
     }
     if ($status != 'Originalverpackte Neuware') {
       echo '<div class="checkbox-container">
-      <input required data-checkbox-toggle class="checkbox-box" type="checkbox" id="used-goods-consent" name="used-goods-consent" value="used-goods-consent-true">
-      <b>' . get_option(Plugin::PREFIX . '_defect_title_field') . '
-        <span class="checkbox-read-more" data-checkbox-detail-expand>' . __('Read More', Plugin::L10N) . '...</span>
-      </b>
+      <b>' . get_option(Plugin::PREFIX . '_defect_title_field') . '</b>
       <div class="checkbox-detail">
        <p>' . get_option(Plugin::PREFIX . '_defect_desc_field') . '</p>
        <p>' . get_option(Plugin::PREFIX . '_defect_attr_desc_field') . '</p>
-       <p>-(z.B.: <span class="zustand">' . $status ?? '' . '</span>)</p>
+       <p>
+        <input required data-checkbox-toggle class="checkbox-box" type="checkbox" id="used-goods-consent" name="used-goods-consent" value="used-goods-consent-true"/>
+        -(z.B.: <span class="zustand">';
+      echo $status ?? '';
+      echo '</span>)
+       </p>
       </div>
       </div>';
     }
@@ -231,8 +233,7 @@ class ProductDefects {
    * Passes the variation attribute to jquery object.
    */
   public static function pass_variation_attribute($data, $product, $variation) {
-    // @TODO: Use product_defect and _defective to more finely tune where checkbox consent is output (which variants).
-    // var_dump(get_field(Plugin::L10N . 'product_defect', $variation->get_id()));
+    $data['attribute_pa_zustand_name'] = get_term_by('slug', get_post_meta($variation->get_id(), 'attribute_pa_zustand', TRUE), 'pa_zustand')->name;
     $data['defective'] = get_post_meta($variation->get_id(), '_defective', TRUE);
 
     return $data;

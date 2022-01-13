@@ -13,25 +13,4 @@
 // ProductDefects consent box styling.
 .checkbox-container {
   margin-bottom: 10px;
-
-  .checkbox-read-more {
-    color: var(--c-brand);
-
-    &:hover {
-      color: var(--c-brand-hover);
-      cursor: pointer;
-    }
-
-    &.hide {
-      display: none;
-    }
-  }
-
-  .checkbox-detail {
-    display: none;
-
-    &.expand {
-      display: unset;
-    }
-  }
 }
