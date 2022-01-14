@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Netzstrategen\ShopStandards\UsedGoods.
+ * Contains \Netzstrategen\ShopStandards\ProductDefects.
  */
 
 namespace Netzstrategen\ShopStandards;
@@ -21,27 +21,7 @@ class ProductDefects {
       ProductDefects::logConsent();
     });
 
-    add_action('wp', function () {
-      $show_value = get_post_meta(get_the_ID(), '_' . Plugin::PREFIX . '_show_product_defects_consent');
-      if ($show_value && $show_value[0] === 'yes') {
-        $show_override = TRUE;
-      }
-      else {
-        $show_override = FALSE;
-      }
-
-      $categories_selected = get_option(Plugin::PREFIX . '_add_category_field');
-      if (!empty($categories_selected)) {
-        $show_categories = has_term($categories_selected, 'product_cat', get_the_ID());
-      }
-      else {
-        $show_categories = FALSE;
-      }
-
-      if ($show_override || $show_categories) {
-        add_action('woocommerce_before_add_to_cart_button', __CLASS__ . '::displayCheckbox');
-      }
-    });
+    add_action('wp', __CLASS__ . '::displayCheckboxCheck');
 
     add_filter('woocommerce_available_variation', __CLASS__ . '::pass_variation_attribute', 10, 3);
 
@@ -56,6 +36,31 @@ class ProductDefects {
     add_action('woocommerce_update_product_variation', __CLASS__ . '::update_variant_option', 10, 1);
     add_action('woocommerce_save_product_variation', __CLASS__ . '::save_product_defective_type', 10, 1);
     add_filter('woocommerce_get_settings_shop_standards', __CLASS__ . '::woocommerce_get_settings_shop_standards');
+  }
+
+  /**
+   * Determines if defective or used checkbox consent should be shown based on settings.
+   */
+  public static function displayCheckboxCheck() {
+    $show_value = get_post_meta(get_the_ID(), '_' . Plugin::PREFIX . '_show_product_defects_consent');
+    if ($show_value && $show_value[0] === 'yes') {
+      $show_override = TRUE;
+    }
+    else {
+      $show_override = FALSE;
+    }
+
+    $categories_selected = get_option(Plugin::PREFIX . '_add_category_field');
+    if (!empty($categories_selected)) {
+      $show_categories = has_term($categories_selected, 'product_cat', get_the_ID());
+    }
+    else {
+      $show_categories = FALSE;
+    }
+
+    if ($show_override || $show_categories) {
+      add_action('woocommerce_before_add_to_cart_button', __CLASS__ . '::displayCheckbox');
+    }
   }
 
   /**
@@ -234,6 +239,7 @@ class ProductDefects {
    */
   public static function pass_variation_attribute($data, $product, $variation) {
     $data['attribute_pa_zustand_name'] = get_term_by('slug', get_post_meta($variation->get_id(), 'attribute_pa_zustand', TRUE), 'pa_zustand')->name;
+    // @TODO: This feature is not necessary right now but the following does not return the true or false variable. Would be nice to keep supporting code anyways in case we need it in future.
     $data['defective'] = get_post_meta($variation->get_id(), '_defective', TRUE);
 
     return $data;
