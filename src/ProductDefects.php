@@ -99,7 +99,9 @@ class ProductDefects {
        <input required data-checkbox-toggle class="checkbox-box" type="checkbox" id="used-goods-consent" name="used-goods-consent" value="used-goods-consent-true"/>
        <span>' . get_option(Plugin::PREFIX . '_defect_attr_desc_field') . '</span>
        </p>
-       <span class="zustand">' . $status ?? '' . '</span>
+       <span class="zustand">';
+      echo $status ?? '';
+      echo '</span>
       </div>
       </div>';
     }
