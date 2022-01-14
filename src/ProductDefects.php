@@ -65,7 +65,7 @@ class ProductDefects {
     $uploads_dir = wp_upload_dir()['basedir'] . '/' . Plugin::PREFIX;
     $logFile = $uploads_dir . '/defects-consent.log';
     if (!dir($uploads_dir)) {
-      mkdir($uploads_dir);
+      wp_mkdir_p($uploads_dir);
     }
     $data = [
       'timestamp' => date_i18n('c'),
@@ -95,13 +95,11 @@ class ProductDefects {
       <b>' . get_option(Plugin::PREFIX . '_defect_title_field') . '</b>
       <div class="checkbox-detail">
        <p>' . get_option(Plugin::PREFIX . '_defect_desc_field') . '</p>
-       <p>' . get_option(Plugin::PREFIX . '_defect_attr_desc_field') . '</p>
        <p>
-        <input required data-checkbox-toggle class="checkbox-box" type="checkbox" id="used-goods-consent" name="used-goods-consent" value="used-goods-consent-true"/>
-        -(z.B.: <span class="zustand">';
-      echo $status ?? '';
-      echo '</span>)
+       <input required data-checkbox-toggle class="checkbox-box" type="checkbox" id="used-goods-consent" name="used-goods-consent" value="used-goods-consent-true"/>
+       <span>' . get_option(Plugin::PREFIX . '_defect_attr_desc_field') . '</span>
        </p>
+       <span class="zustand">' . $status ?? '' . '</span>
       </div>
       </div>';
     }
