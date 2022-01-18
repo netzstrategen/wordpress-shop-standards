@@ -34,7 +34,7 @@ class PlusProducts {
       'type' => 'select',
       'id' => '_' . Plugin::L10N . '_plus_products_category',
       'name' => __('Plus Products Category', Plugin::L10N),
-      'options' => WooCommerce::getTaxonomyTermsAsSelectOptions('product_cat'),
+      'options' => WooCommerce::getTaxonomyTermsAsSelectOptions(ProductsPermalinks::TAX_PRODUCT_CAT),
     ];
     $settings[] = [
       'type' => 'sectionend',

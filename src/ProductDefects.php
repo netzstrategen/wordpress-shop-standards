@@ -12,6 +12,11 @@ namespace Netzstrategen\ShopStandards;
  */
 class ProductDefects {
 
+  const FIELD_PRODUCTS_CATEGORIES = Plugin::PREFIX . '_product_defects_categories';
+  const FIELD_TITLE_TEXT = Plugin::PREFIX . '_product__defects_title_text';
+  const FIELD_DESCRIPTION_TEXT = Plugin::PREFIX . '_product_defects_description_text';
+  const FIELD_ATTRIBUTE_TEXT = Plugin::PREFIX . '_product_defects_attr_text';
+
   /**
    * Checkbox consent initialization method.
    */
@@ -52,7 +57,7 @@ class ProductDefects {
 
     $categories_selected = get_option(Plugin::PREFIX . '_add_category_field');
     if (!empty($categories_selected)) {
-      $show_categories = has_term($categories_selected, 'product_cat', get_the_ID());
+      $show_categories = has_term($categories_selected, ProductsPermalinks::TAX_PRODUCT_CAT, get_the_ID());
     }
     else {
       $show_categories = FALSE;
@@ -97,12 +102,12 @@ class ProductDefects {
     }
     if ($status != 'Originalverpackte Neuware') {
       echo '<div class="checkbox-container">
-      <b>' . get_option(Plugin::PREFIX . '_defect_title_field') . '</b>
+      <b>' . get_option(self::FIELD_TITLE_TEXT) . '</b>
       <div class="checkbox-detail">
-       <p>' . get_option(Plugin::PREFIX . '_defect_desc_field') . '</p>
+       <p>' . get_option(self::FIELD_DESCRIPTION_TEXT) . '</p>
        <p>
        <input required data-checkbox-toggle class="checkbox-box" type="checkbox" id="used-goods-consent" name="used-goods-consent" value="used-goods-consent-true"/>
-       <span>' . get_option(Plugin::PREFIX . '_defect_attr_desc_field') . '</span>
+       <span>' . get_option(self::FIELD_ATTRIBUTE_TEXT) . '</span>
        </p>
        <span class="zustand">';
       echo $status ?? '';
@@ -118,38 +123,41 @@ class ProductDefects {
    * @implements woocommerce_get_settings_shop_standards
    */
   public static function woocommerce_get_settings_shop_standards(array $settings): array {
-    $settings[] = [
-      'type' => 'title',
-      'name' => __('Product Defects Settings', Plugin::L10N),
+    $module_settings = [
+      [
+        'type' => 'title',
+        'name' => __('Product Defects Settings', Plugin::L10N),
+      ],
+      [
+        'type' => 'multiselect',
+        'title' => __('Categories', Plugin::L10N),
+        'desc' => __('Add a category to product defects consent.', Plugin::L10N),
+        'id' => self::FIELD_PRODUCTS_CATEGORIES,
+        'options' => WooCommerce::getTaxonomyTermsAsSelectOptions(ProductsPermalinks::TAX_PRODUCT_CAT, 'name'),
+        'multiple' => 1,
+      ],
+      [
+        'type' => 'text',
+        'title' => __('Title text', Plugin::L10N),
+        'id' => self::FIELD_TITLE_TEXT,
+      ],
+      [
+        'type' => 'textarea',
+        'title' => __('Description text', Plugin::L10N),
+        'id' => self::FIELD_DESCRIPTION_TEXT,
+      ],
+      [
+        'type' => 'text',
+        'title' => __('Description before product attribute text', Plugin::L10N),
+        'id' => self::FIELD_ATTRIBUTE_TEXT,
+      ],
+      [
+        'type' => 'sectionend',
+        'id' => Plugin::L10N . '_product_defects_section',
+      ]
     ];
-    $settings[] = [
-      'type' => 'multiselect',
-      'title' => __('Categories', Plugin::L10N),
-      'desc' => __('Add a category to product defects consent.', Plugin::L10N),
-      'id' => Plugin::PREFIX . '_add_category_field',
-      'options' => WooCommerce::getTaxonomyTermsAsSelectOptions('product_cat'),
-      'multiple' => 1,
-    ];
-    $settings[] = [
-      'type' => 'text',
-      'title' => __('Title text', Plugin::L10N),
-      'id' => Plugin::PREFIX . '_defect_title_field',
-    ];
-    $settings[] = [
-      'type' => 'text',
-      'title' => __('Description text', Plugin::L10N),
-      'id' => Plugin::PREFIX . '_defect_desc_field',
-    ];
-    $settings[] = [
-      'type' => 'text',
-      'title' => __('Description before status attribute text', Plugin::L10N),
-      'id' => Plugin::PREFIX . '_defect_attr_desc_field',
-    ];
-    $settings[] = [
-      'type' => 'sectionend',
-      'id' => Plugin::L10N,
-    ];
-    return $settings;
+
+    return array_merge($settings, $module_settings);
   }
 
   /**
