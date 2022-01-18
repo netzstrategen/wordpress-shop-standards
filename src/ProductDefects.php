@@ -27,7 +27,9 @@ class ProductDefects {
       ProductDefects::logConsent();
     });
 
-    add_action('wp', __CLASS__ . '::displayCheckboxCheck');
+    if (self::should_display_checkbox()) {
+      add_action('woocommerce_before_add_to_cart_button', __CLASS__ . '::displayCheckbox');
+    }
 
     add_filter('woocommerce_available_variation', __CLASS__ . '::pass_variation_attribute', 10, 3);
 
@@ -47,26 +49,15 @@ class ProductDefects {
   /**
    * Determines if defective or used checkbox consent should be shown based on settings.
    */
-  public static function displayCheckboxCheck() {
-    $show_value = get_post_meta(get_the_ID(), '_' . Plugin::PREFIX . '_show_product_defects_consent');
-    if ($show_value && $show_value[0] === 'yes') {
-      $show_override = TRUE;
+  public static function should_display_checkbox(): bool {
+    $post = get_post();
+    $marked_option = get_post_meta($post->ID, WooCommerce::FIELD_SHOW_PRODUCT_DEFECTS_CONSENT, true);
+    $display_check = $marked_option === 'yes';
+    if ($display_check) {
+      return TRUE;
     }
-    else {
-      $show_override = FALSE;
-    }
-
-    $categories_selected = get_option(Plugin::PREFIX . '_add_category_field');
-    if (!empty($categories_selected)) {
-      $show_categories = has_term($categories_selected, ProductsPermalinks::TAX_PRODUCT_CAT, get_the_ID());
-    }
-    else {
-      $show_categories = FALSE;
-    }
-
-    if ($show_override || $show_categories) {
-      add_action('woocommerce_before_add_to_cart_button', __CLASS__ . '::displayCheckbox');
-    }
+    $categories_selected = get_option(self::FIELD_PRODUCTS_CATEGORIES);
+    return !empty($categories_selected) && has_term($categories_selected, ProductsPermalinks::TAX_PRODUCT_CAT, $post->ID);
   }
 
   /**
