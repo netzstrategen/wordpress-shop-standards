@@ -1028,6 +1028,20 @@ class WooCommerce {
   }
 
   /**
+   * Returns the entire list of registered product attributes.
+   *
+   * @return array
+   */
+  public static function getAvailableAttributes(): array {
+    $attributes = [];
+    foreach (wc_get_attribute_taxonomies() as $attr) {
+      $attributes[$attr->attribute_id] = $attr->attribute_label;
+    }
+    sort($attributes);
+    return $attributes;
+  }
+
+  /**
    * Retrieves the earliest "back in stock" date from a product or its variations.
    * If there's stock, the product is considered available and nothing is returned.
    *

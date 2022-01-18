@@ -16,6 +16,7 @@ class ProductDefects {
   const FIELD_TITLE_TEXT = Plugin::PREFIX . '_product__defects_title_text';
   const FIELD_DESCRIPTION_TEXT = Plugin::PREFIX . '_product_defects_description_text';
   const FIELD_ATTRIBUTE_TEXT = Plugin::PREFIX . '_product_defects_attr_text';
+  const FIELD_PRODUCT_ATTRIBUTE = Plugin::L10N . '_product_defects_attribute_id';
 
   /**
    * Checkbox consent initialization method.
@@ -150,6 +151,12 @@ class ProductDefects {
         'type' => 'text',
         'title' => __('Description before product attribute text', Plugin::L10N),
         'id' => self::FIELD_ATTRIBUTE_TEXT,
+      ],
+      [
+        'type' => 'select',
+        'id' => self::FIELD_PRODUCT_ATTRIBUTE,
+        'name' => __('Product attribute to display', Plugin::L10N),
+        'options' => ['' => __('None', Plugin::L10N)] + WooCommerce::getAvailableAttributes(),
       ],
       [
         'type' => 'sectionend',
