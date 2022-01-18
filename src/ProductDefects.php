@@ -133,7 +133,7 @@ class ProductDefects {
         'title' => __('Categories', Plugin::L10N),
         'desc' => __('Add a category to product defects consent.', Plugin::L10N),
         'id' => self::FIELD_PRODUCTS_CATEGORIES,
-        'options' => WooCommerce::getTaxonomyTermsAsSelectOptions(ProductsPermalinks::TAX_PRODUCT_CAT, 'name'),
+        'options' => WooCommerce::getTaxonomyTermsAsSelectOptions(ProductsPermalinks::TAX_PRODUCT_CAT, ['orderby' => 'name']),
         'multiple' => 1,
       ],
       [

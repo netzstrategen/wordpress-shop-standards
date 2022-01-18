@@ -1018,13 +1018,12 @@ class WooCommerce {
   /**
    * Prepares taxonomy terms as select field options.
    */
-  public static function getTaxonomyTermsAsSelectOptions($taxonomy, string $orderBy = null) {
-    $terms = get_terms([
+  public static function getTaxonomyTermsAsSelectOptions($taxonomy, array $args = []) {
+    $terms = get_terms(array_merge([
       'taxonomy' => $taxonomy,
       'fields' => 'id=>name',
       'hide_empty' => false,
-      'orderby' => $orderBy,
-    ]);
+    ], $args));
     return is_wp_error($terms) ? [] : $terms;
   }
 
