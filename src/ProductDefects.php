@@ -23,12 +23,10 @@ class ProductDefects {
    */
   public static function init() {
     // Logs consent to defective or used product when product is added to cart.
-    add_action('woocommerce_add_to_cart', function () {
-      ProductDefects::logConsent();
-    });
+    add_action('woocommerce_add_to_cart', __CLASS__ . '::log_consent_file');
 
     if (self::should_display_checkbox()) {
-      add_action('woocommerce_before_add_to_cart_button', __CLASS__ . '::displayCheckbox');
+      add_action('woocommerce_before_add_to_cart_button', __CLASS__ . '::woocommerce_before_add_to_cart_button');
     }
 
     add_filter('woocommerce_available_variation', __CLASS__ . '::pass_variation_attribute', 10, 3);
@@ -63,9 +61,13 @@ class ProductDefects {
   /**
    * Logs consent to defective or used product.
    */
-  public static function logConsent() {
+  public static function log_consent_file() {
+    if (!isset($_POST['used-goods-consent'])) {
+      return;
+    }
+
     $uploads_dir = wp_upload_dir()['basedir'] . '/' . Plugin::PREFIX;
-    $logFile = $uploads_dir . '/defects-consent.log';
+    $log_file = $uploads_dir . '/defects-consent.log';
     if (!dir($uploads_dir)) {
       wp_mkdir_p($uploads_dir);
     }
@@ -77,13 +79,13 @@ class ProductDefects {
       'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? '',
     ];
     $data = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-    file_put_contents($logFile, $data . "\n", 8);
+    file_put_contents($log_file, $data . "\n", FILE_APPEND);
   }
 
   /**
    * Displays the checkbox and agreement text.
    */
-  public static function displayCheckbox() {
+  public static function woocommerce_before_add_to_cart_button() {
     global $product;
     if ($product->is_type('variable')) {
       // This is to initially set the status variable before js sets it dynamically on variant selection.
