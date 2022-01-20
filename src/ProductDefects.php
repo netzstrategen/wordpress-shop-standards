@@ -22,12 +22,7 @@ class ProductDefects {
    * Checkbox consent initialization method.
    */
   public static function init() {
-    // Logs consent to defective or used product when product is added to cart.
-    add_action('woocommerce_add_to_cart', __CLASS__ . '::log_consent_file');
-
-    if (self::should_display_checkbox()) {
-      add_action('woocommerce_before_add_to_cart_button', __CLASS__ . '::woocommerce_before_add_to_cart_button');
-    }
+    add_action('wp', __CLASS__ . '::should_display_product_checkbox');
 
     add_filter('woocommerce_available_variation', __CLASS__ . '::pass_variation_attribute', 10, 3);
 
@@ -46,20 +41,35 @@ class ProductDefects {
 
   /**
    * Determines if defective or used checkbox consent should be shown based on settings.
+   *
+   * @implemements wp
    */
-  public static function should_display_checkbox(): bool {
+  public static function should_display_product_checkbox() {
     $post = get_post();
+    if (!$post || $post->post_type !== 'product') {
+      // Make sure the current post is a valid product.
+      return;
+    }
+
     $marked_option = get_post_meta($post->ID, WooCommerce::FIELD_SHOW_PRODUCT_DEFECTS_CONSENT, true);
     $display_check = $marked_option === 'yes';
-    if ($display_check) {
-      return TRUE;
+    if (!$display_check) {
+      // Execute this query only if the first condition was not met.
+      $categories_selected = get_option(self::FIELD_PRODUCTS_CATEGORIES);
+      $has_categories = !empty($categories_selected) && has_term($categories_selected, ProductsPermalinks::TAX_PRODUCT_CAT, $post->ID);
     }
-    $categories_selected = get_option(self::FIELD_PRODUCTS_CATEGORIES);
-    return !empty($categories_selected) && has_term($categories_selected, ProductsPermalinks::TAX_PRODUCT_CAT, $post->ID);
+
+    if ($display_check || $has_categories) {
+      add_action('woocommerce_before_add_to_cart_button', __CLASS__ . '::woocommerce_before_add_to_cart_button');
+      // Logs consent to defective or used product when product is added to cart.
+      add_action('woocommerce_add_to_cart', __CLASS__ . '::log_consent_file');
+    }
   }
 
   /**
    * Logs consent to defective or used product.
+   *
+   * @implemements woocommerce_add_to_cart
    */
   public static function log_consent_file() {
     if (!isset($_POST['used-goods-consent'])) {
@@ -84,31 +94,35 @@ class ProductDefects {
 
   /**
    * Displays the checkbox and agreement text.
+   *
+   * @implemements woocommerce_before_add_to_cart_button
    */
   public static function woocommerce_before_add_to_cart_button() {
-    global $product;
-    if ($product->is_type('variable')) {
-      // This is to initially set the status variable before js sets it dynamically on variant selection.
-      $status = wc_get_product()->get_variation_attributes()['pa_zustand'][0];
+    $product_attribute = get_option(self::FIELD_PRODUCT_ATTRIBUTE);
+    if(!empty($product_attribute)){
+      /** @var \WC_Product $product */
+      $product = wc_get_product();
+      if ($product->is_type('variable')) {
+        // This is to initially set the status variable before js sets it dynamically on variant selection.
+        $attribute_value = wc_get_product()->get_variation_attributes()[$product_attribute][0];
+      }
+      else {
+        $attribute_value = wc_get_product()->get_attribute($product_attribute);
+      }
     }
-    else {
-      $status = wc_get_product()->get_attribute('pa_zustand');
-    }
-    if ($status != 'Originalverpackte Neuware') {
-      echo '<div class="checkbox-container">
-      <b>' . get_option(self::FIELD_TITLE_TEXT) . '</b>
-      <div class="checkbox-detail">
-       <p>' . get_option(self::FIELD_DESCRIPTION_TEXT) . '</p>
-       <p>
-       <input required data-checkbox-toggle class="checkbox-box" type="checkbox" id="used-goods-consent" name="used-goods-consent" value="used-goods-consent-true"/>
-       <span>' . get_option(self::FIELD_ATTRIBUTE_TEXT) . '</span>
-       </p>
-       <span class="zustand">';
-      echo $status ?? '';
-      echo '</span>
-      </div>
-      </div>';
-    }
+    echo '<div class="product-defects__checkbox-container">
+    <b>' . get_option(self::FIELD_TITLE_TEXT) . '</b>
+    <div class="product-defects__checkbox-detail">
+     <p>' . get_option(self::FIELD_DESCRIPTION_TEXT) . '</p>
+     <p>
+     <input required data-checkbox-toggle class="checkbox-box" type="checkbox" id="used-goods-consent" name="used-goods-consent" value="used-goods-consent-true"/>
+     <span>' . get_option(self::FIELD_ATTRIBUTE_TEXT) . '</span>
+     </p>
+     <span class="product-defects__attribute">';
+    echo $attribute_value ?? '';
+    echo '</span>
+    </div>
+    </div>';
   }
 
   /**
@@ -163,7 +177,7 @@ class ProductDefects {
   /**
    * Adds defective/used goods checkmark to variant level.
    *
-   * @wp-hook woocommerce_variation_options
+   * @implemements woocommerce_variation_options
    */
   public static function add_variant_option($loop, $variation_data, $variation) {
     $_defect = get_post_meta($variation->ID, '_defective', TRUE);

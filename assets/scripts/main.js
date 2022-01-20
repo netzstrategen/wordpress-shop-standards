@@ -110,16 +110,23 @@
 
   // Used and defective goods checkbox agreement related functionality.
   $(document).ready(() => {
-    const $checkboxElem = $('.checkbox-container');
-    $(document)
-      .on('show_variation', '.single_variation_wrap', (event, variation) => {
-        const zustand = variation.attribute_pa_zustand_name;
-        $checkboxElem.detach();
-        const placeholder = $('.product_meta');
-        if (zustand !== 'Originalverpackte Neuware') {
-          $checkboxElem.insertAfter(placeholder);
-          $('.zustand').text(zustand);
-        }
-      });
+    const $checkboxEl = $('#used-goods-consent');
+    console.log($checkboxEl);
+    if (!$checkboxEl.length) {
+      return;
+    }
+    const $addToCartButton = $('.cart');
+    console.log($addToCartButton);
+    $addToCartButton.prop('disabled', 'disabled');
+    // $(document)
+    //   .on('show_variation', '.single_variation_wrap', (event, variation) => {
+    //     const zustand = variation.attribute_pa_zustand_name;
+    //     $checkboxElem.detach();
+    //     const placeholder = $('.product_meta');
+    //     if (zustand !== 'Originalverpackte Neuware') {
+    //       $checkboxElem.insertAfter(placeholder);
+    //       $('.zustand').text(zustand);
+    //     }
+    //   });
   });
 }(jQuery));
