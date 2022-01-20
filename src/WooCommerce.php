@@ -17,7 +17,6 @@ class WooCommerce {
   const FIELD_GTIN = '_' . Plugin::PREFIX . '_gtin';
   const FIELD_BACK_IN_STOCK_DATE = '_' . Plugin::PREFIX . '_back_in_stock_date';
   const FIELD_DISABLE_RELATED_PRODUCTS = '_' . Plugin::PREFIX . '_disable_related_products';
-  const FIELD_SHOW_PRODUCT_DEFECTS_CONSENT = '_' . Plugin::PREFIX . '_show_product_defects_consent';
 
   /**
    * Adds woocommerce specific settings.
@@ -427,7 +426,6 @@ class WooCommerce {
       self::FIELD_MARKETING_FOCUS,
       self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL,
       self::FIELD_DISABLE_RELATED_PRODUCTS,
-      self::FIELD_SHOW_PRODUCT_DEFECTS_CONSENT,
     ];
 
     foreach ($custom_fields_checkbox as $field) {
@@ -595,14 +593,6 @@ class WooCommerce {
       'id' => self::FIELD_MARKETING_FOCUS,
       'label' => __('Marketing focus product', Plugin::L10N),
       'value' => get_post_meta($variation->ID, self::FIELD_MARKETING_FOCUS, TRUE),
-    ]);
-    echo '</div>';
-    // Product Defects
-    echo '<div style="clear:both">';
-    woocommerce_wp_checkbox([
-      'id' => self::FIELD_SHOW_PRODUCT_DEFECTS_CONSENT,
-      'label' => __('Product Defects', Plugin::L10N),
-      'value' => get_post_meta($variation->ID, self::FIELD_SHOW_PRODUCT_DEFECTS_CONSENT, TRUE),
     ]);
     echo '</div>';
   }

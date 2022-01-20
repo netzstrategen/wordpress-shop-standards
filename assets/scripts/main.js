@@ -115,7 +115,6 @@
     if ($usedGoodsConsentCheckbox.length) {
       $(document)
         .on('show_variation', '.single_variation_wrap', (event, variation) => {
-          console.log(variation);
           const usedGoodsConsentAttr = variation.used_goods_consent_attribute;
           $('.product-defects__attribute').text(usedGoodsConsentAttr);
           if (usedGoodsConsentAttr) {
