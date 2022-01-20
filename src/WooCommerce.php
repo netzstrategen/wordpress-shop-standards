@@ -333,13 +333,6 @@ class WooCommerce {
       'label' => __('Marketing focus product', Plugin::L10N),
     ]);
     echo '</div>';
-    // Show `used or defective goods` checkbox.
-    echo '<div class="options_group">';
-    woocommerce_wp_checkbox([
-      'id' => self::FIELD_SHOW_PRODUCT_DEFECTS_CONSENT,
-      'label' => __('Display used or defective goods consent agreement', Plugin::L10N),
-    ]);
-    echo '</div>';
   }
 
   /**

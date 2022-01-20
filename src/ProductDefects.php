@@ -115,12 +115,13 @@ class ProductDefects {
 
   /**
    * Passes the variation attribute to jquery object.
+   *
+   * @implemements woocommerce_available_variation
    */
   public static function pass_variation_attribute($data, $product, $variation) {
     $data['used_goods_consent_attribute'] = self::get_display_product_attribute($variation);
     return $data;
   }
-
 
   /**
    * Adds checkout specific settings.
@@ -168,4 +169,5 @@ class ProductDefects {
 
     return array_merge($settings, $module_settings);
   }
+
 }
