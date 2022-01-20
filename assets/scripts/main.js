@@ -110,23 +110,22 @@
 
   // Used and defective goods checkbox agreement related functionality.
   $(document).ready(() => {
-    const $checkboxEl = $('#used-goods-consent');
-    console.log($checkboxEl);
-    if (!$checkboxEl.length) {
-      return;
+    const $usedGoodsConsentCheckbox = $('#used-goods-consent');
+    const $usedGoodsConsentContainer = $('.product-defects__checkbox-container');
+    if ($usedGoodsConsentCheckbox.length) {
+      $(document)
+        .on('show_variation', '.single_variation_wrap', (event, variation) => {
+          console.log(variation);
+          const usedGoodsConsentAttr = variation.used_goods_consent_attribute;
+          $('.product-defects__attribute').text(usedGoodsConsentAttr);
+          if (usedGoodsConsentAttr) {
+            $usedGoodsConsentContainer.show();
+            $usedGoodsConsentCheckbox.prop('required', 'required');
+          } else {
+            $usedGoodsConsentContainer.hide();
+            $usedGoodsConsentCheckbox.removeAttr('required');
+          }
+        });
     }
-    const $addToCartButton = $('.cart');
-    console.log($addToCartButton);
-    $addToCartButton.prop('disabled', 'disabled');
-    // $(document)
-    //   .on('show_variation', '.single_variation_wrap', (event, variation) => {
-    //     const zustand = variation.attribute_pa_zustand_name;
-    //     $checkboxElem.detach();
-    //     const placeholder = $('.product_meta');
-    //     if (zustand !== 'Originalverpackte Neuware') {
-    //       $checkboxElem.insertAfter(placeholder);
-    //       $('.zustand').text(zustand);
-    //     }
-    //   });
   });
 }(jQuery));

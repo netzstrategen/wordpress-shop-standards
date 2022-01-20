@@ -1035,9 +1035,9 @@ class WooCommerce {
   public static function getAvailableAttributes(): array {
     $attributes = [];
     foreach (wc_get_attribute_taxonomies() as $attr) {
-      $attributes[$attr->attribute_id] = $attr->attribute_label;
+      $attributes[$attr->attribute_name] = $attr->attribute_label;
     }
-    sort($attributes);
+    asort($attributes);
     return $attributes;
   }
 
