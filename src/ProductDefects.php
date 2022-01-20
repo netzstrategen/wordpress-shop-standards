@@ -97,19 +97,7 @@ class ProductDefects {
    * @implemements woocommerce_before_add_to_cart_button
    */
   public static function woocommerce_before_add_to_cart_button() {
-    $product_attribute = get_option(self::FIELD_PRODUCT_ATTRIBUTE_NAME);
-    if (!empty($product_attribute)) {
-      $product_attribute = 'pa_' . $product_attribute;
-      /** @var \WC_Product $product */
-      $product = wc_get_product();
-      if ($product->is_type('variable')) {
-        // This is to initially set the status variable before js sets it dynamically on variant selection.
-        $attribute_value = wc_get_product()->get_variation_attributes()[$product_attribute][0];
-      }
-      else {
-        $attribute_value = wc_get_product()->get_attribute($product_attribute);
-      }
-    }
+    $product_attribute = self::get_display_product_attribute(wc_get_product());
     echo '<div class="product-defects__checkbox-container">
     <b>' . get_option(self::FIELD_TITLE_TEXT) . '</b>
     <div class="product-defects__checkbox-detail">
@@ -119,7 +107,7 @@ class ProductDefects {
      <span>' . get_option(self::FIELD_ATTRIBUTE_TEXT) . '</span>
      </p>
      <span class="product-defects__attribute">';
-    echo $attribute_value ?? '';
+    echo $product_attribute;
     echo '</span>
     </div>
     </div>';
