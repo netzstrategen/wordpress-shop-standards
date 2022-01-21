@@ -22,23 +22,9 @@ class ProductDefects {
    * Checkbox consent initialization method.
    */
   public static function init() {
-    add_action('wp', __CLASS__ . '::display_product_checkbox');
+    add_action('woocommerce_before_add_to_cart_button', __CLASS__ . '::woocommerce_before_add_to_cart_button');
     add_filter('woocommerce_available_variation', __CLASS__ . '::pass_variation_attribute', 10, 3);
     add_filter('woocommerce_get_settings_shop_standards', __CLASS__ . '::woocommerce_get_settings_shop_standards');
-  }
-
-  /**
-   * Determines if defective or used checkbox consent should be shown based on settings.
-   *
-   * @implemements wp
-   */
-  public static function display_product_checkbox() {
-    if (!is_product()) {
-      return;
-    }
-    if (self::get_display_product_attribute(wc_get_product())) {
-      add_action('woocommerce_before_add_to_cart_button', __CLASS__ . '::woocommerce_before_add_to_cart_button');
-    }
   }
 
   /**
@@ -68,6 +54,10 @@ class ProductDefects {
    */
   public static function woocommerce_before_add_to_cart_button() {
     $product_attribute = self::get_display_product_attribute(wc_get_product());
+    if (empty($product_attribute)) {
+      return;
+    }
+
     echo '<div class="product-defects__checkbox-container">
     <b>' . get_option(self::FIELD_TITLE_TEXT) . '</b>
     <div class="product-defects__checkbox-detail">
