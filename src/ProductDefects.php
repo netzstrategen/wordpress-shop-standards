@@ -33,12 +33,10 @@ class ProductDefects {
    * @implemements wp
    */
   public static function display_product_checkbox() {
-    $product = wc_get_product();
-    if (!$product) {
+    if (!is_product()) {
       return;
     }
-
-    if (self::get_display_product_attribute($product)) {
+    if (self::get_display_product_attribute(wc_get_product())) {
       add_action('woocommerce_before_add_to_cart_button', __CLASS__ . '::woocommerce_before_add_to_cart_button');
       // Logs consent to defective or used product when product is added to cart.
       add_action('woocommerce_add_to_cart', __CLASS__ . '::log_consent_file');
