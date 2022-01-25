@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2021-12-16 07:17-0600\n"
+"POT-Creation-Date: 2022-01-25 14:36+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Fabian Marz <fabian@netzstrategen.com>\n"
 "Language-Team: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: src/Admin.php:65 src/WooCommerce.php:1210
+#: src/Admin.php:65 src/WooCommerce.php:1219
 #, php-format
 msgid ""
 "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in "
@@ -24,35 +24,35 @@ msgstr ""
 msgid "The entered GTIN is unique."
 msgstr "Diese GTIN wird noch nicht verwendet."
 
-#: src/Plugin.php:85 src/Plugin.php:86 src/Plugin.php:258 src/Plugin.php:297
+#: src/Plugin.php:85 src/Plugin.php:86 src/Plugin.php:259 src/Plugin.php:298
 msgid "Hide \"Add to Cart\" button"
 msgstr "“In den Warenkorb”-Verhalten"
 
-#: src/Plugin.php:262
+#: src/Plugin.php:263
 msgid "Product categories"
 msgstr "Produktkategorien"
 
-#: src/Plugin.php:263
+#: src/Plugin.php:264
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
 "ausgeblendet."
 
-#: src/Plugin.php:275
+#: src/Plugin.php:276
 msgid "Product brands"
 msgstr "Produktmarken"
 
-#: src/Plugin.php:276
+#: src/Plugin.php:277
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
 "ausgeblendet."
 
-#: src/Plugin.php:288
+#: src/Plugin.php:289
 msgid "Notice"
 msgstr "Hinweis"
 
-#: src/Plugin.php:290
+#: src/Plugin.php:291
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 "Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
@@ -87,6 +87,38 @@ msgid ""
 "Only changes how the name appears on the page. Leaves the filter drop-down "
 "menu alone."
 msgstr ""
+
+#: src/ProductDefects.php:95
+msgid "Product Defects Settings"
+msgstr "Einstellungen defekte Produkte"
+
+#: src/ProductDefects.php:100
+msgid "Product attribute to verify"
+msgstr "Zu prüfendes Produktattribut"
+
+#: src/ProductDefects.php:101
+msgid "None"
+msgstr ""
+
+#: src/ProductDefects.php:105
+msgid "Target value for attribute"
+msgstr ""
+
+#: src/ProductDefects.php:107
+msgid "Enter the only value on which the checkbox must not be shown"
+msgstr "Eingabe der einzigen Ausprägung, bei der keine Checkbox angezeigt wird"
+
+#: src/ProductDefects.php:111
+msgid "Title text"
+msgstr "Titeltext"
+
+#: src/ProductDefects.php:116
+msgid "Description text"
+msgstr "Beschreibungstext"
+
+#: src/ProductDefects.php:121
+msgid "Checkbox label text"
+msgstr "Checkbox Label Text"
 
 #: src/ProductFilters/WidgetFilterDeliveryTime.php:31
 msgid "Filter Products by Delivery Time"
@@ -280,37 +312,37 @@ msgstr ""
 msgid "Product "
 msgstr "Produkt "
 
-#: src/WooCommerce.php:1120
+#: src/WooCommerce.php:1129
 msgid "Delivery Time: from"
 msgstr "Lieferzeit: ab"
 
-#: src/WooCommerce.php:1134
+#: src/WooCommerce.php:1143
 #, php-format
 msgid "from %1$s"
 msgstr "ab %1$s"
 
-#: src/WooCommerceCheckout.php:50
+#: src/WooCommerceCheckout.php:57
 #, php-format
 msgid "%s is a required field."
 msgstr ""
 
-#: src/WooCommerceCheckout.php:54
+#: src/WooCommerceCheckout.php:61
 msgid "Invalid format"
 msgstr "Ungültiges Format"
 
-#: src/WooCommerceCheckout.php:72
+#: src/WooCommerceCheckout.php:79
 msgid "Checkout settings"
 msgstr "Einstellungen Bestellprozess"
 
-#: src/WooCommerceCheckout.php:77
+#: src/WooCommerceCheckout.php:84
 msgid "Require users to enter billing email address twice"
 msgstr "Nutzer zur erneuten Eingabe der E-Mail-Adresse auffordern"
 
-#: src/WooCommerceCheckout.php:101
+#: src/WooCommerceCheckout.php:108
 msgid "Repeat e-mail address"
 msgstr "E-Mail-Adresse wiederholen"
 
-#: src/WooCommerceCheckout.php:117
+#: src/WooCommerceCheckout.php:124
 msgid "Your email addresses do not match"
 msgstr ""
 "Ihre E-Mail-Adressen stimmen nicht überein. Bitte überprüfen Sie Ihre Eingabe"

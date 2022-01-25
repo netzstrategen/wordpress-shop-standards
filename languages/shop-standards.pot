@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2021-12-16 07:17-0600\n"
+"POT-Creation-Date: 2022-01-25 14:36+0100\n"
 "PO-Revision-Date: 2015-06-18 14:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: netzstrategen\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: .sass-cache\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: src/Admin.php:65 src/WooCommerce.php:1210
+#: src/Admin.php:65 src/WooCommerce.php:1219
 #, php-format
 msgid "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in order to save the product."
 msgstr ""
@@ -27,31 +27,31 @@ msgstr ""
 msgid "The entered GTIN is unique."
 msgstr ""
 
-#: src/Plugin.php:85 src/Plugin.php:86 src/Plugin.php:258 src/Plugin.php:297
+#: src/Plugin.php:85 src/Plugin.php:86 src/Plugin.php:259 src/Plugin.php:298
 msgid "Hide \"Add to Cart\" button"
 msgstr ""
 
-#: src/Plugin.php:262
+#: src/Plugin.php:263
 msgid "Product categories"
 msgstr ""
 
-#: src/Plugin.php:263
+#: src/Plugin.php:264
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 
-#: src/Plugin.php:275
+#: src/Plugin.php:276
 msgid "Product brands"
 msgstr ""
 
-#: src/Plugin.php:276
+#: src/Plugin.php:277
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 
-#: src/Plugin.php:288
+#: src/Plugin.php:289
 msgid "Notice"
 msgstr ""
 
-#: src/Plugin.php:290
+#: src/Plugin.php:291
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 
@@ -77,6 +77,38 @@ msgstr ""
 
 #: src/ProductAttributePageTitle.php:41
 msgid "Only changes how the name appears on the page. Leaves the filter drop-down menu alone."
+msgstr ""
+
+#: src/ProductDefects.php:95
+msgid "Product Defects Settings"
+msgstr ""
+
+#: src/ProductDefects.php:100
+msgid "Product attribute to verify"
+msgstr ""
+
+#: src/ProductDefects.php:101
+msgid "None"
+msgstr ""
+
+#: src/ProductDefects.php:105
+msgid "Target value for attribute"
+msgstr ""
+
+#: src/ProductDefects.php:107
+msgid "Enter the only value on which the checkbox must not be shown"
+msgstr ""
+
+#: src/ProductDefects.php:111
+msgid "Title text"
+msgstr ""
+
+#: src/ProductDefects.php:116
+msgid "Description text"
+msgstr ""
+
+#: src/ProductDefects.php:121
+msgid "Checkbox label text"
 msgstr ""
 
 #: src/ProductFilters/WidgetFilterDeliveryTime.php:31
@@ -254,37 +286,37 @@ msgstr ""
 msgid "Product "
 msgstr ""
 
-#: src/WooCommerce.php:1120
+#: src/WooCommerce.php:1129
 msgid "Delivery Time: from"
 msgstr ""
 
-#: src/WooCommerce.php:1134
+#: src/WooCommerce.php:1143
 #, php-format
 msgid "from %1$s"
 msgstr ""
 
-#: src/WooCommerceCheckout.php:50
+#: src/WooCommerceCheckout.php:57
 #, php-format
 msgid "%s is a required field."
 msgstr ""
 
-#: src/WooCommerceCheckout.php:54
+#: src/WooCommerceCheckout.php:61
 msgid "Invalid format"
 msgstr ""
 
-#: src/WooCommerceCheckout.php:72
+#: src/WooCommerceCheckout.php:79
 msgid "Checkout settings"
 msgstr ""
 
-#: src/WooCommerceCheckout.php:77
+#: src/WooCommerceCheckout.php:84
 msgid "Require users to enter billing email address twice"
 msgstr ""
 
-#: src/WooCommerceCheckout.php:101
+#: src/WooCommerceCheckout.php:108
 msgid "Repeat e-mail address"
 msgstr ""
 
-#: src/WooCommerceCheckout.php:117
+#: src/WooCommerceCheckout.php:124
 msgid "Your email addresses do not match"
 msgstr ""
 

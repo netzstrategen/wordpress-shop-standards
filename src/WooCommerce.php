@@ -1001,13 +1001,27 @@ class WooCommerce {
   /**
    * Prepares taxonomy terms as select field options.
    */
-  public static function getTaxonomyTermsAsSelectOptions($taxonomy) {
-    $terms = get_terms([
+  public static function getTaxonomyTermsAsSelectOptions($taxonomy, array $args = []) {
+    $terms = get_terms(array_merge([
       'taxonomy' => $taxonomy,
       'fields' => 'id=>name',
       'hide_empty' => false,
-    ]);
+    ], $args));
     return is_wp_error($terms) ? [] : $terms;
+  }
+
+  /**
+   * Returns the entire list of registered product attributes.
+   *
+   * @return array
+   */
+  public static function getAvailableAttributes(): array {
+    $attributes = [];
+    foreach (wc_get_attribute_taxonomies() as $attr) {
+      $attributes[$attr->attribute_name] = $attr->attribute_label;
+    }
+    asort($attributes);
+    return $attributes;
   }
 
   /**

@@ -51,7 +51,7 @@ class WooCommerceSaleLabel {
       'type' => 'select',
       'id' => '_' . Plugin::L10N . '_sale_auto_label_category',
       'name' => __('Sale category to assign', Plugin::L10N),
-      'options' => WooCommerce::getTaxonomyTermsAsSelectOptions('product_cat'),
+      'options' => WooCommerce::getTaxonomyTermsAsSelectOptions(ProductsPermalinks::TAX_PRODUCT_CAT),
     ];
     $settings[] = [
       'type' => 'sectionend',

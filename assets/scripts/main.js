@@ -107,4 +107,24 @@
       $('.wcppec-checkout-buttons').hide();
     }
   });
+
+  // Used and defective goods checkbox agreement related functionality.
+  $(document).ready(() => {
+    const $usedGoodsConsentCheckbox = $('#used-goods-consent');
+    const $usedGoodsConsentContainer = $('.product-defects__checkbox-container');
+    if ($usedGoodsConsentCheckbox.length) {
+      $(document)
+        .on('show_variation', '.single_variation_wrap', (event, variation) => {
+          const usedGoodsConsentAttr = variation.used_goods_consent_attribute;
+          $('.product-defects__attribute').text(usedGoodsConsentAttr);
+          if (usedGoodsConsentAttr) {
+            $usedGoodsConsentContainer.show();
+            $usedGoodsConsentCheckbox.prop('required', 'required');
+          } else {
+            $usedGoodsConsentContainer.hide();
+            $usedGoodsConsentCheckbox.removeAttr('required');
+          }
+        });
+    }
+  });
 }(jQuery));

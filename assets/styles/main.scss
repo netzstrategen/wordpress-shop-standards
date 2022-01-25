@@ -9,3 +9,8 @@
   display: block !important; // This important key is needed to override the inline css in the element
   color: #aa0001;
 }
+
+// ProductDefects consent box styling.
+.product-summary .product-defects__checkbox-container {
+  margin-bottom: 10px;
+}
