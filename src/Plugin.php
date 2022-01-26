@@ -91,9 +91,9 @@ class Plugin {
     }
 
     // Displays sale price as regular price if custom field is checked.
-    add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_price_html', 10, 2);
+    add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_price_html', 20, 2);
     // Adds strike price (range) labels for variable products, too.
-    add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_variation_price_html', 10, 2);
+    add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_variation_price_html', 20, 2);
     // Remove "From" text prefixed to prices by B2B Market plugin (starting v1.0.6.1).
     add_filter('bm_original_price_html', __NAMESPACE__ . '\WooCommerce::b2b_remove_prefix', 10, 2);
 
