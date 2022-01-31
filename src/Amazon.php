@@ -8,11 +8,11 @@ namespace Netzstrategen\ShopStandards;
 class Amazon {
 
   /**
-   * First Available Shipping Method or null.
+   * The first available shipping method keyed by order ID.
    *
-   * @var WC_Shipping_Rate|null
+   * @var WC_Shipping_Rate[]
    */
-  public static $firstAvailableMethod = NULL;
+  public static $firstAvailableMethod = [];
 
   /**
    * Replaces the order ID of imported Amazon orders with the custom order ID.
@@ -32,7 +32,7 @@ class Amazon {
    * Returns whether we are using Amazon Pay v2.
    *
    * @return bool
-   *   True or false depending is Amazon Pay v2 is active.
+   *   True or false depending on whether Amazon Pay v2 is active.
    */
   public static function isAmazonPayV2Checkout(): bool {
     $is_amazon_pay_active = is_plugin_active('woocommerce-gateway-amazon-payments-advanced/woocommerce-gateway-amazon-payments-advanced.php');
@@ -48,7 +48,7 @@ class Amazon {
    * @implements wpla_shipping_service_id_map
    */
   public static function wpla_shipping_service_id_map($map, $order) {
-    $available_method = self::$firstAvailableMethod ?? self::get_available_shipping_methods($order);
+    $available_method = self::get_available_shipping_methods($order);
 
     if ($available_method) {
       $id = $available_method->get_method_id();
@@ -68,7 +68,7 @@ class Amazon {
    * @implements wpla_shipping_service_title_map
    */
   public static function wpla_shipping_service_title_map($map, $order) {
-    $available_method = self::$firstAvailableMethod ?? self::get_available_shipping_methods($order);
+    $available_method = self::get_available_shipping_methods($order);
 
     if ($available_method) {
       $label = $available_method->get_label();
@@ -92,6 +92,11 @@ class Amazon {
    *   The first available shipping method or FALSE.
    */
   public static function get_available_shipping_methods(\WC_Order $order) {
+
+    if (isset(self::$firstAvailableMethod[$order->get_id()])) {
+      return self::$firstAvailableMethod[$order->get_id()];
+    }
+
     $country = $order->get_shipping_country() ?? NULL;
     $postcode = $order->get_shipping_postcode() ?? NULL;
     $state = $order->get_shipping_state() ?? '';
@@ -100,7 +105,7 @@ class Amazon {
     $order_items = $order->get_items();
 
     // Country, post code, and items are required to calculate the shipping.
-    if (!$country || !$postcode || empty($order_items)) {
+    if (!$country || !$postcode || !$order_items) {
       return FALSE;
     }
 
@@ -108,13 +113,8 @@ class Amazon {
     $cart = new \WC_Cart();
     $shipping = new \WC_Shipping();
 
-    // Reset shipping first.
-    $shipping->reset_shipping();
     $customer->set_billing_location($country, $state, $postcode, $city);
     $customer->set_shipping_location($country, $state, $postcode, $city);
-
-    // Empty cart.
-    $cart->empty_cart();
 
     // Add all items to cart.
     foreach ($order_items as $order_item) {
@@ -126,11 +126,11 @@ class Amazon {
     $shipping->calculate_shipping($packages);
     $available_methods = $shipping->get_packages();
 
-    if (!empty($available_methods)) {
-      self::$firstAvailableMethod = current($available_methods[0]['rates']);
+    if ($available_methods) {
+      self::$firstAvailableMethod[$order->get_id()] = reset($available_methods[0]['rates']);
     }
 
-    return self::$firstAvailableMethod;
+    return self::$firstAvailableMethod[$order->get_id()];
   }
 
 }
