@@ -91,7 +91,11 @@ class Amazon {
    * @return WC_Shipping_Rate|bool
    *   The first available shipping method or FALSE.
    */
-  public static function get_available_shipping_methods(\WC_Order $order) {
+  public static function get_available_shipping_methods(?\WC_Order $order) {
+
+    if (!$order) {
+      return FALSE;
+    }
 
     if (isset(self::$firstAvailableMethod[$order->get_id()])) {
       return self::$firstAvailableMethod[$order->get_id()];
