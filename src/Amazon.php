@@ -134,6 +134,10 @@ class Amazon {
       self::$firstAvailableMethod[$order->get_id()] = reset($available_methods[0]['rates']);
     }
 
+    else {
+      self::$firstAvailableMethod[$order->get_id()] = FALSE;
+    }
+
     return self::$firstAvailableMethod[$order->get_id()];
   }
 
