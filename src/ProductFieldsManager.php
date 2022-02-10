@@ -12,6 +12,10 @@ class ProductFieldsManager
 
   public static function woocommerce_get_settings_shop_standards(array $settings): array {
     $field_list = apply_filters(Plugin::PREFIX . '/display_custom_product_fields', []);
+    if (empty($field_list)) {
+      return $settings;
+    }
+
     return array_merge($settings, [
       [
         'type' => 'title',
@@ -23,7 +27,20 @@ class ProductFieldsManager
         'name' => __('Custom product fields to be displayed', Plugin::L10N),
         'options' => $field_list,
         'css' => 'height:auto',
-      ]
+      ],
+      [
+        'type' => 'sectionend',
+        'id' => Plugin::L10N . '_custom_product_fields_section',
+      ],
     ]);
+  }
+
+  public static function show_field(string $field_name): bool {
+    $display_fields = get_option(self::FIELD_PRODUCT_FIELDS_LIST);
+    if ($display_fields === FALSE) {
+      // Default state when no fields have been selected yet, all are shown.
+      return TRUE;
+    }
+    return in_array($field_name, $display_fields);
   }
 }
