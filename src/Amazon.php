@@ -55,6 +55,7 @@ class Amazon {
       return [
         'Std DE Dom' => $id,
         'Std DE Dom_2' => $id,
+        'Std DE Dom_6' => $id,
         'AD DE Dom' => $id,
         'MFN AD Intl' => $id,
       ];
@@ -75,6 +76,7 @@ class Amazon {
       return [
         'Std DE Dom' => $label,
         'Std DE Dom_2' => $label,
+        'Std DE Dom_6' => $label,
         'AD DE Dom' => $label,
         'MFN AD Intl' => $label,
       ];
@@ -113,8 +115,17 @@ class Amazon {
       return FALSE;
     }
 
+    WC()->frontend_includes();
+
+    if (!WC()->session) {
+      WC()->session = new \WC_Session_Handler();
+      WC()->session->init();
+    }
+
     $customer = new \WC_Customer();
     $cart = new \WC_Cart();
+    WC()->cart = $cart;
+    $cart_session = new \WC_Cart_Session($cart);
     $shipping = new \WC_Shipping();
 
     $customer->set_billing_location($country, $state, $postcode, $city);
@@ -133,6 +144,11 @@ class Amazon {
     if ($available_methods) {
       self::$firstAvailableMethod[$order->get_id()] = reset($available_methods[0]['rates']);
     }
+
+    // Clean up
+    $cart->empty_cart();
+    $cart_session->destroy_cart_session();
+    WC()->session->destroy_session();
 
     return self::$firstAvailableMethod[$order->get_id()];
   }
