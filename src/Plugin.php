@@ -91,9 +91,9 @@ class Plugin {
     }
 
     // Displays sale price as regular price if custom field is checked.
-    add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_price_html', 10, 2);
+    add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_price_html', 20, 2);
     // Adds strike price (range) labels for variable products, too.
-    add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_variation_price_html', 10, 2);
+    add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_variation_price_html', 20, 2);
     // Remove "From" text prefixed to prices by B2B Market plugin (starting v1.0.6.1).
     add_filter('bm_original_price_html', __NAMESPACE__ . '\WooCommerce::b2b_remove_prefix', 10, 2);
 
@@ -110,6 +110,10 @@ class Plugin {
 
     // Replaces the order ID of imported Amazon orders with the custom order ID.
     add_filter('woocommerce_amazon_pa_update_checkout_session_payload', __NAMESPACE__ . '\Amazon::woocommerce_amazon_pa_update_checkout_session_payload', 10, 3);
+
+    // Overrides the shipping method ID and title for imported Amazon orders.
+    add_filter('wpla_shipping_service_id_map',  __NAMESPACE__ . '\Amazon::wpla_shipping_service_id_map', 10, 2);
+    add_filter('wpla_shipping_service_title_map',  __NAMESPACE__ . '\Amazon::wpla_shipping_service_title_map', 10, 2);
 
     WooCommerce::init();
     WooCommerceSaleLabel::init();

@@ -111,7 +111,7 @@ class WooCommerce {
    * @implements bm_original_price_html
    */
   public static function b2b_remove_prefix($html, $product_id) {
-    $html = preg_replace('@<span class="b2b-price-prefix">.[^<]*</span>@', '', $html);
+    $html = preg_replace('@<span class="b2b-price-prefix">.[^<]*?</span>@', '', $html);
     return $html;
   }
 
@@ -768,12 +768,6 @@ class WooCommerce {
         }
         $price = wc_price(wc_get_price_to_display($product)) . $product->get_price_suffix();
       }
-      // Invoke regular price_html filters (excluding this one).
-      $current_filter = current_filter();
-      $priority = has_filter($current_filter, __METHOD__);
-      remove_filter($current_filter, __METHOD__);
-      $price = apply_filters($current_filter, $price, $product);
-      add_filter($current_filter, __METHOD__, $priority, 2);
 
       if (is_product() && !static::isSideProduct()) {
         $price_label = get_post_meta($product_id, self::FIELD_PRICE_LABEL, TRUE) ?: __('(Our price)', Plugin::L10N);
