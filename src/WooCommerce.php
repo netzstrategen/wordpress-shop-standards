@@ -19,10 +19,16 @@ class WooCommerce {
   const FIELD_DISABLE_RELATED_PRODUCTS = '_' . Plugin::PREFIX . '_disable_related_products';
   const FIELD_PRODUCT_PURCHASING_PRICE = '_'.Plugin::PREFIX.'_purchasing_price';
 
+  /**
+   * Init module.
+   */
   public static function init(): void {
     add_filter(Plugin::PREFIX . '/display_custom_product_fields', __CLASS__ . '::get_product_fields');
   }
 
+  /**
+   * Gather all custom product fields including their own label.
+   */
   public static function get_product_fields(array $fields = []): array {
     return array_merge($fields, [
       self::FIELD_MARKETING_FOCUS => __('Marketing focus product', Plugin::L10N),
