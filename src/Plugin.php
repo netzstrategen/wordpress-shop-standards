@@ -111,6 +111,7 @@ class Plugin {
     // Replaces the order ID of imported Amazon orders with the custom order ID.
     add_filter('woocommerce_amazon_pa_update_checkout_session_payload', __NAMESPACE__ . '\Amazon::woocommerce_amazon_pa_update_checkout_session_payload', 10, 3);
 
+    WooCommerce::init();
     WooCommerceSaleLabel::init();
     Seo::init();
     WooCommerceSalutation::init();
@@ -118,6 +119,7 @@ class Plugin {
     PlusProducts::init();
     ProductsPermalinks::init();
     ProductDefects::init();
+    ProductFieldsManager::init();
 
     if (is_admin()) {
       return;
