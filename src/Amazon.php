@@ -115,10 +115,6 @@ class Amazon {
       return FALSE;
     }
 
-    if (!did_action('woocommerce_load_cart_from_session')) {
-      $GLOBALS['wp_actions']['woocommerce_load_cart_from_session'] = TRUE;
-    }
-
     WC()->frontend_includes();
 
     if (!WC()->session) {
@@ -150,6 +146,7 @@ class Amazon {
     }
 
     // Clean up
+    $cart->empty_cart();
     $cart_session->destroy_cart_session();
     WC()->session->destroy_session();
 
