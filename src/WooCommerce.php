@@ -17,6 +17,33 @@ class WooCommerce {
   const FIELD_GTIN = '_' . Plugin::PREFIX . '_gtin';
   const FIELD_BACK_IN_STOCK_DATE = '_' . Plugin::PREFIX . '_back_in_stock_date';
   const FIELD_DISABLE_RELATED_PRODUCTS = '_' . Plugin::PREFIX . '_disable_related_products';
+  const FIELD_PRODUCT_PURCHASING_PRICE = '_'.Plugin::PREFIX.'_purchasing_price';
+
+  /**
+   * Init module.
+   */
+  public static function init(): void {
+    add_filter(Plugin::PREFIX . '/display_custom_product_fields', __CLASS__ . '::get_product_fields');
+  }
+
+  /**
+   * Gather all custom product fields including their own label.
+   */
+  public static function get_product_fields(array $fields = []): array {
+    return array_merge($fields, [
+      self::FIELD_MARKETING_FOCUS => __('Marketing focus product', Plugin::L10N),
+      self::FIELD_PRICE_COMPARISON_FOCUS => __('Price comparison focus product', Plugin::L10N),
+      self::FIELD_HIDE_ADD_TO_CART_BUTTON => __('Hide add to cart button', Plugin::L10N),
+      self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL => __('Hide sale percentage bubble', Plugin::L10N),
+      self::FIELD_PRICE_LABEL => __('Custom price label', Plugin::L10N),
+      self::FIELD_SHOW_SALE_PRICE_ONLY => __('Display sale price as normal price', Plugin::L10N),
+      self::FIELD_ERP_INVENTORY => __('ERP/Inventory ID', Plugin::L10N),
+      self::FIELD_GTIN => __('Enter the Global Trade Item Number', Plugin::L10N),
+      self::FIELD_BACK_IN_STOCK_DATE => __('Enter the back in stock date', Plugin::L10N),
+      self::FIELD_DISABLE_RELATED_PRODUCTS => __('Disable related products', Plugin::L10N),
+      self::FIELD_PRODUCT_PURCHASING_PRICE => __('Purchasing Price', Plugin::L10N) . ' (' . get_woocommerce_currency_symbol() . ')',
+    ]);
+  }
 
   /**
    * Adds woocommerce specific settings.
@@ -262,76 +289,103 @@ class WooCommerce {
    * @implements woocommerce_product_options_general_product_data
    */
   public static function woocommerce_product_options_general_product_data() {
-    // Back in stock date field.
-    echo '<div class="options_group show_if_simple show_if_external">';
-    woocommerce_wp_text_input([
-      'id' => self::FIELD_BACK_IN_STOCK_DATE,
-      'type' => 'date',
-      'label' => __('Back in stock date', Plugin::L10N),
-      'desc_tip' => TRUE,
-      'description' => __('Enter the back in stock date', Plugin::L10N),
-    ]);
-    echo '</div>';
-    // GTIN field.
-    echo '<div class="options_group show_if_simple show_if_external">';
-    woocommerce_wp_text_input([
-      'id' => self::FIELD_GTIN,
-      'label' => __('GTIN', Plugin::L10N),
-      'desc_tip' => 'true',
-      'description' => __('Enter the Global Trade Item Number', Plugin::L10N),
-    ]);
-    echo '</div>';
-    // ERP/Inventory ID field.
-    echo '<div class="options_group show_if_simple show_if_external">';
-    woocommerce_wp_text_input([
-      'id' => self::FIELD_ERP_INVENTORY,
-      'label' => __('ERP/Inventory ID', Plugin::L10N),
-    ]);
-    echo '</div>';
-    // Show `sale price only` checkbox.
-    echo '<div class="options_group">';
-    woocommerce_wp_checkbox([
-      'id' => self::FIELD_SHOW_SALE_PRICE_ONLY,
-      'label' => __('Display sale price as normal price', Plugin::L10N),
-    ]);
-    echo '</div>';
-    // Custom price label
-    echo '<div class="options_group">';
-    woocommerce_wp_text_input([
-      'id' => self::FIELD_PRICE_LABEL,
-      'label' => __('Custom price label', Plugin::L10N),
-      'desc_tip' => 'true',
-      'description' => __('The label will only be displayed if "Sale price was displayed as regular price" setting is checked.', Plugin::L10N),
-    ]);
-    echo '</div>';
-    // Hide sale percentage flash label.
-    echo '<div class="options_group">';
-    woocommerce_wp_checkbox([
-      'id' => self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL,
-      'label' => __('Hide sale percentage bubble', Plugin::L10N),
-    ]);
-    echo '</div>';
-    // Hide add to cart button.
-    echo '<div class="options_group show_if_simple show_if_external">';
-    woocommerce_wp_checkbox([
-      'id' => self::FIELD_HIDE_ADD_TO_CART_BUTTON,
-      'label' => __('Hide add to cart button', Plugin::L10N),
-    ]);
-    echo '</div>';
-    // Price comparison focus product.
-    echo '<div class="options_group">';
-    woocommerce_wp_checkbox([
-      'id' => self::FIELD_PRICE_COMPARISON_FOCUS,
-      'label' => __('Price comparison focus product', Plugin::L10N),
-    ]);
-    echo '</div>';
-    // Marketing Focus Product
-    echo '<div class="options_group">';
-    woocommerce_wp_checkbox([
-      'id' => self::FIELD_MARKETING_FOCUS,
-      'label' => __('Marketing focus product', Plugin::L10N),
-    ]);
-    echo '</div>';
+    if (ProductFieldsManager::show_field(self::FIELD_BACK_IN_STOCK_DATE)) {
+      // Back in stock date field.
+      echo '<div class="options_group show_if_simple show_if_external">';
+      woocommerce_wp_text_input([
+        'id'          => self::FIELD_BACK_IN_STOCK_DATE,
+        'type'        => 'date',
+        'label'       => __('Back in stock date', Plugin::L10N),
+        'desc_tip'    => true,
+        'description' => self::get_product_fields()[self::FIELD_BACK_IN_STOCK_DATE],
+      ]);
+      echo '</div>';
+    }
+
+    if (ProductFieldsManager::show_field(self::FIELD_GTIN)) {
+      // GTIN field.
+      echo '<div class="options_group show_if_simple show_if_external">';
+      woocommerce_wp_text_input([
+        'id'          => self::FIELD_GTIN,
+        'label'       => __('GTIN', Plugin::L10N),
+        'desc_tip'    => 'true',
+        'description' => self::get_product_fields()[self::FIELD_GTIN],
+      ]);
+      echo '</div>';
+    }
+
+    if (ProductFieldsManager::show_field(self::FIELD_ERP_INVENTORY)) {
+      // ERP/Inventory ID field.
+      echo '<div class="options_group show_if_simple show_if_external">';
+      woocommerce_wp_text_input([
+        'id'    => self::FIELD_ERP_INVENTORY,
+        'label' => self::get_product_fields()[self::FIELD_ERP_INVENTORY],
+      ]);
+      echo '</div>';
+    }
+
+    if (ProductFieldsManager::show_field(self::FIELD_SHOW_SALE_PRICE_ONLY)) {
+      // Show `sale price only` checkbox.
+      echo '<div class="options_group">';
+      woocommerce_wp_checkbox([
+        'id'    => self::FIELD_SHOW_SALE_PRICE_ONLY,
+        'label' => self::get_product_fields()[self::FIELD_SHOW_SALE_PRICE_ONLY],
+      ]);
+      echo '</div>';
+    }
+
+    if (ProductFieldsManager::show_field(self::FIELD_PRICE_LABEL)) {
+      // Custom price label
+      echo '<div class="options_group">';
+      woocommerce_wp_text_input([
+        'id'          => self::FIELD_PRICE_LABEL,
+        'label'       => self::get_product_fields()[self::FIELD_PRICE_LABEL],
+        'desc_tip'    => 'true',
+        'description' => __('The label will only be displayed if "Sale price was displayed as regular price" setting is checked.',
+          Plugin::L10N),
+      ]);
+      echo '</div>';
+    }
+
+    if (ProductFieldsManager::show_field(self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL)) {
+      // Hide sale percentage flash label.
+      echo '<div class="options_group">';
+      woocommerce_wp_checkbox([
+        'id'    => self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL,
+        'label' => self::get_product_fields()[self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL],
+      ]);
+      echo '</div>';
+    }
+
+    if (ProductFieldsManager::show_field(self::FIELD_HIDE_ADD_TO_CART_BUTTON)) {
+      // Hide add to cart button.
+      echo '<div class="options_group show_if_simple show_if_external">';
+      woocommerce_wp_checkbox([
+        'id'    => self::FIELD_HIDE_ADD_TO_CART_BUTTON,
+        'label' => self::get_product_fields()[self::FIELD_HIDE_ADD_TO_CART_BUTTON],
+      ]);
+      echo '</div>';
+    }
+
+    if (ProductFieldsManager::show_field(self::FIELD_PRICE_COMPARISON_FOCUS)) {
+      // Price comparison focus product.
+      echo '<div class="options_group">';
+      woocommerce_wp_checkbox([
+        'id'    => self::FIELD_PRICE_COMPARISON_FOCUS,
+        'label' => self::get_product_fields()[self::FIELD_PRICE_COMPARISON_FOCUS],
+      ]);
+      echo '</div>';
+    }
+
+    if (ProductFieldsManager::show_field(self::FIELD_MARKETING_FOCUS)) {
+      // Marketing Focus Product
+      echo '<div class="options_group">';
+      woocommerce_wp_checkbox([
+        'id' => self::FIELD_MARKETING_FOCUS,
+        'label' => self::get_product_fields()[self::FIELD_MARKETING_FOCUS],
+      ]);
+      echo '</div>';
+    }
   }
 
   /**
@@ -340,12 +394,14 @@ class WooCommerce {
    * @implements woocommerce_product_options_related
    */
   public static function woocommerce_product_options_related(): void {
-    echo '<div class="options_group">';
-    woocommerce_wp_checkbox([
-      'id' => self::FIELD_DISABLE_RELATED_PRODUCTS,
-      'label' => __('Disable related products', Plugin::L10N),
-    ]);
-    echo '</div>';
+    if (ProductFieldsManager::show_field(self::FIELD_DISABLE_RELATED_PRODUCTS)) {
+      echo '<div class="options_group">';
+      woocommerce_wp_checkbox([
+        'id'    => self::FIELD_DISABLE_RELATED_PRODUCTS,
+        'label' => self::get_product_fields()[self::FIELD_DISABLE_RELATED_PRODUCTS],
+      ]);
+      echo '</div>';
+    }
   }
 
   /**
@@ -354,11 +410,13 @@ class WooCommerce {
    * @implements woocommerce_product_options_pricing
    */
   public static function woocommerce_product_options_pricing() {
-    woocommerce_wp_text_input([
-      'id' => '_' . Plugin::PREFIX . '_purchasing_price',
-      'class' => 'wc_input_price short',
-      'label' => __('Purchasing Price', Plugin::L10N) . ' (' . get_woocommerce_currency_symbol() . ')',
-    ]);
+    if (ProductFieldsManager::show_field(self::FIELD_PRODUCT_PURCHASING_PRICE)) {
+      woocommerce_wp_text_input([
+        'id' => self::FIELD_PRODUCT_PURCHASING_PRICE,
+        'class' => 'wc_input_price short',
+        'label' => self::get_product_fields()[self::FIELD_PRODUCT_PURCHASING_PRICE],
+      ]);
+    }
   }
 
   /**
@@ -391,7 +449,7 @@ class WooCommerce {
       self::FIELD_ERP_INVENTORY,
       '_' . Plugin::PREFIX . '_product_notes',
       self::FIELD_PRICE_LABEL,
-      '_' . Plugin::PREFIX . '_purchasing_price',
+      self::FIELD_PRODUCT_PURCHASING_PRICE,
       self::FIELD_DISABLE_RELATED_PRODUCTS,
     ];
 
@@ -579,22 +637,30 @@ class WooCommerce {
       'desc_tip' => TRUE,
     ]);
     echo '</div>';
-    // Price comparison focus product.
-    echo '<div style="clear:both">';
-    woocommerce_wp_checkbox([
-      'id' => self::FIELD_PRICE_COMPARISON_FOCUS,
-      'label' => __('Price comparison focus product', Plugin::L10N),
-      'value' => get_post_meta($variation->ID, self::FIELD_PRICE_COMPARISON_FOCUS, TRUE),
-    ]);
-    echo '</div>';
-    // Marketing Focus Product
-    echo '<div style="clear:both">';
-    woocommerce_wp_checkbox([
-      'id' => self::FIELD_MARKETING_FOCUS,
-      'label' => __('Marketing focus product', Plugin::L10N),
-      'value' => get_post_meta($variation->ID, self::FIELD_MARKETING_FOCUS, TRUE),
-    ]);
-    echo '</div>';
+
+    if (ProductFieldsManager::show_field(self::FIELD_PRICE_COMPARISON_FOCUS)) {
+      // Price comparison focus product.
+      echo '<div style="clear:both">';
+      woocommerce_wp_checkbox([
+        'id'    => self::FIELD_PRICE_COMPARISON_FOCUS,
+        'label' => __('Price comparison focus product', Plugin::L10N),
+        'value' => get_post_meta($variation->ID,
+          self::FIELD_PRICE_COMPARISON_FOCUS, true),
+      ]);
+      echo '</div>';
+    }
+
+    if (ProductFieldsManager::show_field(self::FIELD_MARKETING_FOCUS)) {
+      // Marketing Focus Product
+      echo '<div style="clear:both">';
+      woocommerce_wp_checkbox([
+        'id'    => self::FIELD_MARKETING_FOCUS,
+        'label' => __('Marketing focus product', Plugin::L10N),
+        'value' => get_post_meta($variation->ID, self::FIELD_MARKETING_FOCUS,
+          true),
+      ]);
+      echo '</div>';
+    }
   }
 
   /**
@@ -603,13 +669,16 @@ class WooCommerce {
    * @implements woocommerce_variation_options_pricing
    */
   public static function woocommerce_variation_options_pricing($loop, $variation_data, $variation) {
-    woocommerce_wp_text_input([
-      'id' => '_' . Plugin::PREFIX . '_purchasing_price[' . $loop . ']',
-      'class' => 'wc_input_price short form-row',
-      'wrapper_class' => 'form-row',
-      'label' => __('Purchasing Price', Plugin::L10N) . ' (' . get_woocommerce_currency_symbol() . ')',
-      'value' => get_post_meta($variation->ID, '_' . Plugin::PREFIX . '_purchasing_price', TRUE),
-    ]);
+    if (ProductFieldsManager::show_field(self::FIELD_PRODUCT_PURCHASING_PRICE)) {
+      woocommerce_wp_text_input([
+        'id'            => self::FIELD_PRODUCT_PURCHASING_PRICE.'['.$loop.']',
+        'class'         => 'wc_input_price short form-row',
+        'wrapper_class' => 'form-row',
+        'label'         => self::get_product_fields()[self::FIELD_PRODUCT_PURCHASING_PRICE],
+        'value'         => get_post_meta($variation->ID,
+          self::FIELD_PRODUCT_PURCHASING_PRICE, true),
+      ]);
+    }
   }
 
   /**
@@ -627,7 +696,7 @@ class WooCommerce {
       self::FIELD_BACK_IN_STOCK_DATE,
       self::FIELD_GTIN,
       self::FIELD_ERP_INVENTORY,
-      '_' . Plugin::PREFIX . '_purchasing_price',
+      self::FIELD_PRODUCT_PURCHASING_PRICE,
     ];
 
     foreach ($custom_fields as $field) {

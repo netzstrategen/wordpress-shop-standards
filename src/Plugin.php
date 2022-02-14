@@ -115,6 +115,7 @@ class Plugin {
     add_filter('wpla_shipping_service_id_map',  __NAMESPACE__ . '\Amazon::wpla_shipping_service_id_map', 10, 2);
     add_filter('wpla_shipping_service_title_map',  __NAMESPACE__ . '\Amazon::wpla_shipping_service_title_map', 10, 2);
 
+    WooCommerce::init();
     WooCommerceSaleLabel::init();
     Seo::init();
     WooCommerceSalutation::init();
@@ -122,6 +123,7 @@ class Plugin {
     PlusProducts::init();
     ProductsPermalinks::init();
     ProductDefects::init();
+    ProductFieldsManager::init();
 
     if (is_admin()) {
       return;
