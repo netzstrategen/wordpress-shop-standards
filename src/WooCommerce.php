@@ -546,7 +546,7 @@ class WooCommerce {
    * @implements wp
    */
   public static function wp() {
-    if (empty($product = wc_get_product())) {
+    if (!is_callable('wc_get_product') || empty($product = wc_get_product())) {
       return;
     }
     $product_id = $product->get_id();
