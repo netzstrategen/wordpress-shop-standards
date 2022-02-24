@@ -144,6 +144,9 @@ class Amazon {
     if ($available_methods) {
       self::$firstAvailableMethod[$order->get_id()] = reset($available_methods[0]['rates']);
     }
+    else {
+      self::$firstAvailableMethod[$order->get_id()] = FALSE;
+    }
 
     // Clean up
     $cart->empty_cart();
