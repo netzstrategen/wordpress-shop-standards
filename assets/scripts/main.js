@@ -100,9 +100,9 @@
     }
   });
 
-  // Disable checkout button if there are any WooCommerce error displayed.
+  // Disable checkout button if cart only contains low return products.
   $(document).on('ready updated_cart_totals', () => {
-    if ($('.woocommerce-error').length) {
+    if ($('.woocommerce-error li[data-plus-product="invalid"]').length) {
       $('.checkout-button').removeAttr('href').addClass('disabled');
       $('.wcppec-checkout-buttons').hide();
     }
