@@ -100,7 +100,7 @@
     }
   });
 
-  // Disable checkout button if the cart content only contains low return products.
+  // Disable checkout button if cart only contains low return products.
   $(document).on('ready updated_cart_totals', () => {
     if ($('.woocommerce-error li[data-plus-product="invalid"]').length) {
       $('.checkout-button').removeAttr('href').addClass('disabled');
