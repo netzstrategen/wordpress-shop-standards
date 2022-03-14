@@ -17,7 +17,8 @@ class WooCommerce {
   const FIELD_GTIN = '_' . Plugin::PREFIX . '_gtin';
   const FIELD_BACK_IN_STOCK_DATE = '_' . Plugin::PREFIX . '_back_in_stock_date';
   const FIELD_DISABLE_RELATED_PRODUCTS = '_' . Plugin::PREFIX . '_disable_related_products';
-  const FIELD_PRODUCT_PURCHASING_PRICE = '_'.Plugin::PREFIX.'_purchasing_price';
+  const FIELD_PRODUCT_PURCHASING_PRICE = '_' . Plugin::PREFIX . '_purchasing_price';
+  const FIELD_PRODUCT_INCOMING_STOCK = '_' . Plugin::PREFIX . '_incoming_stock';
 
   /**
    * Init module.
@@ -383,6 +384,27 @@ class WooCommerce {
       woocommerce_wp_checkbox([
         'id' => self::FIELD_MARKETING_FOCUS,
         'label' => self::get_product_fields()[self::FIELD_MARKETING_FOCUS],
+      ]);
+      echo '</div>';
+    }
+  }
+
+
+  /**
+   * Displays custom fields for single products on the invenotry tab.
+   *
+   * @implements woocommerce_product_options_stock_fields
+   * @implements woocommerce_product_after_variable_attributes
+   */
+  public static function showIncomingstock() {
+    if (ProductFieldsManager::show_field(self::FIELD_PRODUCT_INCOMING_STOCK)) {
+      // Back in stock date field.
+      echo '<div class="options_group show_if_simple show_if_external">';
+      woocommerce_wp_text_input([
+        'id'          => self::FIELD_PRODUCT_INCOMING_STOCK,
+        'label'       => __('Incoming Stock', Plugin::L10N),
+        'desc_tip'    => 'true',
+        'description' => self::get_product_fields()[self::FIELD_PRODUCT_INCOMING_STOCK],
       ]);
       echo '</div>';
     }

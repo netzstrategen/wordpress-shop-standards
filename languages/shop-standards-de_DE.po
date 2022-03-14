@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2022-01-25 14:36+0100\n"
+"POT-Creation-Date: 2022-03-14 16:10+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Fabian Marz <fabian@netzstrategen.com>\n"
 "Language-Team: \n"
@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 2.4.3\n"
 
-#: src/Admin.php:65 src/WooCommerce.php:1219
+#: src/Admin.php:69 src/WooCommerce.php:1304
 #, php-format
 msgid ""
 "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in "
@@ -20,39 +20,39 @@ msgstr ""
 "Diese GTIN <a href=\"%s\">wird bereits verwendet</a>. Sie muss geändert "
 "werden bevor das Produkt gespeichert werden kann."
 
-#: src/Admin.php:68
+#: src/Admin.php:72
 msgid "The entered GTIN is unique."
 msgstr "Diese GTIN wird noch nicht verwendet."
 
-#: src/Plugin.php:85 src/Plugin.php:86 src/Plugin.php:259 src/Plugin.php:298
+#: src/Plugin.php:86 src/Plugin.php:87 src/Plugin.php:267 src/Plugin.php:306
 msgid "Hide \"Add to Cart\" button"
 msgstr "“In den Warenkorb”-Verhalten"
 
-#: src/Plugin.php:263
+#: src/Plugin.php:271
 msgid "Product categories"
 msgstr "Produktkategorien"
 
-#: src/Plugin.php:264
+#: src/Plugin.php:272
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
 "ausgeblendet."
 
-#: src/Plugin.php:276
+#: src/Plugin.php:284
 msgid "Product brands"
 msgstr "Produktmarken"
 
-#: src/Plugin.php:277
+#: src/Plugin.php:285
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
 "ausgeblendet."
 
-#: src/Plugin.php:289
+#: src/Plugin.php:297
 msgid "Notice"
 msgstr "Hinweis"
 
-#: src/Plugin.php:291
+#: src/Plugin.php:299
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 "Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
@@ -74,15 +74,15 @@ msgstr ""
 "Sie, dass Sie Ihre Bestellung nur abschließen können, wenn Sie Ihrem "
 "Warenkorb noch mindestens ein Produkt aus einer anderen Kategorie hinzufügen."
 
-#: src/ProductAttributePageTitle.php:34
+#: src/ProductAttributePageTitle.php:42
 msgid "Listing Page"
 msgstr ""
 
-#: src/ProductAttributePageTitle.php:38
+#: src/ProductAttributePageTitle.php:46
 msgid "Page Title"
 msgstr ""
 
-#: src/ProductAttributePageTitle.php:41
+#: src/ProductAttributePageTitle.php:49
 msgid ""
 "Only changes how the name appears on the page. Leaves the filter drop-down "
 "menu alone."
@@ -120,6 +120,14 @@ msgstr "Beschreibungstext"
 msgid "Checkbox label text"
 msgstr "Checkbox Label Text"
 
+#: src/ProductFieldsManager.php:31
+msgid "Product custom fields manager"
+msgstr ""
+
+#: src/ProductFieldsManager.php:36
+msgid "Custom product fields to be displayed"
+msgstr ""
+
 #: src/ProductFilters/WidgetFilterDeliveryTime.php:31
 msgid "Filter Products by Delivery Time"
 msgstr "Produkte nach Lieferzeit filtern"
@@ -134,7 +142,7 @@ msgstr ""
 msgid "Quickly available:"
 msgstr "Schnell verfügbar:"
 
-#: src/ProductFilters/WidgetLayeredNavFilters.php:53
+#: src/ProductFilters/WidgetLayeredNavFilters.php:57
 msgid "Remove filter"
 msgstr ""
 
@@ -142,25 +150,25 @@ msgstr ""
 msgid "Enforce main category on product links"
 msgstr "Hauptkategorie in Produktlinks verwenden/erzwingen"
 
-#: src/Seo.php:50
+#: src/Seo.php:45
 msgid "SEO settings"
 msgstr "SEO Einstellungen"
 
-#: src/Seo.php:55
+#: src/Seo.php:50
 msgid "Index first page of paginated products listings only"
 msgstr ""
 
-#: src/Seo.php:56
+#: src/Seo.php:51
 msgid ""
 "If checked, noindex meta tag will be added to paginated products listing "
 "pages, starting from the second page."
 msgstr ""
 
-#: src/Seo.php:61
+#: src/Seo.php:56
 msgid "Disable Yoast SEO adjacent navigation links."
 msgstr ""
 
-#: src/Seo.php:62
+#: src/Seo.php:57
 msgid ""
 "Avoids unwanted rankings of search result URLs as well as paginated listing "
 "pages in case the shop's product listing is using infinite scrolling or lazy "
@@ -171,62 +179,82 @@ msgstr ""
 msgid "Shop Standards"
 msgstr ""
 
-#: src/WooCommerce.php:29
+#: src/WooCommerce.php:36 src/WooCommerce.php:668
+msgid "Price comparison focus product"
+msgstr "Repricing: kein automatisches Repricing"
+
+#: src/WooCommerce.php:37 src/WooCommerce.php:648
+msgid "Hide add to cart button"
+msgstr "Warenkorb-Button verstecken"
+
+#: src/WooCommerce.php:38
+msgid "Hide sale percentage bubble"
+msgstr "Sale: Prozentangabe verbergen"
+
+#: src/WooCommerce.php:39
+msgid "Custom price label"
+msgstr "Individuelles Preis-Label anzeigen"
+
+#: src/WooCommerce.php:40
+msgid "Display sale price as normal price"
+msgstr "Reduzierten Preis als normalen Preis anzeigen"
+
+#: src/WooCommerce.php:41
+msgid "ERP/Inventory ID"
+msgstr "ERP/Inventar ID"
+
+#: src/WooCommerce.php:42 src/WooCommerce.php:632
+msgid "Enter the Global Trade Item Number"
+msgstr "Geben Sie die Gesamtzahl des Handels ein"
+
+#: src/WooCommerce.php:43 src/WooCommerce.php:623
+msgid "Enter the back in stock date"
+msgstr "Datum, ab dem der Artikel lieferbar ist"
+
+#: src/WooCommerce.php:44
+msgid "Disable related products"
+msgstr ""
+
+#: src/WooCommerce.php:45
+msgid "Purchasing Price"
+msgstr "Einkaufspreis"
+
+#: src/WooCommerce.php:57
 msgid "Coupon settings"
 msgstr "Gutschein Einstellungen"
 
-#: src/WooCommerce.php:34
+#: src/WooCommerce.php:62
 msgid "Disable coupon input field on checkout page"
 msgstr "Gutscheinfeld an der Kasse ausblenden"
 
-#: src/WooCommerce.php:130
+#: src/WooCommerce.php:158
 #, php-format
 msgid "Coupon value: %s"
 msgstr "Wert: %s"
 
-#: src/WooCommerce.php:181
+#: src/WooCommerce.php:209
 msgid "In stock"
 msgstr ""
 
-#: src/WooCommerce.php:185
+#: src/WooCommerce.php:213
 #, php-format
 msgid "Only %s immediately deliverable"
 msgstr "Nur noch %s Stück sofort ab Lager lieferbar"
 
-#: src/WooCommerce.php:192
+#: src/WooCommerce.php:220
 #, php-format
 msgid "Back in stock %s"
 msgstr "Wieder lieferbar %s"
 
-#: src/WooCommerce.php:270 src/WooCommerce.php:541
+#: src/WooCommerce.php:299 src/WooCommerce.php:621
 msgid "Back in stock date"
 msgstr "Lieferbar ab Datum"
 
-#: src/WooCommerce.php:272 src/WooCommerce.php:543
-msgid "Enter the back in stock date"
-msgstr "Datum, ab dem der Artikel lieferbar ist"
-
-#: src/WooCommerce.php:279
+#: src/WooCommerce.php:311
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:281 src/WooCommerce.php:552
-msgid "Enter the Global Trade Item Number"
-msgstr "Geben Sie die Gesamtzahl des Handels ein"
-
-#: src/WooCommerce.php:288
-msgid "ERP/Inventory ID"
-msgstr "ERP/Inventar ID"
-
-#: src/WooCommerce.php:295
-msgid "Display sale price as normal price"
-msgstr "Reduzierten Preis als normalen Preis anzeigen"
-
-#: src/WooCommerce.php:302
-msgid "Custom price label"
-msgstr "Individuelles Preis-Label anzeigen"
-
-#: src/WooCommerce.php:304
+#: src/WooCommerce.php:345
 msgid ""
 "The label will only be displayed if \"Sale price was displayed as regular "
 "price\" setting is checked."
@@ -234,47 +262,27 @@ msgstr ""
 "Das Label wird nur angezeigt, wenn “Sale Preis als regulären Preis anzeigen "
 "aktiviert wurde."
 
-#: src/WooCommerce.php:311
-msgid "Hide sale percentage bubble"
-msgstr "Sale: Prozentangabe verbergen"
+#: src/WooCommerce.php:405
+msgid "Incoming Stock"
+msgstr "Bestand im Zulauf"
 
-#: src/WooCommerce.php:318 src/WooCommerce.php:568
-msgid "Hide add to cart button"
-msgstr "Warenkorb-Button verstecken"
-
-#: src/WooCommerce.php:325 src/WooCommerce.php:586
-msgid "Price comparison focus product"
-msgstr "Repricing: kein automatisches Repricing"
-
-#: src/WooCommerce.php:332 src/WooCommerce.php:594
-msgid "Marketing focus product"
-msgstr "Marketing focus product"
-
-#: src/WooCommerce.php:346
-msgid "Disable related products"
-msgstr ""
-
-#: src/WooCommerce.php:360 src/WooCommerce.php:610
-msgid "Purchasing Price"
-msgstr "Einkaufspreis"
-
-#: src/WooCommerce.php:376
+#: src/WooCommerce.php:456
 msgid "Internal product notes"
 msgstr "Interne Anmerkungen"
 
-#: src/WooCommerce.php:551
+#: src/WooCommerce.php:631
 msgid "GTIN:"
 msgstr ""
 
-#: src/WooCommerce.php:560
+#: src/WooCommerce.php:640
 msgid "ERP/Inventory ID:"
 msgstr "ERP/Inventar ID:"
 
-#: src/WooCommerce.php:576
+#: src/WooCommerce.php:656
 msgid "Variation has insufficient images"
 msgstr "Variation hat ein unzureichendes Bilder"
 
-#: src/WooCommerce.php:578
+#: src/WooCommerce.php:658
 msgid ""
 "Allows this product to be identified and possibly be excluded by other "
 "processes and plugins (e.g. a custom filter for product feeds). Enabling "
@@ -284,39 +292,39 @@ msgstr ""
 "unzureichender Bilder auszuschließen. Das Setzen des Hakens hat keinen "
 "Einfluss auf das Frontend."
 
-#: src/WooCommerce.php:710
+#: src/WooCommerce.php:795
 msgid "(Our price)"
 msgstr "(Online-Preis)"
 
-#: src/WooCommerce.php:765 src/WooCommerce.php:828
+#: src/WooCommerce.php:850 src/WooCommerce.php:913
 msgid "Delivery Time"
 msgstr ""
 
-#: src/WooCommerce.php:888
+#: src/WooCommerce.php:973
 msgid "SKU"
 msgstr ""
 
-#: src/WooCommerce.php:892
+#: src/WooCommerce.php:977
 msgid "ERP/ID"
 msgstr ""
 
-#: src/WooCommerce.php:905
+#: src/WooCommerce.php:990
 msgid "Dimensions"
 msgstr ""
 
-#: src/WooCommerce.php:913
+#: src/WooCommerce.php:998
 msgid "Weight"
 msgstr ""
 
-#: src/WooCommerce.php:959
+#: src/WooCommerce.php:1044
 msgid "Product "
 msgstr "Produkt "
 
-#: src/WooCommerce.php:1129
+#: src/WooCommerce.php:1214
 msgid "Delivery Time: from"
 msgstr "Lieferzeit: ab"
 
-#: src/WooCommerce.php:1143
+#: src/WooCommerce.php:1228
 #, php-format
 msgid "from %1$s"
 msgstr "ab %1$s"

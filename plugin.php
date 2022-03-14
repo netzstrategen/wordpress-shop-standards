@@ -43,6 +43,14 @@ add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
 add_filter('woocommerce_get_settings_pages', __NAMESPACE__ . '\Settings::woocommerce_get_settings_pages');
 add_action('admin_init', __NAMESPACE__ . '\Admin::init');
 
+
+// Adds incoming stock WooCommerce to variable products inventory.
+// Use an earlier 'admin_init' hook in order to show at correct point, as
+// requested by the project manager.
+add_action('admin_init', function () {
+  add_action('woocommerce_product_after_variable_attributes', __NAMESPACE__ . '\WooCommerce::showIncomingstock', 11, 3);
+}, 9);
+
 if (defined('WP_CLI') && WP_CLI) {
   \WP_CLI::add_command('shop-standards', __NAMESPACE__ . '\CliCommand');
 }

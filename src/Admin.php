@@ -32,6 +32,9 @@ class Admin {
     add_action('woocommerce_product_after_variable_attributes', __NAMESPACE__ . '\WooCommerce::woocommerce_product_after_variable_attributes', 10, 3);
     add_action('woocommerce_variation_options_pricing', __NAMESPACE__ . '\WooCommerce::woocommerce_variation_options_pricing', 10, 3);
 
+    // Adds incoming stock WooCommerce to simple products inventory.
+    add_action('woocommerce_product_options_stock_fields', __NAMESPACE__ . '\WooCommerce::showIncomingstock', 9);
+
     // Allow ajax requests to specified functions.
     add_action('wp_ajax_is_existing_gtin', __NAMESPACE__ . '\WooCommerce::wp_ajax_is_existing_gtin');
 
