@@ -389,7 +389,6 @@ class WooCommerce {
     }
   }
 
-
   /**
    * Displays custom fields for single products on the invenotry tab.
    *
