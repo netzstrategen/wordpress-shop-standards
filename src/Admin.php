@@ -32,7 +32,7 @@ class Admin {
     add_action('woocommerce_product_after_variable_attributes', __NAMESPACE__ . '\WooCommerce::woocommerce_product_after_variable_attributes', 10, 3);
     add_action('woocommerce_variation_options_pricing', __NAMESPACE__ . '\WooCommerce::woocommerce_variation_options_pricing', 10, 3);
 
-    // Adds incoming stock WooCommerce to simple products inventory.
+    // Adds "Incoming stock" custom field.
     add_action('woocommerce_product_options_stock_fields', __NAMESPACE__ . '\WooCommerce::showIncomingstock', 9);
     add_action('woocommerce_product_after_variable_attributes', __NAMESPACE__ . '\WooCommerce::showIncomingstock', 10, 3);
 
