@@ -400,9 +400,9 @@ class WooCommerce {
       // Back in stock date field.
       echo '<div class="options_group show_if_simple show_if_external">';
       woocommerce_wp_text_input([
-        'id'          => self::FIELD_PRODUCT_INCOMING_STOCK,
-        'label'       => __('Incoming Stock', Plugin::L10N),
-        'desc_tip'    => 'true',
+        'id' => self::FIELD_PRODUCT_INCOMING_STOCK,
+        'label' => __('Incoming Stock', Plugin::L10N),
+        'desc_tip' => 'true',
         'description' => self::get_product_fields()[self::FIELD_PRODUCT_INCOMING_STOCK],
       ]);
       echo '</div>';
