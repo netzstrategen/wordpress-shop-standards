@@ -123,6 +123,7 @@ class Plugin {
     PlusProducts::init();
     ProductsPermalinks::init();
     ProductDefects::init();
+    ProductFeeds::init();
     ProductFieldsManager::init();
 
     if (is_admin()) {
