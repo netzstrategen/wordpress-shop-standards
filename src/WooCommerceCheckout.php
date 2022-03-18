@@ -37,7 +37,6 @@ class WooCommerceCheckout {
     // woocommerce-gateway-amazon-payments-advanced.
     if (self::isAmazonPayV2Checkout()) {
       add_filter('woocommerce_checkout_fields', __CLASS__ . '::removeRequiredFieldsforAmazonPay');
-      add_filter('woocommerce_checkout_create_order', __CLASS__ . '::woocommerce_checkout_create_order');
     }
   }
 
@@ -149,35 +148,6 @@ class WooCommerceCheckout {
   public static function removeRequiredFieldsforAmazonPay(array $fields): array {
     $fields['billing']['billing_address_1']['required'] = FALSE;
     return $fields;
-  }
-
-  /**
-   * Ensures that the billing_address_1 has always a value in Amazon Pay Orders.
-   *
-   * Missing address data in orders prevent automated processing
-   * (billing address without street & house number).
-   * If billing_adrress_2 contains data, set it to billing_address_1.
-   * If not, use address from shipping_addres_1.
-   *
-   * @implements woocommerce_checkout_create_order
-   */
-  public static function woocommerce_checkout_create_order($order) {
-
-    $billing_address_1 = $order->get_billing_address_1();
-    $billing_address_2 = $order->get_billing_address_2();
-    $shipping_address_1 = $order->get_shipping_address_1();
-
-    if (empty($billing_address_1) && !empty($billing_address_2)) {
-      $order->set_billing_address_1($billing_address_2);
-      $order->set_billing_address_2('');
-    }
-
-    elseif (empty($billing_address_1) && $shipping_address_1 != NULL) {
-      $order->set_billing_address_1($shipping_address_1);
-    }
-
-    return $order;
-
   }
 
 }
