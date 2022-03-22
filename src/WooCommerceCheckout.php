@@ -142,11 +142,11 @@ class WooCommerceCheckout {
 
   /**
    * Remove required fields when checking out via Amazon using woocommerce-gateway-amazon-payments-advanced.
-   * 
+   *
    * @implements woocommerce_checkout_fields
    */
   public static function removeRequiredFieldsforAmazonPay(array $fields): array {
-    unset($fields['billing']['billing_address_1']);
+    $fields['billing']['billing_address_1']['required'] = FALSE;
     return $fields;
   }
 
