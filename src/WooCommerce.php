@@ -9,6 +9,7 @@ class WooCommerce {
 
   const FIELD_MARKETING_FOCUS = '_' . Plugin::PREFIX . '_marketing_focus';
   const FIELD_PRICE_COMPARISON_FOCUS = '_' . Plugin::PREFIX . '_price_comparison_focus';
+  const FIELD_PRICE_COMPARISON_LOWER_ONLY = '_' . Plugin::PREFIX . '_price_comparison_lower_only';
   const FIELD_HIDE_ADD_TO_CART_BUTTON = '_' . Plugin::PREFIX . '_hide_add_to_cart_button';
   const FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL = '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label';
   const FIELD_PRICE_LABEL = '_' . Plugin::PREFIX . '_price_label';
@@ -33,6 +34,7 @@ class WooCommerce {
     return array_merge($fields, [
       self::FIELD_MARKETING_FOCUS => __('Marketing focus product', Plugin::L10N),
       self::FIELD_PRICE_COMPARISON_FOCUS => __('Price comparison focus product', Plugin::L10N),
+      self::FIELD_PRICE_COMPARISON_LOWER_ONLY => __('Price comparison lower only product', Plugin::L10N),
       self::FIELD_HIDE_ADD_TO_CART_BUTTON => __('Hide add to cart button', Plugin::L10N),
       self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL => __('Hide sale percentage bubble', Plugin::L10N),
       self::FIELD_PRICE_LABEL => __('Custom price label', Plugin::L10N),
@@ -377,6 +379,16 @@ class WooCommerce {
       echo '</div>';
     }
 
+    if (ProductFieldsManager::show_field(self::FIELD_PRICE_COMPARISON_LOWER_ONLY)) {
+      // Price comparison lower only product.
+      echo '<div class="options_group">';
+      woocommerce_wp_checkbox([
+        'id'    => self::FIELD_PRICE_COMPARISON_LOWER_ONLY,
+        'label' => self::get_product_fields()[self::FIELD_PRICE_COMPARISON_LOWER_ONLY],
+      ]);
+      echo '</div>';
+    }
+
     if (ProductFieldsManager::show_field(self::FIELD_MARKETING_FOCUS)) {
       // Marketing Focus Product
       echo '<div class="options_group">';
@@ -481,6 +493,7 @@ class WooCommerce {
       self::FIELD_SHOW_SALE_PRICE_ONLY,
       self::FIELD_HIDE_ADD_TO_CART_BUTTON,
       self::FIELD_PRICE_COMPARISON_FOCUS,
+      self::FIELD_PRICE_COMPARISON_LOWER_ONLY,
       self::FIELD_MARKETING_FOCUS,
       self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL,
       self::FIELD_DISABLE_RELATED_PRODUCTS,
@@ -650,6 +663,18 @@ class WooCommerce {
       echo '</div>';
     }
 
+    if (ProductFieldsManager::show_field(self::FIELD_PRICE_COMPARISON_LOWER_ONLY)) {
+      // Price comparison focus product.
+      echo '<div style="clear:both">';
+      woocommerce_wp_checkbox([
+        'id'    => self::FIELD_PRICE_COMPARISON_LOWER_ONLY,
+        'label' => __('Price comparison lower only product', Plugin::L10N),
+        'value' => get_post_meta($variation->ID,
+          self::FIELD_PRICE_COMPARISON_LOWER_ONLY, true),
+      ]);
+      echo '</div>';
+    }
+
     if (ProductFieldsManager::show_field(self::FIELD_MARKETING_FOCUS)) {
       // Marketing Focus Product
       echo '<div style="clear:both">';
@@ -734,6 +759,10 @@ class WooCommerce {
     // Price comparison focus product.
     $price_comparison_focus = isset($_POST[self::FIELD_PRICE_COMPARISON_FOCUS]) && wc_string_to_bool($_POST[self::FIELD_PRICE_COMPARISON_FOCUS]) ? 'yes' : 'no';
     update_post_meta($variation_id, self::FIELD_PRICE_COMPARISON_FOCUS, $price_comparison_focus);
+
+    // Price comparison lower only product.
+    $price_comparison_lower_only = isset($_POST[self::FIELD_PRICE_COMPARISON_LOWER_ONLY]) && wc_string_to_bool($_POST[self::FIELD_PRICE_COMPARISON_LOWER_ONLY]) ? 'yes' : 'no';
+    update_post_meta($variation_id, self::FIELD_PRICE_COMPARISON_LOWER_ONLY, $price_comparison_lower_only);
 
      // Marketing focus product.
      $marketingFocusFieldValue = isset($_POST[self::FIELD_MARKETING_FOCUS]) && wc_string_to_bool($_POST[self::FIELD_MARKETING_FOCUS]) ? 'yes' : 'no';
