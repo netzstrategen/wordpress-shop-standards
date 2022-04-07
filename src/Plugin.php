@@ -115,6 +115,9 @@ class Plugin {
     add_filter('wpla_shipping_service_id_map',  __NAMESPACE__ . '\Amazon::wpla_shipping_service_id_map', 10, 2);
     add_filter('wpla_shipping_service_title_map',  __NAMESPACE__ . '\Amazon::wpla_shipping_service_title_map', 10, 2);
 
+    // Sets instance id for imported Amazon orders.
+    add_filter('wpla_shipping_instance_id',  __NAMESPACE__ . '\Amazon::wpla_shipping_instance_id', 10, 3);
+
     WooCommerce::init();
     WooCommerceSaleLabel::init();
     Seo::init();
