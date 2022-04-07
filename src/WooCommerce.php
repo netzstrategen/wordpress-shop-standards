@@ -741,6 +741,56 @@ class WooCommerce {
   }
 
   /**
+   * Allows adding multiple products to the cart.
+   *
+   * See https://bit.ly/3JfcIET
+   *
+   * @implements wp_loaded
+   */
+  public static function add_multiple_products_to_cart() {
+    if (
+      !isset($_REQUEST['add-to-cart']) ||
+      strpos($_REQUEST['add-to-cart'], ',') === false
+    ) {
+      return;
+    }
+
+    remove_action('wp_loaded', array('WC_Form_Handler', 'add_to_cart_action'), 20);
+
+    $product_ids = explode(',', $_REQUEST['add-to-cart']);
+
+    // Avoid redirection to cart after adding a product.
+    $fn_return_no = fn() => 'no';
+    add_filter('woocommerce_add_to_cart_redirect', '__return_false', 99);
+    add_filter('option_woocommerce_cart_redirect_after_add', $fn_return_no, 99);
+
+    array_map(
+      function ($product_id) {
+        $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint($product_id));
+        if (!$product = wc_get_product($product_id)) {
+          return;
+        }
+
+        $handler = apply_filters('woocommerce_add_to_cart_handler', $product->get_type(), $product);
+
+        if ($handler === 'variable' || $handler === 'variation') {
+          $result = WC_Form_Handler::add_to_cart_handler_variable($product_id);
+        } elseif ($handler === 'grouped') {
+          $result = WC_Form_Handler::add_to_cart_handler_grouped($product_id);
+        } elseif (has_action('woocommerce_add_to_cart_handler_' . $handler)) {
+          do_action('woocommerce_add_to_cart_handler_' . $handler, false);
+        } else {
+          $result = WC_Form_Handler::add_to_cart_handler_simple($product_id);
+        }
+      },
+      $product_ids
+    );
+
+    remove_filter('woocommerce_add_to_cart_redirect', '__return_false', 99);
+    remove_filter('option_woocommerce_cart_redirect_after_add', $fn_return_no, 99);
+  }
+
+  /**
    * Displays sale price as regular price if custom field is checked.
    *
    * @implements woocommerce_get_price_html

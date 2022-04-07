@@ -90,6 +90,9 @@ class Plugin {
       Plugin::register_acf();
     }
 
+    // Allows adding multiple products to the cart.
+    add_action('wp_loaded', __NAMESPACE__ . '\WooCommerce::add_multiple_products_to_cart', 20);
+
     // Displays sale price as regular price if custom field is checked.
     add_filter('woocommerce_get_price_html', __NAMESPACE__ . '\WooCommerce::woocommerce_get_price_html', 20, 2);
     // Adds strike price (range) labels for variable products, too.
