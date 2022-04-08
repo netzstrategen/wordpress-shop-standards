@@ -85,6 +85,20 @@ class Amazon {
   }
 
   /**
+   * Provides instance id to wp-lister-amazon plugin filter.
+   *
+   * @implements wpla_shipping_instance_id
+   */
+  public static function wpla_shipping_instance_id(int $instance_id, $shipping_method_id, $shipping_method_title): int {
+
+    if (isset(self::$firstAvailableMethod)) {
+      $shipping_method = reset(self::$firstAvailableMethod);
+      return $shipping_method->get_instance_id();
+    }
+    return $instance_id;
+  }
+
+  /**
    * Recreates WC_Cart instance and returns the first available shipping method.
    *
    * @param WC_Order $order
