@@ -758,33 +758,30 @@ class WooCommerce {
     remove_action('wp_loaded', array('WC_Form_Handler', 'add_to_cart_action'), 20);
 
     $product_ids = explode(',', $_REQUEST['add-to-cart']);
+    if (!$product_ids) {
+      return;
+    }
+    $num_products = count($product_ids);
+
+    $adding_to_cart = TRUE;
+    $redirect_to_cart = get_option('woocommerce_cart_redirect_after_add');
 
     // Avoid redirection to cart after adding a product.
     $fn_return_no = fn() => 'no';
     add_filter('woocommerce_add_to_cart_redirect', '__return_false', 99);
     add_filter('option_woocommerce_cart_redirect_after_add', $fn_return_no, 99);
 
-    array_map(
-      function ($product_id) {
-        $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint($product_id));
-        if (!$product = wc_get_product($product_id)) {
-          return;
-        }
+    foreach ($product_ids as $index => $product_id) {
+      $num_products--;
+      $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint($product_id));
+      if (empty($product_id)) {
+        continue;
+      }
 
-        $handler = apply_filters('woocommerce_add_to_cart_handler', $product->get_type(), $product);
-
-        if ($handler === 'variable' || $handler === 'variation') {
-          $result = WC_Form_Handler::add_to_cart_handler_variable($product_id);
-        } elseif ($handler === 'grouped') {
-          $result = WC_Form_Handler::add_to_cart_handler_grouped($product_id);
-        } elseif (has_action('woocommerce_add_to_cart_handler_' . $handler)) {
-          do_action('woocommerce_add_to_cart_handler_' . $handler, false);
-        } else {
-          $result = WC_Form_Handler::add_to_cart_handler_simple($product_id);
-        }
-      },
-      $product_ids
-    );
+      // Add product to cart
+      $_REQUEST['add-to-cart'] = $product_id;
+      \WC_Form_Handler::add_to_cart_action();
+    }
 
     remove_filter('woocommerce_add_to_cart_redirect', '__return_false', 99);
     remove_filter('option_woocommerce_cart_redirect_after_add', $fn_return_no, 99);
