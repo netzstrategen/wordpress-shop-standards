@@ -772,7 +772,6 @@ class WooCommerce {
     add_filter('option_woocommerce_cart_redirect_after_add', $fn_return_no, 99);
 
     foreach ($product_ids as $index => $product_id) {
-      $num_products--;
       $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint($product_id));
       if (empty($product_id)) {
         continue;
