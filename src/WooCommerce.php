@@ -755,13 +755,12 @@ class WooCommerce {
       return;
     }
 
-    remove_action('wp_loaded', array('WC_Form_Handler', 'add_to_cart_action'), 20);
-
-    $product_ids = explode(',', $_REQUEST['add-to-cart']);
+    $product_ids = explode(',', sanitize_text_field(wp_unslash($_REQUEST['add-to-cart'])));
     if (!$product_ids) {
       return;
     }
-    $num_products = count($product_ids);
+
+    remove_action('wp_loaded', array('WC_Form_Handler', 'add_to_cart_action'), 20);
 
     // Avoid redirection to cart after adding a product.
     $fn_return_no = fn() => 'no';
