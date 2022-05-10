@@ -172,6 +172,9 @@ class Plugin {
     // Removes SKU from order item name.
     add_filter('woocommerce_email_order_items_args', __NAMESPACE__ . '\WooCommerce::woocommerce_email_order_items_args');
 
+    // Adds delivery time information to an order item.
+    add_filter('woocommerce_new_order_item', __NAMESPACE__ . '\WooCommerce::add_delivery_time_name_to_order_item', 10, 2);
+
     // Adds product attributes to order emails.
     add_filter('woocommerce_display_item_meta', __NAMESPACE__ . '\WooCommerce::woocommerce_display_item_meta', 10, 3);
 
