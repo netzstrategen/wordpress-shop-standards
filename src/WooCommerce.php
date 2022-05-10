@@ -12,7 +12,6 @@ class WooCommerce {
   const FIELD_REPRICING_LOWER_ONLY = '_' . Plugin::PREFIX . '_repricing_lower_only';
   const FIELD_HIDE_ADD_TO_CART_BUTTON = '_' . Plugin::PREFIX . '_hide_add_to_cart_button';
   const FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL = '_' . Plugin::PREFIX . '_hide_sale_percentage_flash_label';
-  const FIELD_PRICE_LABEL = '_' . Plugin::PREFIX . '_price_label';
   const FIELD_SHOW_SALE_PRICE_ONLY = '_' . Plugin::PREFIX . '_show_sale_price_only';
   const FIELD_ERP_INVENTORY = '_' . Plugin::PREFIX . '_erp_inventory_id';
   const FIELD_GTIN = '_' . Plugin::PREFIX . '_gtin';
@@ -37,7 +36,6 @@ class WooCommerce {
       self::FIELD_REPRICING_LOWER_ONLY => __('Repricing: Only lower prices', Plugin::L10N),
       self::FIELD_HIDE_ADD_TO_CART_BUTTON => __('Hide add to cart button', Plugin::L10N),
       self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL => __('Hide sale percentage bubble', Plugin::L10N),
-      self::FIELD_PRICE_LABEL => __('Custom price label', Plugin::L10N),
       self::FIELD_SHOW_SALE_PRICE_ONLY => __('Display sale price as normal price', Plugin::L10N),
       self::FIELD_ERP_INVENTORY => __('ERP/Inventory ID', Plugin::L10N),
       self::FIELD_GTIN => __('Enter the Global Trade Item Number', Plugin::L10N),
@@ -336,19 +334,6 @@ class WooCommerce {
       echo '</div>';
     }
 
-    if (ProductFieldsManager::show_field(self::FIELD_PRICE_LABEL)) {
-      // Custom price label
-      echo '<div class="options_group">';
-      woocommerce_wp_text_input([
-        'id'          => self::FIELD_PRICE_LABEL,
-        'label'       => self::get_product_fields()[self::FIELD_PRICE_LABEL],
-        'desc_tip'    => 'true',
-        'description' => __('The label will only be displayed if "Sale price was displayed as regular price" setting is checked.',
-          Plugin::L10N),
-      ]);
-      echo '</div>';
-    }
-
     if (ProductFieldsManager::show_field(self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL)) {
       // Hide sale percentage flash label.
       echo '<div class="options_group">';
@@ -460,7 +445,6 @@ class WooCommerce {
       self::FIELD_GTIN,
       self::FIELD_ERP_INVENTORY,
       '_' . Plugin::PREFIX . '_product_notes',
-      self::FIELD_PRICE_LABEL,
       self::FIELD_PRODUCT_PURCHASING_PRICE,
       self::FIELD_DISABLE_RELATED_PRODUCTS,
     ];
@@ -843,11 +827,6 @@ class WooCommerce {
           return $price;
         }
         $price = wc_price(wc_get_price_to_display($product)) . $product->get_price_suffix();
-      }
-
-      if (is_product() && !static::isSideProduct()) {
-        $price_label = get_post_meta($product_id, self::FIELD_PRICE_LABEL, TRUE) ?: __('(Our price)', Plugin::L10N);
-        $price .= ' ' . $price_label;
       }
     }
     return $price;
