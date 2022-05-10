@@ -2,6 +2,8 @@
 
 namespace Netzstrategen\ShopStandards;
 
+use WGM_Template;
+
 /**
  * WooCommerce related functionality.
  */
@@ -922,6 +924,30 @@ class WooCommerce {
   }
 
   /**
+   * Adds delivery time information to an order item.
+   *
+   * @implements woocommerce_new_order_item
+   */
+  public static function add_delivery_time_name_to_order_item($item_id, $item) {
+    if (!class_exists('WGM_Template')) {
+      return;
+    }
+
+    if (is_a($item, 'WC_Order_Item_Product')) {
+      $product = $item->get_product();
+      $delivery_time_id = apply_filters(
+        'add_deliverytime_to_order_item',
+        WGM_Template::get_term_id_from_product_meta('_lieferzeit', $product),
+        $product
+      );
+      if (!empty($delivery_time_id)) {
+        $delivery_time = get_term($delivery_time_id, 'product_delivery_times');
+        wc_add_order_item_meta($item_id, '_deliverytime_name', $delivery_time->name);
+      }
+    }
+  }
+
+  /**
    * Adds basic information (e.g. weight, sku, etc.) and product attributes to order emails.
    *
    * @param string $html
@@ -956,10 +982,7 @@ class WooCommerce {
     $product_data_set = array_merge($data, static::getProductAttributes($product));
 
     // Display delivery time from order item meta for each order item.
-    $delivery_time = wc_get_order_item_meta($item->get_id(), '_deliverytime');
-    $delivery_time = get_term($delivery_time, 'product_delivery_times');
-    $delivery_time = $delivery_time->name ?? '';
-    // Add the back in stock date next to the delivery time.
+    $delivery_time = wc_get_order_item_meta($item->get_id(), '_deliverytime_name') ?? '';
     $delivery_time = self::woocommerce_de_get_deliverytime_string_label_string($delivery_time, $product);
 
     if ($delivery_time) {
