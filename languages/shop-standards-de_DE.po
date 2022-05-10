@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2022-04-07 13:29+0200\n"
+"POT-Creation-Date: 2022-05-10 14:57+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Joan López <joan@somoscuatro.es>\n"
 "Language-Team: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: src/Admin.php:65 src/WooCommerce.php:1311
+#: src/Admin.php:65 src/WooCommerce.php:1360
 #, php-format
 msgid ""
 "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in "
@@ -24,35 +24,35 @@ msgstr ""
 msgid "The entered GTIN is unique."
 msgstr "Diese GTIN wird noch nicht verwendet."
 
-#: src/Plugin.php:86 src/Plugin.php:87 src/Plugin.php:268 src/Plugin.php:307
+#: src/Plugin.php:86 src/Plugin.php:87 src/Plugin.php:277 src/Plugin.php:316
 msgid "Hide \"Add to Cart\" button"
 msgstr "“In den Warenkorb”-Verhalten"
 
-#: src/Plugin.php:272
+#: src/Plugin.php:281
 msgid "Product categories"
 msgstr "Produktkategorien"
 
-#: src/Plugin.php:273
+#: src/Plugin.php:282
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
 "ausgeblendet."
 
-#: src/Plugin.php:285
+#: src/Plugin.php:294
 msgid "Product brands"
 msgstr "Produktmarken"
 
-#: src/Plugin.php:286
+#: src/Plugin.php:295
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
 "ausgeblendet."
 
-#: src/Plugin.php:298
+#: src/Plugin.php:307
 msgid "Notice"
 msgstr "Hinweis"
 
-#: src/Plugin.php:300
+#: src/Plugin.php:309
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 "Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
@@ -179,29 +179,25 @@ msgstr ""
 msgid "Shop Standards"
 msgstr ""
 
-#: src/WooCommerce.php:35 src/WooCommerce.php:683
+#: src/WooCommerce.php:36 src/WooCommerce.php:669
 msgid "Marketing focus product"
 msgstr "Marketing focus product"
 
-#: src/WooCommerce.php:36 src/WooCommerce.php:659
+#: src/WooCommerce.php:37 src/WooCommerce.php:645
 msgid "Price comparison focus product"
 msgstr "Repricing: kein automatisches Repricing"
 
-#: src/WooCommerce.php:37 src/WooCommerce.php:671
+#: src/WooCommerce.php:38 src/WooCommerce.php:657
 msgid "Repricing: Only lower prices"
 msgstr "Repricing: Preise nur senken"
 
-#: src/WooCommerce.php:38 src/WooCommerce.php:639
+#: src/WooCommerce.php:39 src/WooCommerce.php:625
 msgid "Hide add to cart button"
 msgstr "Warenkorb-Button verstecken"
 
-#: src/WooCommerce.php:39
+#: src/WooCommerce.php:40
 msgid "Hide sale percentage bubble"
 msgstr "Sale: Prozentangabe verbergen"
-
-#: src/WooCommerce.php:40
-msgid "Custom price label"
-msgstr "Individuelles Preis-Label anzeigen"
 
 #: src/WooCommerce.php:41
 msgid "Display sale price as normal price"
@@ -211,11 +207,11 @@ msgstr "Reduzierten Preis als normalen Preis anzeigen"
 msgid "ERP/Inventory ID"
 msgstr "ERP/Inventar ID"
 
-#: src/WooCommerce.php:43 src/WooCommerce.php:623
+#: src/WooCommerce.php:43 src/WooCommerce.php:609
 msgid "Enter the Global Trade Item Number"
 msgstr "Geben Sie die Gesamtzahl des Handels ein"
 
-#: src/WooCommerce.php:44 src/WooCommerce.php:614
+#: src/WooCommerce.php:44 src/WooCommerce.php:600
 msgid "Enter the back in stock date"
 msgstr "Datum, ab dem der Artikel lieferbar ist"
 
@@ -254,7 +250,7 @@ msgstr "Nur noch %s Stück sofort ab Lager lieferbar"
 msgid "Back in stock %s"
 msgstr "Wieder lieferbar %s"
 
-#: src/WooCommerce.php:300 src/WooCommerce.php:612
+#: src/WooCommerce.php:300 src/WooCommerce.php:598
 msgid "Back in stock date"
 msgstr "Lieferbar ab Datum"
 
@@ -262,31 +258,23 @@ msgstr "Lieferbar ab Datum"
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:346
-msgid ""
-"The label will only be displayed if \"Sale price was displayed as regular "
-"price\" setting is checked."
-msgstr ""
-"Das Label wird nur angezeigt, wenn “Sale Preis als regulären Preis anzeigen "
-"aktiviert wurde."
-
-#: src/WooCommerce.php:446
+#: src/WooCommerce.php:433
 msgid "Internal product notes"
 msgstr "Interne Anmerkungen"
 
-#: src/WooCommerce.php:622
+#: src/WooCommerce.php:608
 msgid "GTIN:"
 msgstr ""
 
-#: src/WooCommerce.php:631
+#: src/WooCommerce.php:617
 msgid "ERP/Inventory ID:"
 msgstr "ERP/Inventar ID:"
 
-#: src/WooCommerce.php:647
+#: src/WooCommerce.php:633
 msgid "Variation has insufficient images"
 msgstr "Variation hat ein unzureichendes Bilder"
 
-#: src/WooCommerce.php:649
+#: src/WooCommerce.php:635
 msgid ""
 "Allows this product to be identified and possibly be excluded by other "
 "processes and plugins (e.g. a custom filter for product feeds). Enabling "
@@ -296,39 +284,35 @@ msgstr ""
 "unzureichender Bilder auszuschließen. Das Setzen des Hakens hat keinen "
 "Einfluss auf das Frontend."
 
-#: src/WooCommerce.php:802
-msgid "(Our price)"
-msgstr "(Online-Preis)"
-
-#: src/WooCommerce.php:857 src/WooCommerce.php:920
+#: src/WooCommerce.php:885 src/WooCommerce.php:969
 msgid "Delivery Time"
 msgstr ""
 
-#: src/WooCommerce.php:980
+#: src/WooCommerce.php:1029
 msgid "SKU"
 msgstr ""
 
-#: src/WooCommerce.php:984
+#: src/WooCommerce.php:1033
 msgid "ERP/ID"
 msgstr ""
 
-#: src/WooCommerce.php:997
+#: src/WooCommerce.php:1046
 msgid "Dimensions"
 msgstr ""
 
-#: src/WooCommerce.php:1005
+#: src/WooCommerce.php:1054
 msgid "Weight"
 msgstr ""
 
-#: src/WooCommerce.php:1051
+#: src/WooCommerce.php:1100
 msgid "Product "
 msgstr "Produkt "
 
-#: src/WooCommerce.php:1221
+#: src/WooCommerce.php:1270
 msgid "Delivery Time: from"
 msgstr "Lieferzeit: ab"
 
-#: src/WooCommerce.php:1235
+#: src/WooCommerce.php:1284
 #, php-format
 msgid "from %1$s"
 msgstr "ab %1$s"
