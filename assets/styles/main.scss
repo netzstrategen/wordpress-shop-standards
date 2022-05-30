@@ -21,3 +21,11 @@
 .price del {
   text-decoration: none !important;
 }
+
+
+.woocommerce .product .single_add_to_cart_button.loading:after {
+  position: relative;
+  top: auto;
+  right: auto;
+  margin-left: 0.53em;
+}
