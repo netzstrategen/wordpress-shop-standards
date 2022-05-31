@@ -335,7 +335,8 @@ class Plugin {
     wp_enqueue_script(Plugin::PREFIX, static::getBaseUrl() . '/dist/scripts/main' . $suffix . '.js', ['jquery'], $git_version, TRUE);
     wp_localize_script(Plugin::PREFIX, 'shop_standards_settings', [
       'emailConfirmationEmail' => get_option('_' . Plugin::L10N . '_checkout_email_confirmation_field'),
-      'ajax_url' => admin_url('admin-ajax.php')
+      'ajax_url' => admin_url('admin-ajax.php'),
+      'ajax_nonce' => wp_create_nonce('ajax-nonce')
     ]);
   }
 

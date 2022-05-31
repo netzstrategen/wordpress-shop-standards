@@ -132,28 +132,37 @@
   $(document).ready(() => {
     $('.single_add_to_cart_button').click((e) => {
       e.preventDefault();
+      if ($(e.target).hasClass('loading')) {
+        return;
+      }
       const $thisbutton = $(e.target);
       const $form = $thisbutton.closest('form.cart');
       const id = $thisbutton.val();
       const productQty = $form.find('input[name=quantity]').val() || 1;
       const productId = $form.find('input[name=product_id]').val() || id;
       const variationId = $form.find('input[name=variation_id]').val() || 0;
+      const productType = $form.hasClass('variations_form') ? 'variable' : 'simple';
       const data = {
         action: 'woocommerceAjaxAddToCart',
         product_id: productId,
         product_sku: '',
         quantity: productQty,
-        variation_id: variationId
+        variation_id: variationId,
+        product_type: productType,
+        nonce: shop_standards_settings.ajax_nonce,
       };
       $.ajax({
         type: 'post',
         url: shop_standards_settings.ajax_url,
         data,
         beforeSend() {
-          $thisbutton.removeClass('added').addClass('loading');
+          $thisbutton.addClass('loading');
         },
         complete() {
-          $thisbutton.addClass('added').removeClass('loading');
+          $thisbutton.removeClass('loading');
+          $('html, body').animate({
+            scrollTop: 0
+          }, 500);
         },
         success(response) {
           if (response.error && response.product_url) {
