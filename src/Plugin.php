@@ -226,6 +226,8 @@ class Plugin {
 
     // Adds GTIN product number in schema.org.
     add_filter('woocommerce_structured_data_product', __NAMESPACE__ . '\Seo::getProductGtin');
+    // Adds Brand name to schema.org.
+    add_filter('woocommerce_structured_data_product', __NAMESPACE__ . '\Seo::getProductBrand');
     // Adds product variation price to schema.org.
     add_filter('woocommerce_structured_data_product_offer', __NAMESPACE__ . '\Seo::getProductVariationPrice', 10, 2);
     // Fixes schema.org prices according to tax settings.

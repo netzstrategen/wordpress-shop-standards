@@ -182,6 +182,22 @@ class Seo {
   }
 
   /**
+   * Adds product brand to schema.org structured data.
+   *
+   * @implements woocommerce_structured_data_product
+   */
+  public static function getProductBrand($data) {
+    global $product;
+
+    $brand = get_the_terms($product->get_id(), apply_filters(Plugin::PREFIX . '_product_brand_taxonomy', 'pa_marken'));
+    if ($brand && !is_wp_error($brand)) {
+      $data['brand'] = $brand[0]->name;
+    }
+
+    return $data;
+  }
+
+  /**
    * Fixes schema.org prices according to tax settings.
    *
    * When retrieving product prices to add into schema.org woocommerce is not
