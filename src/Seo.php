@@ -194,8 +194,8 @@ class Seo {
       return $data;
     }
 
-    $brand = get_the_terms($product->get_id(), apply_filters(Plugin::PREFIX . '_product_brand_taxonomy', 'pa_marken'));
-    if ($brand && !is_wp_error($brand)) {
+    $brands = get_the_terms($product->get_id(), apply_filters(Plugin::PREFIX . '_product_brand_taxonomy', 'pa_marken'));
+    if ($brands && !is_wp_error($brands)) {
       $data['brand'] = [
         '@type' => 'Brand',
         'name' => $brands[0]->name,
