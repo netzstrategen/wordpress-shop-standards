@@ -189,9 +189,17 @@ class Seo {
   public static function getProductBrand($data) {
     global $product;
 
+    // Delegate to woocommerce-brands plugin, if installed.
+    if (isset($data['brand'])) {
+      return $data;
+    }
+
     $brand = get_the_terms($product->get_id(), apply_filters(Plugin::PREFIX . '_product_brand_taxonomy', 'pa_marken'));
     if ($brand && !is_wp_error($brand)) {
-      $data['brand'] = $brand[0]->name;
+      $data['brand'] = [
+        '@type' => 'Brand',
+        'name' => $brands[0]->name,
+      ];
     }
 
     return $data;
