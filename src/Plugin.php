@@ -126,12 +126,12 @@ class Plugin {
     Seo::init();
     WooCommerceSalutation::init();
     WooCommerceCheckout::init();
+    WooCommerceAjax::init();
     PlusProducts::init();
     ProductsPermalinks::init();
     ProductDefects::init();
     ProductFeeds::init();
     ProductFieldsManager::init();
-    WooCommerceAjax::init();
 
     if (is_admin()) {
       return;

@@ -11,9 +11,14 @@ class WooCommerceAjax {
    * WooCommerce Ajax initialization method.
    */
   public static function init() {
-    add_action('wp_ajax_woocommerceAjaxAddToCart', __CLASS__ . '::woocommerceAjaxAddToCart');
-    add_action('wp_ajax_nopriv_woocommerceAjaxAddToCart', __CLASS__ . '::woocommerceAjaxAddToCart');
-    add_filter('woocommerce_add_to_cart_fragments', __CLASS__ . '::ajaxAddToCartNoticeFragments');
+    add_filter('woocommerce_get_settings_shop_standards', __CLASS__ . '::woocommerce_get_settings_shop_standards');
+
+    if (get_option('_' . Plugin::L10N . '_ajax_cart_enabled') === 'yes') {
+      add_filter('body_class',__CLASS__ . '::ajaxBodyClass');
+      add_action('wp_ajax_woocommerceAjaxAddToCart', __CLASS__ . '::woocommerceAjaxAddToCart');
+      add_action('wp_ajax_nopriv_woocommerceAjaxAddToCart', __CLASS__ . '::woocommerceAjaxAddToCart');
+      add_filter('woocommerce_add_to_cart_fragments', __CLASS__ . '::ajaxAddToCartNoticeFragments');
+    }
   }
 
   /**
@@ -69,7 +74,41 @@ class WooCommerceAjax {
 
     $fragments['notices_html'] = ob_get_clean();
     wc_clear_notices();
+    
     return $fragments;
+  }
+
+  /**
+   * Adds woocommerce specific settings.
+   *
+   * @implements woocommerce_get_settings_shop_standards
+   */
+  public static function woocommerce_get_settings_shop_standards(array $settings): array {
+    $settings[] = [
+      'type' => 'title',
+      'name' => __('Ajax Cart Settings', Plugin::L10N),
+    ];
+    $settings[] = [
+      'type' => 'checkbox',
+      'id' => '_' . Plugin::L10N . '_ajax_cart_enabled',
+      'name' => __('Enable', Plugin::L10N)
+    ];
+    $settings[] = [
+      'type' => 'sectionend',
+      'id' => Plugin::L10N,
+    ];
+
+    return $settings;
+  }
+
+  /**
+   * Add custom class for ajax cart active;
+   * @return array
+   */
+  public static function ajaxBodyClass($classes) {
+    $classes[] = 'custom-ajax-cart-active';
+
+    return $classes;
   }
 
 }

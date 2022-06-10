@@ -130,7 +130,7 @@
 
   // Add ajax add to cart
   $(document).ready(() => {
-    $('.single_add_to_cart_button').click((e) => {
+    $('body.custom-ajax-cart-active .single_add_to_cart_button').click((e) => {
       e.preventDefault();
       if ($(e.target).hasClass('loading')) {
         return;
