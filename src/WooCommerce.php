@@ -81,7 +81,7 @@ class WooCommerce {
       $product->get_type() !== 'variable' ||
       get_post_meta($product->get_id(), self::FIELD_SHOW_SALE_PRICE_ONLY, TRUE) === 'yes'
     ) {
-      return $price;
+      return str_replace('-', '<b>&nbsp;–&nbsp;</b>', $price);
     }
     $sale_prices = [
       'min' => $product->get_variation_price('min', TRUE),
@@ -101,7 +101,7 @@ class WooCommerce {
     }
     if (($sale_prices['min'] !== $regular_prices['min'] || $sale_prices['max'] !== $regular_prices['max'])) {
       if ($sale_prices['min'] !== $sale_prices['max'] || $regular_prices['min'] !== $regular_prices['max']) {
-        $price = '<del>' . implode('-', $regular_price) . '</del> <ins>' . implode('-', $sale_price) . '</ins>';
+        $price = '<del>' . implode('&nbsp;–&nbsp;', $regular_price) . '</del> <ins>' . implode('&nbsp;–&nbsp;', $sale_price) . '</ins>';
       }
     }
     return $price;
