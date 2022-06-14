@@ -81,7 +81,7 @@ class WooCommerce {
       $product->get_type() !== 'variable' ||
       get_post_meta($product->get_id(), self::FIELD_SHOW_SALE_PRICE_ONLY, TRUE) === 'yes'
     ) {
-      return str_replace('-', '<b>&nbsp;–&nbsp;</b>', $price);
+      return preg_replace('@<\/span>(-)@', '&nbsp;–&nbsp;', $price);
     }
     $sale_prices = [
       'min' => $product->get_variation_price('min', TRUE),
