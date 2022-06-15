@@ -169,8 +169,13 @@
             window.location = response.product_url;
           } else {
             $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, $thisbutton]);
-            $('.woocommerce-error, .woocommerce-message, .woocommerce-info').remove();
+            $('.woocommerce-error, .woocommerce-message, .woocommerce-info, .related-accessories').remove();
             $form.closest('.product').before(response.fragments.notices_html);
+            if (!$(response.fragments.notices_html).hasClass('woocommerce-error')) {
+              $form.closest('.product').before(response.fragments.accessories_html);
+              $(document).trigger('reloadRelatedAccessories');
+              $(document).trigger('reloadGalleryaSlider');
+            }
             if ($('span.header-item--cart__amount').length) {
               $('span.header-item--cart__amount').html($(response.fragments['span.header-item--cart__amount']).html());
             } else {

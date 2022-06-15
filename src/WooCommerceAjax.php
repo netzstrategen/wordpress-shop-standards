@@ -2,6 +2,8 @@
 
 namespace Netzstrategen\ShopStandards;
 
+use Netzstrategen\WooCommerceRelatedAccessories\WooCommerce as RelatedAccessoriesWoocommerce;
+
 /**
  * WooCommerce Ajax related functionality.
  */
@@ -18,6 +20,9 @@ class WooCommerceAjax {
       add_action('wp_ajax_woocommerceAjaxAddToCart', __CLASS__ . '::woocommerceAjaxAddToCart');
       add_action('wp_ajax_nopriv_woocommerceAjaxAddToCart', __CLASS__ . '::woocommerceAjaxAddToCart');
       add_filter('woocommerce_add_to_cart_fragments', __CLASS__ . '::ajaxAddToCartNoticeFragments');
+      if (is_plugin_active('woocommerce-related-accessories/plugin.php')){
+        add_filter('woocommerce_add_to_cart_fragments', __CLASS__ . '::ajaxAddToCartAccessoriesFragments');
+      }
     }
   }
 
@@ -74,7 +79,29 @@ class WooCommerceAjax {
 
     $fragments['notices_html'] = ob_get_clean();
     wc_clear_notices();
-    
+
+    return $fragments;
+  }
+
+   /**
+   * WooCommerce Ajax add related accesories in Woocommerce fragments.
+   * @return object
+   */
+  public static function ajaxAddToCartAccessoriesFragments($fragments) {
+    if (is_plugin_active('woocommerce-related-accessories/plugin.php')) {
+      if (!isset($_POST['product_id'])) {
+        return $fragments;
+      }
+
+      $accessories_html = '';
+      global $post;
+      $post = get_post($_POST['product_id']);
+      ob_start();
+      //Forcing $isAddedToCart variable to be TRUE
+      RelatedAccessoriesWoocommerce::woocommerce_add_to_cart(TRUE,TRUE,TRUE,TRUE,TRUE,TRUE);
+      RelatedAccessoriesWoocommerce::woocommerce_before_single_product();
+      $fragments['accessories_html'] = ob_get_clean();
+    }
     return $fragments;
   }
 
