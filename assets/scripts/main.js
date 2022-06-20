@@ -42,8 +42,8 @@
     $variationSelectChanged = $(this);
   });
 
-  $('.lowest_delivery_variations__select').on('change', function() {
-    setTimeout(function(){
+  $('.lowest_delivery_variations__select').on('change', () => {
+    setTimeout(() => {
       $('.variations_form select').trigger('change');
     }, 100);
   });
