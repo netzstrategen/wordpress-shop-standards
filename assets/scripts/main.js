@@ -42,12 +42,6 @@
     $variationSelectChanged = $(this);
   });
 
-  $('.lowest_delivery_variations__select').on('change', function() {
-    setTimeout(function(){
-      $('.variations_form select').trigger('change');
-    }, 100);
-  });
-
   $('.variations_form').on('woocommerce_variation_has_changed', () => {
     // Allow selecting the default empty value of an attributes dropdown
     // without modifying the value of the others.
