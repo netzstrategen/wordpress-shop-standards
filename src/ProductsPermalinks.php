@@ -30,7 +30,7 @@ class ProductsPermalinks {
   /**
    * Ensures the canonical url matches the same product link fixed.
    */
-  public static function match_canonical_url(?string $canonical): string {
+  public static function match_canonical_url(?string $canonical): ?string {
     if ($canonical && is_product()) {
       // Executes the same flow to get the right product link.
       $canonical = get_the_permalink();
