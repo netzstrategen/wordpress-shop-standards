@@ -20,6 +20,7 @@ class WooCommerce {
   const FIELD_BACK_IN_STOCK_DATE = '_' . Plugin::PREFIX . '_back_in_stock_date';
   const FIELD_DISABLE_RELATED_PRODUCTS = '_' . Plugin::PREFIX . '_disable_related_products';
   const FIELD_PRODUCT_PURCHASING_PRICE = '_'.Plugin::PREFIX.'_purchasing_price';
+  const FIELD_REPRICING_OPTIONS = '_' . Plugin::PREFIX . '_repricing_options';
 
   /**
    * Init module.
@@ -44,6 +45,7 @@ class WooCommerce {
       self::FIELD_BACK_IN_STOCK_DATE => __('Enter the back in stock date', Plugin::L10N),
       self::FIELD_DISABLE_RELATED_PRODUCTS => __('Disable related products', Plugin::L10N),
       self::FIELD_PRODUCT_PURCHASING_PRICE => __('Purchasing Price', Plugin::L10N) . ' (' . get_woocommerce_currency_symbol() . ')',
+      self::FIELD_REPRICING_OPTIONS => __('Repricing options', Plugin::L10N),
     ]);
   }
 
@@ -385,6 +387,41 @@ class WooCommerce {
       ]);
       echo '</div>';
     }
+
+    if (ProductFieldsManager::show_field(self::FIELD_REPRICING_OPTIONS)) {
+      // Repricing options.
+      global $post;
+      $brand = '';
+      $product = wc_get_product($post->ID);
+      if ($product->is_type('variation')) {
+        $product = wc_get_product($product->get_parent_id());
+      }
+      $product_attributes = self::getProductAttributes($product, FALSE);
+      if (!empty($product_attributes)) {
+        foreach ($product_attributes as $attr) {
+          if ($attr['name'] === 'Kategorie') {
+            if (!empty($attr['value'])) {
+              $brand = explode(',', $attr['value'])[0];
+            }
+          }
+        }
+      }
+
+      $dropdown_values = [
+        '' => __('Select option', Plugin::L10N),
+        !empty($brand) ? $brand . ' | default' : 'default' => __('Default', Plugin::L10N),
+        !empty($brand) ? $brand . ' | no repricing' : 'no repricing' => __('No Repricing', Plugin::L10N),
+        !empty($brand) ? $brand . ' | lower prices only' : 'lower prices only' => __('Lower prices only', Plugin::L10N),
+      ];
+
+      echo '<div class="options_group">';
+      woocommerce_wp_select([
+        'id'    => self::FIELD_REPRICING_OPTIONS,
+        'label' => self::get_product_fields()[self::FIELD_REPRICING_OPTIONS],
+        'options' => $dropdown_values,
+      ]);
+      echo '</div>';
+    }
   }
 
   /**
@@ -449,6 +486,7 @@ class WooCommerce {
       '_' . Plugin::PREFIX . '_product_notes',
       self::FIELD_PRODUCT_PURCHASING_PRICE,
       self::FIELD_DISABLE_RELATED_PRODUCTS,
+      self::FIELD_REPRICING_OPTIONS,
     ];
 
     foreach ($custom_fields as $field) {
@@ -672,6 +710,41 @@ class WooCommerce {
       ]);
       echo '</div>';
     }
+
+    if (ProductFieldsManager::show_field(self::FIELD_REPRICING_OPTIONS)) {
+      // Repricing options.
+      $brand = '';
+      $variation_product_object = wc_get_product($variation->ID);
+      $product = wc_get_product($variation_product_object->get_parent_id());
+
+      $product_attributes = self::getProductAttributes($product, FALSE);
+      if (!empty($product_attributes)) {
+        foreach ($product_attributes as $attr) {
+          if ($attr['name'] === 'Kategorie') {
+            if (!empty($attr['value'])) {
+              $brand = explode(',', $attr['value'])[0];
+            }
+          }
+        }
+      }
+
+      $dropdown_values = [
+        '' => __('Select option', Plugin::L10N),
+        !empty($brand) ? $brand . ' | default' : 'default' => __('Default', Plugin::L10N),
+        !empty($brand) ? $brand . ' | no repricing' : 'no repricing' => __('No Repricing', Plugin::L10N),
+        !empty($brand) ? $brand . ' | lower prices only' : 'lower prices only' => __('Lower prices only', Plugin::L10N),
+      ];
+
+      echo '<div style="clear:both">';
+      woocommerce_wp_select([
+        'id'    => self::FIELD_REPRICING_OPTIONS . '[' . $loop . ']',
+        'label' => __('Repricing options', Plugin::L10N),
+        'options' => $dropdown_values,
+        'value' => get_post_meta($variation->ID,
+          self::FIELD_REPRICING_OPTIONS, TRUE),
+      ]);
+      echo '</div>';
+    }
   }
 
   /**
@@ -708,6 +781,7 @@ class WooCommerce {
       self::FIELD_GTIN,
       self::FIELD_ERP_INVENTORY,
       self::FIELD_PRODUCT_PURCHASING_PRICE,
+      self::FIELD_REPRICING_OPTIONS
     ];
 
     foreach ($custom_fields as $field) {
@@ -1064,11 +1138,13 @@ class WooCommerce {
    *
    * @param WC_Product $product
    *   Product for which attributes should be retrieved.
+   * @param bool $get_only_visible_attributes
+   *   Condition to filter product attributes by visibility.
    *
    * @return array
    *   List of attributes of the product.
    */
-  public static function getProductAttributes(\WC_Product $product) {
+  public static function getProductAttributes(\WC_Product $product, $get_only_visible_attributes = TRUE) {
     $data = [];
     if ($parent_id = $product->get_parent_id()) {
       $product = wc_get_product($parent_id);
@@ -1087,7 +1163,10 @@ class WooCommerce {
       if (isset($variation_attributes[$key])) {
         continue;
       }
-      if ($attribute['is_taxonomy'] && $attribute['is_visible'] === 1) {
+      if ($get_only_visible_attributes && $attribute['is_visible'] !== 1) {
+        continue;
+      }
+      if ($attribute['is_taxonomy']) {
         $terms = wp_get_post_terms($product->get_id(), $attribute['name'], 'all');
         if (empty($terms)) {
           continue;
