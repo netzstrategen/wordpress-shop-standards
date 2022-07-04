@@ -1144,7 +1144,7 @@ class WooCommerce {
    * @return array
    *   List of attributes of the product.
    */
-  public static function getProductAttributes(\WC_Product $product, $get_only_visible_attributes = TRUE) {
+  public static function getProductAttributes(\WC_Product $product, bool $get_only_visible_attributes = TRUE) {
     $data = [];
     if ($parent_id = $product->get_parent_id()) {
       $product = wc_get_product($parent_id);
