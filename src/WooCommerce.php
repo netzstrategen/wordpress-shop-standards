@@ -399,7 +399,7 @@ class WooCommerce {
       $product_attributes = self::getProductAttributes($product, FALSE);
       if (!empty($product_attributes)) {
         foreach ($product_attributes as $attr) {
-          if ($attr['name'] === 'Kategorie') {
+          if ($attr['name'] === 'Marke') {
             if (!empty($attr['value'])) {
               $brand = explode(',', $attr['value'])[0];
             }
@@ -720,7 +720,7 @@ class WooCommerce {
       $product_attributes = self::getProductAttributes($product, FALSE);
       if (!empty($product_attributes)) {
         foreach ($product_attributes as $attr) {
-          if ($attr['name'] === 'Kategorie') {
+          if ($attr['name'] === 'Marke') {
             if (!empty($attr['value'])) {
               $brand = explode(',', $attr['value'])[0];
             }
