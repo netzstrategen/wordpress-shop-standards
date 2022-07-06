@@ -393,25 +393,12 @@ class WooCommerce {
       global $post;
       $brand = '';
       $product = wc_get_product($post->ID);
+      
       if ($product->is_type('variation')) {
         $product = wc_get_product($product->get_parent_id());
       }
-      $product_attributes = self::getProductAttributes($product, FALSE);
-      if (!empty($product_attributes)) {
-        foreach ($product_attributes as $attr) {
-          if ($attr['name'] === 'Marke') {
-            if (!empty($attr['value'])) {
-              $brand = explode(',', $attr['value'])[0];
-            }
-          }
-        }
-      }
-
-      $dropdown_values = [
-        !empty($brand) ? $brand . ' | default' : 'default' => __('Default', Plugin::L10N),
-        !empty($brand) ? $brand . ' | no repricing' : 'no repricing' => __('No Repricing', Plugin::L10N),
-        !empty($brand) ? $brand . ' | lower prices only' : 'lower prices only' => __('Lower prices only', Plugin::L10N),
-      ];
+      
+      $dropdown_values = self::getRepricingOptionsDropdownValues($product);
 
       echo '<div class="options_group">';
       woocommerce_wp_select([
@@ -714,24 +701,8 @@ class WooCommerce {
       // Repricing options.
       $brand = '';
       $variation_product_object = wc_get_product($variation->ID);
-      $product = wc_get_product($variation_product_object->get_parent_id());
-
-      $product_attributes = self::getProductAttributes($product, FALSE);
-      if (!empty($product_attributes)) {
-        foreach ($product_attributes as $attr) {
-          if ($attr['name'] === 'Marke') {
-            if (!empty($attr['value'])) {
-              $brand = explode(',', $attr['value'])[0];
-            }
-          }
-        }
-      }
-
-      $dropdown_values = [
-        !empty($brand) ? $brand . ' | default' : 'default' => __('Default', Plugin::L10N),
-        !empty($brand) ? $brand . ' | no repricing' : 'no repricing' => __('No Repricing', Plugin::L10N),
-        !empty($brand) ? $brand . ' | lower prices only' : 'lower prices only' => __('Lower prices only', Plugin::L10N),
-      ];
+      $product = wc_get_product($variation_product_object->get_parent_id());      
+      $dropdown_values = self::getRepricingOptionsDropdownValues($product);
 
       echo '<div style="clear:both">';
       woocommerce_wp_select([
@@ -1487,6 +1458,38 @@ class WooCommerce {
       add_filter('woocommerce_product_related_posts_force_display', '__return_false', 40, 2);
       add_filter('woocommerce_related_products', '__return_empty_array');
     }
+  }
+
+  /**
+   * Retrives the repricing options dropdown values
+   * 
+   * @param WC_Product $product
+   *   The product for which values must be returend
+   * 
+   * @return array
+   *   Dropdown values
+   */
+  public static function getRepricingOptionsDropdownValues(\WC_Product $product) {
+    $brand = '';
+    
+    $product_attributes = self::getProductAttributes($product, FALSE);
+    if (!empty($product_attributes)) {
+      foreach ($product_attributes as $attr) {
+        if ($attr['name'] === 'Marke') {
+          if (!empty($attr['value'])) {
+            $brand = explode(',', $attr['value'])[0];
+          }
+        }
+      }
+    }
+
+    $dropdown_values = [
+      !empty($brand) ? $brand . ' | default' : 'default' => __('Default', Plugin::L10N),
+      !empty($brand) ? $brand . ' | no repricing' : 'no repricing' => __('No Repricing', Plugin::L10N),
+      !empty($brand) ? $brand . ' | lower prices only' : 'lower prices only' => __('Lower prices only', Plugin::L10N),
+    ];
+    
+    return $dropdown_values;
   }
 
 }
