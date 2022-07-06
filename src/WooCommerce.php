@@ -408,7 +408,6 @@ class WooCommerce {
       }
 
       $dropdown_values = [
-        '' => __('Select option', Plugin::L10N),
         !empty($brand) ? $brand . ' | default' : 'default' => __('Default', Plugin::L10N),
         !empty($brand) ? $brand . ' | no repricing' : 'no repricing' => __('No Repricing', Plugin::L10N),
         !empty($brand) ? $brand . ' | lower prices only' : 'lower prices only' => __('Lower prices only', Plugin::L10N),
@@ -729,7 +728,6 @@ class WooCommerce {
       }
 
       $dropdown_values = [
-        '' => __('Select option', Plugin::L10N),
         !empty($brand) ? $brand . ' | default' : 'default' => __('Default', Plugin::L10N),
         !empty($brand) ? $brand . ' | no repricing' : 'no repricing' => __('No Repricing', Plugin::L10N),
         !empty($brand) ? $brand . ' | lower prices only' : 'lower prices only' => __('Lower prices only', Plugin::L10N),
