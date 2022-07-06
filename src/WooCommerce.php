@@ -1469,7 +1469,7 @@ class WooCommerce {
    * @return array
    *   Dropdown values
    */
-  public static function getRepricingOptionsDropdownValues(\WC_Product $product) {
+  private static function getRepricingOptionsDropdownValues(\WC_Product $product) {
     $brand = '';
     
     $product_attributes = self::getProductAttributes($product, FALSE);
