@@ -85,8 +85,14 @@ class ProductsPermalinks {
       return $post_link;
     }
 
-    $main_term_id   = get_post_meta($post->ID, '_yoast_wpseo_primary_product_cat', TRUE);
-    $main_term_slug = get_term($main_term_id, self::TAX_PRODUCT_CAT)->slug ?? NULL;
+    $main_term_id = get_post_meta($post->ID, '_yoast_wpseo_primary_product_cat', TRUE);
+    static $main_term_slugs;
+    if (!isset($main_term_slugs[$main_term_id])) {
+      $main_term_slugs[$main_term_id] = get_term($main_term_id, self::TAX_PRODUCT_CAT)->slug ?? '';
+    }
+
+    $main_term_slug = $main_term_slugs[$main_term_id];
+
     if (empty($main_term_slug)) {
       $main_term_slug = self::get_main_term_from_post($post);
       if (empty($main_term_slug)) {
