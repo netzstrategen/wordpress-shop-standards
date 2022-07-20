@@ -207,6 +207,10 @@ msgstr ""
 msgid "Purchasing Price"
 msgstr ""
 
+#: src/WooCommerce.php:48 src/WooCommerce.php:741
+msgid "Repricing options"
+msgstr ""
+
 #: src/WooCommerce.php:58
 msgid "Coupon settings"
 msgstr ""
@@ -240,6 +244,22 @@ msgstr ""
 
 #: src/WooCommerce.php:312
 msgid "GTIN"
+msgstr ""
+
+#: src/WooCommerce.php:411 src/WooCommerce.php:732
+msgid "Select option"
+msgstr ""
+
+#: src/WooCommerce.php:412 src/WooCommerce.php:733
+msgid "Default"
+msgstr ""
+
+#: src/WooCommerce.php:413 src/WooCommerce.php:734
+msgid "No Repricing"
+msgstr ""
+
+#: src/WooCommerce.php:414 src/WooCommerce.php:735
+msgid "Lower prices only"
 msgstr ""
 
 #: src/WooCommerce.php:433
