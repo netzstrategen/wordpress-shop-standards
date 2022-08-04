@@ -1492,4 +1492,33 @@ class WooCommerce {
     return $dropdown_values;
   }
 
+  /**
+   * Adds custom meta to customer.
+   *
+   * @implements woocommerce_checkout_order_processed
+   */
+  private static function addCustomMetaForUser($order_id) {
+    $order = wc_get_order($order_id);
+    $user_id = $order->get_user_id();
+
+    $args = [
+      'limit' => -1,
+      'customer_id' => $user_id,
+    ];
+    $customer_orders = wc_get_orders($args);
+
+    $items_counter = 0;
+    foreach ($customer_orders as $o) {
+      $items_counter += $o->get_item_count();
+    }
+
+    if ($customer_orders) {
+      update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', count($customer_orders));
+    }
+
+    if ($items_counter) {
+      update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', count($items_counter));
+    }
+  }
+
 }
