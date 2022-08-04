@@ -411,5 +411,9 @@ msgstr "Herr"
 msgid "Company"
 msgstr "Firma"
 
+#: src/WooCommerceSalutation.php:68
+msgid "Divers"
+msgstr "Diverse"
+
 #~ msgid "Discontinued Product"
 #~ msgstr "Auslaufartikel"
