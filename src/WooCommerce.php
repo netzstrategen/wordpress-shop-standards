@@ -1495,10 +1495,9 @@ class WooCommerce {
   /**
    * Adds custom meta to customer.
    *
-   * @implements woocommerce_checkout_order_processed
+   * @implements woocommerce_checkout_create_order
    */
-  private static function addCustomMetaForUser($order_id) {
-    $order = wc_get_order($order_id);
+  public static function addCustomMetaForUser($order) {
     $user_id = $order->get_user_id();
 
     $args = [
@@ -1507,17 +1506,17 @@ class WooCommerce {
     ];
     $customer_orders = wc_get_orders($args);
 
-    $items_counter = 0;
+    $items_counter = $order->get_item_count();
     foreach ($customer_orders as $o) {
       $items_counter += $o->get_item_count();
     }
 
     if ($customer_orders) {
-      update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', count($customer_orders));
+      update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', count($customer_orders) + 1);
     }
 
     if ($items_counter) {
-      update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', count($items_counter));
+      update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', $items_counter);
     }
   }
 
