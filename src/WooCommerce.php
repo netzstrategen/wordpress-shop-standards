@@ -1493,7 +1493,7 @@ class WooCommerce {
   }
 
   /**
-   * Adds custom meta to customer.
+   * Adds customer orders and items count to orders meta.
    *
    * @implements woocommerce_checkout_create_order
    */
