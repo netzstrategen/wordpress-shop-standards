@@ -1497,7 +1497,10 @@ class WooCommerce {
    *
    * @implements woocommerce_checkout_create_order
    */
-  public static function addCustomMetaForUser($order) {
+  public static function addCustomMetaForUser(WC_Order $order):void {
+    if (!order) {
+     return;
+    }
     $user_id = $order->get_user_id();
     $items_counter = $order->get_item_count();
     $customer_orders_count = get_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', TRUE);
