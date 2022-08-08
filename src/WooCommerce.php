@@ -1497,8 +1497,8 @@ class WooCommerce {
    *
    * @implements woocommerce_checkout_create_order
    */
-  public static function addCustomMetaForUser(WC_Order $order):void {
-    if (!order) {
+  public static function addCustomMetaForUser(\WC_Order $order):void {
+    if (!$order) {
      return;
     }
     $user_id = $order->get_user_id();
