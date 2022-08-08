@@ -1517,9 +1517,7 @@ class WooCommerce {
         $items_counter += $customer_order->get_item_count();
       }
 
-      if (!empty($customer_orders)) {
-        update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', count($customer_orders) + 1);
-      }
+      update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', count($customer_orders) + 1);
       update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', $items_counter);
     }
   }
