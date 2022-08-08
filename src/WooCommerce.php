@@ -1499,23 +1499,27 @@ class WooCommerce {
    */
   public static function addCustomMetaForUser($order) {
     $user_id = $order->get_user_id();
-
-    $args = [
-      'limit' => -1,
-      'customer_id' => $user_id,
-    ];
-    $customer_orders = wc_get_orders($args);
-
     $items_counter = $order->get_item_count();
-    foreach ($customer_orders as $o) {
-      $items_counter += $o->get_item_count();
+    $customer_orders_count = get_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', TRUE);
+    $customer_order_items_count = get_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', TRUE);
+    if ($customer_orders_count && $customer_order_items_count) {
+      update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', $customer_orders_count + 1);
+      update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', $customer_order_items_count + $items_counter);
     }
+    else {
+      $args = [
+        'limit' => -1,
+        'customer_id' => $user_id,
+      ];
+      $customer_orders = wc_get_orders($args);
 
-    if ($customer_orders) {
-      update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', count($customer_orders) + 1);
-    }
+      foreach ($customer_orders as $customer_order) {
+        $items_counter += $customer_order->get_item_count();
+      }
 
-    if ($items_counter) {
+      if (!empty($customer_orders)) {
+        update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', count($customer_orders) + 1);
+      }
       update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', $items_counter);
     }
   }
