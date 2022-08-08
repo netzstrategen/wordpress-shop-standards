@@ -1503,8 +1503,8 @@ class WooCommerce {
     $customer_orders_count = get_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', TRUE);
     $customer_order_items_count = get_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', TRUE);
     if ($customer_orders_count && $customer_order_items_count) {
-      update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', $customer_orders_count + 1);
-      update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', $customer_order_items_count + $items_counter);
+      $customer_orders_count++;
+      $customer_order_items_count += $items_counter;
     }
     else {
       $args = [
@@ -1517,9 +1517,11 @@ class WooCommerce {
         $items_counter += $customer_order->get_item_count();
       }
 
-      update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', count($customer_orders) + 1);
-      update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', $items_counter);
+      $customer_orders_count = count($customer_orders) + 1;
+      $customer_order_items_count = $items_counter;
     }
+    update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', $customer_orders_count);
+    update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', $customer_order_items_count);
   }
 
 }
