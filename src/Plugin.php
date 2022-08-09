@@ -45,7 +45,7 @@ class Plugin {
    *
    * @var string
    */
-  const CRON_EVENT_ORPHANS_VARIANTS_CLEANUP = Plugin::PREFIX . '/cron/orphans-variant-cleanup';
+  const CRON_EVENT_ORPHAN_VARIANTS_CLEANUP = Plugin::PREFIX . '/cron/orphan-variants-cleanup';
 
   /**
    * Plugin initialization method with the lowest possible priority.
@@ -218,12 +218,11 @@ class Plugin {
       }
     }
 
+    add_action(self::CRON_EVENT_ORPHAN_VARIANTS_CLEANUP, __NAMESPACE__ . '\WooCommerce::cron_orphan_variants_cleanup');
     // Schedules delete orphan variants cron.
-    if (!wp_next_scheduled(self::CRON_EVENT_ORPHANS_VARIANTS_CLEANUP)) {
-      wp_schedule_event(time(), 'weekly', self::CRON_EVENT_ORPHANS_VARIANTS_CLEANUP);
+    if (!wp_next_scheduled(self::CRON_EVENT_ORPHAN_VARIANTS_CLEANUP)) {
+      wp_schedule_event(time(), 'weekly', self::CRON_EVENT_ORPHAN_VARIANTS_CLEANUP);
     }
-
-    add_action(self::CRON_EVENT_ORPHANS_VARIANTS_CLEANUP, __NAMESPACE__  . '\WooCommerce::cron_orphans_variants_cleanup');
 
     // Prefetches DNS entries for particular resources.
     add_filter('wp_resource_hints', __NAMESPACE__ . '\Performance::wp_resource_hints', 10, 2);

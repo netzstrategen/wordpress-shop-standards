@@ -252,14 +252,20 @@ class WooCommerce {
   /**
    * Cron event callback to remove outdated back-in-stock product metadata.
    */
-  public static function cron_orphans_variants_cleanup() {
+  public static function cron_orphan_variants_cleanup() {
     global $wpdb;
-    $wpdb->query(
-      "DELETE products
-    FROM {$wpdb->posts} products
-    LEFT JOIN {$wpdb->posts} wp ON wp.ID = products.post_parent
-    WHERE wp.ID IS NULL AND products.post_type = 'product_variation';"
+    $orphan_variants_ids = $wpdb->get_col(
+      "SELECT products.ID products
+      FROM {$wpdb->posts} products
+      LEFT JOIN {$wpdb->posts} wp ON wp.ID = products.post_parent
+      WHERE wp.ID IS NULL AND products.post_type = 'product_variation';"
     );
+
+    if (!empty($orphan_variants_ids)) {
+      foreach ($orphan_variants_ids as $id) {
+        wp_delete_post($id, true);
+      }
+    }
   }
 
   /**
