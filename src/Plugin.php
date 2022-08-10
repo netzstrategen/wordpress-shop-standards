@@ -41,7 +41,7 @@ class Plugin {
   const CRON_EVENT_REMOVE_BACK_IN_STOCK = Plugin::PREFIX . '/remove-past-back-in-stock';
 
   /**
- * Cron event name for delete orphan variants.
+   * Cron event name for delete orphan variants.
    *
    * @var string
    */
