@@ -41,6 +41,13 @@ class Plugin {
   const CRON_EVENT_REMOVE_BACK_IN_STOCK = Plugin::PREFIX . '/remove-past-back-in-stock';
 
   /**
+   * Cron event name for delete orphan variants.
+   *
+   * @var string
+   */
+  const CRON_EVENT_ORPHAN_VARIANTS_CLEANUP = Plugin::PREFIX . '/cron/orphan-variants-cleanup';
+
+  /**
    * Plugin initialization method with the lowest possible priority.
    *
    * @implements init
@@ -209,6 +216,12 @@ class Plugin {
       if (!wp_next_scheduled(static::CRON_EVENT_REMOVE_BACK_IN_STOCK)) {
         wp_schedule_event(strtotime('03:00:00'), 'daily', self::CRON_EVENT_REMOVE_BACK_IN_STOCK);
       }
+    }
+
+    add_action(self::CRON_EVENT_ORPHAN_VARIANTS_CLEANUP, __NAMESPACE__ . '\WooCommerce::cron_orphan_variants_cleanup');
+    // Schedules delete orphan variants cron.
+    if (!wp_next_scheduled(self::CRON_EVENT_ORPHAN_VARIANTS_CLEANUP)) {
+      wp_schedule_event(time(), 'weekly', self::CRON_EVENT_ORPHAN_VARIANTS_CLEANUP);
     }
 
     // Prefetches DNS entries for particular resources.

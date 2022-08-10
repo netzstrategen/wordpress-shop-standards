@@ -250,6 +250,27 @@ class WooCommerce {
   }
 
   /**
+   * Cron event callback to remove outdated back-in-stock product metadata.
+   */
+  public static function cron_orphan_variants_cleanup() {
+    global $wpdb;
+    $orphan_variants_ids = $wpdb->get_col(
+      "SELECT p.ID
+      FROM {$wpdb->posts} p
+      LEFT JOIN {$wpdb->posts} parent ON parent.ID = p.post_parent
+      WHERE parent.ID IS NULL AND p.post_type = 'product_variation';"
+    );
+
+    if (!empty($orphan_variants_ids)) {
+      foreach ($orphan_variants_ids as $id) {
+        if ($product = wc_get_product($id)) {
+          $product->delete(TRUE);
+        }
+      }
+    }
+  }
+
+  /**
    * Changes number of displayed products.
    *
    * @implement loop_shop_per_page
