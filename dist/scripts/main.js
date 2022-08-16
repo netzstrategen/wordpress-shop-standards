@@ -46,7 +46,7 @@
       $variationsSelectDropdowns.each(function setVariationSelectDropdowns() {
         var $this = $(this);
 
-        if ($this.find('option').size() === 2) {
+        if ($this.find('option').length === 2) {
           $this.val($this.find('option').eq(1).val());
         }
       });
