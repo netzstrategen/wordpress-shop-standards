@@ -408,12 +408,12 @@ msgid "Mr"
 msgstr "Herr"
 
 #: src/WooCommerceSalutation.php:67
-msgid "Company"
-msgstr "Firma"
+msgid "Diverse"
+msgstr "Divers"
 
 #: src/WooCommerceSalutation.php:68
-msgid "Divers"
-msgstr "Diverse"
+msgid "Company"
+msgstr "Firma"
 
 #~ msgid "Discontinued Product"
 #~ msgstr "Auslaufartikel"

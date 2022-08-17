@@ -381,9 +381,9 @@ msgid "Mr"
 msgstr ""
 
 #: src/WooCommerceSalutation.php:67
-msgid "Company"
+msgid "Diverse"
 msgstr ""
 
 #: src/WooCommerceSalutation.php:68
-msgid "Divers"
+msgid "Company"
 msgstr ""

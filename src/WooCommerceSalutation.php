@@ -64,8 +64,8 @@ class WooCommerceSalutation {
         '' => '',
         'Mrs' => __('Mrs', Plugin::L10N),
         'Mr' => __('Mr', Plugin::L10N),
+        'Diverse' => __('Diverse', Plugin::L10N),
         'Company' => __('Company', Plugin::L10N),
-        'Divers' => __('Divers', Plugin::L10N),
       ],
       'priority' => 5,
     ];
