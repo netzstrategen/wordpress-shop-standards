@@ -53,7 +53,7 @@
       // dropdowns, it should be auto-selected.
       $variationsSelectDropdowns.each(function setVariationSelectDropdowns() {
         const $this = $(this);
-        if ($this.find('option').size() === 2) {
+        if ($this.find('option').length === 2) {
           $this.val($this.find('option').eq(1).val());
         }
       });
