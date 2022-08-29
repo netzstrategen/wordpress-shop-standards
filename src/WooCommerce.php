@@ -1513,4 +1513,39 @@ class WooCommerce {
     return $dropdown_values;
   }
 
+  /**
+   * Adds customer orders and items count to orders meta.
+   *
+   * @implements woocommerce_checkout_create_order
+   */
+  public static function addCustomMetaForUser(\WC_Order $order):void {
+    if (!$order) {
+     return;
+    }
+    $user_id = $order->get_user_id();
+    $items_counter = $order->get_item_count();
+    $customer_orders_count = get_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', TRUE);
+    $customer_order_items_count = get_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', TRUE);
+    if ($customer_orders_count && $customer_order_items_count) {
+      $customer_orders_count++;
+      $customer_order_items_count += $items_counter;
+    }
+    else {
+      $args = [
+        'limit' => -1,
+        'customer_id' => $user_id,
+      ];
+      $customer_orders = wc_get_orders($args);
+
+      foreach ($customer_orders as $customer_order) {
+        $items_counter += $customer_order->get_item_count();
+      }
+
+      $customer_orders_count = count($customer_orders) + 1;
+      $customer_order_items_count = $items_counter;
+    }
+    update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', $customer_orders_count);
+    update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', $customer_order_items_count);
+  }
+
 }

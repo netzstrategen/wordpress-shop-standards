@@ -188,6 +188,9 @@ class Plugin {
     // Adds missing postcode validation for some countries.
     add_filter('woocommerce_validate_postcode', __NAMESPACE__ . '\WooCommerce::woocommerce_validate_postcode', 10, 3);
 
+    // Adds customer metafields when creating orders.
+    add_action('woocommerce_checkout_create_order', __NAMESPACE__ . '\WooCommerce::addCustomMetaForUser', 10, 1);
+
     if (class_exists('Woocommerce_German_Market')) {
       // Remove delivery time from product name in order emails, added by
       // woocommerce-german-market.
