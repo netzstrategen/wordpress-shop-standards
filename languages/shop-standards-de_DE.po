@@ -408,6 +408,10 @@ msgid "Mr"
 msgstr "Herr"
 
 #: src/WooCommerceSalutation.php:67
+msgid "Diverse"
+msgstr "Divers"
+
+#: src/WooCommerceSalutation.php:68
 msgid "Company"
 msgstr "Firma"
 
