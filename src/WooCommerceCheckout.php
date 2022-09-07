@@ -150,4 +150,38 @@ class WooCommerceCheckout {
     return $fields;
   }
 
+  /**
+   * Tracks counts of orders and order items for each customer.
+   *
+   * @implements woocommerce_checkout_create_order
+   */
+  public static function woocommerce_checkout_create_order(\WC_Order $order): void {
+    if (!$order) {
+      return;
+    }
+    if (!$user_id = $order->get_user_id()) {
+      return;
+    }
+    $total_order_count = get_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', TRUE);
+    $total_order_items_count = get_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', TRUE);
+
+    if (!is_numeric($total_order_count)) {
+      $customer_orders = wc_get_orders([
+        'limit' => -1,
+        'customer_id' => $user_id,
+      ]);
+      $total_order_count = count($customer_orders);
+      $total_order_items_count = 0;
+      foreach ($customer_orders as $customer_order) {
+        $total_order_items_count += $customer_order->get_item_count();
+      }
+    }
+
+    $total_order_count++;
+    $total_order_items_count += $order->get_item_count()
+
+    update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', $total_order_count);
+    update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', $total_order_items_count);
+  }
+
 }
