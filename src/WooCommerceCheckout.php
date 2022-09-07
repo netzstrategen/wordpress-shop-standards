@@ -178,7 +178,7 @@ class WooCommerceCheckout {
     }
 
     $total_order_count++;
-    $total_order_items_count += $order->get_item_count()
+    $total_order_items_count += $order->get_item_count();
 
     update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', $total_order_count);
     update_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_order_items_count', $total_order_items_count);
