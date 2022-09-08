@@ -156,10 +156,7 @@ class WooCommerceCheckout {
    * @implements woocommerce_checkout_create_order
    */
   public static function woocommerce_checkout_create_order(\WC_Order $order): void {
-    if (!$order) {
-      return;
-    }
-    if (!$user_id = $order->get_user_id()) {
+    if (!$order || !$user_id = $order->get_user_id()) {
       return;
     }
     $total_order_count = get_user_meta($user_id, '_' . Plugin::PREFIX . '_customer_orders_count', TRUE);
