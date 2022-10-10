@@ -27,6 +27,8 @@ class WooCommerce {
    */
   public static function init(): void {
     add_filter(Plugin::PREFIX . '/display_custom_product_fields', __CLASS__ . '::get_product_fields');
+    add_filter('woocommerce_get_order_item_totals', __CLASS__ . '::woocommerce_get_order_item_totals', 10, 2);
+
   }
 
   /**
@@ -414,11 +416,11 @@ class WooCommerce {
       global $post;
       $brand = '';
       $product = wc_get_product($post->ID);
-      
+
       if ($product->is_type('variation')) {
         $product = wc_get_product($product->get_parent_id());
       }
-      
+
       $dropdown_values = self::getRepricingOptionsDropdownValues($product);
 
       echo '<div class="options_group">';
@@ -722,7 +724,7 @@ class WooCommerce {
       // Repricing options.
       $brand = '';
       $variation_product_object = wc_get_product($variation->ID);
-      $product = wc_get_product($variation_product_object->get_parent_id());      
+      $product = wc_get_product($variation_product_object->get_parent_id());
       $dropdown_values = self::getRepricingOptionsDropdownValues($product);
 
       echo '<div style="clear:both">';
@@ -1483,16 +1485,16 @@ class WooCommerce {
 
   /**
    * Retrives the repricing options dropdown values
-   * 
+   *
    * @param WC_Product $product
    *   The product for which values must be returend
-   * 
+   *
    * @return array
    *   Dropdown values
    */
   private static function getRepricingOptionsDropdownValues(\WC_Product $product) {
     $brand = '';
-    
+
     $product_attributes = self::getProductAttributes($product, FALSE);
     if (!empty($product_attributes)) {
       foreach ($product_attributes as $attr) {
@@ -1509,8 +1511,36 @@ class WooCommerce {
       !empty($brand) ? $brand . ' | no repricing' : 'no repricing' => __('No Repricing', Plugin::L10N),
       !empty($brand) ? $brand . ' | lower prices only' : 'lower prices only' => __('Lower prices only', Plugin::L10N),
     ];
-    
+
     return $dropdown_values;
+  }
+
+  /**
+   * Separates the shipping methods in new lines in emails.
+   *
+   * @param  array $total_rows
+   * @param \WC_Order $order
+   * @return array
+   */
+  public static function woocommerce_get_order_item_totals($total_rows, \WC_Order $order):array {
+    $shipping_methods = $order->get_shipping_methods();
+    if(count($shipping_methods) > 1) {
+
+      $shipping_methods_row = '';
+      $count = 1;
+
+      foreach($shipping_methods as $shipping_method) {
+        $positionen = $shipping_method->get_meta("Positionen") ?? '';
+        $shipping_methods_row .= "($count) ";
+        $shipping_methods_row .= $shipping_method->get_name();
+        $shipping_methods_row .= $positionen ? ': ' . $position : '';
+        $shipping_methods_row .= $positionen . '<br />';
+        $count++;
+      }
+
+      $total_rows['shipping']['value'] = $shipping_methods_row;
+    }
+    return $total_rows;
   }
 
 }
