@@ -27,7 +27,7 @@ class WooCommerce {
    */
   public static function init(): void {
     add_filter(Plugin::PREFIX . '/display_custom_product_fields', __CLASS__ . '::get_product_fields');
-    add_filter('woocommerce_get_order_item_totals', __CLASS__ . '::woocommerce_get_order_item_totals', 10, 2);
+    add_filter('woocommerce_get_order_item_totals', __CLASS__ . '::woocommerce_get_order_item_totals', 10, 3);
 
   }
 
@@ -1522,20 +1522,30 @@ class WooCommerce {
    * @param \WC_Order $order
    * @return array
    */
-  public static function woocommerce_get_order_item_totals($total_rows, \WC_Order $order):array {
+  public static function woocommerce_get_order_item_totals($total_rows, \WC_Order $order, $tax_display):array {
     $shipping_methods = $order->get_shipping_methods();
+    $currency = ' ' . get_woocommerce_currency_symbol();
+
     if(count($shipping_methods) > 1) {
 
       $shipping_methods_row = '';
       $count = 1;
 
       foreach($shipping_methods as $shipping_method) {
+        // Calculate => Shipping Price + Tax + Symbol
+        $shipping_price = floatval($shipping_method->get_total());
+        $shipping_price_tax = floatval($shipping_method->get_data()['total_tax']);
+        $shipping_price_total = $shipping_price + $shipping_price_tax;
+        $shipping_price_total_with_symbol = $shipping_price_total . $currency;
+
         $positionen = $shipping_method->get_meta("Positionen") ?? '';
         $shipping_methods_row .= "($count) ";
-        $shipping_methods_row .= $shipping_method->get_name();
+        $shipping_methods_row .= '<strong>' . $shipping_method->get_name() . '</strong>';
         $shipping_methods_row .= $positionen ? ': ' . $position : '';
-        $shipping_methods_row .= $positionen . '<br />';
+        $shipping_methods_row .= $positionen;
+        $shipping_methods_row .= $shipping_price_total ? ' - ' . $shipping_price_total_with_symbol . '<br />' : '<br />';
         $count++;
+
       }
 
       $total_rows['shipping']['value'] = $shipping_methods_row;
