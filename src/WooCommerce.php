@@ -1516,6 +1516,20 @@ class WooCommerce {
   }
 
   /**
+   * Calculates shipping price + tax
+   *
+   * @param  object $shipping_method
+   * @return float
+   */
+  public static function getTotalShippingPrice(object $shipping_method):float {
+    $shipping_price = floatval($shipping_method->get_total());
+    $shipping_price_tax = floatval($shipping_method->get_data()['total_tax']);
+    $shipping_price_total = $shipping_price + $shipping_price_tax;
+
+    return $shipping_price_total;
+  }
+
+  /**
    * Separates the shipping methods in new lines in emails.
    *
    * @param  array $total_rows
@@ -1532,17 +1546,13 @@ class WooCommerce {
       $count = 1;
 
       foreach($shipping_methods as $shipping_method) {
-        // Calculate => Shipping Price + Tax + Symbol
-        $shipping_price = floatval($shipping_method->get_total());
-        $shipping_price_tax = floatval($shipping_method->get_data()['total_tax']);
-        $shipping_price_total = $shipping_price + $shipping_price_tax;
+        $shipping_price_total = self::getTotalShippingPrice($shipping_method);
         $shipping_price_total_with_symbol = $shipping_price_total . $currency;
 
         $positionen = $shipping_method->get_meta("Positionen") ?? '';
         $shipping_methods_row .= "($count) ";
         $shipping_methods_row .= '<strong>' . $shipping_method->get_name() . '</strong>';
-        $shipping_methods_row .= $positionen ? ': ' . $position : '';
-        $shipping_methods_row .= $positionen;
+        $shipping_methods_row .= $positionen ? ': ' . $positionen : '';
         $shipping_methods_row .= $shipping_price_total ? ' - ' . $shipping_price_total_with_symbol . '<br />' : '<br />';
         $count++;
 
