@@ -1519,14 +1519,19 @@ class WooCommerce {
    * Calculates shipping price + tax
    *
    * @param  object $shipping_method
-   * @return float
+   * @return string
    */
-  public static function getTotalShippingPrice(object $shipping_method):float {
+  public static function getTotalShippingPrice(object $shipping_method):string {
+    $currency = ' ' . get_woocommerce_currency_symbol();
     $shipping_price = floatval($shipping_method->get_total());
-    $shipping_price_tax = floatval($shipping_method->get_data()['total_tax']);
-    $shipping_price_total = $shipping_price + $shipping_price_tax;
 
-    return $shipping_price_total;
+    if(!$shipping_price) return '<br />';
+
+    $shipping_price_tax = floatval($shipping_method->get_total_tax());
+    $shipping_price_total = $shipping_price + $shipping_price_tax;
+    $shipping_price_total_with_symbol = ' - ' . $shipping_price_total . $currency . '<br />';
+
+    return $shipping_price_total_with_symbol;
   }
 
   /**
@@ -1538,7 +1543,6 @@ class WooCommerce {
    */
   public static function woocommerce_get_order_item_totals($total_rows, \WC_Order $order, $tax_display):array {
     $shipping_methods = $order->get_shipping_methods();
-    $currency = ' ' . get_woocommerce_currency_symbol();
 
     if(count($shipping_methods) > 1) {
 
@@ -1546,14 +1550,13 @@ class WooCommerce {
       $count = 1;
 
       foreach($shipping_methods as $shipping_method) {
-        $shipping_price_total = self::getTotalShippingPrice($shipping_method);
-        $shipping_price_total_with_symbol = $shipping_price_total . $currency;
+        $shipping_price_total_with_symbol = self::getTotalShippingPrice($shipping_method);
 
         $positionen = $shipping_method->get_meta("Positionen") ?? '';
         $shipping_methods_row .= "($count) ";
         $shipping_methods_row .= '<strong>' . $shipping_method->get_name() . '</strong>';
         $shipping_methods_row .= $positionen ? ': ' . $positionen : '';
-        $shipping_methods_row .= $shipping_price_total ? ' - ' . $shipping_price_total_with_symbol . '<br />' : '<br />';
+        $shipping_methods_row .= $shipping_price_total_with_symbol;
         $count++;
 
       }
