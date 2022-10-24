@@ -27,6 +27,7 @@ class WooCommerce {
    */
   public static function init(): void {
     add_filter(Plugin::PREFIX . '/display_custom_product_fields', __CLASS__ . '::get_product_fields');
+    add_action('save_post', __CLASS__ . '::save_post_custom_status_manager');
   }
 
   /**
@@ -1511,6 +1512,23 @@ class WooCommerce {
     ];
     
     return $dropdown_values;
+  }
+
+    /**
+   * Invalidate the object cache in Woocommerce order status manager
+   * 
+   * @param int $post_id
+   * 
+   * @param \WP_Post $post
+   *   all post types - we're checking for wc_order_status post type
+   * 
+   * @return void
+   * 
+   */
+  private static function save_post_custom_status_manager(int $post_id, \WP_Post $post) {
+    if($post->post_type === 'wc_order_status' && wp_cache_get('wc_order_status_manager_order_status_posts')) {
+      wp_cache_delete( 'wc_order_status_manager_order_status_posts');
+    }
   }
 
 }
