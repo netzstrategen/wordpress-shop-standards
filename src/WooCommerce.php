@@ -1521,7 +1521,7 @@ class WooCommerce {
    * @param  object $shipping_method
    * @return string
    */
-  public static function getTotalShippingPrice(object $shipping_method):string {
+  public static function getTotalShippingPrice($shipping_method):string {
     $currency = ' ' . get_woocommerce_currency_symbol();
     $shipping_price = floatval($shipping_method->get_total());
 
@@ -1558,7 +1558,6 @@ class WooCommerce {
         $shipping_methods_row .= $positionen ? ': ' . $positionen : '';
         $shipping_methods_row .= $shipping_price_total_with_symbol;
         $count++;
-
       }
 
       $total_rows['shipping']['value'] = $shipping_methods_row;
