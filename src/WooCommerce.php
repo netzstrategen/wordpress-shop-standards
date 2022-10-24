@@ -1521,8 +1521,8 @@ class WooCommerce {
    * 
    */
   public static function save_post_wc_order_status() {
-    if(wp_cache_get( 'wc_order_status_manager_order_status_posts')){
-      wp_cache_delete( 'wc_order_status_manager_order_status_posts');
+    if (wp_cache_get('wc_order_status_manager_order_status_posts')) {
+      wp_cache_delete('wc_order_status_manager_order_status_posts');
     }
   }
 
