@@ -1514,14 +1514,16 @@ class WooCommerce {
     return $dropdown_values;
   }
 
-    /**
-   * Invalidate the object cache in Woocommerce order status manager
+   /**
+   * Invalidates the object cache in Woocommerce order status manager.
    * 
    * @implements save_post_wc_order_status
    * 
    */
   public static function save_post_wc_order_status() {
+    if(wp_cache_get( 'wc_order_status_manager_order_status_posts')){
       wp_cache_delete( 'wc_order_status_manager_order_status_posts');
+    }
   }
 
 }
