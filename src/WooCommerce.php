@@ -1517,7 +1517,7 @@ class WooCommerce {
     /**
    * Invalidate the object cache in Woocommerce order status manager
    * 
-   * @return void
+   * @implements save_post_wc_order_status
    * 
    */
   public static function save_post_wc_order_status() {
