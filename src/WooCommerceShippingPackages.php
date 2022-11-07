@@ -41,20 +41,14 @@ class WooCommerceShippingPackages {
 
       return $shipping_price_total_with_symbol;
     }
-    
+    return '';
+
   }
 
   /**
    * Separates the shipping methods in new lines in emails.
    *
-   * @param array $total_rows
-   *   Total rows of woocommerce order items.
-   * @param \WC_Order $order
-   *   A Wc_Order object.
-   *
-   * @return array
-   *   The shipping details including shipping method name, shipping costs,
-   *   taxes and currency sign.
+   * @implements woocommerce_get_order_item_totals
    */
   public static function woocommerce_get_order_item_totals($total_rows, \WC_Order $order): array {
     $shipping_methods = $order->get_shipping_methods();
