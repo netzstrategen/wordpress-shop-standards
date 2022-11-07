@@ -37,12 +37,11 @@ class WooCommerceShippingPackages {
       $shipping_price = floatval($shipping_method->get_total());
       $shipping_price_tax = floatval($shipping_method->get_total_tax());
       $shipping_price_total = $shipping_price + $shipping_price_tax;
-      $shipping_price_total_with_symbol = ' - ' . $shipping_price_total . $currency . '<br />';
+      $shipping_price_total_with_symbol = ' - ' . $shipping_price_total . $currency;
 
       return $shipping_price_total_with_symbol;
     }
-
-    return '<br />';
+    
   }
 
   /**
@@ -72,7 +71,7 @@ class WooCommerceShippingPackages {
         $shipping_methods_row .= "($count) ";
         $shipping_methods_row .= '<strong>' . $shipping_method->get_name() . '</strong>';
         $shipping_methods_row .= $items ? ': ' . $items : '';
-        $shipping_methods_row .= $shipping_price_total_with_symbol;
+        $shipping_methods_row .= $shipping_price_total_with_symbol  . '<br />';
         $count++;
       }
 
