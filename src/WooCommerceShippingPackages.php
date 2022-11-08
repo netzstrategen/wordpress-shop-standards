@@ -16,7 +16,6 @@ class WooCommerceShippingPackages {
    * Initialize the needed functions and hooks.
    */
   public static function init() {
-    // Show multiple shipping methods separately in order emails.
     add_filter('woocommerce_get_order_item_totals', __CLASS__ . '::woocommerce_get_order_item_totals', 10, 2);
   }
 
@@ -26,22 +25,21 @@ class WooCommerceShippingPackages {
    * @param \WC_Order_Item_Shipping $shipping_method
    *   A shipping item object derived from a WC_Order.
    *
+   * @param \WC_Order $order
+   *   An order object
+   * 
    * @return string
-   *   The shipping costs including taxes, currency sign, and HTML line-breaks,
+   *   The shipping costs including taxes, currency sign,
    *   for output in the HTML order emails.
    */
-  public static function getShippingCostsIncludingTaxes(\WC_Order_Item_Shipping $shipping_method): string {
+  public static function getShippingCostsIncludingTaxes(\WC_Order_Item_Shipping $shipping_method, \WC_Order $order): string {
+    $shipping_price_total_with_symbol = '';
+    $shipping_price = $shipping_method->get_total();
 
     if ($shipping_price) {
-      $currency = ' ' . get_woocommerce_currency_symbol();
-      $shipping_price = floatval($shipping_method->get_total());
-      $shipping_price_tax = floatval($shipping_method->get_total_tax());
-      $shipping_price_total = $shipping_price + $shipping_price_tax;
-      $shipping_price_total_with_symbol = ' - ' . $shipping_price_total . $currency;
-
-      return $shipping_price_total_with_symbol;
+      $shipping_price_total_with_symbol = wc_price($shipping_price + $shipping_method->get_total_tax(), ['currency' => $order->get_currency()]);
     }
-    return '';
+    return $shipping_price_total_with_symbol;
 
   }
 
@@ -59,13 +57,13 @@ class WooCommerceShippingPackages {
       $count = 1;
 
       foreach ($shipping_methods as $shipping_method) {
-        $shipping_price_total_with_symbol = self::getShippingCostsIncludingTaxes($shipping_method);
+        $shipping_price_total_with_symbol = self::getShippingCostsIncludingTaxes($shipping_method, $order);
 
         $items = $shipping_method->get_meta('Positionen') ?? '';
         $shipping_methods_row .= "($count) ";
         $shipping_methods_row .= '<strong>' . $shipping_method->get_name() . '</strong>';
         $shipping_methods_row .= $items ? ': ' . $items : '';
-        $shipping_methods_row .= $shipping_price_total_with_symbol  . '<br />';
+        $shipping_methods_row .= $shipping_price_total_with_symbol ? ' - ' . $shipping_price_total_with_symbol . '<br />' : '<br />';
         $count++;
       }
 
