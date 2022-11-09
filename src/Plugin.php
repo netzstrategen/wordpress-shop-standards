@@ -138,6 +138,7 @@ class Plugin {
     ProductDefects::init();
     ProductFeeds::init();
     ProductFieldsManager::init();
+    WooCommerceShippingPackages::init();
 
     if (is_admin()) {
       return;

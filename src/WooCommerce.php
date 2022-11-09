@@ -414,11 +414,11 @@ class WooCommerce {
       global $post;
       $brand = '';
       $product = wc_get_product($post->ID);
-      
+
       if ($product->is_type('variation')) {
         $product = wc_get_product($product->get_parent_id());
       }
-      
+
       $dropdown_values = self::getRepricingOptionsDropdownValues($product);
 
       echo '<div class="options_group">';
@@ -722,7 +722,7 @@ class WooCommerce {
       // Repricing options.
       $brand = '';
       $variation_product_object = wc_get_product($variation->ID);
-      $product = wc_get_product($variation_product_object->get_parent_id());      
+      $product = wc_get_product($variation_product_object->get_parent_id());
       $dropdown_values = self::getRepricingOptionsDropdownValues($product);
 
       echo '<div style="clear:both">';
@@ -1483,16 +1483,16 @@ class WooCommerce {
 
   /**
    * Retrives the repricing options dropdown values
-   * 
+   *
    * @param WC_Product $product
    *   The product for which values must be returend
-   * 
+   *
    * @return array
    *   Dropdown values
    */
   private static function getRepricingOptionsDropdownValues(\WC_Product $product) {
     $brand = '';
-    
+
     $product_attributes = self::getProductAttributes($product, FALSE);
     if (!empty($product_attributes)) {
       foreach ($product_attributes as $attr) {
@@ -1509,7 +1509,7 @@ class WooCommerce {
       !empty($brand) ? $brand . ' | no repricing' : 'no repricing' => __('No Repricing', Plugin::L10N),
       !empty($brand) ? $brand . ' | lower prices only' : 'lower prices only' => __('Lower prices only', Plugin::L10N),
     ];
-    
+
     return $dropdown_values;
   }
 
