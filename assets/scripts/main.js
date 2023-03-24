@@ -5,7 +5,7 @@
   $('body')
     .on(
       'click',
-      '[data-url]:not(input[name="docs-details"])',
+      '[data-url]:not(input[name^="docs-"])',
       (e) => {
         const url = $(e.target).data('url') || $(e.target).closest('[data-url]').data('url');
         if (url) {

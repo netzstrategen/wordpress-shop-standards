@@ -1,7 +1,7 @@
 /* global jQuery, shop_standards_settings */
 (function pageLoad($) {
   // Toggles product filtering by term.
-  $('body').on('click', '[data-url]:not(input[name="docs-details"])', function (e) {
+  $('body').on('click', '[data-url]:not(input[name^="docs-"]))', function (e) {
     var url = $(e.target).data('url') || $(e.target).closest('[data-url]').data('url');
 
     if (url) {
