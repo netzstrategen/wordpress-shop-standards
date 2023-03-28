@@ -1,8 +1,8 @@
 /* global jQuery, shop_standards_settings */
 (function pageLoad($) {
   // Toggles product filtering by term.
-  $('body').on('click', '[data-url]:not(input[name^="docs-"]))', function (e) {
-    var url = $(e.target).data('url') || $(e.target).closest('[data-url]').data('url');
+  $('body').on('click', '[data-url]:not(input[name^="docs-"], [data-action="download"])', function (e) {
+    var url = $(e.target).data('url') || $(e.target).closest('[data-url]:not(input[name^="docs-"], [data-action="download"])').data('url');
 
     if (url) {
       document.location.href = url;
