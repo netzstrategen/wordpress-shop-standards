@@ -21,3 +21,14 @@
 .price del {
   text-decoration: none !important;
 }
+
+.extended-status {
+  &__text {
+    display: none;
+    padding-top: 1rem;
+
+    &--active {
+      display: block;
+    }
+  }
+}
