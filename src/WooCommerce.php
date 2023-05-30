@@ -3,6 +3,7 @@
 namespace Netzstrategen\ShopStandards;
 
 use WGM_Template;
+use Netzstrategen\WooCommerceMoeve\Integration\CustomerPortal;
 
 /**
  * WooCommerce related functionality.
@@ -1511,6 +1512,27 @@ class WooCommerce {
     ];
 
     return $dropdown_values;
+  }
+
+  /**
+  * Displays additional order details before the order table on the WooCommerce order details page.
+  *
+  * @param WC_Order $order The WooCommerce order object.
+  *
+  * @uses woocommerce_order_details_before_order_table
+  */
+  public static function woocommerce_order_details_before_order_table($order) {
+    if (is_account_page() && is_wc_endpoint_url('view-order') && $order->has_status('processing')) {
+      $status = get_post_meta($order->get_id(), '_moeve_order_status', true) ?: 0;
+      $mapped_status = CustomerPortal::mapStatusOfSalesContract($status);
+      $html = "
+        <div class='extended-status'>
+          <h2 class='extended-status__headline'>Aktualisieren Sie hier den Status Ihrer Bestellung</h2>
+          <button class='extended-status__button woocommerce-button button'>Bestellstatus aktualisieren</button>
+          <p class='extended-status__text'>$mapped_status</p>
+        </div>";
+      echo $html;
+    }
   }
 
 }

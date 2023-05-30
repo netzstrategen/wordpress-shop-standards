@@ -264,6 +264,12 @@ class Plugin {
 
     // Override page title on product attribute pages.
     add_filter('woocommerce_page_title', __NAMESPACE__ . '\ProductAttributePageTitle::woocommerce_page_title');
+
+    // Adds extended order status to order page.
+    if (is_plugin_active('woocommerce-moeve/plugin.php')) {
+      add_action('woocommerce_order_details_before_order_table', __NAMESPACE__ . '\WooCommerce::woocommerce_order_details_before_order_table');
+    }
+
   }
 
   /**
