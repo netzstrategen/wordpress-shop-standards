@@ -127,4 +127,14 @@
         });
     }
   });
+
+  // Shows the extended status text in the order's page on click.
+  $(document).ready(() => {
+    const extendedStatusButton = $('.extended-status__button');
+    const extendedStatusText = $('.extended-status__text');
+    if (!extendedStatusButton.length || !extendedStatusText.length) return;
+    extendedStatusButton.on('click', () => {
+      extendedStatusText.toggleClass('extended-status__text--active');
+    });
+  });
 }(jQuery));
