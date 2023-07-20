@@ -65,7 +65,7 @@ class PlusProducts {
   }
 
   /**
-   * Check if all products in the cart belong to a specific category and have specific quantity conditions.
+   * Checks if all products in the cart belong to a specific category and have specific quantity conditions.
    *
    * @param string $category_slug
    * The slug of the category to check against.
