@@ -57,29 +57,35 @@ class PlusProducts {
       return;
     }
 
-    if (static::checkProductsCategoryInCart($plusCategory->slug)) {
-      wc_add_notice(__('Currently there are only Plus products in your shopping cart. Please, add at least one product from a different category to complete your order.', Plugin::L10N), 'error', [
+    if (static::checkProductsInCartMatchCategoryAndQuantity($plusCategory->slug, 2)) {
+      wc_add_notice(__('There is currently only one Plus product in your shopping cart. Please note that you can only complete your order if you add an additional product to your shopping cart.', 'shop-standards'), 'error', [
         'plus-product' => 'invalid',
       ]);
     }
   }
 
   /**
-   * Checks if cart contains products only from a given category.
+   * Checks if all products in the cart belong to a specific category and have specific quantity conditions.
    *
-   * @param string $categorySlug
-   *   The slug of the products category.
+   * @param string $category_slug
+   * The slug of the category to check against.
+   *
+   * @param int $product_quantity
+   * The minimum quantity of products in the cart.
    *
    * @return bool
-   *   True if the cart contains only products from the given category.
+   * Returns FALSE if any of the products in the cart does not belong to the given category_slug
+   * or the quantity of the products is greater than the minimum quantity.
    */
-  public static function checkProductsCategoryInCart(string $categorySlug): bool {
-    foreach (WC()->cart->get_cart() as $cartItem) {
-      if (!has_term($categorySlug, 'product_cat', $cartItem['product_id'])) {
+  public static function checkProductsInCartMatchCategoryAndQuantity(string $category_slug, int $product_quantity): bool {
+    $cart_items = WC()->cart->get_cart();
+    $cart_contents_count = WC()->cart->get_cart_contents_count();
+    foreach ($cart_items as $cart_item) {
+      if (!has_term($category_slug, 'product_cat', $cart_item['product_id'])
+        || $cart_item['quantity'] >= $product_quantity || $cart_contents_count > 1) {
         return FALSE;
       }
     }
-
     return TRUE;
   }
 

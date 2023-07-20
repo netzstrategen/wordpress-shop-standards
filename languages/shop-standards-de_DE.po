@@ -1,17 +1,26 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: shop-standards\n"
-"POT-Creation-Date: 2022-05-10 14:57+0200\n"
-"PO-Revision-Date: \n"
-"Last-Translator: Joan López <joan@somoscuatro.es>\n"
+"Project-Id-Version: Shop Standards\n"
+"POT-Creation-Date: 2023-07-20 14:15+0330\n"
+"PO-Revision-Date: 2023-07-20 14:15+0330\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.3.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: plugin.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: src/Admin.php:65 src/WooCommerce.php:1360
+#: src/Admin.php:65 src/WooCommerce.php:1430
 #, php-format
 msgid ""
 "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in "
@@ -24,35 +33,35 @@ msgstr ""
 msgid "The entered GTIN is unique."
 msgstr "Diese GTIN wird noch nicht verwendet."
 
-#: src/Plugin.php:86 src/Plugin.php:87 src/Plugin.php:277 src/Plugin.php:316
+#: src/Plugin.php:93 src/Plugin.php:94 src/Plugin.php:303 src/Plugin.php:342
 msgid "Hide \"Add to Cart\" button"
 msgstr "“In den Warenkorb”-Verhalten"
 
-#: src/Plugin.php:281
+#: src/Plugin.php:307
 msgid "Product categories"
 msgstr "Produktkategorien"
 
-#: src/Plugin.php:282
+#: src/Plugin.php:308
 msgid "\"Add to Cart\" button will be hidden for the selected categories."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
 "ausgeblendet."
 
-#: src/Plugin.php:294
+#: src/Plugin.php:320
 msgid "Product brands"
 msgstr "Produktmarken"
 
-#: src/Plugin.php:295
+#: src/Plugin.php:321
 msgid "\"Add to Cart\" button will be hidden for the selected brands."
 msgstr ""
 "Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
 "ausgeblendet."
 
-#: src/Plugin.php:307
+#: src/Plugin.php:333
 msgid "Notice"
 msgstr "Hinweis"
 
-#: src/Plugin.php:309
+#: src/Plugin.php:335
 msgid "Notice to display for products that must not be sold online."
 msgstr ""
 "Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
@@ -67,12 +76,13 @@ msgstr "Plus Produkt Kategorien"
 
 #: src/PlusProducts.php:61
 msgid ""
-"Currently there are only Plus products in your shopping cart. Please, add at "
-"least one product from a different category to complete your order."
+"There is currently only one Plus product in your shopping cart. Please note "
+"that you can only complete your order if you add an additional product to "
+"your shopping cart."
 msgstr ""
-"In Ihrem Warenkorb befinden sich aktuell nur Plus-Produkte. Bitte beachten "
-"Sie, dass Sie Ihre Bestellung nur abschließen können, wenn Sie Ihrem "
-"Warenkorb noch mindestens ein Produkt aus einer anderen Kategorie hinzufügen."
+"In Ihrem Warenkorb befindet sich aktuell nur ein Plus-Produkt. Bitte "
+"beachten Sie, dass Sie Ihre Bestellung nur abschließen können, wenn Sie noch "
+"ein ergänzendes Produkt in Ihren Warenkorb legen."
 
 #: src/ProductAttributePageTitle.php:42
 msgid "Listing Page"
@@ -175,126 +185,111 @@ msgid ""
 "loading to display further products without pagination links."
 msgstr ""
 
+#. Plugin Name of the plugin/theme
 #: src/Settings.php:39
 msgid "Shop Standards"
 msgstr ""
 
-#: src/WooCommerce.php:36 src/WooCommerce.php:669
+#: src/WooCommerce.php:38 src/WooCommerce.php:715
 msgid "Marketing focus product"
 msgstr "Marketing focus product"
 
-#: src/WooCommerce.php:37 src/WooCommerce.php:645
+#: src/WooCommerce.php:39 src/WooCommerce.php:691
 msgid "Price comparison focus product"
 msgstr "Repricing: kein automatisches Repricing"
 
-#: src/WooCommerce.php:38 src/WooCommerce.php:657
+#: src/WooCommerce.php:40 src/WooCommerce.php:703
 msgid "Repricing: Only lower prices"
 msgstr "Repricing: Preise nur senken"
 
-#: src/WooCommerce.php:39 src/WooCommerce.php:625
+#: src/WooCommerce.php:41 src/WooCommerce.php:671
 msgid "Hide add to cart button"
 msgstr "Warenkorb-Button verstecken"
 
-#: src/WooCommerce.php:40
+#: src/WooCommerce.php:42
 msgid "Hide sale percentage bubble"
 msgstr "Sale: Prozentangabe verbergen"
 
-#: src/WooCommerce.php:41
+#: src/WooCommerce.php:43
 msgid "Display sale price as normal price"
 msgstr "Reduzierten Preis als normalen Preis anzeigen"
 
-#: src/WooCommerce.php:42
+#: src/WooCommerce.php:44
 msgid "ERP/Inventory ID"
 msgstr "ERP/Inventar ID"
 
-#: src/WooCommerce.php:43 src/WooCommerce.php:609
+#: src/WooCommerce.php:45 src/WooCommerce.php:655
 msgid "Enter the Global Trade Item Number"
 msgstr "Geben Sie die Gesamtzahl des Handels ein"
 
-#: src/WooCommerce.php:44 src/WooCommerce.php:600
+#: src/WooCommerce.php:46 src/WooCommerce.php:646
 msgid "Enter the back in stock date"
 msgstr "Datum, ab dem der Artikel lieferbar ist"
 
-#: src/WooCommerce.php:45
+#: src/WooCommerce.php:47
 msgid "Disable related products"
 msgstr ""
 
-#: src/WooCommerce.php:46
+#: src/WooCommerce.php:48
 msgid "Purchasing Price"
 msgstr "Einkaufspreis"
 
-#: src/WooCommerce.php:48 src/WooCommerce.php:741
+#: src/WooCommerce.php:49 src/WooCommerce.php:732
 msgid "Repricing options"
 msgstr "Repricing Optionen"
 
-#: src/WooCommerce.php:58
+#: src/WooCommerce.php:61
 msgid "Coupon settings"
 msgstr "Gutschein Einstellungen"
 
-#: src/WooCommerce.php:63
+#: src/WooCommerce.php:66
 msgid "Disable coupon input field on checkout page"
 msgstr "Gutscheinfeld an der Kasse ausblenden"
 
-#: src/WooCommerce.php:159
+#: src/WooCommerce.php:162
 #, php-format
 msgid "Coupon value: %s"
 msgstr "Wert: %s"
 
-#: src/WooCommerce.php:210
+#: src/WooCommerce.php:213
 msgid "In stock"
 msgstr ""
 
-#: src/WooCommerce.php:214
+#: src/WooCommerce.php:217
 #, php-format
 msgid "Only %s immediately deliverable"
 msgstr "Nur noch %s Stück sofort ab Lager lieferbar"
 
-#: src/WooCommerce.php:221
+#: src/WooCommerce.php:224
 #, php-format
 msgid "Back in stock %s"
 msgstr "Wieder lieferbar %s"
 
-#: src/WooCommerce.php:300 src/WooCommerce.php:598
+#: src/WooCommerce.php:324 src/WooCommerce.php:644
 msgid "Back in stock date"
 msgstr "Lieferbar ab Datum"
 
-#: src/WooCommerce.php:312
+#: src/WooCommerce.php:336
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:411 src/WooCommerce.php:732
-msgid "Select option"
-msgstr "Wähle eine Option"
-
-#: src/WooCommerce.php:412 src/WooCommerce.php:733
-msgid "Default"
-msgstr "Standard"
-
-#: src/WooCommerce.php:413 src/WooCommerce.php:734
-msgid "No Repricing"
-msgstr "Kein Repricing"
-
-#: src/WooCommerce.php:414 src/WooCommerce.php:735
-msgid "Lower prices only"
-msgstr "Preise nur senken"
-
-#: src/WooCommerce.php:433
+#: src/WooCommerce.php:478
 msgid "Internal product notes"
 msgstr "Interne Anmerkungen"
 
-#: src/WooCommerce.php:608
+#: src/WooCommerce.php:654
 msgid "GTIN:"
 msgstr ""
 
-#: src/WooCommerce.php:617
+#: src/WooCommerce.php:663
 msgid "ERP/Inventory ID:"
 msgstr "ERP/Inventar ID:"
 
-#: src/WooCommerce.php:633
+#: src/WooCommerce.php:679
 msgid "Variation has insufficient images"
 msgstr "Variation hat ein unzureichendes Bilder"
 
-#: src/WooCommerce.php:635
+#: src/WooCommerce.php:681
 msgid ""
 "Allows this product to be identified and possibly be excluded by other "
 "processes and plugins (e.g. a custom filter for product feeds). Enabling "
@@ -304,38 +299,51 @@ msgstr ""
 "unzureichender Bilder auszuschließen. Das Setzen des Hakens hat keinen "
 "Einfluss auf das Frontend."
 
-#: src/WooCommerce.php:885 src/WooCommerce.php:969
+#: src/WooCommerce.php:950 src/WooCommerce.php:1034
 msgid "Delivery Time"
 msgstr ""
 
-#: src/WooCommerce.php:1029
+#: src/WooCommerce.php:1094
 msgid "SKU"
 msgstr ""
 
-#: src/WooCommerce.php:1033
+#: src/WooCommerce.php:1098
 msgid "ERP/ID"
 msgstr ""
 
-#: src/WooCommerce.php:1046
+#: src/WooCommerce.php:1111
 msgid "Dimensions"
 msgstr ""
 
-#: src/WooCommerce.php:1054
+#: src/WooCommerce.php:1119
 msgid "Weight"
 msgstr ""
 
-#: src/WooCommerce.php:1100
+#: src/WooCommerce.php:1170
 msgid "Product "
 msgstr "Produkt "
 
-#: src/WooCommerce.php:1270
+#: src/WooCommerce.php:1340
 msgid "Delivery Time: from"
 msgstr "Lieferzeit: ab"
 
-#: src/WooCommerce.php:1284
+#. translators: from date, e.g. available 'from 24.10.2019'
+#: src/WooCommerce.php:1354
 #, php-format
 msgid "from %1$s"
 msgstr "ab %1$s"
+
+#: src/WooCommerce.php:1509
+msgid "Default"
+msgstr "Standard"
+
+#: src/WooCommerce.php:1510
+msgid "No Repricing"
+msgstr "Kein Repricing"
+
+#: src/WooCommerce.php:1511
+msgid "Lower prices only"
+msgstr "Preise nur senken"
 
 #: src/WooCommerceCheckout.php:57
 #, php-format
@@ -414,6 +422,21 @@ msgstr "Divers"
 #: src/WooCommerceSalutation.php:68
 msgid "Company"
 msgstr "Firma"
+
+#. Description of the plugin/theme
+msgid "Standard refinements for e-commerce websites."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "netzstrategen"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://netzstrategen.com"
+msgstr ""
+
+#~ msgid "Select option"
+#~ msgstr "Wähle eine Option"
 
 #~ msgid "Discontinued Product"
 #~ msgstr "Auslaufartikel"
