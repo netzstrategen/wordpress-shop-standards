@@ -58,7 +58,7 @@ class PlusProducts {
     }
 
     if (static::checkProductsInCartMatchCategoryAndQuantity($plusCategory->slug, 2)) {
-      wc_add_notice(__('There is currently only one Plus product in your shopping cart. Please note that you can only complete your order if you add an additional product to your shopping cart.', Plugin::L10N), 'error', [
+      wc_add_notice(__('There is currently only one Plus product in your shopping cart. Please note that you can only complete your order if you add an additional product to your shopping cart.', 'shop-standards'), 'error', [
         'plus-product' => 'invalid',
       ]);
     }
