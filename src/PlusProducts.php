@@ -74,8 +74,8 @@ class PlusProducts {
    * The minimum quantity of products in the cart.
    *
    * @return bool
-   * Returns FALSE if any of the products in the cart does not belong to the category
-   * or the quantity of the products is less than the minimum quantity.
+   * Returns FALSE if any of the products in the cart does not belong to the given category_slug
+   * or the quantity of the products is greater than the minimum quantity.
    */
   public static function checkProductsInCartMatchCategoryAndQuantity(string $category_slug, int $product_quantity): bool {
     $cart_items = WC()->cart->get_cart();
