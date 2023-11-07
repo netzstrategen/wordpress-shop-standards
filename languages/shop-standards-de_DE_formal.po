@@ -1,0 +1,428 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Shop Standards\n"
+"POT-Creation-Date: 2022-08-04 12:48+0300\n"
+"PO-Revision-Date: 2023-11-07 14:21+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: plugin.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: src/Admin.php:65 src/WooCommerce.php:1360
+#, php-format
+msgid ""
+"The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in "
+"order to save the product."
+msgstr ""
+"Diese GTIN <a href=\"%s\">wird bereits verwendet</a>. Sie muss geändert "
+"werden bevor das Produkt gespeichert werden kann."
+
+#: src/Admin.php:68
+msgid "The entered GTIN is unique."
+msgstr "Diese GTIN wird noch nicht verwendet."
+
+#: src/Plugin.php:86 src/Plugin.php:87 src/Plugin.php:277 src/Plugin.php:316
+msgid "Hide \"Add to Cart\" button"
+msgstr "“In den Warenkorb”-Verhalten"
+
+#: src/Plugin.php:281
+msgid "Product categories"
+msgstr "Produktkategorien"
+
+#: src/Plugin.php:282
+msgid "\"Add to Cart\" button will be hidden for the selected categories."
+msgstr ""
+"Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Kategorien "
+"ausgeblendet."
+
+#: src/Plugin.php:294
+msgid "Product brands"
+msgstr "Produktmarken"
+
+#: src/Plugin.php:295
+msgid "\"Add to Cart\" button will be hidden for the selected brands."
+msgstr ""
+"Die Schaltfläche “In den Warenkorb” wird für die ausgewählten Marken "
+"ausgeblendet."
+
+#: src/Plugin.php:307
+msgid "Notice"
+msgstr "Hinweis"
+
+#: src/Plugin.php:309
+msgid "Notice to display for products that must not be sold online."
+msgstr ""
+"Hinweis zur Anzeige für Produkte, die nicht online verkauft werden dürfen."
+
+#: src/PlusProducts.php:31
+msgid "Plus Product Settings"
+msgstr "Plus Produkt Einstellungen"
+
+#: src/PlusProducts.php:36
+msgid "Plus Products Category"
+msgstr "Plus Produkt Kategorien"
+
+#: src/PlusProducts.php:61
+msgid ""
+"Currently there are only Plus products in your shopping cart. Please, add at "
+"least one product from a different category to complete your order."
+msgstr ""
+"In Ihrem Warenkorb befindet sich aktuell nur Plus-Produkte. Bitte beachten "
+"Sie, dass Sie Ihre Bestellung nur abschließen können, wenn Sie noch ein "
+"ergänzendes Produkt in Ihren Warenkorb legen."
+
+#: src/ProductAttributePageTitle.php:42
+msgid "Listing Page"
+msgstr ""
+
+#: src/ProductAttributePageTitle.php:46
+msgid "Page Title"
+msgstr ""
+
+#: src/ProductAttributePageTitle.php:49
+msgid ""
+"Only changes how the name appears on the page. Leaves the filter drop-down "
+"menu alone."
+msgstr ""
+
+#: src/ProductDefects.php:95
+msgid "Product Defects Settings"
+msgstr "Einstellungen defekte Produkte"
+
+#: src/ProductDefects.php:100
+msgid "Product attribute to verify"
+msgstr "Zu prüfendes Produktattribut"
+
+#: src/ProductDefects.php:101
+msgid "None"
+msgstr ""
+
+#: src/ProductDefects.php:105
+msgid "Target value for attribute"
+msgstr ""
+
+#: src/ProductDefects.php:107
+msgid "Enter the only value on which the checkbox must not be shown"
+msgstr "Eingabe der einzigen Ausprägung, bei der keine Checkbox angezeigt wird"
+
+#: src/ProductDefects.php:111
+msgid "Title text"
+msgstr "Titeltext"
+
+#: src/ProductDefects.php:116
+msgid "Description text"
+msgstr "Beschreibungstext"
+
+#: src/ProductDefects.php:121
+msgid "Checkbox label text"
+msgstr "Checkbox Label Text"
+
+#: src/ProductFieldsManager.php:31
+msgid "Product custom fields manager"
+msgstr ""
+
+#: src/ProductFieldsManager.php:36
+msgid "Custom product fields to be displayed"
+msgstr ""
+
+#: src/ProductFilters/WidgetFilterDeliveryTime.php:31
+msgid "Filter Products by Delivery Time"
+msgstr "Produkte nach Lieferzeit filtern"
+
+#: src/ProductFilters/WidgetFilterDeliveryTime.php:32
+msgid "Display a list of delivery times to filter products in your store."
+msgstr ""
+"Zeigen Sie eine Liste der Lieferzeiten an, um Produkte in Ihrer Filiale zu "
+"filtern."
+
+#: src/ProductFilters/WidgetFilterDeliveryTime.php:69
+msgid "Quickly available:"
+msgstr "Schnell verfügbar:"
+
+#: src/ProductFilters/WidgetLayeredNavFilters.php:57
+msgid "Remove filter"
+msgstr ""
+
+#: src/ProductsPermalinks.php:46
+msgid "Enforce main category on product links"
+msgstr "Hauptkategorie in Produktlinks verwenden/erzwingen"
+
+#: src/Seo.php:45
+msgid "SEO settings"
+msgstr "SEO Einstellungen"
+
+#: src/Seo.php:50
+msgid "Index first page of paginated products listings only"
+msgstr ""
+
+#: src/Seo.php:51
+msgid ""
+"If checked, noindex meta tag will be added to paginated products listing "
+"pages, starting from the second page."
+msgstr ""
+
+#: src/Seo.php:56
+msgid "Disable Yoast SEO adjacent navigation links."
+msgstr ""
+
+#: src/Seo.php:57
+msgid ""
+"Avoids unwanted rankings of search result URLs as well as paginated listing "
+"pages in case the shop's product listing is using infinite scrolling or lazy "
+"loading to display further products without pagination links."
+msgstr ""
+
+#: src/Settings.php:39
+msgid "Shop Standards"
+msgstr ""
+
+#: src/WooCommerce.php:36 src/WooCommerce.php:669
+msgid "Marketing focus product"
+msgstr "Marketing focus product"
+
+#: src/WooCommerce.php:37 src/WooCommerce.php:645
+msgid "Price comparison focus product"
+msgstr "Repricing: kein automatisches Repricing"
+
+#: src/WooCommerce.php:38 src/WooCommerce.php:657
+msgid "Repricing: Only lower prices"
+msgstr "Repricing: Preise nur senken"
+
+#: src/WooCommerce.php:39 src/WooCommerce.php:625
+msgid "Hide add to cart button"
+msgstr "Warenkorb-Button verstecken"
+
+#: src/WooCommerce.php:40
+msgid "Hide sale percentage bubble"
+msgstr "Sale: Prozentangabe verbergen"
+
+#: src/WooCommerce.php:41
+msgid "Display sale price as normal price"
+msgstr "Reduzierten Preis als normalen Preis anzeigen"
+
+#: src/WooCommerce.php:42
+msgid "ERP/Inventory ID"
+msgstr "ERP/Inventar ID"
+
+#: src/WooCommerce.php:43 src/WooCommerce.php:609
+msgid "Enter the Global Trade Item Number"
+msgstr "Geben Sie die Gesamtzahl des Handels ein"
+
+#: src/WooCommerce.php:44 src/WooCommerce.php:600
+msgid "Enter the back in stock date"
+msgstr "Datum, ab dem der Artikel lieferbar ist"
+
+#: src/WooCommerce.php:45
+msgid "Disable related products"
+msgstr ""
+
+#: src/WooCommerce.php:46
+msgid "Purchasing Price"
+msgstr "Einkaufspreis"
+
+#: src/WooCommerce.php:48 src/WooCommerce.php:741
+msgid "Repricing options"
+msgstr "Repricing Optionen"
+
+#: src/WooCommerce.php:58
+msgid "Coupon settings"
+msgstr "Gutschein Einstellungen"
+
+#: src/WooCommerce.php:63
+msgid "Disable coupon input field on checkout page"
+msgstr "Gutscheinfeld an der Kasse ausblenden"
+
+#: src/WooCommerce.php:159
+#, php-format
+msgid "Coupon value: %s"
+msgstr "Wert: %s"
+
+#: src/WooCommerce.php:210
+msgid "In stock"
+msgstr ""
+
+#: src/WooCommerce.php:214
+#, php-format
+msgid "Only %s immediately deliverable"
+msgstr "Nur noch %s Stück sofort ab Lager lieferbar"
+
+#: src/WooCommerce.php:221
+#, php-format
+msgid "Back in stock %s"
+msgstr "Wieder lieferbar %s"
+
+#: src/WooCommerce.php:300 src/WooCommerce.php:598
+msgid "Back in stock date"
+msgstr "Lieferbar ab Datum"
+
+#: src/WooCommerce.php:312
+msgid "GTIN"
+msgstr ""
+
+#: src/WooCommerce.php:411 src/WooCommerce.php:732
+msgid "Select option"
+msgstr "Wähle eine Option"
+
+#: src/WooCommerce.php:412 src/WooCommerce.php:733
+msgid "Default"
+msgstr "Standard"
+
+#: src/WooCommerce.php:413 src/WooCommerce.php:734
+msgid "No Repricing"
+msgstr "Kein Repricing"
+
+#: src/WooCommerce.php:414 src/WooCommerce.php:735
+msgid "Lower prices only"
+msgstr "Preise nur senken"
+
+#: src/WooCommerce.php:433
+msgid "Internal product notes"
+msgstr "Interne Anmerkungen"
+
+#: src/WooCommerce.php:608
+msgid "GTIN:"
+msgstr ""
+
+#: src/WooCommerce.php:617
+msgid "ERP/Inventory ID:"
+msgstr "ERP/Inventar ID:"
+
+#: src/WooCommerce.php:633
+msgid "Variation has insufficient images"
+msgstr "Variation hat ein unzureichendes Bilder"
+
+#: src/WooCommerce.php:635
+msgid ""
+"Allows this product to be identified and possibly be excluded by other "
+"processes and plugins (e.g. a custom filter for product feeds). Enabling "
+"this option has no effect on the output (by default)."
+msgstr ""
+"Markiert diese Variante um sie beispielsweise bei Produkt-Feeds aufgrund "
+"unzureichender Bilder auszuschließen. Das Setzen des Hakens hat keinen "
+"Einfluss auf das Frontend."
+
+#: src/WooCommerce.php:885 src/WooCommerce.php:969
+msgid "Delivery Time"
+msgstr ""
+
+#: src/WooCommerce.php:1029
+msgid "SKU"
+msgstr ""
+
+#: src/WooCommerce.php:1033
+msgid "ERP/ID"
+msgstr ""
+
+#: src/WooCommerce.php:1046
+msgid "Dimensions"
+msgstr ""
+
+#: src/WooCommerce.php:1054
+msgid "Weight"
+msgstr ""
+
+#: src/WooCommerce.php:1100
+msgid "Product "
+msgstr "Produkt "
+
+#: src/WooCommerce.php:1270
+msgid "Delivery Time: from"
+msgstr "Lieferzeit: ab"
+
+#: src/WooCommerce.php:1284
+#, php-format
+msgid "from %1$s"
+msgstr "ab %1$s"
+
+#: src/WooCommerceCheckout.php:57
+#, php-format
+msgid "%s is a required field."
+msgstr ""
+
+#: src/WooCommerceCheckout.php:61
+msgid "Invalid format"
+msgstr "Ungültiges Format"
+
+#: src/WooCommerceCheckout.php:79
+msgid "Checkout settings"
+msgstr "Einstellungen Bestellprozess"
+
+#: src/WooCommerceCheckout.php:84
+msgid "Require users to enter billing email address twice"
+msgstr "Nutzer zur erneuten Eingabe der E-Mail-Adresse auffordern"
+
+#: src/WooCommerceCheckout.php:108
+msgid "Repeat e-mail address"
+msgstr "E-Mail-Adresse wiederholen"
+
+#: src/WooCommerceCheckout.php:124
+msgid "Your email addresses do not match"
+msgstr ""
+"Ihre E-Mail-Adressen stimmen nicht überein. Bitte überprüfen Sie Ihre Eingabe"
+
+#: src/WooCommerceSaleLabel.php:32
+msgid "Automatic sale category assignment"
+msgstr "Automatisches zuweisen einer „Sale“-Kategorie"
+
+#: src/WooCommerceSaleLabel.php:37
+msgid "Enable"
+msgstr "Aktivieren"
+
+#: src/WooCommerceSaleLabel.php:43
+msgid "Eligible delivery times"
+msgstr "Geeignete Lieferzeiten"
+
+#: src/WooCommerceSaleLabel.php:53
+msgid "Sale category to assign"
+msgstr "Zuzuweisende „Sale“-Kategorie"
+
+#: src/WooCommerceSalutation.php:36 src/WooCommerceSalutation.php:60
+msgid "Salutation"
+msgstr "Anrede"
+
+#: src/WooCommerceSalutation.php:40
+msgid "Salutation field"
+msgstr "Anrede Feld"
+
+#: src/WooCommerceSalutation.php:41
+msgid "Add salutation field in checkout"
+msgstr "Füge ein Anrede Feld zum Checkout hinzu"
+
+#: src/WooCommerceSalutation.php:44
+msgid ""
+"If checked a salutation field will be added to the shipping and billing "
+"address fields."
+msgstr ""
+"Wenn aktiv, wird ein Anrede Feld zu den Versand- und Rechnungsfeldern im "
+"Checkout hinzugefügt."
+
+#: src/WooCommerceSalutation.php:65
+msgid "Mrs"
+msgstr "Frau"
+
+#: src/WooCommerceSalutation.php:66
+msgid "Mr"
+msgstr "Herr"
+
+#: src/WooCommerceSalutation.php:67
+msgid "Diverse"
+msgstr "Divers"
+
+#: src/WooCommerceSalutation.php:68
+msgid "Company"
+msgstr "Firma"
+
+#~ msgid "Discontinued Product"
+#~ msgstr "Auslaufartikel"
