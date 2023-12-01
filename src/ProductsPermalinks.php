@@ -105,7 +105,13 @@ class ProductsPermalinks {
     // Replace the placeholder with main category.
     $product_link = str_replace($product_cat_placeholder, $main_term_slug, $base_permalink);
     $product_link = sprintf('%s/%s', untrailingslashit($product_link), trailingslashit($post->post_name));
-    return home_url($product_link);
+    /**
+     * Returns the product permalink with the option to filter it.
+     *
+     * @param string $product_link The product permalink.
+     * @return string The filtered product permalink.
+     */
+    return apply_filters('shop_standards_get_product_permalink', home_url($product_link));
   }
 
   /**
