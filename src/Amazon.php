@@ -91,9 +91,9 @@ class Amazon {
    */
   public static function wpla_shipping_instance_id(int $instance_id, $shipping_method_id, $shipping_method_title): int {
 
-    if (!empty(self::$firstAvailableMethod)) {
+    if (isset(self::$firstAvailableMethod)) {
       $shipping_method = reset(self::$firstAvailableMethod);
-      return $shipping_method->get_instance_id();
+      return $shipping_method ? $shipping_method->get_instance_id() : $instance_id;
     }
     return $instance_id;
   }
