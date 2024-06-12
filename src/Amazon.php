@@ -93,7 +93,7 @@ class Amazon {
 
     if (isset(self::$firstAvailableMethod)) {
       $shipping_method = reset(self::$firstAvailableMethod);
-      return $shipping_method->get_instance_id();
+      return $shipping_method?->get_instance_id() ?? $instance_id;
     }
     return $instance_id;
   }
