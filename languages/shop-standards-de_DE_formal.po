@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Shop Standards\n"
-"POT-Creation-Date: 2024-07-03 14:19+0200\n"
-"PO-Revision-Date: 2024-07-15 17:18+0200\n"
+"POT-Creation-Date: 2024-10-14 18:25+0200\n"
+"PO-Revision-Date: 2024-10-14 18:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: src/Admin.php:65 src/WooCommerce.php:1430
+#: src/Admin.php:65 src/WooCommerce.php:1400
 #, php-format
 msgid ""
 "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in "
@@ -189,53 +189,55 @@ msgstr ""
 msgid "Shop Standards"
 msgstr ""
 
-#: src/WooCommerce.php:38 src/WooCommerce.php:715
-msgid "Marketing focus product"
-msgstr "Marketing focus product"
+#: src/WooCommerce.php:38
+msgid "Focus Products"
+msgstr "Fokusprodukte"
 
-#: src/WooCommerce.php:39 src/WooCommerce.php:691
-msgid "Price comparison focus product"
-msgstr "Repricing: kein automatisches Repricing"
+#: src/WooCommerce.php:39
+#, fuzzy
+#| msgid "Discontinued Product"
+msgid "Discontinued Products"
+msgstr "Auslaufartikel"
 
-#: src/WooCommerce.php:40 src/WooCommerce.php:703
-msgid "Repricing: Only lower prices"
-msgstr "Repricing: Preise nur senken"
+#: src/WooCommerce.php:40
+msgid "Slow Sellers"
+msgstr "Penner"
 
-#: src/WooCommerce.php:41 src/WooCommerce.php:671
+#: src/WooCommerce.php:41
+msgid "Order Item"
+msgstr "Bestellartikel"
+
+#: src/WooCommerce.php:42 src/WooCommerce.php:660
 msgid "Hide add to cart button"
 msgstr "Warenkorb-Button verstecken"
 
-#: src/WooCommerce.php:42
+#: src/WooCommerce.php:43
 msgid "Hide sale percentage bubble"
 msgstr "Sale: Prozentangabe verbergen"
 
-#: src/WooCommerce.php:43
+#: src/WooCommerce.php:44
 msgid "Display sale price as normal price"
 msgstr "Reduzierten Preis als normalen Preis anzeigen"
 
-#: src/WooCommerce.php:44
+#: src/WooCommerce.php:45
 msgid "ERP/Inventory ID"
 msgstr "ERP/Inventar ID"
 
-#: src/WooCommerce.php:45 src/WooCommerce.php:655
+#: src/WooCommerce.php:46 src/WooCommerce.php:644
 msgid "Enter the Global Trade Item Number"
 msgstr "Geben Sie die Gesamtzahl des Handels ein"
 
-#: src/WooCommerce.php:46 src/WooCommerce.php:646
+#: src/WooCommerce.php:47 src/WooCommerce.php:635
 msgid "Enter the back in stock date"
 msgstr "Datum, ab dem der Artikel lieferbar ist"
 
-#: src/WooCommerce.php:47
+#: src/WooCommerce.php:48
 msgid "Disable related products"
 msgstr ""
 
-#: src/WooCommerce.php:48
+#: src/WooCommerce.php:49
 msgid "Purchasing Price"
 msgstr "Einkaufspreis"
-
-#: src/WooCommerce.php:49 src/WooCommerce.php:732
-msgid "Repricing options"
-msgstr "Repricing Optionen"
 
 #: src/WooCommerce.php:61
 msgid "Coupon settings"
@@ -264,7 +266,7 @@ msgstr "Nur noch %s Stück sofort ab Lager lieferbar"
 msgid "Back in stock %s"
 msgstr "Wieder lieferbar %s"
 
-#: src/WooCommerce.php:324 src/WooCommerce.php:644
+#: src/WooCommerce.php:324 src/WooCommerce.php:633
 msgid "Back in stock date"
 msgstr "Lieferbar ab Datum"
 
@@ -272,23 +274,23 @@ msgstr "Lieferbar ab Datum"
 msgid "GTIN"
 msgstr ""
 
-#: src/WooCommerce.php:478
+#: src/WooCommerce.php:467
 msgid "Internal product notes"
 msgstr "Interne Anmerkungen"
 
-#: src/WooCommerce.php:654
+#: src/WooCommerce.php:643
 msgid "GTIN:"
 msgstr ""
 
-#: src/WooCommerce.php:663
+#: src/WooCommerce.php:652
 msgid "ERP/Inventory ID:"
 msgstr "ERP/Inventar ID:"
 
-#: src/WooCommerce.php:679
+#: src/WooCommerce.php:668
 msgid "Variation has insufficient images"
 msgstr "Variation hat ein unzureichendes Bilder"
 
-#: src/WooCommerce.php:681
+#: src/WooCommerce.php:670
 msgid ""
 "Allows this product to be identified and possibly be excluded by other "
 "processes and plugins (e.g. a custom filter for product feeds). Enabling "
@@ -298,48 +300,60 @@ msgstr ""
 "unzureichender Bilder auszuschließen. Das Setzen des Hakens hat keinen "
 "Einfluss auf das Frontend."
 
-#: src/WooCommerce.php:950 src/WooCommerce.php:1034
+#: src/WooCommerce.php:680
+msgid "Price comparison focus product"
+msgstr "Repricing: kein automatisches Repricing"
+
+#: src/WooCommerce.php:692
+msgid "Repricing: Only lower prices"
+msgstr "Repricing: Preise nur senken"
+
+#: src/WooCommerce.php:704
+msgid "Marketing focus product"
+msgstr "Marketing focus product"
+
+#: src/WooCommerce.php:920 src/WooCommerce.php:1004
 msgid "Delivery Time"
 msgstr ""
 
-#: src/WooCommerce.php:1094
+#: src/WooCommerce.php:1064
 msgid "SKU"
 msgstr ""
 
-#: src/WooCommerce.php:1098
+#: src/WooCommerce.php:1068
 msgid "ERP/ID"
 msgstr ""
 
-#: src/WooCommerce.php:1111
+#: src/WooCommerce.php:1081
 msgid "Dimensions"
 msgstr ""
 
-#: src/WooCommerce.php:1119
+#: src/WooCommerce.php:1089
 msgid "Weight"
 msgstr ""
 
-#: src/WooCommerce.php:1170
+#: src/WooCommerce.php:1140
 msgid "Product "
 msgstr "Produkt "
 
-#: src/WooCommerce.php:1340
+#: src/WooCommerce.php:1310
 msgid "Delivery Time: from"
 msgstr "Lieferzeit: ab"
 
-#: src/WooCommerce.php:1354
+#: src/WooCommerce.php:1324
 #, php-format
 msgid "from %1$s"
 msgstr "ab %1$s"
 
-#: src/WooCommerce.php:1509
+#: src/WooCommerce.php:1479
 msgid "Default"
 msgstr "Standard"
 
-#: src/WooCommerce.php:1510
+#: src/WooCommerce.php:1480
 msgid "No Repricing"
 msgstr "Kein Repricing"
 
-#: src/WooCommerce.php:1511
+#: src/WooCommerce.php:1481
 msgid "Lower prices only"
 msgstr "Preise nur senken"
 
@@ -421,8 +435,8 @@ msgstr "Divers"
 msgid "Company"
 msgstr "Firma"
 
+#~ msgid "Repricing options"
+#~ msgstr "Repricing Optionen"
+
 #~ msgid "Select option"
 #~ msgstr "Wähle eine Option"
-
-#~ msgid "Discontinued Product"
-#~ msgstr "Auslaufartikel"
