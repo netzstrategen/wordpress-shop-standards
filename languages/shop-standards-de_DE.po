@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Shop Standards\n"
-"POT-Creation-Date: 2024-10-14 18:25+0200\n"
-"PO-Revision-Date: 2024-10-14 18:26+0200\n"
+"POT-Creation-Date: 2024-10-17 16:39+0200\n"
+"PO-Revision-Date: 2024-10-17 16:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: src/Admin.php:65 src/WooCommerce.php:1400
+#: src/Admin.php:65 src/WooCommerce.php:1416
 #, php-format
 msgid ""
 "The entered GTIN <a href=\"%s\">already exists</a>. It must be changed in "
@@ -190,8 +190,8 @@ msgid "Shop Standards"
 msgstr ""
 
 #: src/WooCommerce.php:38
-msgid "Focus Products"
-msgstr "Fokusprodukte"
+msgid "Focus Product"
+msgstr "Fokusprodukt"
 
 #: src/WooCommerce.php:39
 msgid "Discontinued Products"
@@ -298,60 +298,48 @@ msgstr ""
 "unzureichender Bilder auszuschließen. Das Setzen des Hakens hat keinen "
 "Einfluss auf das Frontend."
 
-#: src/WooCommerce.php:680
-msgid "Price comparison focus product"
-msgstr "Repricing: kein automatisches Repricing"
-
-#: src/WooCommerce.php:692
-msgid "Repricing: Only lower prices"
-msgstr "Repricing: Preise nur senken"
-
-#: src/WooCommerce.php:704
-msgid "Marketing focus product"
-msgstr "Marketing focus product"
-
-#: src/WooCommerce.php:920 src/WooCommerce.php:1004
+#: src/WooCommerce.php:936 src/WooCommerce.php:1020
 msgid "Delivery Time"
 msgstr ""
 
-#: src/WooCommerce.php:1064
+#: src/WooCommerce.php:1080
 msgid "SKU"
 msgstr ""
 
-#: src/WooCommerce.php:1068
+#: src/WooCommerce.php:1084
 msgid "ERP/ID"
 msgstr ""
 
-#: src/WooCommerce.php:1081
+#: src/WooCommerce.php:1097
 msgid "Dimensions"
 msgstr ""
 
-#: src/WooCommerce.php:1089
+#: src/WooCommerce.php:1105
 msgid "Weight"
 msgstr ""
 
-#: src/WooCommerce.php:1140
+#: src/WooCommerce.php:1156
 msgid "Product "
 msgstr "Produkt "
 
-#: src/WooCommerce.php:1310
+#: src/WooCommerce.php:1326
 msgid "Delivery Time: from"
 msgstr "Lieferzeit: ab"
 
-#: src/WooCommerce.php:1324
+#: src/WooCommerce.php:1340
 #, php-format
 msgid "from %1$s"
 msgstr "ab %1$s"
 
-#: src/WooCommerce.php:1479
+#: src/WooCommerce.php:1495
 msgid "Default"
 msgstr "Standard"
 
-#: src/WooCommerce.php:1480
+#: src/WooCommerce.php:1496
 msgid "No Repricing"
 msgstr "Kein Repricing"
 
-#: src/WooCommerce.php:1481
+#: src/WooCommerce.php:1497
 msgid "Lower prices only"
 msgstr "Preise nur senken"
 
@@ -432,6 +420,15 @@ msgstr "Divers"
 #: src/WooCommerceSalutation.php:68
 msgid "Company"
 msgstr "Firma"
+
+#~ msgid "Price comparison focus product"
+#~ msgstr "Repricing: kein automatisches Repricing"
+
+#~ msgid "Repricing: Only lower prices"
+#~ msgstr "Repricing: Preise nur senken"
+
+#~ msgid "Marketing focus product"
+#~ msgstr "Marketing focus product"
 
 #~ msgid "Repricing options"
 #~ msgstr "Repricing Optionen"

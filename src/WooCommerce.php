@@ -35,7 +35,7 @@ class WooCommerce {
    */
   public static function get_product_fields(array $fields = []): array {
     return array_merge($fields, [
-      self::FIELD_MARKETING_FOCUS => __('Focus Products', Plugin::L10N),
+      self::FIELD_MARKETING_FOCUS => __('Focus Product', Plugin::L10N),
       self::FIELD_PRICE_COMPARISON_FOCUS => __('Discontinued Products', Plugin::L10N),
       self::FIELD_REPRICING_LOWER_ONLY => __('Slow Sellers', Plugin::L10N),
       self::FIELD_ORDER_ITEM => __('Order Item', Plugin::L10N),
