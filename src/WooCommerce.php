@@ -21,7 +21,7 @@ class WooCommerce {
   const FIELD_BACK_IN_STOCK_DATE = '_' . Plugin::PREFIX . '_back_in_stock_date';
   const FIELD_DISABLE_RELATED_PRODUCTS = '_' . Plugin::PREFIX . '_disable_related_products';
   const FIELD_PRODUCT_PURCHASING_PRICE = '_'.Plugin::PREFIX.'_purchasing_price';
-  const FIELD_ORDER_ITEM = '_'. Plugin::PREFIX.'_order_item';
+  const FIELD_ORDER_ITEM = '_' . Plugin::PREFIX . '_order_item';
 
   /**
    * Init module.
