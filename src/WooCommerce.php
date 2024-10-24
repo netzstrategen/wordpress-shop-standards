@@ -703,7 +703,7 @@ class WooCommerce {
         'id'    => self::FIELD_MARKETING_FOCUS,
         'label' => self::get_product_fields()[self::FIELD_MARKETING_FOCUS],
         'value' => get_post_meta($variation->ID, self::FIELD_MARKETING_FOCUS,
-          true),
+         true),
       ]);
       echo '</div>';
     }
