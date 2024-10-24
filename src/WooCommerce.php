@@ -21,7 +21,7 @@ class WooCommerce {
   const FIELD_BACK_IN_STOCK_DATE = '_' . Plugin::PREFIX . '_back_in_stock_date';
   const FIELD_DISABLE_RELATED_PRODUCTS = '_' . Plugin::PREFIX . '_disable_related_products';
   const FIELD_PRODUCT_PURCHASING_PRICE = '_'.Plugin::PREFIX.'_purchasing_price';
-  const FIELD_REPRICING_OPTIONS = '_' . Plugin::PREFIX . '_repricing_options';
+  const FIELD_ORDER_ITEM = '_' . Plugin::PREFIX . '_order_item';
 
   /**
    * Init module.
@@ -35,9 +35,10 @@ class WooCommerce {
    */
   public static function get_product_fields(array $fields = []): array {
     return array_merge($fields, [
-      self::FIELD_MARKETING_FOCUS => __('Marketing focus product', Plugin::L10N),
-      self::FIELD_PRICE_COMPARISON_FOCUS => __('Price comparison focus product', Plugin::L10N),
-      self::FIELD_REPRICING_LOWER_ONLY => __('Repricing: Only lower prices', Plugin::L10N),
+      self::FIELD_MARKETING_FOCUS => __('Focus Product', Plugin::L10N),
+      self::FIELD_PRICE_COMPARISON_FOCUS => __('Discontinued Products', Plugin::L10N),
+      self::FIELD_REPRICING_LOWER_ONLY => __('Slow Sellers', Plugin::L10N),
+      self::FIELD_ORDER_ITEM => __('Order Item', Plugin::L10N),
       self::FIELD_HIDE_ADD_TO_CART_BUTTON => __('Hide add to cart button', Plugin::L10N),
       self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL => __('Hide sale percentage bubble', Plugin::L10N),
       self::FIELD_SHOW_SALE_PRICE_ONLY => __('Display sale price as normal price', Plugin::L10N),
@@ -46,7 +47,6 @@ class WooCommerce {
       self::FIELD_BACK_IN_STOCK_DATE => __('Enter the back in stock date', Plugin::L10N),
       self::FIELD_DISABLE_RELATED_PRODUCTS => __('Disable related products', Plugin::L10N),
       self::FIELD_PRODUCT_PURCHASING_PRICE => __('Purchasing Price', Plugin::L10N) . ' (' . get_woocommerce_currency_symbol() . ')',
-      self::FIELD_REPRICING_OPTIONS => __('Repricing options', Plugin::L10N),
     ]);
   }
 
@@ -410,23 +410,12 @@ class WooCommerce {
       echo '</div>';
     }
 
-    if (ProductFieldsManager::show_field(self::FIELD_REPRICING_OPTIONS)) {
-      // Repricing options.
-      global $post;
-      $brand = '';
-      $product = wc_get_product($post->ID);
-
-      if ($product->is_type('variation')) {
-        $product = wc_get_product($product->get_parent_id());
-      }
-
-      $dropdown_values = self::getRepricingOptionsDropdownValues($product);
-
+    if (ProductFieldsManager::show_field(self::FIELD_ORDER_ITEM)) {
+      // Order Item
       echo '<div class="options_group">';
-      woocommerce_wp_select([
-        'id'    => self::FIELD_REPRICING_OPTIONS,
-        'label' => self::get_product_fields()[self::FIELD_REPRICING_OPTIONS],
-        'options' => $dropdown_values,
+      woocommerce_wp_checkbox([
+        'id' => self::FIELD_ORDER_ITEM,
+        'label' => self::get_product_fields()[self::FIELD_ORDER_ITEM],
       ]);
       echo '</div>';
     }
@@ -494,7 +483,6 @@ class WooCommerce {
       '_' . Plugin::PREFIX . '_product_notes',
       self::FIELD_PRODUCT_PURCHASING_PRICE,
       self::FIELD_DISABLE_RELATED_PRODUCTS,
-      self::FIELD_REPRICING_OPTIONS,
     ];
 
     foreach ($custom_fields as $field) {
@@ -529,6 +517,7 @@ class WooCommerce {
       self::FIELD_MARKETING_FOCUS,
       self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL,
       self::FIELD_DISABLE_RELATED_PRODUCTS,
+      self::FIELD_ORDER_ITEM,
     ];
 
     foreach ($custom_fields_checkbox as $field) {
@@ -688,7 +677,7 @@ class WooCommerce {
       echo '<div style="clear:both">';
       woocommerce_wp_checkbox([
         'id'    => self::FIELD_PRICE_COMPARISON_FOCUS,
-        'label' => __('Price comparison focus product', Plugin::L10N),
+        'label' => self::get_product_fields()[self::FIELD_PRICE_COMPARISON_FOCUS],
         'value' => get_post_meta($variation->ID,
           self::FIELD_PRICE_COMPARISON_FOCUS, true),
       ]);
@@ -700,7 +689,7 @@ class WooCommerce {
       echo '<div style="clear:both">';
       woocommerce_wp_checkbox([
         'id'    => self::FIELD_REPRICING_LOWER_ONLY,
-        'label' => __('Repricing: Only lower prices', Plugin::L10N),
+        'label' => self::get_product_fields()[self::FIELD_REPRICING_LOWER_ONLY],
         'value' => get_post_meta($variation->ID,
           self::FIELD_REPRICING_LOWER_ONLY, true),
       ]);
@@ -712,27 +701,21 @@ class WooCommerce {
       echo '<div style="clear:both">';
       woocommerce_wp_checkbox([
         'id'    => self::FIELD_MARKETING_FOCUS,
-        'label' => __('Marketing focus product', Plugin::L10N),
+        'label' => self::get_product_fields()[self::FIELD_MARKETING_FOCUS],
         'value' => get_post_meta($variation->ID, self::FIELD_MARKETING_FOCUS,
-          true),
+         true),
       ]);
       echo '</div>';
     }
 
-    if (ProductFieldsManager::show_field(self::FIELD_REPRICING_OPTIONS)) {
-      // Repricing options.
-      $brand = '';
-      $variation_product_object = wc_get_product($variation->ID);
-      $product = wc_get_product($variation_product_object->get_parent_id());
-      $dropdown_values = self::getRepricingOptionsDropdownValues($product);
-
-      echo '<div style="clear:both">';
-      woocommerce_wp_select([
-        'id'    => self::FIELD_REPRICING_OPTIONS . '[' . $loop . ']',
-        'label' => __('Repricing options', Plugin::L10N),
-        'options' => $dropdown_values,
-        'value' => get_post_meta($variation->ID,
-          self::FIELD_REPRICING_OPTIONS, TRUE),
+    if (ProductFieldsManager::show_field(self::FIELD_ORDER_ITEM)) {
+      // Order Item
+      echo '<div class="options_group">';
+      woocommerce_wp_checkbox([
+        'id' => self::FIELD_ORDER_ITEM,
+        'label' => self::get_product_fields()[self::FIELD_ORDER_ITEM],
+        'value' => get_post_meta($variation->ID, self::FIELD_ORDER_ITEM,
+        true),
       ]);
       echo '</div>';
     }
@@ -772,7 +755,6 @@ class WooCommerce {
       self::FIELD_GTIN,
       self::FIELD_ERP_INVENTORY,
       self::FIELD_PRODUCT_PURCHASING_PRICE,
-      self::FIELD_REPRICING_OPTIONS
     ];
 
     foreach ($custom_fields as $field) {
@@ -818,6 +800,10 @@ class WooCommerce {
      // Marketing focus product.
      $marketingFocusFieldValue = isset($_POST[self::FIELD_MARKETING_FOCUS]) && wc_string_to_bool($_POST[self::FIELD_MARKETING_FOCUS]) ? 'yes' : 'no';
      update_post_meta($variation_id, self::FIELD_MARKETING_FOCUS, $marketingFocusFieldValue);
+
+     // Order Item
+     $orderItemFieldValue = isset($_POST[self::FIELD_ORDER_ITEM]) && wc_string_to_bool($_POST[self::FIELD_ORDER_ITEM]) ? 'yes' : 'no';
+     update_post_meta($variation_id, self::FIELD_ORDER_ITEM, $orderItemFieldValue);
   }
 
   /**
