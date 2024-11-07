@@ -10,7 +10,7 @@ use Netzstrategen\WooCommerceMoeve\Integration\CustomerPortal;
  */
 class WooCommerce {
 
-  const FIELD_MARKETING_FOCUS = '_' . Plugin::PREFIX . '_marketing_focus';
+  const FIELD_DISCONTINUED_PRODUCTS = '_' . Plugin::PREFIX . '_discontinued_products';
   const FIELD_PRICE_COMPARISON_FOCUS = '_' . Plugin::PREFIX . '_price_comparison_focus';
   const FIELD_REPRICING_LOWER_ONLY = '_' . Plugin::PREFIX . '_repricing_lower_only';
   const FIELD_HIDE_ADD_TO_CART_BUTTON = '_' . Plugin::PREFIX . '_hide_add_to_cart_button';
@@ -35,8 +35,8 @@ class WooCommerce {
    */
   public static function get_product_fields(array $fields = []): array {
     return array_merge($fields, [
-      self::FIELD_MARKETING_FOCUS => __('Focus Product', Plugin::L10N),
-      self::FIELD_PRICE_COMPARISON_FOCUS => __('Discontinued Products', Plugin::L10N),
+      self::FIELD_DISCONTINUED_PRODUCTS => __('Discontinued Products', Plugin::L10N),
+      self::FIELD_PRICE_COMPARISON_FOCUS => __('Focus Product', Plugin::L10N),
       self::FIELD_REPRICING_LOWER_ONLY => __('Slow Sellers', Plugin::L10N),
       self::FIELD_ORDER_ITEM => __('Order Item', Plugin::L10N),
       self::FIELD_HIDE_ADD_TO_CART_BUTTON => __('Hide add to cart button', Plugin::L10N),
@@ -400,22 +400,22 @@ class WooCommerce {
       echo '</div>';
     }
 
-    if (ProductFieldsManager::show_field(self::FIELD_MARKETING_FOCUS)) {
-      // Marketing Focus Product
-      echo '<div class="options_group">';
-      woocommerce_wp_checkbox([
-        'id' => self::FIELD_MARKETING_FOCUS,
-        'label' => self::get_product_fields()[self::FIELD_MARKETING_FOCUS],
-      ]);
-      echo '</div>';
-    }
-
     if (ProductFieldsManager::show_field(self::FIELD_ORDER_ITEM)) {
       // Order Item
       echo '<div class="options_group">';
       woocommerce_wp_checkbox([
         'id' => self::FIELD_ORDER_ITEM,
         'label' => self::get_product_fields()[self::FIELD_ORDER_ITEM],
+      ]);
+      echo '</div>';
+    }
+
+    if(ProductFieldsManager::show_field(self::FIELD_DISCONTINUED_PRODUCTS)) {
+      // Discontinued products.
+      echo '<div class="options_group">';
+      woocommerce_wp_checkbox([
+        'id' => self::FIELD_DISCONTINUED_PRODUCTS,
+        'label' => self::get_product_fields()[self::FIELD_DISCONTINUED_PRODUCTS],
       ]);
       echo '</div>';
     }
@@ -514,10 +514,10 @@ class WooCommerce {
       self::FIELD_HIDE_ADD_TO_CART_BUTTON,
       self::FIELD_PRICE_COMPARISON_FOCUS,
       self::FIELD_REPRICING_LOWER_ONLY,
-      self::FIELD_MARKETING_FOCUS,
       self::FIELD_HIDE_SALE_PERCENTAGE_FLASH_LABEL,
       self::FIELD_DISABLE_RELATED_PRODUCTS,
       self::FIELD_ORDER_ITEM,
+      self::FIELD_DISCONTINUED_PRODUCTS,
     ];
 
     foreach ($custom_fields_checkbox as $field) {
@@ -696,18 +696,6 @@ class WooCommerce {
       echo '</div>';
     }
 
-    if (ProductFieldsManager::show_field(self::FIELD_MARKETING_FOCUS)) {
-      // Marketing Focus Product
-      echo '<div style="clear:both">';
-      woocommerce_wp_checkbox([
-        'id'    => self::FIELD_MARKETING_FOCUS,
-        'label' => self::get_product_fields()[self::FIELD_MARKETING_FOCUS],
-        'value' => get_post_meta($variation->ID, self::FIELD_MARKETING_FOCUS,
-         true),
-      ]);
-      echo '</div>';
-    }
-
     if (ProductFieldsManager::show_field(self::FIELD_ORDER_ITEM)) {
       // Order Item
       echo '<div class="options_group">';
@@ -716,6 +704,17 @@ class WooCommerce {
         'label' => self::get_product_fields()[self::FIELD_ORDER_ITEM],
         'value' => get_post_meta($variation->ID, self::FIELD_ORDER_ITEM,
         true),
+      ]);
+      echo '</div>';
+    }
+
+    if (ProductFieldsManager::show_field(self::FIELD_DISCONTINUED_PRODUCTS)) {
+      // Discontinued products.
+      echo '<div class="options_group">';
+      woocommerce_wp_checkbox([
+        'id' => self::FIELD_DISCONTINUED_PRODUCTS,
+        'label' => self::get_product_fields()[self::FIELD_DISCONTINUED_PRODUCTS],
+        'value' => get_post_meta($variation->ID, self::FIELD_DISCONTINUED_PRODUCTS, true),
       ]);
       echo '</div>';
     }
@@ -797,13 +796,13 @@ class WooCommerce {
     $price_comparison_lower_only = isset($_POST[self::FIELD_REPRICING_LOWER_ONLY]) && wc_string_to_bool($_POST[self::FIELD_REPRICING_LOWER_ONLY]) ? 'yes' : 'no';
     update_post_meta($variation_id, self::FIELD_REPRICING_LOWER_ONLY, $price_comparison_lower_only);
 
-     // Marketing focus product.
-     $marketingFocusFieldValue = isset($_POST[self::FIELD_MARKETING_FOCUS]) && wc_string_to_bool($_POST[self::FIELD_MARKETING_FOCUS]) ? 'yes' : 'no';
-     update_post_meta($variation_id, self::FIELD_MARKETING_FOCUS, $marketingFocusFieldValue);
-
      // Order Item
      $orderItemFieldValue = isset($_POST[self::FIELD_ORDER_ITEM]) && wc_string_to_bool($_POST[self::FIELD_ORDER_ITEM]) ? 'yes' : 'no';
      update_post_meta($variation_id, self::FIELD_ORDER_ITEM, $orderItemFieldValue);
+
+      // Discontinued products.
+      $discontinuedProductsFieldValue = isset($_POST[self::FIELD_DISCONTINUED_PRODUCTS]) && wc_string_to_bool($_POST[self::FIELD_DISCONTINUED_PRODUCTS]) ? 'yes' : 'no';
+      update_post_meta($variation_id, self::FIELD_DISCONTINUED_PRODUCTS, $discontinuedProductsFieldValue);
   }
 
   /**
