@@ -22,6 +22,7 @@ class WooCommerce {
   const FIELD_DISABLE_RELATED_PRODUCTS = '_' . Plugin::PREFIX . '_disable_related_products';
   const FIELD_PRODUCT_PURCHASING_PRICE = '_'.Plugin::PREFIX.'_purchasing_price';
   const FIELD_ORDER_ITEM = '_' . Plugin::PREFIX . '_order_item';
+  const FIELD_EXCLUSION_COMPARISON = '_' . Plugin::PREFIX . '_exclusion_comparison';
 
   /**
    * Init module.
@@ -47,6 +48,7 @@ class WooCommerce {
       self::FIELD_BACK_IN_STOCK_DATE => __('Enter the back in stock date', Plugin::L10N),
       self::FIELD_DISABLE_RELATED_PRODUCTS => __('Disable related products', Plugin::L10N),
       self::FIELD_PRODUCT_PURCHASING_PRICE => __('Purchasing Price', Plugin::L10N) . ' (' . get_woocommerce_currency_symbol() . ')',
+      self::FIELD_EXCLUSION_COMPARISON => __('Exclusion of price comparison platforms', Plugin::L10N),
     ]);
   }
 
@@ -419,6 +421,16 @@ class WooCommerce {
       ]);
       echo '</div>';
     }
+
+    if(ProductFieldsManager::show_field(self::FIELD_EXCLUSION_COMPARISON)) {
+      // Exclusion of price comparison platforms.
+      echo '<div class="options_group">';
+      woocommerce_wp_checkbox([
+        'id' => self::FIELD_EXCLUSION_COMPARISON,
+        'label' => self::get_product_fields()[self::FIELD_EXCLUSION_COMPARISON],
+      ]);
+      echo '</div>';
+    }
   }
 
   /**
@@ -518,6 +530,7 @@ class WooCommerce {
       self::FIELD_DISABLE_RELATED_PRODUCTS,
       self::FIELD_ORDER_ITEM,
       self::FIELD_DISCONTINUED_PRODUCTS,
+      self::FIELD_EXCLUSION_COMPARISON,
     ];
 
     foreach ($custom_fields_checkbox as $field) {
@@ -718,6 +731,17 @@ class WooCommerce {
       ]);
       echo '</div>';
     }
+
+    if (ProductFieldsManager::show_field(self::FIELD_EXCLUSION_COMPARISON)) {
+      // Exclusion of price comparison platforms.
+      echo '<div class="options_group">';
+      woocommerce_wp_checkbox([
+        'id' => self::FIELD_EXCLUSION_COMPARISON,
+        'label' => self::get_product_fields()[self::FIELD_EXCLUSION_COMPARISON],
+        'value' => get_post_meta($variation->ID, self::FIELD_EXCLUSION_COMPARISON, true),
+      ]);
+      echo '</div>';
+    }
   }
 
   /**
@@ -800,9 +824,13 @@ class WooCommerce {
      $orderItemFieldValue = isset($_POST[self::FIELD_ORDER_ITEM]) && wc_string_to_bool($_POST[self::FIELD_ORDER_ITEM]) ? 'yes' : 'no';
      update_post_meta($variation_id, self::FIELD_ORDER_ITEM, $orderItemFieldValue);
 
-      // Discontinued products.
-      $discontinuedProductsFieldValue = isset($_POST[self::FIELD_DISCONTINUED_PRODUCTS]) && wc_string_to_bool($_POST[self::FIELD_DISCONTINUED_PRODUCTS]) ? 'yes' : 'no';
-      update_post_meta($variation_id, self::FIELD_DISCONTINUED_PRODUCTS, $discontinuedProductsFieldValue);
+     // Discontinued products.
+     $discontinuedProductsFieldValue = isset($_POST[self::FIELD_DISCONTINUED_PRODUCTS]) && wc_string_to_bool($_POST[self::FIELD_DISCONTINUED_PRODUCTS]) ? 'yes' : 'no';
+     update_post_meta($variation_id, self::FIELD_DISCONTINUED_PRODUCTS, $discontinuedProductsFieldValue);
+
+     // Exclusion of price comparison platforms.
+     $exclusionComparisonFieldValue = isset($_POST[self::FIELD_EXCLUSION_COMPARISON]) && wc_string_to_bool($_POST[self::FIELD_EXCLUSION_COMPARISON]) ? 'yes' : 'no';
+     update_post_meta($variation_id, self::FIELD_EXCLUSION_COMPARISON, $exclusionComparisonFieldValue);
   }
 
   /**
