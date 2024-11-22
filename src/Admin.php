@@ -114,7 +114,8 @@ class Admin {
 
     foreach ($product->get_children() as $variation) {
       $variation_term_id = get_post_meta($variation, '_lieferzeit', TRUE);
-      $variation_term_slug = get_term($variation_term_id)?->slug;
+      $variation_term = get_term($variation_term_id);
+      $variation_term_slug = $variation_term->slug;
       if (!$variation_term_slug) {
         continue;
       }
