@@ -114,7 +114,11 @@ class Admin {
 
     foreach ($product->get_children() as $variation) {
       $variation_term_id = get_post_meta($variation, '_lieferzeit', TRUE);
-      $variation_term_slug = get_term($variation_term_id)->slug;
+      $variation_term = get_term($variation_term_id);
+      $variation_term_slug = !is_wp_error($variation_term) ? $variation_term?->slug : null;
+      if (!$variation_term_slug) {
+        continue;
+      }
       // Matches every digits in the delivery time term slug.
       preg_match('/(\d+)/', $variation_term_slug, $variation_delivery_days);
       array_shift($variation_delivery_days);
