@@ -1558,8 +1558,8 @@ class WooCommerce {
     // Gets the coupon id.
     $coupon_id = $coupon->get_id();
 
-    // Gets the repeater 'include-ssfields' value list.
-    $shop_standards_fields = get_field('include-ssfields', $coupon_id);
+    // Gets the repeater 'acf_shop_standard_coupon_validation' value list.
+    $shop_standards_fields = get_field('acf_shop_standard_coupon_validation', $coupon_id);
     
     $exclude_shop_standard_fields = [];
 
@@ -1567,11 +1567,11 @@ class WooCommerce {
     if (!empty($shop_standards_fields) && is_array($shop_standards_fields)) {
         foreach ($shop_standards_fields as $field) {
             // Get sub field values.
-            $shop_standard_field = $field['acf_shop_standard_sub_field']; 
-            $include = $field['acf_shop_standard_include']; 
+            $acf_shop_standards_product_field = $field['acf_shop_standard_product_field']; 
+            $included_or_excluded = $field['acf_shop_standard_include_or_exclude']; 
             
-            if($include === 'EXCLUDE'){
-              $exclude_shop_standard_fields[] = $shop_standard_field;
+            if($included_or_excluded === 'EXCLUDE'){
+              $exclude_shop_standard_fields[] = $acf_shop_standards_product_field;
             }            
         }
     } 

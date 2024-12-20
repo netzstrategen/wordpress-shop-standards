@@ -354,8 +354,8 @@ class Plugin {
       'title' => __('Shop standard fields to exclude from coupon', Plugin::L10N),
       'fields' => [
           [
-              'key' => 'field_6760319f700ef',
-              'name' => 'include-ssfields',
+              'key' => 'acf_shop_standard_coupon_validation',
+              'name' => 'acf_shop_standard_coupon_validation',
               'label' => __('Validate Shop standard field on coupon.',Plugin::L10N),              
               'type' => 'repeater',
               'layout' => 'table',
@@ -363,9 +363,9 @@ class Plugin {
               'button_label' => __('Add validation', Plugin::L10N),
               'sub_fields' => [
                 [
-                  'key' => 'acf_shop_standard_sub_field',
-                  'name' => 'acf_shop_standard_sub_field',
-                  'label' => 'Shop standard field',
+                  'key' => 'acf_shop_standard_product_field',
+                  'name' => 'acf_shop_standard_product_field',
+                  'label' => __('Shop standard product field', Plugin::L10N),
                   'type' => 'select',
                   'choices' => woocommerce::get_product_fields(),
                   'allow_null' => 0,
@@ -373,8 +373,8 @@ class Plugin {
                   'ui' => 1,
                 ],
                 [
-                  'key' => 'acf_shop_standard_include',
-                  'name' => 'acf_shop_standard_include',
+                  'key' => 'acf_shop_standard_include_or_exclude',
+                  'name' => 'acf_shop_standard_include_or_exclude',
                   'label' => __('Coupon validaton for field.', Plugin::L10N),
                   'type' => 'select',
                   'choices' => [
