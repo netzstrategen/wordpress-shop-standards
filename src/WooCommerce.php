@@ -1548,4 +1548,50 @@ class WooCommerce {
     }
   }
 
+  /**
+   * Validates if the product cart item has a field marked as EXCLUDE in the coupon and applies the discount accordingly.
+   *
+   * @return int Discount value for the cart item.
+   */
+  public static function apply_product_shop_standard_field_validations_to_coupon($discount, $discounting_amount, $cart_item, $single, $coupon) {
+    
+    // Gets the coupon id.
+    $coupon_id = $coupon->get_id();
+
+    // Gets the repeater 'include-ssfields' value list.
+    $shop_standards_fields = get_field('include-ssfields', $coupon_id);
+    
+    $exclude_shop_standard_fields = [];
+
+    // Gets the shop standard fields of the coupon marked as EXCLUDE.
+    if (!empty($shop_standards_fields) && is_array($shop_standards_fields)) {
+        foreach ($shop_standards_fields as $field) {
+            // Get sub field values.
+            $shop_standard_field = $field['acf_shop_standard_sub_field']; 
+            $include = $field['acf_shop_standard_include']; 
+            
+            if($include === 'EXCLUDE'){
+              $exclude_shop_standard_fields[] = $shop_standard_field;
+            }            
+        }
+    } 
+   
+    // Get product fields matching with coupon fields marked as EXCLUDE.
+    $product_id = $cart_item['product_id'];
+    $product = wc_get_product($product_id);
+    $product_fields = [];
+    
+    foreach ($exclude_shop_standard_fields as $field) {
+      $product_shop_standard_field=$product->get_meta($field,true);
+      if($product_shop_standard_field && wc_string_to_bool($product_shop_standard_field)){
+        $product_fields[] = $field;
+      }     
+    }
+   
+    if (!empty($product_fields)) {
+      return 0;
+    }
+    return $discount;
+  }
+
 }

@@ -270,6 +270,9 @@ class Plugin {
       add_action('woocommerce_order_details_before_order_table', __NAMESPACE__ . '\WooCommerce::woocommerce_order_details_before_order_table');
     }
 
+    // Exclude coupon for producs with custom shopstandards fields marked as exclude.
+    add_filter('woocommerce_coupon_get_discount_amount', __NAMESPACE__ . '\WooCommerce::apply_product_shop_standard_field_validations_to_coupon',11,5);
+
   }
 
   /**
@@ -344,6 +347,56 @@ class Plugin {
       'label_placement' => 'top',
       'instruction_placement' => 'label',
       'active' => 1,
+    ]);
+    
+    acf_add_local_field_group([
+      'key' => 'acf_shop_standard_coupon_exclude',
+      'title' => __('Shop standard fields to exclude from coupon', Plugin::L10N),
+      'fields' => [
+          [
+              'key' => 'field_6760319f700ef',
+              'name' => 'include-ssfields',
+              'label' => __('Validate Shop standard field on coupon.',Plugin::L10N),              
+              'type' => 'repeater',
+              'layout' => 'table',
+              'instructions' => __('List of shop standard fields to validate.', Plugin::L10N),
+              'button_label' => __('Add validation', Plugin::L10N),
+              'sub_fields' => [
+                [
+                  'key' => 'acf_shop_standard_sub_field',
+                  'name' => 'acf_shop_standard_sub_field',
+                  'label' => 'Shop standard field',
+                  'type' => 'select',
+                  'choices' => woocommerce::get_product_fields(),
+                  'allow_null' => 0,
+                  'multiple' => 0,
+                  'ui' => 1,
+                ],
+                [
+                  'key' => 'acf_shop_standard_include',
+                  'name' => 'acf_shop_standard_include',
+                  'label' => __('Coupon validaton for field.', Plugin::L10N),
+                  'type' => 'select',
+                  'choices' => [
+                      'INCLUDE' => 'INCLUDE',
+                      'EXCLUDE' => 'EXCLUDE',
+                  ],                  
+                  'allow_null' => 0,
+                  'multiple' => 0,
+                  'ui' => 1,
+                ],
+              ],
+          ],
+      ],
+      'location' => [
+          [
+              [
+                  'param' => 'post_type',
+                  'operator' => '==',
+                  'value' => 'shop_coupon',
+              ],
+          ],
+      ],      
     ]);
   }
 
