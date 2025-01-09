@@ -1578,7 +1578,7 @@ class WooCommerce {
             // Get sub field values.
             $acf_shop_standards_product_field = $field['acf_shop_standard_product_field']; 
             $included_or_excluded = $field['acf_shop_standard_include_or_exclude']; 
-            Var_dump($acf_shop_standards_product_field."-->".$included_or_excluded);
+            
             if($included_or_excluded === 'EXCLUDE'){
               $exclude_shop_standard_fields[] = $acf_shop_standards_product_field;
               $are_coupon_fields_marked_excluded=true;
