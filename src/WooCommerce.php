@@ -4,6 +4,7 @@ namespace Netzstrategen\ShopStandards;
 
 use WGM_Template;
 use Netzstrategen\WooCommerceMoeve\Integration\CustomerPortal;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 
 /**
  * WooCommerce related functionality.
@@ -1560,8 +1561,16 @@ class WooCommerce {
 
     // Gets the repeater 'acf_shop_standard_coupon_validation' value list.
     $shop_standards_fields = get_field('acf_shop_standard_coupon_validation', $coupon_id);
+
+    //Validates if the coupon has shop standard fields marked configured.
+    if(empty($shop_standards_fields)){
+      return $discount;
+    }
     
     $exclude_shop_standard_fields = [];
+    $include_shop_standard_fields = [];
+    $are_coupon_fields_marked_excluded = false;
+    $are_coupon_fields_marked_included = false;
 
     // Gets the shop standard fields of the coupon marked as EXCLUDE.
     if (!empty($shop_standards_fields) && is_array($shop_standards_fields)) {
@@ -1569,9 +1578,14 @@ class WooCommerce {
             // Get sub field values.
             $acf_shop_standards_product_field = $field['acf_shop_standard_product_field']; 
             $included_or_excluded = $field['acf_shop_standard_include_or_exclude']; 
-            
+            Var_dump($acf_shop_standards_product_field."-->".$included_or_excluded);
             if($included_or_excluded === 'EXCLUDE'){
               $exclude_shop_standard_fields[] = $acf_shop_standards_product_field;
+              $are_coupon_fields_marked_excluded=true;
+            } 
+            if($included_or_excluded === 'INCLUDE'){
+              $include_shop_standard_fields[] = $acf_shop_standards_product_field;
+              $are_coupon_fields_marked_included=true;
             }            
         }
     } 
@@ -1579,19 +1593,32 @@ class WooCommerce {
     // Get product fields matching with coupon fields marked as EXCLUDE.
     $product_id = $cart_item['product_id'];
     $product = wc_get_product($product_id);
-    $product_fields = [];
+    $product_fields_excluded = [];
+    $product_fields_included = [];
     
     foreach ($exclude_shop_standard_fields as $field) {
       $product_shop_standard_field=$product->get_meta($field,true);
       if($product_shop_standard_field && wc_string_to_bool($product_shop_standard_field)){
-        $product_fields[] = $field;
+        $product_fields_excluded[] = $field;
       }     
     }
-   
-    if (!empty($product_fields)) {
-      return 0;
+
+    foreach ($include_shop_standard_fields as $field) {
+      $product_shop_standard_field=$product->get_meta($field,true);
+      if($product_shop_standard_field && wc_string_to_bool($product_shop_standard_field)){
+        $product_fields_included[] = $field;
+      }     
     }
-    return $discount;
+
+    //Only applies the discount when the product has fields marked as INCLUDE and none field marked as EXCLUDE.
+    if(
+        ($are_coupon_fields_marked_included && empty($product_fields_included)) ||
+        ($are_coupon_fields_marked_excluded && !empty($product_fields_excluded)) 
+    ){
+      return 0;
+    }else{
+      return $discount;
+    }    
   }
 
 }
