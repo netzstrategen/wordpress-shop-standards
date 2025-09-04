@@ -345,6 +345,28 @@ class Plugin {
       'instruction_placement' => 'label',
       'active' => 1,
     ]);
+
+    // Recommended own-brand product selector for WooCommerce products.
+    register_field_group([
+      'key' => 'group_recommended_product',
+      'title' => __('Recommended Product', Plugin::L10N),
+      'fields' => [[
+        'key' => 'field_recommended_own_brand_product',
+        'label' => __('Recommended Own-Brand Product', Plugin::L10N),
+        'name' => 'recommended_own_brand_product',
+        'type' => 'post_object',
+        'instructions' => __('Select a recommended own-brand product to display as an alternative or complement to this product.', Plugin::L10N),
+        'post_type' => ['product'],
+        'allow_null' => 1,
+        'return_format' => 'id',
+        'ui' => 1,
+      ]],
+      'location' => [[[
+        'param' => 'post_type',
+        'operator' => '==',
+        'value' => 'product',
+      ]]],
+    ]);
   }
 
   /**
