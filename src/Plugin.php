@@ -366,6 +366,29 @@ class Plugin {
         'value' => 'product',
       ]]],
     ]);
+
+    // Image attachment fields for marking images with text.
+    register_field_group([
+      'key' => 'imageAttachmentFields',
+      'title' => __('Image Attachment Fields', Plugin::L10N),
+      'fields' => [[
+        'key' => 'field_contains_text',
+        'label' => __('Contains Text', Plugin::L10N),
+        'name' => 'contains_text',
+        'type' => 'true_false',
+        'instructions' => __('Check this box if the image contains text or typography', Plugin::L10N),
+        'default_value' => 0,
+        'ui' => 1,
+      ]],
+      'location' => [[[
+        'param' => 'attachment',
+        'operator' => '==',
+        'value' => 'image',
+      ]]],
+      'label_placement' => 'top',
+      'instruction_placement' => 'label',
+      'active' => 1,
+    ]);
   }
 
   /**
