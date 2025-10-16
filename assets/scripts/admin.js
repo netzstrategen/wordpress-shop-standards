@@ -43,4 +43,12 @@
       'json',
     );
   }, 500));
+
+  /**
+   * Disable scroll on number input field to prevent accidental value changes.
+   */
+  $(document).on('wheel', 'input[name="acf[field_recommended_own_brand_product]"]', (event) => {
+    event.preventDefault();
+    $(event.currentTarget).blur();
+  });
 }(jQuery));
