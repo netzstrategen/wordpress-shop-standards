@@ -29,6 +29,43 @@ class WooCommerce {
    */
   public static function init(): void {
     add_filter(Plugin::PREFIX . '/display_custom_product_fields', __CLASS__ . '::get_product_fields');
+    add_action('woocommerce_proceed_to_checkout', __CLASS__ . '::display_shop_advantages_on_cart', 30);
+  }
+
+  /**
+   * Displays shop advantages on the cart page after the checkout buttons.
+   *
+   * @implements woocommerce_proceed_to_checkout
+   */
+  public static function display_shop_advantages_on_cart(): void {
+    if (!function_exists('get_field')) {
+      return;
+    }
+
+    $shop_advantages = get_field('shop_advantages', 'option');
+
+    if (empty($shop_advantages)) {
+      return;
+    }
+
+    echo '<div class="shop-advantages-cart">';
+    echo '<ul class="shop-advantages">';
+
+    foreach ($shop_advantages as $advantage) {
+      if (empty($advantage['icon']) || empty($advantage['text'])) {
+        continue;
+      }
+
+      $icon_url = is_numeric($advantage['icon']) ? wp_get_attachment_url($advantage['icon']) : $advantage['icon'];
+      
+      echo '<li class="shop-advantage">';
+      echo '<img src="' . esc_url($icon_url) . '" alt="' . esc_attr($advantage['text']) . '" width="20" height="20">';
+      echo '<span class="shop-advantage__text">' . wp_kses_post($advantage['text']) . '</span>';
+      echo '</li>';
+    }
+
+    echo '</ul>';
+    echo '</div>';
   }
 
   /**
