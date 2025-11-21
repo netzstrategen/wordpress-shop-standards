@@ -94,6 +94,12 @@ class Plugin {
         'menu_title' => __('Hide "Add to Cart" button', Plugin::L10N),
         'parent_slug' => 'woocommerce',
       ]);
+      acf_add_options_sub_page([
+        'page_title' => __('Shop Advantages', Plugin::L10N),
+        'menu_title' => __('Shop Advantages', Plugin::L10N),
+        'parent_slug' => 'woocommerce',
+        'menu_slug' => 'shop-advantages',
+      ]);
       Plugin::register_acf();
     }
 
@@ -384,6 +390,84 @@ class Plugin {
         'param' => 'attachment',
         'operator' => '==',
         'value' => 'image',
+      ]]],
+      'label_placement' => 'top',
+      'instruction_placement' => 'label',
+      'active' => 1,
+    ]);
+
+    // Shop and product advantages.
+    register_field_group([
+      'key' => 'group_shop_advantages',
+      'title' => __('Shop Advantages', Plugin::L10N),
+      'fields' => [
+        [
+          'key' => 'field_shop_advantages',
+          'label' => __('Shop Advantages', Plugin::L10N),
+          'name' => 'shop_advantages',
+          'type' => 'repeater',
+          'instructions' => __('List of customer benefits shown in footer/product listing page.', Plugin::L10N),
+          'layout' => 'table',
+          'button_label' => __('Add advantage', Plugin::L10N),
+          'sub_fields' => [
+            [
+              'key' => 'field_shop_advantage_icon',
+              'label' => __('Icon', Plugin::L10N),
+              'name' => 'icon',
+              'type' => 'image',
+              'instructions' => '',
+              'mime_types' => 'svg',
+              'return_format' => 'url',
+              'required' => 1,
+            ],
+            [
+              'key' => 'field_shop_advantage_text',
+              'label' => __('Text', Plugin::L10N),
+              'name' => 'text',
+              'type' => 'text',
+              'required' => 1,
+              'wrapper' => [
+                'width' => '75',
+              ],
+            ],
+          ],
+        ],
+        [
+          'key' => 'field_product_advantages',
+          'label' => __('Product Advantages', Plugin::L10N),
+          'name' => 'product_advantages',
+          'type' => 'repeater',
+          'instructions' => __('List of customer benefits shown on product detail page.', Plugin::L10N),
+          'layout' => 'table',
+          'button_label' => __('Add advantage', Plugin::L10N),
+          'sub_fields' => [
+            [
+              'key' => 'field_product_advantage_icon',
+              'label' => __('Icon', Plugin::L10N),
+              'name' => 'icon',
+              'type' => 'image',
+              'instructions' => '',
+              'mime_types' => 'svg',
+              'return_format' => 'url',
+              'required' => 1,
+            ],
+            [
+              'key' => 'field_product_advantage_text',
+              'label' => __('Text', Plugin::L10N),
+              'name' => 'text',
+              'type' => 'text',
+              'required' => 1,
+              'wrapper' => [
+                'width' => '75',
+              ],
+            ],
+          ],
+        ],
+      ],
+      'location' => [[[
+        'param' => 'options_page',
+        'operator' => '==',
+        'value' => 'shop-advantages',
       ]]],
       'label_placement' => 'top',
       'instruction_placement' => 'label',
