@@ -139,6 +139,7 @@ class Plugin {
     ProductFeeds::init();
     ProductFieldsManager::init();
     WooCommerceShippingPackages::init();
+    ShopAdvantages::init();
 
     if (is_admin()) {
       return;
@@ -389,6 +390,8 @@ class Plugin {
       'instruction_placement' => 'label',
       'active' => 1,
     ]);
+
+
   }
 
   /**
