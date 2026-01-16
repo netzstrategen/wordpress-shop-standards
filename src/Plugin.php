@@ -140,6 +140,7 @@ class Plugin {
     ProductFieldsManager::init();
     WooCommerceShippingPackages::init();
     ShopAdvantages::init();
+    Elementor\Elementor::init();
 
     if (is_admin()) {
       return;
