@@ -97,6 +97,10 @@ class Plugin {
       Plugin::register_acf();
     }
 
+    // Initialize 30-day sales tracking for feed optimization.
+    SalesTracking::init();
+    SalesTrackingAdmin::init();
+
     // Allows adding multiple products to the cart.
     add_action('wp_loaded', __NAMESPACE__ . '\WooCommerce::add_multiple_products_to_cart', 20);
 

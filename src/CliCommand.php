@@ -64,6 +64,28 @@ class CliCommand extends \WP_CLI_Command {
   }
 
   /**
+   * Updates 30-day sales count for all products.
+   *
+   * Aggregates sales quantities from orders in the last 30 days and stores
+   * them in the _sales_count_30_days meta field for each product/variation.
+   *
+   * ## EXAMPLES
+   *
+   *     wp shop-standards update-sales-count
+   *
+   * @subcommand update-sales-count
+   */
+  public function updateSalesCount(array $args, array $options) {
+    WP_CLI::log('Starting 30-day sales count update...');
+    $start_time = microtime(true);
+
+    SalesTracking::updateAllProductSales(true);
+
+    $elapsed = round(microtime(true) - $start_time, 2);
+    WP_CLI::success("Sales counts have been successfully updated in {$elapsed} seconds.");
+  }
+
+  /**
    * Builds a list of product IDs from WP-CLI command arguments.
    */
   public static function getProductsToUpdate(array $args, array $options) {
