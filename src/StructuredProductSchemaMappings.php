@@ -189,8 +189,8 @@ class StructuredProductSchemaMappings {
         continue;
       }
 
-      $unit = trim((string) ($row['unit'] ?? $row['unit_override'] ?? ''));
-      $property_label = trim((string) ($row['property_label'] ?? $row['property_label_override'] ?? ''));
+      $unit = trim((string) ($row['unit'] ?? ''));
+      $property_label = trim((string) ($row['property_label'] ?? ''));
 
       // Last row for an attribute wins.
       $normalized[$attribute_slug] = [
