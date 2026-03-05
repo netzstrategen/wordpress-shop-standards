@@ -33,6 +33,9 @@ class WooCommerceCheckout {
     // Add checkout error messages.
     add_filter( 'woocommerce_form_field', __CLASS__ . '::woocommerceFormField', 10, 4 );
 
+    // Applies final email-field ordering.
+    add_filter('woocommerce_checkout_fields', __CLASS__ . '::setBillingEmailFieldsOrder', 999);
+
     // Remove required fields when checking out via Amazon using
     // woocommerce-gateway-amazon-payments-advanced.
     if (self::isAmazonPayV2Checkout()) {
@@ -147,6 +150,37 @@ class WooCommerceCheckout {
    */
   public static function removeRequiredFieldsforAmazonPay(array $fields): array {
     $fields['billing']['billing_address_1']['required'] = FALSE;
+    return $fields;
+  }
+
+  /**
+   * Sets billing email fields order and pairing.
+   *
+   * @implements woocommerce_checkout_fields
+   */
+  public static function setBillingEmailFieldsOrder(array $fields): array {
+    if (!isset($fields['billing']) || !is_array($fields['billing'])) {
+      return $fields;
+    }
+
+    $has_billing_email = isset($fields['billing']['billing_email']) && is_array($fields['billing']['billing_email']);
+    $has_confirmation_email = isset($fields['billing']['billing_email_confirmation']) && is_array($fields['billing']['billing_email_confirmation']);
+
+    if ($has_billing_email) {
+      $fields['billing']['billing_email']['priority'] = 110;
+    }
+
+    if ($has_confirmation_email) {
+      $fields['billing']['billing_email_confirmation']['priority'] = 120;
+      $fields['billing']['billing_email_confirmation']['class'] = ['form-row-last'];
+      $fields['billing']['billing_email_confirmation']['clear'] = TRUE;
+    }
+
+    if ($has_billing_email && $has_confirmation_email) {
+      $fields['billing']['billing_email']['class'] = ['form-row-first'];
+      $fields['billing']['billing_email']['clear'] = FALSE;
+    }
+
     return $fields;
   }
 
