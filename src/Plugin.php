@@ -252,12 +252,16 @@ class Plugin {
     // Adds Brand name to schema.org.
     // Only if woocommerce-brands is not installed (using priority 20).
     add_filter('woocommerce_structured_data_product', __NAMESPACE__ . '\Seo::getProductBrand', 21);
+    // Sanitizes the final schema.org product offer structure after third-party mutations.
+    add_filter('woocommerce_structured_data_product', __NAMESPACE__ . '\Seo::normalizeProductOffers', 999, 2);
     // Adds product variation price to schema.org.
     add_filter('woocommerce_structured_data_product_offer', __NAMESPACE__ . '\Seo::getProductVariationPrice', 10, 2);
     // Fixes schema.org prices according to tax settings.
     add_filter('woocommerce_structured_data_product_offer', __NAMESPACE__ . '\Seo::adjustPrice', 10, 2);
     // Fixes product availability in schema.org.
     add_filter('woocommerce_structured_data_product_offer', __NAMESPACE__ . '\Seo::adjustAvailability', 10, 2);
+    // Sanitizes the final schema.org offer structure after all price mutations.
+    add_filter('woocommerce_structured_data_product_offer', __NAMESPACE__ . '\Seo::normalizePriceMarkup', 99, 2);
 
     // Fixes WooCommerce strings translations.
     add_filter('gettext', __NAMESPACE__ . '\WooCommerce::gettext', 10, 3);

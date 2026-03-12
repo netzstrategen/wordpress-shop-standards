@@ -206,6 +206,59 @@ class Seo {
   }
 
   /**
+   * Returns price specifications as a normalized list of items.
+   */
+  protected static function getPriceSpecifications(array $markup): array {
+    if (empty($markup['priceSpecification']) || !is_array($markup['priceSpecification'])) {
+      return [];
+    }
+
+    $price_specifications = $markup['priceSpecification'];
+
+    // WooCommerce core may emit a list of price specifications. If custom code
+    // appends string keys to that list, keep only the actual specification
+    // entries so the final JSON-LD stays valid.
+    if (isset($price_specifications[0]) && is_array($price_specifications[0])) {
+      return array_values(array_filter($price_specifications, 'is_array'));
+    }
+
+    return [$price_specifications];
+  }
+
+  /**
+   * Writes normalized price specifications back to the markup.
+   */
+  protected static function setPriceSpecifications(array $markup, array $price_specifications): array {
+    if (!$price_specifications) {
+      unset($markup['priceSpecification']);
+      return $markup;
+    }
+
+    $markup['priceSpecification'] = count($price_specifications) === 1 ?
+      reset($price_specifications) :
+      array_values($price_specifications);
+
+    return $markup;
+  }
+
+  /**
+   * Resolves the currency used in the current offer markup.
+   */
+  protected static function getOfferCurrency(array $markup): string {
+    if (!empty($markup['priceCurrency'])) {
+      return $markup['priceCurrency'];
+    }
+
+    foreach (static::getPriceSpecifications($markup) as $price_specification) {
+      if (!empty($price_specification['priceCurrency'])) {
+        return $price_specification['priceCurrency'];
+      }
+    }
+
+    return get_woocommerce_currency();
+  }
+
+  /**
    * Fixes schema.org prices according to tax settings.
    *
    * When retrieving product prices to add into schema.org woocommerce is not
@@ -222,16 +275,19 @@ class Seo {
     }
 
     $prices_include_tax = wc_prices_include_tax();
+    $price_specifications = static::getPriceSpecifications($markup);
 
     if ($product->get_type() === 'variable') {
       $lowest = $product->get_variation_price('min', $prices_include_tax);
       $highest = $product->get_variation_price('max', $prices_include_tax);
       if ($lowest === $highest) {
         $markup['price'] = wc_format_decimal($lowest, wc_get_price_decimals());
-        $markup['priceSpecification']['price'] = wc_format_decimal(
-          $lowest,
-          wc_get_price_decimals()
-        );
+        if ($price_specifications) {
+          $price_specifications[0]['price'] = wc_format_decimal(
+            $lowest,
+            wc_get_price_decimals()
+          );
+        }
       }
       else {
         $markup['lowPrice'] = wc_format_decimal(
@@ -248,10 +304,12 @@ class Seo {
         wc_get_price_excluding_tax($product);
 
       $markup['price'] = $product_price;
-      $markup['priceSpecification']['price'] = $product_price;
+      if ($price_specifications) {
+        $price_specifications[0]['price'] = $product_price;
+      }
     }
 
-    return $markup;
+    return static::setPriceSpecifications($markup, $price_specifications);
   }
 
   /**
@@ -268,6 +326,58 @@ class Seo {
     if (($product->get_stock_quantity() > 0) || $product->backorders_allowed() || !empty($in_stock)) {
       $markup['availability'] = 'https://schema.org/InStock';
     }
+    return $markup;
+  }
+
+  /**
+   * Restores a valid priceSpecification structure and currency fields.
+   *
+   * @implements woocommerce_structured_data_product_offer
+   */
+  public static function normalizePriceMarkup($markup, $product) {
+    $currency = static::getOfferCurrency($markup);
+    $price_specifications = static::getPriceSpecifications($markup);
+
+    foreach ($price_specifications as &$price_specification) {
+      if (empty($price_specification['priceCurrency'])) {
+        $price_specification['priceCurrency'] = $currency;
+      }
+    }
+    unset($price_specification);
+
+    $markup = static::setPriceSpecifications($markup, $price_specifications);
+
+    if (
+      (
+        !empty($markup['price']) ||
+        !empty($markup['lowPrice']) ||
+        !empty($markup['highPrice'])
+      ) &&
+      empty($markup['priceCurrency'])
+    ) {
+      $markup['priceCurrency'] = $currency;
+    }
+
+    return $markup;
+  }
+
+  /**
+   * Sanitizes nested product offers after product-level schema filters run.
+   *
+   * @implements woocommerce_structured_data_product
+   */
+  public static function normalizeProductOffers($markup, $product) {
+    if (empty($markup['offers']) || !is_array($markup['offers'])) {
+      return $markup;
+    }
+
+    foreach ($markup['offers'] as $index => $offer) {
+      if (!is_array($offer)) {
+        continue;
+      }
+      $markup['offers'][$index] = static::normalizePriceMarkup($offer, $product);
+    }
+
     return $markup;
   }
 
