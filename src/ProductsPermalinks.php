@@ -49,9 +49,13 @@ class ProductsPermalinks {
    * permalink instead.
    */
   public static function redirect_to_product_permalink(): void {
+    if (!is_product()) {
+      return;
+    }
+
     remove_action('template_redirect', 'wc_product_canonical_redirect', 5);
 
-    if (!is_product() || !function_exists('wc_get_product')) {
+    if (!function_exists('wc_get_product')) {
       return;
     }
 
