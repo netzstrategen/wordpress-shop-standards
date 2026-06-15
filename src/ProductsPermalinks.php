@@ -21,6 +21,7 @@ class ProductsPermalinks {
     if (get_option(self::FIELD_ENFORCE_CAT_LINKS)) {
       add_filter('post_type_link', __CLASS__ . '::get_product_permalink', PHP_INT_MAX, 2);
       add_filter('wpseo_canonical', __CLASS__ . '::match_canonical_url', PHP_INT_MAX);
+      add_action('template_redirect', __CLASS__ . '::redirect_to_product_permalink', 4);
     }
     // Set up admin actions to handle product setting.
     add_action('admin_init', __CLASS__ . '::register_product_settings');
@@ -36,6 +37,43 @@ class ProductsPermalinks {
       $canonical = get_the_permalink();
     }
     return $canonical;
+  }
+
+  /**
+   * Redirects product requests to the enforced product permalink.
+   *
+   * WooCommerce's product canonical redirect compares the requested category
+   * against the full category hierarchy, while this plugin intentionally emits
+   * product permalinks with only the main category slug. Remove WooCommerce's
+   * redirect to avoid self-redirect loops, then compare against the filtered
+   * permalink instead.
+   */
+  public static function redirect_to_product_permalink(): void {
+    remove_action('template_redirect', 'wc_product_canonical_redirect', 5);
+
+    if (!is_product() || !function_exists('wc_get_product')) {
+      return;
+    }
+
+    $product = wc_get_product(get_the_ID());
+    if (!$product) {
+      return;
+    }
+
+    $request_path = wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+    if (!$request_path) {
+      return;
+    }
+
+    $current_url = trailingslashit(home_url($request_path));
+    $product_url = trailingslashit($product->get_permalink());
+    if ($current_url === $product_url) {
+      return;
+    }
+
+    $query_vars = isset($_GET) && is_array($_GET) ? $_GET : [];
+    wp_safe_redirect(add_query_arg($query_vars, $product_url), 301);
+    exit;
   }
 
   /**
