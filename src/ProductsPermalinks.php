@@ -53,7 +53,10 @@ class ProductsPermalinks {
       return;
     }
 
-    remove_action('template_redirect', 'wc_product_canonical_redirect', 5);
+    $woocommerce_canonical_priority = has_action('template_redirect', 'wc_product_canonical_redirect');
+    if ($woocommerce_canonical_priority !== FALSE) {
+      remove_action('template_redirect', 'wc_product_canonical_redirect', $woocommerce_canonical_priority);
+    }
 
     if (!function_exists('wc_get_product')) {
       return;
@@ -65,13 +68,15 @@ class ProductsPermalinks {
     }
 
     $request_path = wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
-    if (!$request_path) {
+    $product_path = wp_parse_url($product->get_permalink(), PHP_URL_PATH);
+    if (!$request_path || !$product_path) {
       return;
     }
 
-    $current_url = trailingslashit(home_url($request_path));
+    $current_path = trailingslashit($request_path);
+    $product_path = trailingslashit($product_path);
     $product_url = trailingslashit($product->get_permalink());
-    if ($current_url === $product_url) {
+    if ($current_path === $product_path) {
       return;
     }
 
