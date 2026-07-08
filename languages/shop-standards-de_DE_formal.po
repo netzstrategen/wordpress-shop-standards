@@ -433,6 +433,22 @@ msgstr "Produkteigenschaften"
 msgid "Academic title"
 msgstr "Titel"
 
+#: src/WooCommerceCheckoutBlockFields.php:101
+msgid "Floor number"
+msgstr "Etage"
+
+#: src/WooCommerceCheckoutBlockFields.php:119
+msgid "Basement"
+msgstr "Untergeschoss"
+
+#: src/WooCommerceCheckoutBlockFields.php:120
+msgid "Ground floor"
+msgstr "Erdgeschoss"
+
+#: src/WooCommerceCheckoutBlockFields.php:123
+msgid "Floor %d"
+msgstr "%d. Etage"
+
 #~ msgid "Price comparison focus product"
 #~ msgstr "Repricing: kein automatisches Repricing"
 
