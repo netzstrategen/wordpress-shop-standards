@@ -84,3 +84,40 @@
 .wp-block-woocommerce-checkout .wc-block-components-product-metadata.is-attributes-expanded .shop-standards-attributes-toggle button::after {
   transform: rotate(180deg);
 }
+
+/**
+ * Clearer cart line-item price labels.
+ *
+ * The block already renders every value; it only lacks labels. These are
+ * added with CSS `::before`/`::after`, the same approach used for the classic
+ * `del::after { content: " (UVP)" }` price suffix. This content cannot be
+ * translated through gettext; all brand shops using this plugin are German,
+ * so the literals below are acceptable (a `saleBadgePriceFormat` /
+ * `subtotalPriceFormat` checkout filter would be the translatable
+ * alternative, but does not cover every label added here).
+ *
+ * `.wc-block-components-product-price__value` is used for BOTH the per-unit
+ * sale price and the line total, so every rule is scoped to the specific cell
+ * (`.wc-block-cart-item__prices` = per unit, `.wc-block-cart-item__total` =
+ * sum).
+ */
+.wc-block-cart-item__prices .wc-block-components-product-price__regular::before {
+  content: "Einzelpreis (UVP): ";
+}
+.wc-block-cart-item__prices .wc-block-components-product-price__value::before {
+  content: "Einzelpreis (Sale): ";
+}
+
+.wc-block-cart-item__wrap > .wc-block-components-sale-badge::after {
+  content: " pro Stück";
+}
+
+.wc-block-cart-item__total .wc-block-components-product-price__value::before {
+  content: "Gesamt: ";
+}
+.wc-block-cart-item__total .wc-block-components-product-price {
+  white-space: nowrap;
+}
+.wc-block-cart-item__total .wc-block-components-sale-badge::after {
+  content: " insgesamt";
+}

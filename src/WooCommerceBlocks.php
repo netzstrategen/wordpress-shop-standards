@@ -14,11 +14,15 @@ use Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface;
  *
  * The Cart and Checkout blocks render line-item metadata and checkout steps
  * client-side from the Store API, so PHP templates and most classic hooks do
- * not apply there. This integration loads block-attributes: it groups the
- * product-attribute rows (tagged by WooCommerce::woocommerce_get_item_data()
- * with the `shop-standards-attribute--additional` class) and the variation
- * attributes behind a collapsible toggle, matching the classic cart
- * template's behaviour.
+ * not apply there. This integration loads two small, independent scripts:
+ * - block-attributes: groups the product-attribute rows (tagged by
+ *   WooCommerce::woocommerce_get_item_data() with the
+ *   `shop-standards-attribute--additional` class) and the variation
+ *   attributes behind a collapsible toggle, matching the classic cart
+ *   template's behaviour.
+ * - block-labels: adjusts block-only strings via the checkout filter
+ *   registry (e.g. removing German Market's "Veranschlagte" prefix from the
+ *   order total).
  *
  * Registered on both `woocommerce_blocks_cart_block_registration` and
  * `woocommerce_blocks_checkout_block_registration` in plugin.php — both fire
@@ -42,6 +46,7 @@ class WooCommerceBlocks implements IntegrationInterface {
     $base_url = Plugin::getBaseUrl();
 
     wp_register_script(Plugin::PREFIX . '-block-attributes', $base_url . '/dist/scripts/block-attributes' . $suffix . '.js', ['wp-data', 'wc-settings'], $version, TRUE);
+    wp_register_script(Plugin::PREFIX . '-block-labels', $base_url . '/dist/scripts/block-labels' . $suffix . '.js', ['wc-blocks-checkout'], $version, TRUE);
 
     wp_register_style($this->get_name(), $base_url . '/dist/styles/blocks' . $suffix . '.css', [], $version);
     wp_enqueue_style($this->get_name());
@@ -51,7 +56,7 @@ class WooCommerceBlocks implements IntegrationInterface {
    * {@inheritdoc}
    */
   public function get_script_handles() {
-    return [Plugin::PREFIX . '-block-attributes'];
+    return [Plugin::PREFIX . '-block-attributes', Plugin::PREFIX . '-block-labels'];
   }
 
   /**
