@@ -137,6 +137,7 @@ class Plugin {
     Seo::init();
     WooCommerceSalutation::init();
     WooCommerceCheckout::init();
+    WooCommerceCheckoutBlockFields::init();
     PlusProducts::init();
     ProductsPermalinks::init();
     ProductDefects::init();

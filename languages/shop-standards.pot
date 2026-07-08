@@ -391,3 +391,7 @@ msgstr ""
 #: src/WooCommerceBlocks.php:69
 msgid "Product properties"
 msgstr ""
+
+#: src/WooCommerceCheckoutBlockFields.php:73
+msgid "Academic title"
+msgstr ""

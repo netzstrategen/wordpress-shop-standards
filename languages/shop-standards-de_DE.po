@@ -429,6 +429,10 @@ msgstr "Firma"
 msgid "Product properties"
 msgstr "Produkteigenschaften"
 
+#: src/WooCommerceCheckoutBlockFields.php:73
+msgid "Academic title"
+msgstr "Titel"
+
 #~ msgid "Price comparison focus product"
 #~ msgstr "Repricing: kein automatisches Repricing"
 
