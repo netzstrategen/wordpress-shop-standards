@@ -121,3 +121,19 @@
 .wc-block-cart-item__total .wc-block-components-sale-badge::after {
   content: " insgesamt";
 }
+
+/**
+ * Conditional VAT field.
+ *
+ * The EU VAT plugin's step (`.eu-vat-extra-css`) is hidden by default and
+ * only revealed by block-vat.js when the customer is an EU company outside
+ * Germany. Hiding by default (rather than in JS) prevents the field from
+ * flashing before the rule is evaluated. If the script fails to run the field
+ * stays hidden, which is safe here because VAT is an optional field.
+ */
+.eu-vat-extra-css {
+  display: none;
+}
+.eu-vat-extra-css.shop-standards-vat-visible {
+  display: revert;
+}
