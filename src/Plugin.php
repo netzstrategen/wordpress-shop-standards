@@ -283,6 +283,20 @@ class Plugin {
   }
 
   /**
+   * Registers the Cart/Checkout blocks integration.
+   *
+   * Hooked directly in plugin.php (not from init()): both blocks initialize
+   * their integration registries before `init` priority 20 runs, so a later
+   * registration would miss the hook.
+   *
+   * @uses woocommerce_blocks_cart_block_registration
+   * @uses woocommerce_blocks_checkout_block_registration
+   */
+  public static function registerBlocksIntegration($integration_registry) {
+    $integration_registry->register(new WooCommerceBlocks());
+  }
+
+  /**
    * Redirects requests to shop page using different letter-casing to canonical shop page path.
    *
    * This is necessary as the archives rewrite rules do not match

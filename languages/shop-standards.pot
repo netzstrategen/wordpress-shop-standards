@@ -387,3 +387,7 @@ msgstr ""
 #: src/WooCommerceSalutation.php:68
 msgid "Company"
 msgstr ""
+
+#: src/WooCommerceBlocks.php:69
+msgid "Product properties"
+msgstr ""

@@ -425,6 +425,10 @@ msgstr "Divers"
 msgid "Company"
 msgstr "Firma"
 
+#: src/WooCommerceBlocks.php:69
+msgid "Product properties"
+msgstr "Produkteigenschaften"
+
 #~ msgid "Price comparison focus product"
 #~ msgstr "Repricing: kein automatisches Repricing"
 
