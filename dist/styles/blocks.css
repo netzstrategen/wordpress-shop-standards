@@ -201,3 +201,17 @@
   width: 100% !important;
   text-align: center !important;
 }
+
+/**
+ * Shop advantages under the Cart block's submit button.
+ *
+ * ShopAdvantages appends the same `.shop-advantages-cart` markup used by the
+ * classic cart (src/ShopAdvantages.php); `.shop-advantages`/`.shop-advantage`/
+ * `.shop-advantage__text` are already styled globally by the theme's
+ * ListAdvantages component, so only the wrapper's spacing needs restating
+ * here — the classic cart's `max-width: 430px; margin: 0 0 1em auto;` assumes
+ * a right-aligned button, but the block button is already full width.
+ */
+.wp-block-woocommerce-cart .shop-advantages-cart {
+  margin-top: 1em;
+}
