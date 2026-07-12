@@ -42,6 +42,11 @@
   margin-top: 8px;
   text-align: left !important;
 }
+.wp-block-woocommerce-cart .is-mobile .wc-block-cart-item__total .wc-block-cart-item__total-price-and-sale-badge-wrapper,
+.wp-block-woocommerce-cart .is-small .wc-block-cart-item__total .wc-block-cart-item__total-price-and-sale-badge-wrapper,
+.wp-block-woocommerce-cart .is-medium .wc-block-cart-item__total .wc-block-cart-item__total-price-and-sale-badge-wrapper {
+  align-items: flex-start;
+}
 
 /**
  * Collapsible product attributes.

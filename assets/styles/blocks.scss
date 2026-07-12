@@ -41,6 +41,13 @@
   grid-row-start: 3 !important;
   margin-top: 8px;
   text-align: left !important;
+
+  // The wrapper right-aligns its children (price line, savings badge) by
+  // default; the badge is narrower than the price line, so it otherwise
+  // sits indented instead of starting at the same left edge.
+  .wc-block-cart-item__total-price-and-sale-badge-wrapper {
+    align-items: flex-start;
+  }
 }
 
 /**
