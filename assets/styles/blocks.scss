@@ -26,17 +26,21 @@
  * exceeds the 20px-padded container. Giving it its own full-width row below
  * the quantity selector collapses the row instead of adding a column.
  *
- * `!important` on `grid-row-start`: WooCommerce's own more specific selector
- * (`.wc-block-cart table.wc-block-cart-items .wc-block-cart-items__row
- * .wc-block-cart-item__total`) sets `grid-row-start: 1`, which otherwise wins.
+ * Spans the full row width (column 1) to align with the card's own left
+ * edge, matching the coupon toggle and other blocks below the item list.
+ *
+ * `!important` is needed on `grid-row-start` and `text-align`: WooCommerce's
+ * own more specific selector (`table.wc-block-cart-items
+ * .wc-block-cart-items__row .wc-block-cart-item__total`) sets
+ * `grid-row-start: 1` and `text-align: right`, which otherwise win.
  */
 .wp-block-woocommerce-cart .is-mobile .wc-block-cart-item__total,
 .wp-block-woocommerce-cart .is-small .wc-block-cart-item__total,
 .wp-block-woocommerce-cart .is-medium .wc-block-cart-item__total {
-  grid-column: 2 / -1;
+  grid-column: 1 / -1;
   grid-row-start: 3 !important;
   margin-top: 8px;
-  text-align: left;
+  text-align: left !important;
 }
 
 /**
