@@ -33,7 +33,7 @@
 .wp-block-woocommerce-cart .is-mobile .wc-block-cart-item__total,
 .wp-block-woocommerce-cart .is-small .wc-block-cart-item__total,
 .wp-block-woocommerce-cart .is-medium .wc-block-cart-item__total {
-  grid-column: 1/-1;
+  grid-column: 2/-1;
   grid-row-start: 3 !important;
   margin-top: 8px;
   text-align: left;
@@ -100,7 +100,7 @@
   background: none;
   cursor: pointer;
   font: inherit;
-  font-size: 0.8em;
+  font-size: 0.95em;
   text-align: left;
 }
 .wp-block-woocommerce-cart .shop-standards-attributes-toggle button::after,
@@ -143,6 +143,11 @@
 }
 .wc-block-cart-item__prices .wc-block-components-product-price__value::before {
   content: "Einzelpreis (Sale): ";
+}
+.wc-block-cart-item__prices .wc-block-components-product-price__regular,
+.wc-block-cart-item__prices .wc-block-components-product-price__value {
+  margin-left: 0 !important;
+  font-size: inherit !important;
 }
 
 .wc-block-cart-item__wrap > .wc-block-components-sale-badge::after {

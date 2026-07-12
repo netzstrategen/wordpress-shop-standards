@@ -33,7 +33,7 @@
 .wp-block-woocommerce-cart .is-mobile .wc-block-cart-item__total,
 .wp-block-woocommerce-cart .is-small .wc-block-cart-item__total,
 .wp-block-woocommerce-cart .is-medium .wc-block-cart-item__total {
-  grid-column: 1 / -1;
+  grid-column: 2 / -1;
   grid-row-start: 3 !important;
   margin-top: 8px;
   text-align: left;
@@ -102,7 +102,7 @@
     background: none;
     cursor: pointer;
     font: inherit;
-    font-size: 0.8em;
+    font-size: 0.95em;
     text-align: left;
 
     // [3]
@@ -149,6 +149,18 @@
 
   .wc-block-components-product-price__value::before {
     content: 'Einzelpreis (Sale): ';
+  }
+
+  // The sale price (`<ins>`) is otherwise larger than the regular price
+  // (`<del>`) and keeps the margin meant for sitting inline next to it, even
+  // though it wraps to its own line here — both make the two labels look
+  // inconsistent and indented relative to one another. `!important` is
+  // needed: WooCommerce's own `.wc-block-components-product-price__value
+  // .is-discounted` rule ties on specificity and wins by load order.
+  .wc-block-components-product-price__regular,
+  .wc-block-components-product-price__value {
+    margin-left: 0 !important;
+    font-size: inherit !important;
   }
 }
 
