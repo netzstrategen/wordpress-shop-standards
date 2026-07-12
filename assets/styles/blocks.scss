@@ -179,6 +179,12 @@
   .wc-block-components-sale-badge::after {
     content: ' insgesamt';
   }
+
+  // WooCommerce's own `@container (max-width: 699px)` rule hides this badge
+  // outright below that width; keep it, matching the desktop cart.
+  .wc-block-components-sale-badge {
+    display: block !important;
+  }
 }
 
 /**

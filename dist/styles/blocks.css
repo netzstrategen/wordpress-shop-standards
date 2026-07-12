@@ -158,6 +158,9 @@
 .wc-block-cart-item__total .wc-block-components-sale-badge::after {
   content: " insgesamt";
 }
+.wc-block-cart-item__total .wc-block-components-sale-badge {
+  display: block !important;
+}
 
 /**
  * Conditional VAT field.
