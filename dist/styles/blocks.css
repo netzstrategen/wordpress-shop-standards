@@ -195,3 +195,9 @@
   background-color: var(--c-brand-active, #143264) !important;
   color: #fff !important;
 }
+
+.wc-block-cart__submit-button {
+  display: block !important;
+  width: 100% !important;
+  text-align: center !important;
+}

@@ -212,3 +212,11 @@
     color: #fff !important;
   }
 }
+
+// The cart's proceed-to-checkout button spans the full sidebar width,
+// matching the classic cart's `.wc-proceed-to-checkout .button` layout.
+.wc-block-cart__submit-button {
+  display: block !important;
+  width: 100% !important;
+  text-align: center !important;
+}
