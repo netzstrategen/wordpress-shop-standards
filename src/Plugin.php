@@ -145,6 +145,7 @@ class Plugin {
     ProductFieldsManager::init();
     WooCommerceShippingPackages::init();
     ShopAdvantages::init();
+    TrustedShopsCartBanner::init();
     Elementor\Elementor::init();
 
     if (is_admin()) {

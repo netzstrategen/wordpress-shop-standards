@@ -234,3 +234,16 @@
 .wp-block-woocommerce-cart .shop-advantages-cart {
   margin-top: 1em;
 }
+
+/**
+ * eTrusted (Trusted Shops) cart banner.
+ *
+ * TrustedShopsCartBanner appends a bare `<etrusted-widget>` tag after the
+ * shop advantages (src/TrustedShopsCartBanner.php); the eTrusted script
+ * (already loaded on any cart page by woocommerce-reputations) populates its
+ * content client-side, so only the tag's own layout needs styling here.
+ */
+.wp-block-woocommerce-cart etrusted-widget {
+  display: block;
+  margin-top: 1em;
+}
