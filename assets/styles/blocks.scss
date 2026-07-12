@@ -18,6 +18,28 @@
 }
 
 /**
+ * At narrow container widths the cart items table switches to a CSS Grid row
+ * (WooCommerce's `is-mobile`/`is-small`/`is-medium` states): image (col 1,
+ * row 1), product (cols 2-3, row 1), quantity (col 1, row 2). The total cell
+ * has no explicit placement there, so it auto-flows into an implicit 4th
+ * column sized to the price's unwrapped width — with a long product name this
+ * exceeds the 20px-padded container. Giving it its own full-width row below
+ * the quantity selector collapses the row instead of adding a column.
+ *
+ * `!important` on `grid-row-start`: WooCommerce's own more specific selector
+ * (`.wc-block-cart table.wc-block-cart-items .wc-block-cart-items__row
+ * .wc-block-cart-item__total`) sets `grid-row-start: 1`, which otherwise wins.
+ */
+.wp-block-woocommerce-cart .is-mobile .wc-block-cart-item__total,
+.wp-block-woocommerce-cart .is-small .wc-block-cart-item__total,
+.wp-block-woocommerce-cart .is-medium .wc-block-cart-item__total {
+  grid-column: 1 / -1;
+  grid-row-start: 3 !important;
+  margin-top: 8px;
+  text-align: left;
+}
+
+/**
  * Collapsible product attributes.
  *
  * Inside each item's `.wc-block-components-product-metadata` the block
@@ -144,7 +166,13 @@
   }
 
   // "Enthält … MwSt. (19%)" on a single line (it wraps in the narrow column).
-  .wc-block-components-product-price {
+  //
+  // Only on `is-large` (the desktop table layout, plenty of room): the
+  // `is-mobile`/`is-small`/`is-medium` states use a CSS Grid row where this
+  // cell's column has no explicit width, so a nowrap line forces an implicit
+  // column wide enough for the whole line, overflowing the block's own
+  // (narrower) container. Wrapping normally there fits the fixed column.
+  .is-large & .wc-block-components-product-price {
     white-space: nowrap;
   }
 
