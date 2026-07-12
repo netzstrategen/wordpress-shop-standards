@@ -3,6 +3,21 @@
  * Styles for the WooCommerce Cart and Checkout blocks.
  */
 /**
+ * White background and padding around the block wrappers, matching the
+ * classic cart/checkout's `.woocommerce` container.
+ *
+ * `!important` is required on the Checkout block: WooCommerce's own
+ * `checkout.css` sets `padding-top: 24px` on this same selector, loaded after
+ * this stylesheet, so it otherwise wins that one property despite equal
+ * specificity.
+ */
+.wp-block-woocommerce-cart,
+.wp-block-woocommerce-checkout {
+  padding: 20px !important;
+  background-color: #fff !important;
+}
+
+/**
  * Collapsible product attributes.
  *
  * Inside each item's `.wc-block-components-product-metadata` the block
