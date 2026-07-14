@@ -282,3 +282,54 @@
   display: block;
   margin-top: 1em;
 }
+
+/**
+ * Checkout address field order.
+ *
+ * The address form is a flex-wrap row with every field at `order: 0` (visual
+ * order = registration order). Additional fields (Anrede, Titel, Etage) can
+ * only be registered after all of WooCommerce's core fields — there is no
+ * "insert between core fields" option in the Additional Checkout Fields API —
+ * so they land at the end regardless of registration order. Explicit `order`
+ * values move Anrede/Titel up to sit right after Land/Region, matching the
+ * classic checkout's field order; Etage stays at the end.
+ */
+.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__country {
+  order: 1;
+}
+.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-select-input-shop-standards-salutation {
+  order: 2;
+}
+.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-select-input-shop-standards-title {
+  order: 3;
+}
+.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__first_name {
+  order: 4;
+}
+.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__last_name {
+  order: 5;
+}
+.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__address_1 {
+  order: 6;
+}
+.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__address_2-toggle {
+  order: 7;
+}
+.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__address_2-hidden-input {
+  order: 8;
+}
+.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__postcode {
+  order: 9;
+}
+.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__city {
+  order: 10;
+}
+.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__state {
+  order: 11;
+}
+.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__phone {
+  order: 12;
+}
+.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-select-input-shop-standards-floor-number {
+  order: 13;
+}
