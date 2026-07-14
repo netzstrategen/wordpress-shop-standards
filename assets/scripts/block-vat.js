@@ -18,18 +18,8 @@
 (function checkoutVatConditional(wp) {
   const VAT_STEP = '.eu-vat-extra-css';
   const VAT_INPUT = '#billing_vat_number';
-  const VAT_HEADING = '.eu-vat-extra-css .wc-block-components-checkout-step__title, .eu-vat-extra-css legend';
   const VISIBLE_CLASS = 'shop-standards-vat-visible';
   const SALUTATION_FIELD = 'shop-standards/salutation';
-
-  // Rewords the step heading from "VAT Details" to "Umsatzsteuer-ID".
-  function fixHeadingText() {
-    document.querySelectorAll(VAT_HEADING).forEach((el) => {
-      if (el.textContent.trim() === 'VAT Details') {
-        el.textContent = 'Umsatzsteuer-ID';
-      }
-    });
-  }
 
   /**
    * Whether the VAT step should be shown for the current checkout state.
@@ -70,7 +60,6 @@
     if (!step) {
       return;
     }
-    fixHeadingText();
     const show = shouldShow();
     step.classList.toggle(VISIBLE_CLASS, show);
     if (!show) {
