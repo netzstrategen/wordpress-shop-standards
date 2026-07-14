@@ -15,8 +15,7 @@ use Netzstrategen\WooCommerceReputations\Settings as ReputationsSettings;
  * The classic cart gets this banner from woocommerce-reputations, hooked to a
  * theme-only template hook the Cart block has no equivalent of. Appends the
  * same widget tag after the block's Proceed to Checkout block, at an earlier
- * priority than ShopAdvantages so it renders above the advantages (Asana
- * ID-837).
+ * priority than ShopAdvantages so it renders above the advantages.
  */
 class TrustedShopsCartBanner {
 

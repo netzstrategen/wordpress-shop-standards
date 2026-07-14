@@ -15,7 +15,7 @@
   const BADGE_SELECTOR = '.wc-block-components-sale-badge';
 
   // Rewords the sale badge's leading text node from "Sparen Sie" to "Sie
-  // sparen" (Asana ID-835); no checkout filter covers this fixed text node.
+  // sparen"; no checkout filter covers this fixed text node.
   function fixBadgeText(badge) {
     const textNode = badge.firstChild;
     if (textNode && textNode.nodeType === Node.TEXT_NODE) {

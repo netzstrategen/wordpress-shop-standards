@@ -23,8 +23,8 @@ use Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface;
  * - block-labels: adjusts block-only strings — via the checkout filter
  *   registry where a filter exists (e.g. removing German Market's
  *   "Veranschlagte" prefix from the order total), otherwise via direct DOM
- *   text updates (e.g. the sale badge's "Sparen Sie" -> "Sie sparen", per
- *   Asana ID-835, which no filter exposes).
+ *   text updates (e.g. the sale badge's "Sparen Sie" -> "Sie sparen", which no
+ *   filter exposes).
  * - block-vat: shows the EU VAT Number plugin's VAT field only for companies
  *   outside Germany (reads the salutation field registered by
  *   WooCommerceCheckoutBlockFields).
