@@ -333,3 +333,39 @@
 .wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-select-input-shop-standards-floor-number {
   order: 13;
 }
+
+/**
+ * Checkout step order.
+ *
+ * The checkout form is a flex column of steps; the EU VAT Number plugin's
+ * step renders last regardless of registration order (last among the plugin
+ * load order, after the terms/actions steps). Explicit order values move it
+ * to sit right after the shipping address, before billing address.
+ */
+.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-woocommerce-checkout-shipping-address-block {
+  order: 4;
+}
+.wp-block-woocommerce-checkout .wc-block-checkout__form .eu-vat-extra-css {
+  order: 5;
+}
+.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-woocommerce-checkout-billing-address-block {
+  order: 6;
+}
+.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-woocommerce-checkout-shipping-methods-block {
+  order: 7;
+}
+.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-woocommerce-checkout-payment-block {
+  order: 8;
+}
+.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-woocommerce-checkout-order-note-block {
+  order: 9;
+}
+.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-woocommerce-checkout-terms-block {
+  order: 10;
+}
+.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-woocommerce-checkout-actions-block {
+  order: 11;
+}
+.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-amazon-payments-advanced-log-out-banner {
+  order: 12;
+}
