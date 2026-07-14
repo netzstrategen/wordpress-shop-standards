@@ -7,7 +7,8 @@
 (function cartBlockLabels(wp, wc) {
   if (wc && wc.blocksCheckout && typeof wc.blocksCheckout.registerCheckoutFilters === 'function') {
     wc.blocksCheckout.registerCheckoutFilters('shop-standards-block-labels', {
-      // Removes German Market's "Veranschlagte" prefix from the block total.
+      // Shortens WooCommerce core's "Estimated total" label (de: "Veranschlagte
+      // Gesamtsumme") to just "Gesamtsumme".
       totalLabel: (value) => (typeof value === 'string' ? value.replace(/^Veranschlagte\s+/i, '') : value),
     });
   }
