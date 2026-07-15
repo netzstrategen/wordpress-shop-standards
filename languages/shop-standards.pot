@@ -387,27 +387,3 @@ msgstr ""
 #: src/WooCommerceSalutation.php:68
 msgid "Company"
 msgstr ""
-
-#: src/WooCommerceBlocks.php:69
-msgid "Product properties"
-msgstr ""
-
-#: src/WooCommerceCheckoutBlockFields.php:73
-msgid "Academic title"
-msgstr ""
-
-#: src/WooCommerceCheckoutBlockFields.php:101
-msgid "Floor number"
-msgstr ""
-
-#: src/WooCommerceCheckoutBlockFields.php:119
-msgid "Basement"
-msgstr ""
-
-#: src/WooCommerceCheckoutBlockFields.php:120
-msgid "Ground floor"
-msgstr ""
-
-#: src/WooCommerceCheckoutBlockFields.php:123
-msgid "Floor %d"
-msgstr ""

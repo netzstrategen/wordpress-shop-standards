@@ -144,7 +144,6 @@ class Plugin {
     ProductFieldsManager::init();
     WooCommerceShippingPackages::init();
     ShopAdvantages::init();
-    TrustedShopsCartBanner::init();
     Elementor\Elementor::init();
 
     if (is_admin()) {
@@ -281,20 +280,6 @@ class Plugin {
       add_action('woocommerce_order_details_before_order_table', __NAMESPACE__ . '\WooCommerce::woocommerce_order_details_before_order_table');
     }
 
-  }
-
-  /**
-   * Registers the Cart/Checkout blocks integration.
-   *
-   * Hooked directly in plugin.php (not from init()): both blocks initialize
-   * their integration registries before `init` priority 20 runs, so a later
-   * registration would miss the hook.
-   *
-   * @uses woocommerce_blocks_cart_block_registration
-   * @uses woocommerce_blocks_checkout_block_registration
-   */
-  public static function registerBlocksIntegration($integration_registry) {
-    $integration_registry->register(new WooCommerceBlocks());
   }
 
   /**

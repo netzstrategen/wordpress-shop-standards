@@ -16,12 +16,6 @@ class ShopAdvantages {
       static::register_acf_fields();
     }
     add_action('woocommerce_proceed_to_checkout', __CLASS__ . '::display_shop_advantages_on_cart', 30);
-
-    // The Cart block has no equivalent template hook; append the same markup
-    // after its "Proceed to Checkout" block via WordPress's native
-    // render_block_{$block_name} filter (the block-development-recommended
-    // way to inject content next to a specific block, with no JS/build step).
-    add_filter('render_block_woocommerce/proceed-to-checkout-block', __CLASS__ . '::appendToBlockProceedToCheckout');
   }
 
   /**
@@ -124,43 +118,18 @@ class ShopAdvantages {
    * @implements woocommerce_proceed_to_checkout
    */
   public static function display_shop_advantages_on_cart(): void {
-    echo static::buildMarkup();
-  }
-
-  /**
-   * Appends shop advantages after the Cart block's Proceed to Checkout block.
-   *
-   * @param string $block_content
-   *   The block's own rendered HTML.
-   *
-   * @return string
-   *   The block's HTML with the advantages markup appended.
-   *
-   * @implements render_block_woocommerce/proceed-to-checkout-block
-   */
-  public static function appendToBlockProceedToCheckout(string $block_content): string {
-    return $block_content . static::buildMarkup();
-  }
-
-  /**
-   * Builds the shop advantages markup from the ACF options page field.
-   *
-   * @return string
-   *   The advantages list markup, or an empty string if none are configured.
-   */
-  protected static function buildMarkup(): string {
     if (!function_exists('get_field')) {
-      return '';
+      return;
     }
 
     $shop_advantages = get_field('shop_advantages', 'option');
 
     if (empty($shop_advantages)) {
-      return '';
+      return;
     }
 
-    $markup = '<div class="shop-advantages-cart">';
-    $markup .= '<ul class="shop-advantages">';
+    echo '<div class="shop-advantages-cart">';
+    echo '<ul class="shop-advantages">';
 
     foreach ($shop_advantages as $advantage) {
       if (empty($advantage['icon']) || empty($advantage['text'])) {
@@ -168,17 +137,15 @@ class ShopAdvantages {
       }
 
       $icon_url = is_numeric($advantage['icon']) ? wp_get_attachment_url($advantage['icon']) : $advantage['icon'];
-
-      $markup .= '<li class="shop-advantage">';
-      $markup .= '<img src="' . esc_url($icon_url) . '" alt="' . esc_attr($advantage['text']) . '" width="20" height="20">';
-      $markup .= '<span class="shop-advantage__text">' . wp_kses_post($advantage['text']) . '</span>';
-      $markup .= '</li>';
+      
+      echo '<li class="shop-advantage">';
+      echo '<img src="' . esc_url($icon_url) . '" alt="' . esc_attr($advantage['text']) . '" width="20" height="20">';
+      echo '<span class="shop-advantage__text">' . wp_kses_post($advantage['text']) . '</span>';
+      echo '</li>';
     }
 
-    $markup .= '</ul>';
-    $markup .= '</div>';
-
-    return $markup;
+    echo '</ul>';
+    echo '</div>';
   }
 
 }

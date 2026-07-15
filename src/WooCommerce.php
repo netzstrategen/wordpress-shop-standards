@@ -953,10 +953,6 @@ class WooCommerce {
     $separator = [[
       'key' => 'separator',
       'value' => '',
-      // Hide the split marker in the Cart/Checkout blocks, which render item
-      // data client-side and would otherwise print a literal "separator:" row.
-      // The classic cart template still finds this entry and splits on it.
-      '__experimental_woocommerce_blocks_hidden' => TRUE,
     ]];
 
     // Display delivery time from woocommerce-german-market first for each order item.
@@ -976,15 +972,6 @@ class WooCommerce {
     else {
       $data = array_merge($data, $separator);
     }
-
-    // Tag each attribute row with our own class. The Cart block copies an
-    // item-data entry's `className` onto its rendered <li>, giving a
-    // progressive-enhancement script a stable hook to group these rows under a
-    // collapsible toggle. The classic cart template ignores the extra key.
-    $filtered_attributes = array_map(static function ($attribute) {
-      $attribute['className'] = 'shop-standards-attribute--additional';
-      return $attribute;
-    }, $filtered_attributes);
 
     // Add product data (SKU, dimensions and weight) and attributes.
     // Note: we display parent attributes for production variations.
