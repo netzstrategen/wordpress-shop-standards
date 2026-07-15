@@ -1,0 +1,304 @@
+/**
+ * Styles for the WooCommerce Cart and Checkout blocks.
+ */
+
+/**
+ * White background and padding around the block wrappers, matching the
+ * classic cart/checkout's `.woocommerce` container.
+ *
+ * `!important` is required on the Checkout block: WooCommerce's own
+ * `checkout.css` sets `padding-top: 24px` on this same selector, loaded after
+ * this stylesheet, so it otherwise wins that one property despite equal
+ * specificity.
+ */
+.wp-block-woocommerce-cart,
+.wp-block-woocommerce-checkout {
+  padding: 20px !important;
+  background-color: #fff !important;
+}
+
+/**
+ * At narrow container widths the cart items table switches to a CSS Grid row
+ * (WooCommerce's `is-mobile`/`is-small`/`is-medium` states): image (col 1,
+ * row 1), product (cols 2-3, row 1), quantity (col 1, row 2). The total cell
+ * has no explicit placement there, so it auto-flows into an implicit 4th
+ * column sized to the price's unwrapped width — with a long product name this
+ * exceeds the 20px-padded container. Giving it its own full-width row below
+ * the quantity selector collapses the row instead of adding a column.
+ *
+ * Spans the full row width (column 1) to align with the card's own left
+ * edge, matching the coupon toggle and other blocks below the item list.
+ *
+ * `!important` is needed on `grid-row-start` and `text-align`: WooCommerce's
+ * own more specific selector (`table.wc-block-cart-items
+ * .wc-block-cart-items__row .wc-block-cart-item__total`) sets
+ * `grid-row-start: 1` and `text-align: right`, which otherwise win.
+ */
+.wp-block-woocommerce-cart .is-mobile .wc-block-cart-item__total,
+.wp-block-woocommerce-cart .is-small .wc-block-cart-item__total,
+.wp-block-woocommerce-cart .is-medium .wc-block-cart-item__total {
+  grid-column: 1 / -1;
+  grid-row-start: 3 !important;
+  margin-top: 8px;
+  text-align: left !important;
+
+  // The wrapper right-aligns its children (price line, savings badge) by
+  // default; the badge is narrower than the price line, so it otherwise
+  // sits indented instead of starting at the same left edge.
+  .wc-block-cart-item__total-price-and-sale-badge-wrapper {
+    align-items: flex-start;
+  }
+}
+
+/**
+ * Collapsible product attributes.
+ *
+ * Inside each item's `.wc-block-components-product-metadata` the block
+ * renders two `.wc-block-components-product-details` lists: the first holds
+ * the item data (SKU, delivery time, and the product attributes tagged by
+ * `WooCommerce::woocommerce_get_item_data()` with
+ * `.shop-standards-attribute--additional`); the trailing sibling list holds
+ * the selected variation attributes.
+ *
+ * Matching the classic cart, both the tagged attributes and the whole
+ * variation list are collapsed by default and revealed together via
+ * block-attributes.js, which adds `.is-attributes-expanded` to the metadata
+ * container.
+ *
+ * 1. Collapsed at first paint — the server-set class and the structural
+ *    sibling selector both match the instant React renders, so there is no
+ *    flash.
+ * 2. Reveal to whatever display WooCommerce would otherwise use.
+ * 3. Down arrow indicator.
+ *
+ * Scoped to the Cart AND Checkout block wrappers — their order summaries
+ * share this markup — so the collapse rule never hides attributes in a
+ * context without the toggle script.
+ */
+.wp-block-woocommerce-cart .wc-block-components-product-metadata,
+.wp-block-woocommerce-checkout .wc-block-components-product-metadata {
+  // [1]
+  > .wc-block-components-product-details > li.shop-standards-attribute--additional {
+    display: none;
+  }
+  > .wc-block-components-product-details ~ .wc-block-components-product-details {
+    display: none;
+  }
+
+  &.is-attributes-expanded {
+    > .wc-block-components-product-details > li.shop-standards-attribute--additional {
+      display: revert; // [2]
+    }
+    > .wc-block-components-product-details ~ .wc-block-components-product-details {
+      display: revert; // [2]
+    }
+  }
+}
+
+.wp-block-woocommerce-cart .shop-standards-attributes-toggle,
+.wp-block-woocommerce-checkout .shop-standards-attributes-toggle {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.75em 0;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 0;
+    background: none;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.95em;
+    text-align: left;
+
+    // [3]
+    &::after {
+      display: inline-block;
+      width: 1em;
+      height: 0.75em;
+      margin-left: 0.5em;
+      content: '';
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='8' viewBox='0 0 13 8'%3E%3Cpolygon fill='%23000' points='0 .766 5.51 6.1 0 11.434 .81 12.2 7.2 6.1 .81 0' transform='rotate(90 6.1 6.6)'/%3E%3C/svg%3E%0A");
+      background-position: center right;
+      background-repeat: no-repeat;
+      background-size: contain;
+      transition: transform 0.2s ease;
+    }
+  }
+}
+
+.wp-block-woocommerce-cart .wc-block-components-product-metadata.is-attributes-expanded .shop-standards-attributes-toggle button::after,
+.wp-block-woocommerce-checkout .wc-block-components-product-metadata.is-attributes-expanded .shop-standards-attributes-toggle button::after {
+  transform: rotate(180deg);
+}
+
+/**
+ * Clearer cart line-item price labels.
+ *
+ * The block already renders every value; it only lacks labels. These are
+ * added with CSS `::before`/`::after`, the same approach used for the classic
+ * `del::after { content: " (UVP)" }` price suffix. This content cannot be
+ * translated through gettext; all brand shops using this plugin are German,
+ * so the literals below are acceptable (a `saleBadgePriceFormat` /
+ * `subtotalPriceFormat` checkout filter would be the translatable
+ * alternative, but does not cover every label added here).
+ *
+ * `.wc-block-components-product-price__value` is used for BOTH the per-unit
+ * sale price and the line total, so every rule is scoped to the specific cell
+ * (`.wc-block-cart-item__prices` = per unit, `.wc-block-cart-item__total` =
+ * sum).
+ */
+.wc-block-cart-item__prices {
+  .wc-block-components-product-price__regular::before {
+    content: 'Einzelpreis (UVP): ';
+  }
+
+  .wc-block-components-product-price__value::before {
+    content: 'Einzelpreis (Sale): ';
+  }
+
+  // The sale price (`<ins>`) is otherwise larger than the regular price
+  // (`<del>`) and keeps the margin meant for sitting inline next to it, even
+  // though it wraps to its own line here — both make the two labels look
+  // inconsistent and indented relative to one another. `!important` is
+  // needed: WooCommerce's own `.wc-block-components-product-price__value
+  // .is-discounted` rule ties on specificity and wins by load order.
+  .wc-block-components-product-price__regular,
+  .wc-block-components-product-price__value {
+    margin-left: 0 !important;
+    font-size: inherit !important;
+  }
+}
+
+// Per-unit savings badge -> "… pro Stück". It sits directly under the product
+// column wrap (a sibling of the price cell), not inside `__prices`.
+.wc-block-cart-item__wrap > .wc-block-components-sale-badge::after {
+  content: ' pro Stück';
+}
+
+// Right column (cumulated): label the line total, keep the tax note on one
+// line, and mark the cumulated savings badge.
+.wc-block-cart-item__total {
+  .wc-block-components-product-price__value::before {
+    content: 'Gesamt: ';
+  }
+
+  // "Enthält … MwSt. (19%)" on a single line (it wraps in the narrow column).
+  //
+  // Only on `is-large` (the desktop table layout, plenty of room): the
+  // `is-mobile`/`is-small`/`is-medium` states use a CSS Grid row where this
+  // cell's column has no explicit width, so a nowrap line forces an implicit
+  // column wide enough for the whole line, overflowing the block's own
+  // (narrower) container. Wrapping normally there fits the fixed column.
+  .is-large & .wc-block-components-product-price {
+    white-space: nowrap;
+  }
+
+  .wc-block-components-sale-badge::after {
+    content: ' insgesamt';
+  }
+
+  // WooCommerce's own `@container (max-width: 699px)` rule hides this badge
+  // outright below that width; keep it, matching the desktop cart.
+  .wc-block-components-sale-badge {
+    display: block !important;
+  }
+}
+
+/**
+ * Brand-color the Cart/Checkout block primary buttons.
+ *
+ * The Cart and Checkout blocks render their "proceed to checkout" / "place
+ * order" buttons with no brand styling at all — no theme CSS targets these
+ * block-specific classes, only the classic markup (`.woocommerce .button`,
+ * `#place_order`, `.checkout-button`). This mirrors that classic recipe.
+ *
+ * Reuses `--c-brand` / `--c-brand-hover` / `--c-brand-active`, the same
+ * custom properties the theme already declares at `:root` for the classic
+ * buttons — so this picks up each brand's real color with no project-side
+ * change. The fallback values only apply where a theme hasn't declared the
+ * variable yet.
+ *
+ * `!important` is required: WooCommerce's own `wc-blocks.css` has a rule on
+ * the bare `.wc-block-components-button` class (which both of these buttons
+ * also carry) using `!important` on nearly every property, sized for a small
+ * icon-button variant (16×16px, opacity .6) — not meant for these primary
+ * CTAs, and there is no more-specific override to key off instead. Overriding
+ * an `!important` rule requires `!important` too; scoped to exactly these two
+ * classes, this cannot leak onto other buttons.
+ */
+.wc-block-cart__submit-button,
+.wc-block-components-checkout-place-order-button {
+  display: inline-block !important;
+  box-sizing: border-box !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: auto !important;
+  min-height: auto !important;
+  margin: 0 !important;
+  padding: 0.5em 1em !important;
+  border: 2px solid var(--c-brand, #143264) !important;
+  border-radius: 5px !important;
+  background: var(--c-brand, #143264) none !important;
+  color: #fff !important;
+  font-weight: 500 !important;
+  line-height: 1.55 !important;
+  letter-spacing: 0.016875em !important;
+  text-decoration: none !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+
+  &:hover,
+  &:focus {
+    border-color: var(--c-brand-hover, #18479f) !important;
+    background-color: var(--c-brand-hover, #18479f) !important;
+    color: #fff !important;
+    opacity: 1 !important;
+  }
+
+  &:active {
+    border-color: var(--c-brand-active, #143264) !important;
+    background-color: var(--c-brand-active, #143264) !important;
+    color: #fff !important;
+  }
+}
+
+// The cart's proceed-to-checkout button spans the full sidebar width,
+// matching the classic cart's `.wc-proceed-to-checkout .button` layout.
+.wc-block-cart__submit-button {
+  display: block !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+
+/**
+ * Shop advantages under the Cart block's submit button.
+ *
+ * ShopAdvantages appends the same `.shop-advantages-cart` markup used by the
+ * classic cart (src/ShopAdvantages.php); `.shop-advantages`/`.shop-advantage`/
+ * `.shop-advantage__text` are already styled globally by the theme's
+ * ListAdvantages component, so only the wrapper's spacing needs restating
+ * here — the classic cart's `max-width: 430px; margin: 0 0 1em auto;` assumes
+ * a right-aligned button, but the block button is already full width.
+ */
+.wp-block-woocommerce-cart .shop-advantages-cart {
+  margin-top: 1em;
+}
+
+/**
+ * eTrusted (Trusted Shops) cart banner.
+ *
+ * TrustedShopsCartBanner appends a bare `<etrusted-widget>` tag after the
+ * shop advantages (src/TrustedShopsCartBanner.php); the eTrusted script
+ * (already loaded on any cart page by woocommerce-reputations) populates its
+ * content client-side, so only the tag's own layout needs styling here.
+ */
+.wp-block-woocommerce-cart etrusted-widget {
+  display: block;
+  margin-top: 1em;
+}

@@ -60,17 +60,27 @@ class WooCommerceSalutation {
       'label' => __('Salutation', Plugin::L10N),
       'class' => ['form-row-wide'],
       'type' => 'select',
-      'options' => [
-        '' => '',
-        'Mrs' => __('Mrs', Plugin::L10N),
-        'Mr' => __('Mr', Plugin::L10N),
-        'Diverse' => __('Diverse', Plugin::L10N),
-        'Company' => __('Company', Plugin::L10N),
-      ],
+      'options' => ['' => ''] + array_column(static::getSalutationOptions(), 'label', 'value'),
       'priority' => 5,
     ];
     return $fields;
   }
 
+  /**
+   * Returns the salutation options for the classic checkout field.
+   *
+   * @return array[]
+   *   Each item has a 'value' (matching
+   *   \Netzstrategen\WooCommerceMoeve\integration\models\BaseModel::SALUTATION_CODE_MAPPING
+   *   for stores using MOEVE) and a translated 'label'.
+   */
+  public static function getSalutationOptions(): array {
+    return [
+      ['value' => 'Mrs', 'label' => __('Mrs', Plugin::L10N)],
+      ['value' => 'Mr', 'label' => __('Mr', Plugin::L10N)],
+      ['value' => 'Diverse', 'label' => __('Diverse', Plugin::L10N)],
+      ['value' => 'Company', 'label' => __('Company', Plugin::L10N)],
+    ];
+  }
 
 }

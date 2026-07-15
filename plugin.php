@@ -40,6 +40,11 @@ register_uninstall_hook(__FILE__, __NAMESPACE__ . '\Schema::uninstall');
 add_action('plugins_loaded', __NAMESPACE__ . '\Plugin::loadTextdomain');
 add_action('init', __NAMESPACE__ . '\Plugin::preInit', 0);
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
+
+// Registered at load time: the Cart/Checkout blocks initialize their
+// integration registries before `init` fires.
+add_action('woocommerce_blocks_cart_block_registration', __NAMESPACE__ . '\Plugin::registerBlocksIntegration');
+add_action('woocommerce_blocks_checkout_block_registration', __NAMESPACE__ . '\Plugin::registerBlocksIntegration');
 add_filter('woocommerce_get_settings_pages', __NAMESPACE__ . '\Settings::woocommerce_get_settings_pages');
 add_action('admin_init', __NAMESPACE__ . '\Admin::init');
 
