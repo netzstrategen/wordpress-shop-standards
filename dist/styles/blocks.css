@@ -177,22 +177,6 @@
 }
 
 /**
- * Conditional VAT field.
- *
- * The EU VAT plugin's step (`.eu-vat-extra-css`) is hidden by default and
- * only revealed by block-vat.js when the customer is an EU company outside
- * Germany. Hiding by default (rather than in JS) prevents the field from
- * flashing before the rule is evaluated. If the script fails to run the field
- * stays hidden, which is safe here because VAT is an optional field.
- */
-.eu-vat-extra-css {
-  display: none;
-}
-.eu-vat-extra-css.shop-standards-vat-visible {
-  display: revert;
-}
-
-/**
  * Brand-color the Cart/Checkout block primary buttons.
  *
  * The Cart and Checkout blocks render their "proceed to checkout" / "place
@@ -281,91 +265,4 @@
 .wp-block-woocommerce-cart etrusted-widget {
   display: block;
   margin-top: 1em;
-}
-
-/**
- * Checkout address field order.
- *
- * The address form is a flex-wrap row with every field at `order: 0` (visual
- * order = registration order). Additional fields (Anrede, Titel, Etage) can
- * only be registered after all of WooCommerce's core fields — there is no
- * "insert between core fields" option in the Additional Checkout Fields API —
- * so they land at the end regardless of registration order. Explicit `order`
- * values move Anrede/Titel up to sit right after Land/Region, matching the
- * classic checkout's field order; Etage stays at the end.
- */
-.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__country {
-  order: 1;
-}
-.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-select-input-shop-standards-salutation {
-  order: 2;
-}
-.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-select-input-shop-standards-title {
-  order: 3;
-}
-.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__first_name {
-  order: 4;
-}
-.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__last_name {
-  order: 5;
-}
-.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__address_1 {
-  order: 6;
-}
-.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__address_2-toggle {
-  order: 7;
-}
-.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__address_2-hidden-input {
-  order: 8;
-}
-.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__postcode {
-  order: 9;
-}
-.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__city {
-  order: 10;
-}
-.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__state {
-  order: 11;
-}
-.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__phone {
-  order: 12;
-}
-.wp-block-woocommerce-checkout .wc-block-components-address-form .wc-block-components-select-input-shop-standards-floor-number {
-  order: 13;
-}
-
-/**
- * Checkout step order.
- *
- * The checkout form is a flex column of steps; the EU VAT Number plugin's
- * step renders last regardless of registration order (last among the plugin
- * load order, after the terms/actions steps). Explicit order values move it
- * to sit right after the shipping address, before billing address.
- */
-.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-woocommerce-checkout-shipping-address-block {
-  order: 4;
-}
-.wp-block-woocommerce-checkout .wc-block-checkout__form .eu-vat-extra-css {
-  order: 5;
-}
-.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-woocommerce-checkout-billing-address-block {
-  order: 6;
-}
-.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-woocommerce-checkout-shipping-methods-block {
-  order: 7;
-}
-.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-woocommerce-checkout-payment-block {
-  order: 8;
-}
-.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-woocommerce-checkout-order-note-block {
-  order: 9;
-}
-.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-woocommerce-checkout-terms-block {
-  order: 10;
-}
-.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-woocommerce-checkout-actions-block {
-  order: 11;
-}
-.wp-block-woocommerce-checkout .wc-block-checkout__form .wp-block-amazon-payments-advanced-log-out-banner {
-  order: 12;
 }

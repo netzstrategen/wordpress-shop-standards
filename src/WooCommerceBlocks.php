@@ -25,9 +25,6 @@ use Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface;
  *   "Estimated total" / "Veranschlagte Gesamtsumme" label to "Gesamtsumme"),
  *   otherwise via direct DOM text updates (e.g. the sale badge's "Sparen Sie"
  *   -> "Sie sparen", which no filter exposes).
- * - block-vat: shows the EU VAT Number plugin's VAT field only for companies
- *   outside Germany (reads the salutation field registered by
- *   WooCommerceCheckoutBlockFields).
  *
  * Registered on both `woocommerce_blocks_cart_block_registration` and
  * `woocommerce_blocks_checkout_block_registration` in plugin.php — both fire
@@ -52,9 +49,6 @@ class WooCommerceBlocks implements IntegrationInterface {
 
     wp_register_script(Plugin::PREFIX . '-block-attributes', $base_url . '/dist/scripts/block-attributes' . $suffix . '.js', ['wp-data', 'wc-settings'], $version, TRUE);
     wp_register_script(Plugin::PREFIX . '-block-labels', $base_url . '/dist/scripts/block-labels' . $suffix . '.js', ['wp-data', 'wc-blocks-checkout'], $version, TRUE);
-    if (class_exists('WC_EU_VAT_Number')) {
-      wp_register_script(Plugin::PREFIX . '-block-vat', $base_url . '/dist/scripts/block-vat' . $suffix . '.js', ['wp-data'], $version, TRUE);
-    }
 
     wp_register_style($this->get_name(), $base_url . '/dist/styles/blocks' . $suffix . '.css', [], $version);
     wp_enqueue_style($this->get_name());
@@ -64,11 +58,7 @@ class WooCommerceBlocks implements IntegrationInterface {
    * {@inheritdoc}
    */
   public function get_script_handles() {
-    $handles = [Plugin::PREFIX . '-block-attributes', Plugin::PREFIX . '-block-labels'];
-    if (class_exists('WC_EU_VAT_Number')) {
-      $handles[] = Plugin::PREFIX . '-block-vat';
-    }
-    return $handles;
+    return [Plugin::PREFIX . '-block-attributes', Plugin::PREFIX . '-block-labels'];
   }
 
   /**

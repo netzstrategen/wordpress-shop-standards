@@ -67,8 +67,7 @@ class WooCommerceSalutation {
   }
 
   /**
-   * Returns the salutation options, shared with the block checkout field
-   * registered by WooCommerceCheckoutBlockFields.
+   * Returns the salutation options for the classic checkout field.
    *
    * @return array[]
    *   Each item has a 'value' (matching
