@@ -8,6 +8,13 @@ namespace Netzstrategen\ShopStandards;
 class Amazon {
 
   /**
+   * Order meta key holding the number shown to customers.
+   *
+   * @var string
+   */
+  const CUSTOM_ORDER_NUMBER_META = '_alg_wc_custom_order_number';
+
+  /**
    * The first available shipping method keyed by order ID.
    *
    * @var WC_Shipping_Rate[]
@@ -26,6 +33,32 @@ class Amazon {
     $payload['merchantMetadata']['merchantReferenceId'] = $order->get_order_number();
 
     return $payload;
+  }
+
+  /**
+   * Resolves the custom order number Amazon echoes back into a real order ID.
+   *
+   * The block checkout never sets `order_awaiting_payment`, so Amazon Pay falls
+   * back to the reference above; without this it calls wc_get_order() on an
+   * order number and fatals on the false return.
+   *
+   * @implements woocommerce_amazon_pa_merchant_metadata_reference_id_reverse
+   */
+  public static function woocommerce_amazon_pa_merchant_metadata_reference_id_reverse($order_id) {
+    if (empty($order_id)) {
+      return $order_id;
+    }
+    // Matched on the number first: it is what we send, and a number can collide
+    // with an unrelated order's ID.
+    $orders = wc_get_orders([
+      'limit' => 1,
+      'return' => 'ids',
+      'meta_key' => static::CUSTOM_ORDER_NUMBER_META,
+      'meta_value' => $order_id,
+    ]);
+
+    // Orders predating the custom numbering are sent with their plain ID.
+    return $orders ? reset($orders) : $order_id;
   }
 
   /**
