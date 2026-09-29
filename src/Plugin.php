@@ -141,7 +141,6 @@ class Plugin {
     PlusProducts::init();
     ProductsPermalinks::init();
     ProductDefects::init();
-    ProductFeeds::init();
     ProductFieldsManager::init();
     WooCommerceShippingPackages::init();
     ShopAdvantages::init();
