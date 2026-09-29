@@ -124,6 +124,7 @@ class Plugin {
 
     // Replaces the order ID of imported Amazon orders with the custom order ID.
     add_filter('woocommerce_amazon_pa_update_checkout_session_payload', __NAMESPACE__ . '\Amazon::woocommerce_amazon_pa_update_checkout_session_payload', 10, 3);
+    add_filter('woocommerce_amazon_pa_merchant_metadata_reference_id_reverse', __NAMESPACE__ . '\Amazon::woocommerce_amazon_pa_merchant_metadata_reference_id_reverse');
 
     // Overrides the shipping method ID and title for imported Amazon orders.
     add_filter('wpla_shipping_service_id_map',  __NAMESPACE__ . '\Amazon::wpla_shipping_service_id_map', 10, 2);
