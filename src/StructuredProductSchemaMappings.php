@@ -180,6 +180,7 @@ class StructuredProductSchemaMappings {
     }
 
     $normalized = [];
+    $unit_options = static::getUnitOptions();
 
     foreach ($rows as $row) {
       $attribute_slug = static::normalize_attribute_slug((string) ($row['attribute_slug'] ?? ''));
@@ -190,6 +191,10 @@ class StructuredProductSchemaMappings {
       }
 
       $unit = trim((string) ($row['unit'] ?? ''));
+      if ($unit !== '') {
+        // ACF saves the select key ("c"), publish the unit symbol ("°C").
+        $unit = $unit_options[$unit] ?? $unit;
+      }
       $property_label = trim((string) ($row['property_label'] ?? ''));
 
       // Last row for an attribute wins.
