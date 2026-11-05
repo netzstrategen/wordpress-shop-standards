@@ -142,6 +142,7 @@ class Plugin {
     ProductsPermalinks::init();
     ProductDefects::init();
     ProductFieldsManager::init();
+    StructuredProductSchemaMappings::init();
     WooCommerceShippingPackages::init();
     ShopAdvantages::init();
     Elementor\Elementor::init();
