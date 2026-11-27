@@ -1019,8 +1019,13 @@ class WooCommerce {
    * @implements woocommerce_display_item_meta
    */
   public static function woocommerce_display_item_meta($html, $item, $args) {
+    $product = is_callable([$item, 'get_product']) ? $item->get_product() : FALSE;
+    // A line whose product was deleted or never existed keeps WooCommerce's
+    // own meta list; product data would throw and abort the email or page.
+    if (!$product instanceof \WC_Product) {
+      return $html;
+    }
     $strings = [];
-    $product = $item->get_product();
     $data = static::getProductData($product);
     // @todo The separator element is stripped from the sent mail.
     if (!is_wc_endpoint_url()) {
